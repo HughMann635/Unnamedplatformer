@@ -29,7 +29,7 @@ public:
     sky() {
         skyblock = sf::RectangleShape( sf::Vector2f(width, height-100.f));
         skyblock.setFillColor(sf::Color(0, 0, 30));
-        skyblock.setPosition(0, 0);
+        skyblock.setPosition(sf::Vector2f(0, 0));
     }
     void makestars (int stars) {
         for (int i = 0; i < stars; i++) {

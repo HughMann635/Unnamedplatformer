@@ -33,6 +33,7 @@ int main()
 		player.checkground(ground.getgroundlevel());
 
 		window.clear();
+		sky.drawsky(window);
 		sky.drawstars(window);
 		ground.drawscreen(window);
 		player.drawscreen(window);
