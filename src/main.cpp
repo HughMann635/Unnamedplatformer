@@ -15,7 +15,10 @@ int main()
 
 	player player;
 	ground ground;
+	sky sky;
 	sf::Clock timer;
+
+	sky.makestars(stars);
 
 	while ( window.isOpen() ) {
 		float deltatime = timer.restart().asSeconds();
@@ -32,6 +35,7 @@ int main()
 		window.clear();
 		ground.drawscreen(window);
 		player.drawscreen(window);
+		sky.drawstars(window);
 		window.display();
 	}
 }
