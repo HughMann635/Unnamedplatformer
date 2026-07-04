@@ -12,8 +12,8 @@ const int camheight = 720;
 const float playerdim = 50.f; 
 
 float gravity = 1000.f;
-float jumpforce = 500.f;
-float movespeed = 150.f;
+float jumpforce = 450.f;
+float movespeed = 230.f;
 
 //Circle can accelerate up to a speed of 240 or so
 float circleaccel = 30.f;

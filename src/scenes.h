@@ -1,7 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include "vars.h"
+#include "tilemap.h"
 
 class ground {
 public:
