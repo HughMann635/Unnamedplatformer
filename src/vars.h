@@ -13,4 +13,4 @@ const float playerdim = 50.f;
 
 float gravity = 300.f;
 float jumpforce = 200.f;
-float speed = 150.f;
+float movespeed = 150.f;

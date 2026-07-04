@@ -25,6 +25,7 @@ int main()
 
 	sf::Vector2f velocity = (sf::Vector2f(0.f, gravity));
 	sf::Clock timer;
+	bool grounded = false;
 
 	while ( window.isOpen() ) {
 		float deltatime = timer.restart().asSeconds();
@@ -32,7 +33,37 @@ int main()
 		while ( const std::optional event = window.pollEvent() ) {
 			if ( event->is<sf::Event::Closed>() )
 				window.close();
+
+			if ( event->is<sf::Event::KeyPressed>() ) {
+				auto& key = event->getIf<sf::Event::KeyPressed>()->code;
+				if (key == sf::Keyboard::Key::Up || key == sf::Keyboard::Key::W) {
+					if (grounded) {
+						velocity.y = jumpforce**2;
+						grounded = false;
+					}
+				} 
+				if (key == sf::Keyboard::Key::Right || key == sf::Keyboard::Key::D) {
+					velocity.x = movespeed;
+				} else if (key == sf::Keyboard::Key::Left || key == sf::Keyboard::Key::A) {
+					velocity.x = -movespeed;
+				} else {velocity.x = 0.f; }
+			}
 		}
+		if (!grounded) {
+			velocity.y += gravity * deltatime;
+		}
+
+		player.move(velocity * deltatime);
+
+		float groundlevel = ground.getPosition().y + ground.getSize().y;
+		float playerlevel = player.getPosition().y;
+
+		if (playerlevel >= groundlevel) {
+			player.setPosition(sf::Vector2f(player.getPosition().x, ground.getSize().y));
+			grounded = true;
+			velocity.y = 0.f;
+		}
+
 		window.clear();
 		window.draw(player);
 		window.draw(ground);
