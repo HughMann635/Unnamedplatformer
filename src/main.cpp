@@ -33,9 +33,9 @@ int main()
 		player.checkground(ground.getgroundlevel());
 
 		window.clear();
+		sky.drawstars(window);
 		ground.drawscreen(window);
 		player.drawscreen(window);
-		sky.drawstars(window);
 		window.display();
 	}
 }
