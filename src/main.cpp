@@ -20,7 +20,7 @@ int main()
 
 	//Placeholder ground
 	sf::RectangleShape ground( sf::Vector2f(width, 100.f));
-	ground.setFillColor(sf::Color(255,0,200));
+	ground.setFillColor(sf::Color(255,200,200));
 	ground.setPosition(sf::Vector2f(0.f, height-100.f));
 
 	sf::Vector2f velocity = (sf::Vector2f(0.f, gravity));
@@ -38,28 +38,30 @@ int main()
 				auto& key = event->getIf<sf::Event::KeyPressed>()->code;
 				if (key == sf::Keyboard::Key::Up || key == sf::Keyboard::Key::W) {
 					if (grounded) {
-						velocity.y = jumpforce**2;
+						velocity.y -= jumpforce;
 						grounded = false;
 					}
 				} 
-				if (key == sf::Keyboard::Key::Right || key == sf::Keyboard::Key::D) {
-					velocity.x = movespeed;
-				} else if (key == sf::Keyboard::Key::Left || key == sf::Keyboard::Key::A) {
-					velocity.x = -movespeed;
-				} else {velocity.x = 0.f; }
 			}
 		}
+
+		if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Right) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::D)) {
+			velocity.x = movespeed;
+		} else if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Left) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::A)) {
+			velocity.x = -movespeed;
+		} else {velocity.x = 0.f; }
+
 		if (!grounded) {
 			velocity.y += gravity * deltatime;
 		}
 
 		player.move(velocity * deltatime);
 
-		float groundlevel = ground.getPosition().y + ground.getSize().y;
+		float groundlevel = ground.getPosition().y-playerdim;
 		float playerlevel = player.getPosition().y;
 
 		if (playerlevel >= groundlevel) {
-			player.setPosition(sf::Vector2f(player.getPosition().x, ground.getSize().y));
+			player.setPosition(sf::Vector2f(player.getPosition().x, ground.getPosition().y-playerdim));
 			grounded = true;
 			velocity.y = 0.f;
 		}

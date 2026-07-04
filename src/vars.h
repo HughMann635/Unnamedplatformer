@@ -11,6 +11,6 @@ const int camheight = 720;
 //Player and physics settings - for now just contains stuff for a square
 const float playerdim = 50.f; 
 
-float gravity = 300.f;
-float jumpforce = 200.f;
+float gravity = 1000.f;
+float jumpforce = 500.f;
 float movespeed = 150.f;
