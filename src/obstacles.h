@@ -30,7 +30,7 @@ public:
 
     }
 };
-//Lava - kills upon entering; reacts with water to become a walkable platform
+//Lava - kills upon entering
 class lava {
 public:
     sf::RectangleShape lavablock;
@@ -38,11 +38,19 @@ public:
 
     }
 };
-//Water - alters physics as if you're swimming; reacts with lava to become a walkable platform
+//Water - alters physics as if you're swimming
 class water {
 public:
     sf::RectangleShape waterblock;
     water() {
+
+    }
+};
+//Zero gravity - you can no longer jump, you just drift through the air and up and down let you move in those directions
+class zero_g {
+    public:
+    sf::RectangleShape zero_gblock;
+    zero_g() {
 
     }
 };
