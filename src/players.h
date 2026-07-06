@@ -42,8 +42,9 @@ public:
             velocity.x = 0.f; 
         }
         
-        sf::Vector2f bound = player.playershape.getPosition();
+        sf::Vector2f bound = playershape.getPosition();
         bound.x = std::clamp(bound.x, 0.f, (float)width-playerdim);
+        playershape.setPosition(bound);
 
 		if (!grounded) {
 			velocity.y += gravity * deltatime;
