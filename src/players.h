@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include <algorithm>
 #include "vars.h"
 #include "scenes.h"
 
@@ -34,10 +35,15 @@ public:
     }
     void updatepos (float deltatime) {
         if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Right) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::D)) {
-			velocity.x = movespeed;
+            velocity.x = movespeed;
 		} else if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Left) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::A)) {
-			velocity.x = -movespeed;
-		} else {velocity.x = 0.f; }
+            velocity.x = -movespeed;
+		} else {
+            velocity.x = 0.f; 
+        }
+        
+        sf::Vector2f bound = player.playershape.getPosition();
+        bound.x = std::clamp(bound.x, 0.f, (float)width-playerdim);
 
 		if (!grounded) {
 			velocity.y += gravity * deltatime;
