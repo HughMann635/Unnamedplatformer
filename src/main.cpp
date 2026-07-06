@@ -42,7 +42,13 @@ int main()
 		sky.drawstars(window);
 		ground.drawscreen(window);
 		player.drawscreen(window);
-		view.setCenter(sf::Vector2f(camwidth/2.f, height-camheight/2.f));
+		if (player.playershape.getPosition().x < camwidth/2.f) {
+			view.setCenter(sf::Vector2f(camwidth/2.f, height-camheight/2.f));
+		} else if (player.playershape.getPosition().x > width-camwidth/2.f) {
+			view.setCenter(sf::Vector2f(width-camwidth/2.f, height-camheight/2.f));
+		} else {
+			view.setCenter(sf::Vector2f(player.playershape.getPosition().x, height-camheight/2.f));
+		}
 		window.display();
 	}
 }
