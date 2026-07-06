@@ -12,8 +12,8 @@ const int stars = 90; //90 stars in the background, of varying sizes
 //Player and physics settings
 const float playerdim = 20.f; 
 
-float gravity = 2000.f;
-float jumpforce = 450.f;
+float gravity = 1800.f;
+float jumpforce = 600.f;
 float movespeed = 230.f;
 
 //Circle can accelerate up to a speed of 300 or so
