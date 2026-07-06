@@ -19,3 +19,14 @@ enum class tiletype {
     water,
     zero_g
 };
+
+struct Tile {
+    tiletype type;
+    sf::RectangleShape tile;
+};
+
+class tilemap {
+public:
+    std::vector<Tile> tilelist;
+    
+};
