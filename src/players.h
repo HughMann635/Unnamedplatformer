@@ -41,16 +41,16 @@ public:
 		} else {
             velocity.x = 0.f; 
         }
-        
-        sf::Vector2f bound = playershape.getPosition();
-        bound.x = std::clamp(bound.x, 0.f, (float)width-playerdim);
-        playershape.setPosition(bound);
 
 		if (!grounded) {
 			velocity.y += gravity * deltatime;
 		}
 
 		playershape.move(velocity * deltatime);
+
+        sf::Vector2f bound = playershape.getPosition();
+        bound.x = std::clamp(bound.x, 0.f, (float)width-playerdim);
+        playershape.setPosition(bound);
     }
     
     void checkground (float groundlevel) {
