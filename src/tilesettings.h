@@ -51,7 +51,6 @@ public:
             for (int j = 0; j < 64; j++) {
                 char tilecode = level[i*64+j];
                 Tile new_tile;
-                new_tile.tile.setSize(sf::Vector2f(playerdim, playerdim));
                 switch (tilecode) {
                     case '*': 
                         new_tile.type = tiletype::empty;

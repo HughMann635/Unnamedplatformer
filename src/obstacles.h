@@ -8,14 +8,18 @@ class spike {
 public:
     sf::ConvexShape spikeblock;
     spike() {
+        spikeblock.setPointCount(3);
+    }
 
+    void drawspike (sf::RenderWindow& window) {
+        window.draw(spikeblock);
     }
 };
 
 //Double spike - two small spikes placed beside each other
 class doublespike {
 public:
-    sf::ConvexShape spikeblock;
+    sf::ConvexShape twospikeblock;
     doublespike() {
 
     }
