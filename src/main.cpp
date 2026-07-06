@@ -18,6 +18,10 @@ int main()
 	sky sky;
 	sf::Clock timer;
 
+	sf::View view;
+	view.setSize(sf::Vector2f(camwidth, camheight));
+	view.setCenter(sf::Vector2f(player.playershape.getPosition().x, player.playershape.getPosition().y));
+
 	sky.makestars(stars);
 
 	while ( window.isOpen() ) {
@@ -33,10 +37,12 @@ int main()
 		player.checkground(ground.getgroundlevel());
 
 		window.clear();
+		window.setView(view);
 		sky.drawsky(window);
 		sky.drawstars(window);
 		ground.drawscreen(window);
 		player.drawscreen(window);
+		view.setCenter(sf::Vector2f(camwidth/2.f, height-camheight/2.f));
 		window.display();
 	}
 }

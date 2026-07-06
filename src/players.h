@@ -4,6 +4,8 @@
 #include "vars.h"
 #include "scenes.h"
 
+//In the future, will make separate classes for each playable powerup
+
 class player {
 public:
     sf::RectangleShape playershape;
@@ -59,7 +61,4 @@ public:
     void drawscreen (sf::RenderWindow& window) {
         window.draw(playershape);
     }
-
-private:
-
 };

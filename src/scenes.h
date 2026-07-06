@@ -8,9 +8,9 @@ class ground {
 public:
     sf::RectangleShape groundblock;
     ground() {
-        groundblock = sf::RectangleShape( sf::Vector2f(width, 100.f));
+        groundblock = sf::RectangleShape( sf::Vector2f(width, 40.f));
         groundblock.setFillColor(sf::Color(255,200,200));
-        groundblock.setPosition(sf::Vector2f(0.f, height-100.f));
+        groundblock.setPosition(sf::Vector2f(0.f, height-40.f));
     }
 
     float getgroundlevel() {
@@ -27,7 +27,7 @@ public:
     sf::CircleShape star;
     sf::RectangleShape skyblock;
     sky() {
-        skyblock = sf::RectangleShape( sf::Vector2f(width, height-100.f));
+        skyblock = sf::RectangleShape(sf::Vector2f(width, height));
         skyblock.setFillColor(sf::Color(0, 0, 30));
         skyblock.setPosition(sf::Vector2f(0, 0));
     }
