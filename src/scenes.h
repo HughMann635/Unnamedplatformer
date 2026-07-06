@@ -33,11 +33,11 @@ public:
     }
     void makestars (int stars) {
         for (int i = 0; i < stars; i++) {
-            float star_radius = 5;
+            float star_radius = std::rand() % 3;
             star = sf::CircleShape(star_radius);
 
             float starx = std::rand() % width;
-            float stary = (std::rand() % height) - 100;
+            float stary = (std::rand() % height) - 80;
             star.setPosition(sf::Vector2f(starx, stary));
             
             int starbrightness = 134 + std::rand() % 122;

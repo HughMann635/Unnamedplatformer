@@ -7,7 +7,7 @@ const int height = 720;
 std::string title = "Shape Game";
 const int camwidth = 960;
 const int camheight = 540;
-const int stars = 90; //90 stars in the background, of varying sizes
+const int stars = 700; //700 stars in the background, of varying sizes
 
 //Player and physics settings
 //This is also the dimension of all tiles in the game
