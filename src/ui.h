@@ -3,3 +3,4 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 #include "vars.h"
+#include "states.h"

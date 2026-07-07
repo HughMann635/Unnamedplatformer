@@ -43,19 +43,36 @@ public:
 
 //Black hole - sucks you in when you get within 1 tile of the center
 //Black circle with particles orbiting it 
+//NOTE: when inputting the position, make sure to add 2.5 to each coordinate
 class blackhole {
 public:
     sf::CircleShape blackholeblock;
-    blackhole() {
-
+    blackhole(sf::Vector2f position) {
+        blackholeblock.setRadius(7.5);
+        blackholeblock.setFillColor(sf::Color::Black);
+        blackholeblock.setPosition(position);
+    }
+    
+    void drawblackhole (sf::RenderWindow& window){
+        window.draw(blackholeblock);
     }
 };
 //Lava - kills upon entering
 class lava {
 public:
-    sf::RectangleShape lavablock;
-    lava() {
+    sf::ConvexShape lavablock;
+    lava(sf::Vector2f position) {
+        lavablock.setPointCount(4);
+        lavablock.setPoint(0, sf::Vector2f(0, 0));
+        lavablock.setPoint(1, sf::Vector2f(20, 0));
+        lavablock.setPoint(2, sf::Vector2f(20, 20));
+        lavablock.setPoint(3, sf::Vector2f(0, 20));
+        lavablock.setFillColor(sf::Color(255, 150, 20, 0.5));
+        lavablock.setPosition(position);
+    }
 
+    void drawlava (sf::RenderWindow& window) {
+        window.draw(lavablock);
     }
 };
 //Water - alters physics as if you're swimming

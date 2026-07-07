@@ -22,3 +22,9 @@ float circleaccel = 30.f;
 float circlemax = 300.f;
 //Triangle moves at a normal speed but when pushing an object, it slows down and pushes the object at the same speed
 float trianglepushspeed = 115.f;
+
+//Game settings
+bool circlelocked = true;
+bool trianglelocked = true;
+bool octagonlocked = true;
+bool hexagonlocked = true;
