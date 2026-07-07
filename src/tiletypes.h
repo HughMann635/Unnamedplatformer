@@ -8,6 +8,24 @@ public:
     virtual ~tileTypes() {}
 };
 
+class ground_ : public tileTypes {
+public:
+    sf::ConvexShape ground_block;
+    ground_(sf::Vector2f position) {
+        ground_block.setPosition(4);
+        ground_block.setPoint(0, sf::Vector2f(0, 0));
+        ground_block.setPoint(1, sf::Vector2f(20, 0));
+        ground_block.setPoint(2, sf::Vector2f(20, 20));
+        ground_block.setPoint(3, sf::Vector2f(0, 20));
+        ground_block.setFillColor(sf::Color(255, 200, 200));
+        ground_block.setPosition(sf::Vector2f(0, 0));
+    }    
+
+    void drawground (sf::RenderWindow& window) {
+        window.draw(ground_block);
+    }
+};
+
 class spike : public tileTypes {
 public:
     sf::ConvexShape spikeblock;
