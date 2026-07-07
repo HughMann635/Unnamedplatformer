@@ -2,10 +2,36 @@
 
 #include <SFML/Graphics.hpp>
 #include "vars.h"
+#include "tilesettings.h"
 
 class tileTypes {
 public:
-    void draw (sf::RenderWindow& window);
+    void draw (sf::RenderWindow& window) {
+        switch (new_tile.type) {
+            case tiletype::empty:
+            case tiletype::spawn:
+            case tiletype::exit:
+            break;
+            case tiletype::solid:
+            window.draw(ground_block);
+            case tiletype::spike:
+            window.draw(spikeblock);
+            case tiletype::doublespike:
+            window.draw(twospikeblock);
+            case tiletype::block_push:
+            window.draw(blockblock);
+            case tiletype::spring:
+            window.draw(springblock);
+            case tiletype::blackhole:
+            window.draw(blackholeblock);
+            case tiletype::lava:
+            window.draw(lavablock);
+            case tiletype::water:
+            window.draw(waterblock);
+            case tiletype::zero_g:
+            window.draw(zero_gblock)
+        }
+    };
     virtual ~tileTypes() {}
 };
 
