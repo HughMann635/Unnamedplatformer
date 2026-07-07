@@ -78,17 +78,37 @@ public:
 //Water - alters physics as if you're swimming
 class water {
 public:
-    sf::RectangleShape waterblock;
-    water() {
+    sf::ConvexShape waterblock;
+    water(sf::Vector2f position) {
+        waterblock.setPointCount(4);
+        waterblock.setPoint(0, sf::Vector2f(0, 0));
+        waterblock.setPoint(1, sf::Vector2f(20, 0));
+        waterblock.setPoint(2, sf::Vector2f(20, 20));
+        waterblock.setPoint(3, sf::Vector2f(0, 20));
+        waterblock.setFillColor(sf::Color(20, 150, 255, 0.5));
+        waterblock.setPosition(position);    
+    }
 
+    void drawwater (sf::RenderWindow& window) {
+        window.draw(waterblock);
     }
 };
 //Zero gravity - you can no longer jump, you just drift through the air and up and down let you move in those directions
 class zero_g {
     public:
-    sf::RectangleShape zero_gblock;
-    zero_g() {
+    sf::ConvexShape zero_gblock;
+    zero_g(sf::Vector2f position) {
+        zero_gblock.setPointCount(4);
+        zero_gblock.setPoint(0, sf::Vector2f(0, 0));
+        zero_gblock.setPoint(1, sf::Vector2f(20, 0));
+        zero_gblock.setPoint(2, sf::Vector2f(20, 20));
+        zero_gblock.setPoint(3, sf::Vector2f(0, 20));
+        zero_gblock.setFillColor(sf::Color(200, 200, 200, 0.5));
+        zero_gblock.setPosition(position);
+    }
 
+    void drawzerog (sf::RenderWindow& window) {
+        window.draw(zero_gblock);
     }
 };
 //Block - an immovable block, except for if you use the triangle powerup the  you can push it 
