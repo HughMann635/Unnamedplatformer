@@ -7,8 +7,13 @@
 class spike {
 public:
     sf::ConvexShape spikeblock;
-    spike() {
+    spike(sf::Vector2f position) {
         spikeblock.setPointCount(3);
+        spikeblock.setPoint(0, sf::Vector2f(0, 0));
+        spikeblock.setPoint(1, sf::Vector2f(10, 20));
+        spikeblock.setPoint(2, sf::Vector2f(20, 0));
+        spikeblock.setFillColor(sf::Color::Red);
+        spikeblock.setPosition(position);
     }
 
     void drawspike (sf::RenderWindow& window) {
@@ -20,8 +25,19 @@ public:
 class doublespike {
 public:
     sf::ConvexShape twospikeblock;
-    doublespike() {
+    doublespike(sf::Vector2f position) {
+        twospikeblock.setPointCount(5);
+        twospikeblock.setPoint(0, sf::Vector2f(0, 0));
+        twospikeblock.setPoint(1, sf::Vector2f(5, 10));
+        twospikeblock.setPoint(2, sf::Vector2f(10, 0));
+        twospikeblock.setPoint(3, sf::Vector2f(15, 10));
+        twospikeblock.setPoint(4, sf::Vector2f(20, 0));
+        twospikeblock.setFillColor(sf::Color::Red);
+        twospikeblock.setPosition(position);
+    }
 
+    void drawdoublespike (sf::RenderWindow& window) {
+        window.draw(twospikeblock);
     }
 };
 
