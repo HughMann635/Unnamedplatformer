@@ -5,6 +5,7 @@
 
 class tileTypes {
 public:
+    void draw (sf::RenderWindow& window);
     virtual ~tileTypes() {}
 };
 
