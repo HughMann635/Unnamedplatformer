@@ -3,7 +3,7 @@
 
 #include "states.h"
 #include "players.h"
-#include "obstacles.h"
+#include "tiletypes.h"
 #include "scenes.h"
 #include "ui.h"
 #include "vars.h"
