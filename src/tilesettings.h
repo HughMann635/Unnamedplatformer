@@ -13,7 +13,7 @@ enum class tiletype {
     //Obstacles / non-player entities
     spike,
     doublespike,
-    pushblock,
+    block_push,
     spring,
     blackhole,
     //Environments
@@ -59,6 +59,7 @@ public:
                         break;
                     case '#':
                         new_tile.type = tiletype::solid;
+                        new_tile.tile = std::make_unique<solid>(sf::Vector2f(j*playerdim, i*playerdim));
                         tilelist.push_back(new_tile);
                         break;   
                     case 'S':
@@ -73,34 +74,42 @@ public:
                         break;
                     case '\'':
                         new_tile.type = tiletype::spike;
+                        new_tile.tile = std::make_unique<spike>(sf::Vector2f(j*playerdim, i*playerdim));
                         tilelist.push_back(new_tile);
                         break;
                     case '"':
                         new_tile.type = tiletype::doublespike;
+                        new_tile.tile = std::make_unique<doublespike>(sf::Vector2f(j*playerdim, i*playerdim));
                         tilelist.push_back(new_tile);
                         break;
                     case 'L':
                         new_tile.type = tiletype::lava;
+                        new_tile.tile = std::make_unique<lava>(sf::Vector2f(j*playerdim, i*playerdim));
                         tilelist.push_back(new_tile);
                         break;
                     case 'W':
                         new_tile.type = tiletype::water;
+                        new_tile.tile = std::make_unique<water>(sf::Vector2f(j*playerdim,i*playerdim));
                         tilelist.push_back(new_tile);
                         break;
                     case 'Z':
                         new_tile.type = tiletype::zero_g;
+                        new_tile.tile = std::make_unique<zero_g>(sf::Vector2f(j*playerdim,i*playerdim));
                         tilelist.push_back(new_tile);
                         break;
                     case 'B':
                         new_tile.type = tiletype::blackhole;
+                        new_tile.tile = std::make_unique<blackhole>(sf::Vector2f(j*playerdim, i*playerdim));
                         tilelist.push_back(new_tile);
                         break;
                     case 'P':
-                        new_tile.type = tiletype::pushblock;
+                        new_tile.type = tiletype::block_push; //cuz i cant have two 'B' cases
+                        new_tile.tile = std::make_unique<block>(sf::Vector2f(j*playerdim, i*playerdim));
                         tilelist.push_back(new_tile);
                         break;
                     case '^':
                         new_tile.type = tiletype::spring;
+                        new_tile.tile = std::make_unique<spring>(sf::Vector2f(j*playerdim, i*playerdim));
                         tilelist.push_back(new_tile);
                         break;
                 }
