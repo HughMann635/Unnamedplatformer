@@ -2,7 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include "vars.h"
 #include "tilemap.h"
-#include "obstacles.h"
+#include "tiletypes.h"
 
 enum class tiletype {
     //Basic tile types
@@ -24,7 +24,7 @@ enum class tiletype {
 
 struct Tile {
     tiletype type;
-    std::unique_ptr<tiletypes> tile;
+    std::unique_ptr<tileTypes> tile;
 };
 
 //TILE CODES

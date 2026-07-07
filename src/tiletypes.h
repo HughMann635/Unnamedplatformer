@@ -4,6 +4,11 @@
 #include "vars.h"
 
 //Spike - same size as player
+class tileTypes {
+    virtual void draw(sf::RenderWindow& window) = 0;
+    virtual ~tileTypes() {}
+};
+
 class spike {
 public:
     sf::ConvexShape spikeblock;
