@@ -21,7 +21,7 @@ public:
         ground_block.setPosition(sf::Vector2f(0, 0));
     }    
 
-    void drawground (sf::RenderWindow& window) {
+    void draw (sf::RenderWindow& window) {
         window.draw(ground_block);
     }
 };
@@ -38,7 +38,7 @@ public:
         spikeblock.setPosition(position);
     }
 
-    void drawspike (sf::RenderWindow& window) {
+    void draw (sf::RenderWindow& window) {
         window.draw(spikeblock);
     }
 };
@@ -57,7 +57,7 @@ public:
         twospikeblock.setPosition(position);
     }
 
-    void drawdoublespike (sf::RenderWindow& window) {
+    void draw (sf::RenderWindow& window) {
         window.draw(twospikeblock);
     }
 };
@@ -73,7 +73,7 @@ public:
         blackholeblock.setPosition(position);
     }
     
-    void drawblackhole (sf::RenderWindow& window){
+    void draw (sf::RenderWindow& window){
         window.draw(blackholeblock);
     }
 };
@@ -91,7 +91,7 @@ public:
         lavablock.setPosition(position);
     }
 
-    void drawlava (sf::RenderWindow& window) {
+    void draw (sf::RenderWindow& window) {
         window.draw(lavablock);
     }
 };
@@ -109,7 +109,7 @@ public:
         waterblock.setPosition(position);    
     }
 
-    void drawwater (sf::RenderWindow& window) {
+    void draw (sf::RenderWindow& window) {
         window.draw(waterblock);
     }
 };
@@ -127,7 +127,7 @@ class zero_g : public tileTypes {
         zero_gblock.setPosition(position);
     }
 
-    void drawzerog (sf::RenderWindow& window) {
+    void draw (sf::RenderWindow& window) {
         window.draw(zero_gblock);
     }
 };
@@ -147,6 +147,10 @@ public:
         blockblock.setFillColor(sf::Color(100, 100, 100));
         blockblock.setPosition(position);
     }
+
+    void draw (sf::RenderWindow& window) {
+        window.draw(blockblock);
+    }
 };
 
 class spring : public tileTypes{
@@ -165,5 +169,9 @@ public:
         springblock.setPoint(8, sf::Vector2f(12, 3));
         springblock.setPoint(9, sf::Vector2f(20, 3));
         springblock.setPoint(10, sf::Vector2f(20, 0));
+    }
+
+    void draw (sf::RenderWindow& window) {
+        window.draw(springblock);
     }
 };
