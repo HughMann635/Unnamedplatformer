@@ -69,3 +69,19 @@ public:
         window.draw(playershape);
     }
 };
+
+class circle : public player {
+
+};
+
+class triangle : public player {
+
+};
+
+class hexagon : public player {
+
+};
+
+class octagon : public player {
+    
+};
