@@ -2,36 +2,10 @@
 
 #include <SFML/Graphics.hpp>
 #include "vars.h"
-#include "tilesettings.h"
 
 class tileTypes {
 public:
-    void draw (sf::RenderWindow& window) {
-        switch (new_tile.type) {
-            case tiletype::empty:
-            case tiletype::spawn:
-            case tiletype::exit:
-            break;
-            case tiletype::solid:
-            window.draw(ground_block);
-            case tiletype::spike:
-            window.draw(spikeblock);
-            case tiletype::doublespike:
-            window.draw(twospikeblock);
-            case tiletype::block_push:
-            window.draw(blockblock);
-            case tiletype::spring:
-            window.draw(springblock);
-            case tiletype::blackhole:
-            window.draw(blackholeblock);
-            case tiletype::lava:
-            window.draw(lavablock);
-            case tiletype::water:
-            window.draw(waterblock);
-            case tiletype::zero_g:
-            window.draw(zero_gblock)
-        }
-    };
+    virtual void draw (sf::RenderWindow& window) {}
     virtual ~tileTypes() {}
 };
 
@@ -45,10 +19,10 @@ public:
         ground_block.setPoint(2, sf::Vector2f(20, 20));
         ground_block.setPoint(3, sf::Vector2f(0, 20));
         ground_block.setFillColor(sf::Color(255, 200, 200));
-        ground_block.setPosition(sf::Vector2f(0, 0));
+        ground_block.setPosition(sf::Vector2f(position));
     }    
 
-    void draw (sf::RenderWindow& window) {
+    void draw (sf::RenderWindow& window) override {
         window.draw(ground_block);
     }
 };
@@ -65,7 +39,7 @@ public:
         spikeblock.setPosition(position);
     }
 
-    void draw (sf::RenderWindow& window) {
+    void draw (sf::RenderWindow& window) override {
         window.draw(spikeblock);
     }
 };
@@ -84,7 +58,7 @@ public:
         twospikeblock.setPosition(position);
     }
 
-    void draw (sf::RenderWindow& window) {
+    void draw (sf::RenderWindow& window) override {
         window.draw(twospikeblock);
     }
 };
@@ -100,7 +74,7 @@ public:
         blackholeblock.setPosition(position);
     }
     
-    void draw (sf::RenderWindow& window){
+    void draw (sf::RenderWindow& window) override {
         window.draw(blackholeblock);
     }
 };
@@ -118,7 +92,7 @@ public:
         lavablock.setPosition(position);
     }
 
-    void draw (sf::RenderWindow& window) {
+    void draw (sf::RenderWindow& window) override {
         window.draw(lavablock);
     }
 };
@@ -136,7 +110,7 @@ public:
         waterblock.setPosition(position);    
     }
 
-    void draw (sf::RenderWindow& window) {
+    void draw (sf::RenderWindow& window) override {
         window.draw(waterblock);
     }
 };
@@ -154,7 +128,7 @@ class zero_g : public tileTypes {
         zero_gblock.setPosition(position);
     }
 
-    void draw (sf::RenderWindow& window) {
+    void draw (sf::RenderWindow& window) override {
         window.draw(zero_gblock);
     }
 };
@@ -175,7 +149,7 @@ public:
         blockblock.setPosition(position);
     }
 
-    void draw (sf::RenderWindow& window) {
+    void draw (sf::RenderWindow& window) override {
         window.draw(blockblock);
     }
 };
@@ -198,7 +172,7 @@ public:
         springblock.setPoint(10, sf::Vector2f(20, 0));
     }
 
-    void draw (sf::RenderWindow& window) {
+    void draw (sf::RenderWindow& window) override {
         window.draw(springblock);
     }
 };
