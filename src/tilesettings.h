@@ -51,8 +51,8 @@ public:
 
     void loadmap (std::string level) {
         for (int i = 0; i < 36; i++) {
-            for (int j = 0; j < 64; j++) {
-                char tilecode = level[i*64+j];
+            for (int j = 0; j < 65; j++) {
+                char tilecode = level[i*65+j];
                 Tile new_tile;
                 switch (tilecode) {
                     case '*': 
