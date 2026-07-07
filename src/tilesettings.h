@@ -116,4 +116,12 @@ public:
             }
         }
     }
+
+    void drawmap (sf::RenderWindow& window) {
+        for (auto& pos: tilelist) {
+            if (pos.type != tiletype::empty) {
+                pos.tile -> draw(window);
+            }
+        }
+    }
 };

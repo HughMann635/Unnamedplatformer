@@ -7,6 +7,7 @@
 #include "scenes.h"
 #include "ui.h"
 #include "vars.h"
+#include "tilesettings.h"
 
 int main()
 {
@@ -16,6 +17,7 @@ int main()
 	player player;
 	ground ground;
 	sky sky;
+	tilemap map;
 	sf::Clock timer;
 
 	sf::View view;
