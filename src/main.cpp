@@ -26,6 +26,9 @@ int main()
 
 	sky.makestars(stars);
 
+	map.loadmap(levels[0][0]);
+	player.playershape.setPosition(map.spawn);
+
 	while ( window.isOpen() ) {
 		float deltatime = timer.restart().asSeconds();
 		
@@ -43,6 +46,7 @@ int main()
 		sky.drawsky(window);
 		sky.drawstars(window);
 		ground.drawscreen(window);
+		map.drawmap(window);
 		player.drawscreen(window);
 		if (player.playershape.getPosition().x < camwidth/2.f) {
 			if (player.playershape.getPosition().y < camheight/2.f) {
