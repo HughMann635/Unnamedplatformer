@@ -43,7 +43,7 @@ public:
 
 //Black hole - sucks you in when you get within 1 tile of the center
 //Black circle with particles orbiting it 
-//NOTE: when inputting the position, make sure to add 2.5 to each coordinate
+//NOTE TO SELF when inputting the position, make sure to add 2.5 to each coordinate
 class blackhole {
 public:
     sf::CircleShape blackholeblock;
@@ -111,19 +111,39 @@ class zero_g {
         window.draw(zero_gblock);
     }
 };
-//Block - an immovable block, except for if you use the triangle powerup the  you can push it 
+//Block - an immovable block, except for if you use the triangle powerup then you can push it 
 class block {
 public:
-    sf::RectangleShape blockblock;
-    block() {
-
+    sf::ConvexShape blockblock;
+    //sf::Vector2<float> blockx; 
+    //sf::Vector2<float> blocky;
+    //might implement these later for push code
+    block(sf::Vector2f position) {
+        blockblock.setPointCount(4);
+        blockblock.setPoint(0, sf::Vector2f(0, 0));
+        blockblock.setPoint(1, sf::Vector2f(20, 0));
+        blockblock.setPoint(2, sf::Vector2f(20, 20));
+        blockblock.setPoint(3, sf::Vector2f(0, 20));
+        blockblock.setFillColor(sf::Color(100, 100, 100));
+        blockblock.setPosition(position);
     }
 };
 //Spring - catapults you into the air
 class spring {
 public:
-    sf::ConvexShape springblock; //I might not use a convexshape
-    spring() {
-        
+    sf::ConvexShape springblock;
+    spring(sf::Vector2f position) {
+        springblock.setPointCount(9);
+        springblock.setPoint(0, sf::Vector2f(0, 0));
+        springblock.setPoint(1, sf::Vector2f(0, 3));
+        springblock.setPoint(2, sf::Vector2f(8, 3));
+        springblock.setPoint(3, sf::Vector2f(8, 6));
+        springblock.setPoint(4, sf::Vector2f(0, 6));
+        springblock.setPoint(5, sf::Vector2f(10, 10));
+        springblock.setPoint(6, sf::Vector2f(20, 6));
+        springblock.setPoint(7, sf::Vector2f(12, 6));
+        springblock.setPoint(8, sf::Vector2f(12, 3));
+        springblock.setPoint(9, sf::Vector2f(20, 3));
+        springblock.setPoint(10, sf::Vector2f(20, 0));
     }
 };
