@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include "vars.h"
 #include "tilemap.h"
+#include "obstacles.h"
 
 enum class tiletype {
     //Basic tile types
@@ -23,7 +24,7 @@ enum class tiletype {
 
 struct Tile {
     tiletype type;
-    sf::RectangleShape tile;
+    std::unique_ptr<tiletypes> tile;
 };
 
 //TILE CODES
@@ -58,7 +59,6 @@ public:
                         break;
                     case '#':
                         new_tile.type = tiletype::solid;
-                        new_tile.tile.setFillColor(sf::Color(255, 200, 200));
                         tilelist.push_back(new_tile);
                         break;   
                     case 'S':
