@@ -3,13 +3,12 @@
 #include <SFML/Graphics.hpp>
 #include "vars.h"
 
-//Spike - same size as player
 class tileTypes {
-    virtual void draw(sf::RenderWindow& window) = 0;
+public:
     virtual ~tileTypes() {}
 };
 
-class spike {
+class spike : public tileTypes {
 public:
     sf::ConvexShape spikeblock;
     spike(sf::Vector2f position) {
@@ -26,8 +25,7 @@ public:
     }
 };
 
-//Double spike - two small spikes placed beside each other
-class doublespike {
+class doublespike : public tileTypes {
 public:
     sf::ConvexShape twospikeblock;
     doublespike(sf::Vector2f position) {
@@ -46,10 +44,9 @@ public:
     }
 };
 
-//Black hole - sucks you in when you get within 1 tile of the center
 //Black circle with particles orbiting it 
 //NOTE TO SELF when inputting the position, make sure to add 2.5 to each coordinate
-class blackhole {
+class blackhole : public tileTypes {
 public:
     sf::CircleShape blackholeblock;
     blackhole(sf::Vector2f position) {
@@ -63,7 +60,7 @@ public:
     }
 };
 //Lava - kills upon entering
-class lava {
+class lava : public tileTypes {
 public:
     sf::ConvexShape lavablock;
     lava(sf::Vector2f position) {
@@ -80,8 +77,8 @@ public:
         window.draw(lavablock);
     }
 };
-//Water - alters physics as if you're swimming
-class water {
+
+class water : public tileTypes {
 public:
     sf::ConvexShape waterblock;
     water(sf::Vector2f position) {
@@ -98,8 +95,8 @@ public:
         window.draw(waterblock);
     }
 };
-//Zero gravity - you can no longer jump, you just drift through the air and up and down let you move in those directions
-class zero_g {
+
+class zero_g : public tileTypes {
     public:
     sf::ConvexShape zero_gblock;
     zero_g(sf::Vector2f position) {
@@ -116,8 +113,8 @@ class zero_g {
         window.draw(zero_gblock);
     }
 };
-//Block - an immovable block, except for if you use the triangle powerup then you can push it 
-class block {
+
+class block : public tileTypes{
 public:
     sf::ConvexShape blockblock;
     //sf::Vector2<float> blockx; 
@@ -133,12 +130,12 @@ public:
         blockblock.setPosition(position);
     }
 };
-//Spring - catapults you into the air
-class spring {
+
+class spring : public tileTypes{
 public:
     sf::ConvexShape springblock;
     spring(sf::Vector2f position) {
-        springblock.setPointCount(9);
+        springblock.setPointCount(11);
         springblock.setPoint(0, sf::Vector2f(0, 0));
         springblock.setPoint(1, sf::Vector2f(0, 3));
         springblock.setPoint(2, sf::Vector2f(8, 3));
