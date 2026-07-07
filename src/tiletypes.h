@@ -12,7 +12,7 @@ class ground_ : public tileTypes {
 public:
     sf::ConvexShape ground_block;
     ground_(sf::Vector2f position) {
-        ground_block.setPosition(4);
+        ground_block.setPointCount(4);
         ground_block.setPoint(0, sf::Vector2f(0, 0));
         ground_block.setPoint(1, sf::Vector2f(20, 0));
         ground_block.setPoint(2, sf::Vector2f(20, 20));
