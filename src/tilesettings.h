@@ -59,7 +59,7 @@ public:
                         break;
                     case '#':
                         new_tile.type = tiletype::solid;
-                        new_tile.tile = std::make_unique<solid>(sf::Vector2f(j*playerdim, i*playerdim));
+                        new_tile.tile = std::make_unique<ground_>(sf::Vector2f(j*playerdim, i*playerdim));
                         tilelist.push_back(new_tile);
                         break;   
                     case 'S':
