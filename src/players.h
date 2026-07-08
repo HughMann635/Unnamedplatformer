@@ -14,9 +14,8 @@ public:
     bool grounded;
 
     player() {
-        playershape = sf::RectangleShape( sf::Vector2f(playerdim, playerdim));
+        playershape = sf::RectangleShape(sf::Vector2f(playerdim, playerdim));
 	    playershape.setFillColor(sf::Color::Red);
-	    playershape.setPosition(sf::Vector2f(100.f, 300.f));
 
         sf::Vector2f velocity = (sf::Vector2f(0.f, gravity));
         grounded = false;
@@ -52,7 +51,7 @@ public:
         bound.x = std::clamp(bound.x, 0.f, (float)width-playerdim);
         playershape.setPosition(bound);
     }
-    
+
     void checkground (float groundlevel) {
         float playerlevel = playershape.getPosition().y+playerdim;
 
