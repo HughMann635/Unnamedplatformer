@@ -37,7 +37,7 @@ public:
         spikeblock.setPoint(2, sf::Vector2f(20, 0));
         spikeblock.setFillColor(sf::Color::Red);
         spikeblock.setOutlineColor(sf::Color(150, 0, 0));
-        spikeblock.setOutlineThickness(2.f);
+        spikeblock.setOutlineThickness(-2.f);
         spikeblock.setPosition(position);
     }
 
@@ -48,22 +48,29 @@ public:
 
 class doublespike : public tileTypes {
 public:
-    sf::ConvexShape twospikeblock;
+    sf::ConvexShape twospikes[2];
     doublespike(sf::Vector2f position) {
-        twospikeblock.setPointCount(5);
-        twospikeblock.setPoint(0, sf::Vector2f(0, 0));
-        twospikeblock.setPoint(1, sf::Vector2f(5, 10));
-        twospikeblock.setPoint(2, sf::Vector2f(10, 0));
-        twospikeblock.setPoint(3, sf::Vector2f(15, 10));
-        twospikeblock.setPoint(4, sf::Vector2f(20, 0));
-        twospikeblock.setFillColor(sf::Color::Red);
-        twospikeblock.setOutlineColor(sf::Color(150, 0, 0));
-        twospikeblock.setOutlineThickness(2.f);
-        twospikeblock.setPosition(position);
+        twospikes[0].setPointCount(3);
+        twospikes[0].setPoint(0, sf::Vector2f(0, 0));
+        twospikes[0].setPoint(1, sf::Vector2f(5, 10));
+        twospikes[0].setPoint(2, sf::Vector2f(10, 0));
+        
+        twospikes[1].setPointCount(3);
+        twospikes[1].setPoint(0, sf::Vector2f(10, 0));
+        twospikes[1].setPoint(1, sf::Vector2f(15, 10));
+        twospikes[1].setPoint(2, sf::Vector2f(20, 0));
+        
+        for (int i = 0; i < 2; i++) {
+            twospikes[i].setFillColor(sf::Color::Red);
+            twospikes[i].setOutlineColor(sf::Color(150, 0, 0));
+            twospikes[i].setOutlineThickness(-1.f);
+            twospikes[i].setPosition(position);
+        }
     }
 
     void draw (sf::RenderWindow& window) override {
-        window.draw(twospikeblock);
+        window.draw(twospikes[0]);
+        window.draw(twospikes[1]);
     }
 };
 
