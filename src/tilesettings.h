@@ -34,8 +34,8 @@ struct Tile {
 // # = solid
 // S = spawn point
 // F = finish point
-// ' = single spike (same size as player)
-// " = double spike (two spikes right beside each other)"
+// 1 = single spike (same size as player)
+// 2 = double spike (two spikes right beside each other)"
 // L = lava
 // W = water
 // Z = zero-g zone
@@ -77,12 +77,12 @@ public:
                         finish = sf::Vector2f(i*playerdim, j*playerdim);
                         tilelist.push_back(std::move(new_tile));
                         break;
-                    case '\'':
+                    case '1':
                         new_tile.type = tiletype::spike;
                         new_tile.tile = std::make_unique<spike>(sf::Vector2f(j*playerdim, i*playerdim));
                         tilelist.push_back(std::move(new_tile));
                         break;
-                    case '"':
+                    case '2':
                         new_tile.type = tiletype::doublespike;
                         new_tile.tile = std::make_unique<doublespike>(sf::Vector2f(j*playerdim, i*playerdim));
                         tilelist.push_back(std::move(new_tile));
