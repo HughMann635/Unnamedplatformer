@@ -37,6 +37,7 @@ public:
         spikeblock.setPoint(2, sf::Vector2f(20, 0));
         spikeblock.setFillColor(sf::Color::Red);
         spikeblock.setOutlineColor(sf::Color(150, 0, 0));
+        spikeblock.setOutlineThickness(2.f);
         spikeblock.setPosition(position);
     }
 
@@ -57,6 +58,7 @@ public:
         twospikeblock.setPoint(4, sf::Vector2f(20, 0));
         twospikeblock.setFillColor(sf::Color::Red);
         twospikeblock.setOutlineColor(sf::Color(150, 0, 0));
+        twospikeblock.setOutlineThickness(2.f);
         twospikeblock.setPosition(position);
     }
 
