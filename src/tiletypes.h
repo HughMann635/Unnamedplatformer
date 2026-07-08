@@ -36,6 +36,7 @@ public:
         spikeblock.setPoint(1, sf::Vector2f(10, 20));
         spikeblock.setPoint(2, sf::Vector2f(20, 0));
         spikeblock.setFillColor(sf::Color::Red);
+        spikeblock.setOutlineColor(sf::Color(150, 0, 0));
         spikeblock.setPosition(position);
     }
 
@@ -55,6 +56,7 @@ public:
         twospikeblock.setPoint(3, sf::Vector2f(15, 10));
         twospikeblock.setPoint(4, sf::Vector2f(20, 0));
         twospikeblock.setFillColor(sf::Color::Red);
+        twospikeblock.setOutlineColor(sf::Color(150, 0, 0));
         twospikeblock.setPosition(position);
     }
 
@@ -159,17 +161,17 @@ public:
     sf::ConvexShape springblock;
     spring(sf::Vector2f position) {
         springblock.setPointCount(11);
-        springblock.setPoint(0, sf::Vector2f(0, 0));
-        springblock.setPoint(1, sf::Vector2f(0, 3));
-        springblock.setPoint(2, sf::Vector2f(8, 3));
-        springblock.setPoint(3, sf::Vector2f(8, 6));
-        springblock.setPoint(4, sf::Vector2f(0, 6));
+        springblock.setPoint(0, sf::Vector2f(0, 20));
+        springblock.setPoint(1, sf::Vector2f(0, 17));
+        springblock.setPoint(2, sf::Vector2f(8, 17));
+        springblock.setPoint(3, sf::Vector2f(8, 14));
+        springblock.setPoint(4, sf::Vector2f(0, 14));
         springblock.setPoint(5, sf::Vector2f(10, 10));
-        springblock.setPoint(6, sf::Vector2f(20, 6));
-        springblock.setPoint(7, sf::Vector2f(12, 6));
-        springblock.setPoint(8, sf::Vector2f(12, 3));
-        springblock.setPoint(9, sf::Vector2f(20, 3));
-        springblock.setPoint(10, sf::Vector2f(20, 0));
+        springblock.setPoint(6, sf::Vector2f(20, 14));
+        springblock.setPoint(7, sf::Vector2f(12, 14));
+        springblock.setPoint(8, sf::Vector2f(12, 17));
+        springblock.setPoint(9, sf::Vector2f(20, 17));
+        springblock.setPoint(10, sf::Vector2f(20, 20));
         springblock.setFillColor(sf::Color(200, 255, 255));
         springblock.setPosition(position);
     }
