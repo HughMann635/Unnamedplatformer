@@ -99,7 +99,7 @@ public:
         lavablock.setPoint(1, sf::Vector2f(20, 0));
         lavablock.setPoint(2, sf::Vector2f(20, 20));
         lavablock.setPoint(3, sf::Vector2f(0, 20));
-        lavablock.setFillColor(sf::Color(255, 150, 20, 0.5));
+        lavablock.setFillColor(sf::Color(255, 150, 20));
         lavablock.setPosition(position);
     }
 
@@ -117,7 +117,7 @@ public:
         waterblock.setPoint(1, sf::Vector2f(20, 0));
         waterblock.setPoint(2, sf::Vector2f(20, 20));
         waterblock.setPoint(3, sf::Vector2f(0, 20));
-        waterblock.setFillColor(sf::Color(20, 150, 255, 0.5));
+        waterblock.setFillColor(sf::Color(20, 150, 255));
         waterblock.setPosition(position);    
     }
 
@@ -135,7 +135,7 @@ class zero_g : public tileTypes {
         zero_gblock.setPoint(1, sf::Vector2f(20, 0));
         zero_gblock.setPoint(2, sf::Vector2f(20, 20));
         zero_gblock.setPoint(3, sf::Vector2f(0, 20));
-        zero_gblock.setFillColor(sf::Color(200, 200, 200, 0.5));
+        zero_gblock.setFillColor(sf::Color(200, 200, 200));
         zero_gblock.setPosition(position);
     }
 
