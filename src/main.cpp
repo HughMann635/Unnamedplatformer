@@ -45,9 +45,8 @@ int main()
 		window.setView(view);
 		sky.drawsky(window);
 		sky.drawstars(window);
-		ground.drawscreen(window);
-		map.drawmap(window);
 		player.drawscreen(window);
+		map.drawmap(window);
 		if (player.playershape.getPosition().x < camwidth/2.f) {
 			if (player.playershape.getPosition().y < camheight/2.f) {
 				view.setCenter(sf::Vector2f(camwidth/2.f, camheight/2.f));
