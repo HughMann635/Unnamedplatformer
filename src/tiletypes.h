@@ -170,6 +170,8 @@ public:
         springblock.setPoint(8, sf::Vector2f(12, 3));
         springblock.setPoint(9, sf::Vector2f(20, 3));
         springblock.setPoint(10, sf::Vector2f(20, 0));
+        springblock.setFillColor(sf::Color(200, 255, 255));
+        springblock.setPosition(position);
     }
 
     void draw (sf::RenderWindow& window) override {
