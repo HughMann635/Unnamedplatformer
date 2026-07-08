@@ -69,7 +69,7 @@ public:
                         break;   
                     case 'S':
                         new_tile.type = tiletype::spawn;
-                        spawn = sf::Vector2f((i-4)*playerdim, (j-4)*playerdim);
+                        spawn = sf::Vector2f(j*playerdim, i*playerdim);
                         tilelist.push_back(std::move(new_tile));
                         break;
                     case 'F':
