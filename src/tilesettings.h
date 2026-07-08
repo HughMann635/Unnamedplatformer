@@ -52,6 +52,9 @@ public:
     void loadmap (std::string level) {
         for (int i = 0; i < 36; i++) {
             for (int j = 0; j < 65; j++) {
+                if (level[i*65+j] == '\n') {
+                    continue;
+                }
                 char tilecode = level[i*65+j];
                 Tile new_tile;
                 switch (tilecode) {
@@ -121,7 +124,7 @@ public:
 
     void drawmap (sf::RenderWindow& window) {
         for (auto& pos: tilelist) {
-            if (pos.type != tiletype::empty || pos.type != tiletype::spawn || pos.type != tiletype::exit) {
+            if (pos.type != tiletype::empty && pos.type != tiletype::spawn && pos.type != tiletype::exit) {
                 pos.tile -> draw(window);
             }
         }
