@@ -6,6 +6,8 @@
 #include "vars.h"
 #include "tiletypes.h"
 
+class player;
+
 enum class tiletype {
     //Basic tile types
     empty,
@@ -122,7 +124,7 @@ public:
         }
     }
 
-    void checkCollisions (sf::FloatRect collide(), player& Player) {
+    void checkCollisions (player& Player) {
         for (auto& pos: tilelist) {
             if (pos.type == tiletype::empty) { continue; }
 
