@@ -23,8 +23,7 @@ public:
 
     void jump (const std::optional<sf::Event>&event) {
         if ( event->is<sf::Event::KeyPressed>() ) {
-            auto& key = event->getIf<sf::Event::KeyPressed>()->code;
-            if (key == sf::Keyboard::Key::Up || key == sf::Keyboard::Key::W) {
+            if (sf::Keyboard::isKeyPressed ( sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::W)) {
                 if (grounded && !swimming && !zerogactive) {
                     velocity.y -= jumpforce;
                     grounded = false;
@@ -41,6 +40,10 @@ public:
         }
     }
     void updatepos (float deltatime) {
+        movespeed = 260.f;
+        if (swimming) { movespeed *= 0.88; }
+        if (zerogactive) { movespeed *= 0.94; }
+        
         if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Right) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::D)) {
             velocity.x = movespeed;
 		} else if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Left) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::A)) {
@@ -52,7 +55,7 @@ public:
             if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Down) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::S)) {
                 velocity.y = 50.f;
             }
-            if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::W)) {
+            else if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::W)) {
                 velocity.y = -125.f;
             }
             else {
@@ -68,7 +71,10 @@ public:
             gravity = 250.f; 
         } else if (zerogactive) {
             gravity = 0.f;
-        } else { gravity = 1800.f; }
+            velocity.y *= 0.95;
+        } else if (!swimming && !zerogactive) { 
+            gravity = 1800.f; 
+        }
 
 		playershape.move(velocity * deltatime);
 
