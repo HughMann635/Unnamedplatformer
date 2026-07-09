@@ -21,23 +21,21 @@ public:
         grounded = false;
     }
 
-    void jump (const std::optional<sf::Event>&event) {
-        if ( event->is<sf::Event::KeyPressed>() ) {
-            if (sf::Keyboard::isKeyPressed ( sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::W)) {
-                if (grounded && !swimming && !zerogactive) {
-                    velocity.y -= jumpforce;
-                    grounded = false;
-                }
+    void jump (float deltatime) {
+        if (sf::Keyboard::isKeyPressed ( sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::W)) {
+            if (grounded && !swimming && !zerogactive) {
+                velocity.y -= jumpforce;
+                grounded = false;
             }
-            if (swimming) {
-                if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Down) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::S)) {
-                    velocity.y += 50.f;
-                }
-                if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::W)) {
-                    velocity.y = -125.f;
-                }
-            } 
         }
+        if (swimming) {
+            if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Down) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::S)) {
+                velocity.y += 50.f;
+            }
+            if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::W)) {
+                velocity.y = -125.f;
+            }
+        } 
     }
     void updatepos (float deltatime) {
         if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Right) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::D)) {

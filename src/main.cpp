@@ -35,9 +35,8 @@ int main()
 		while ( const std::optional event = window.pollEvent() ) {
 			if ( event->is<sf::Event::Closed>() || running == false)
 				window.close();
-			player.jump(event);
 		}
-
+		player.jump(deltatime);
 		player.updatepos(deltatime);
 		player.checkground(ground.getgroundlevel());
 		map.checkCollisions(player);

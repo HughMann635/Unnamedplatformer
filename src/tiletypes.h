@@ -118,7 +118,7 @@ public:
         lavablock.setPoint(1, sf::Vector2f(20, 0));
         lavablock.setPoint(2, sf::Vector2f(20, 20));
         lavablock.setPoint(3, sf::Vector2f(0, 20));
-        lavablock.setFillColor(sf::Color(255, 150, 20, 220));
+        lavablock.setFillColor(sf::Color(255, 150, 20, 200));
         lavablock.setPosition(position);
     }
 
