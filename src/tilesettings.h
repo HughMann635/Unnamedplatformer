@@ -174,7 +174,7 @@ public:
 
     void drawmap (sf::RenderWindow& window) {
         for (auto& pos: tilelist) {
-            if (pos.type != tiletype::empty && pos.type != tiletype::spawn && pos.type != tiletype::exit) {
+            if (pos.type != tiletype::empty && pos.type != tiletype::spawn) {
                 pos.tile -> draw(window);
             }
         }
