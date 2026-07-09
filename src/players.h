@@ -29,13 +29,15 @@ public:
                     velocity.y -= jumpforce;
                     grounded = false;
                 }
+            }
+            if (swimming || zerogactive) {
+                if (key == sf::Keyboard::Key::Down || key == sf::Keyboard::Key::S) {
+                    velocity.y += 50.f;
+                }
+                if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::W)) {
+                    velocity.y = -125.f;
+                }
             } 
-            if (key == sf::Keyboard::Key::Down || key == sf::Keyboard::Key::S) {
-                velocity.y += 50.f;
-            }
-            if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::W)) {
-                velocity.y = -50.f;
-            }
         }
     }
     void updatepos (float deltatime) {
@@ -46,10 +48,16 @@ public:
 		} else {
             velocity.x = 0.f; 
         }
-        
+
         if (!grounded) {
 			velocity.y += gravity * deltatime;
 		}
+
+        if (swimming) {
+            gravity = 250.f; 
+        } else if (zerogactive) {
+            gravity = 0.f;
+        } else { gravity = 1800.f; }
 
 		playershape.move(velocity * deltatime);
 
