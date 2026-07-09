@@ -36,10 +36,11 @@ int main()
 			if ( event->is<sf::Event::Closed>() || running == false)
 				window.close();
 		}
+		
+		map.checkCollisions(player);
 		player.jump(deltatime);
 		player.updatepos(deltatime);
 		player.checkground(ground.getgroundlevel());
-		map.checkCollisions(player);
 
 		window.clear();
 		window.setView(view);
