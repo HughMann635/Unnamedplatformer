@@ -243,7 +243,7 @@ public:
     }
 
     void draw (sf::RenderWindow& window) override {
-        window.draw(finishblcok);
+        window.draw(finishblock);
     }
 
     sf::FloatRect collide() override {
