@@ -50,7 +50,7 @@ class tilemap {
 public:
     std::vector<Tile> tilelist;
     sf::Vector2f spawn;
-    sf::Vector2f finish;
+    sf::Vector2f finishpoint;
 
     void loadmap (std::string level) {
         for (int i = 0; i < 36; i++) {
@@ -77,7 +77,8 @@ public:
                         break;
                     case 'F':
                         new_tile.type = tiletype::exit;
-                        finish = sf::Vector2f(i*playerdim, j*playerdim);
+                        finishpoint = sf::Vector2f(i*playerdim, j*playerdim);
+                        new_tile.tile = std::make_unique<finish>(sf::Vector2f(j*playerdim, i*playerdim));
                         tilelist.push_back(std::move(new_tile));
                         break;
                     case '1':
