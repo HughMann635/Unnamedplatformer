@@ -45,7 +45,7 @@ public:
 		} else if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Left) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::A)) {
             velocity.x = -movespeed;
 		} else {
-            velocity.x = 0.f; 
+            zerogactive || swimming ? velocity.x *= 0.8 : velocity.x *= 0.f; 
         }
         if (zerogactive) {
             if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Down) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::S)) {
@@ -55,22 +55,21 @@ public:
                 velocity.y = -125.f;
             }
             else {
-                velocity.y *= 0.97;
+                velocity.y *= 0.983;
             }
         } 
-
-        if (!grounded) {
-			velocity.y += gravity * deltatime;
-		}
 
         if (swimming) {
             gravity = 250.f; 
         } else if (zerogactive) {
             gravity = 0.f;
-            velocity.y *= 0.95;
         } else if (!swimming && !zerogactive) { 
             gravity = 1800.f; 
         }
+
+        if (!grounded) {
+			velocity.y += gravity * deltatime;
+		}
 
 		playershape.move(velocity * deltatime);
 
