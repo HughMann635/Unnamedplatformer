@@ -235,5 +235,18 @@ public:
     finish (sf::Vector2f position) {
         finishblock.setPointCount(4);
         finishblock.setPoint(0, sf::Vector2f(0, 0));
+        finishblock.setPoint(1, sf::Vector2f(20, 0));
+        finishblock.setPoint(2, sf::Vector2f(20, 20));
+        finishblock.setPoint(3, sf::Vector2f(0, 20));
+        finishblock.setFillColor(sf::Color(235, 240, 70, 200));
+        finishblock.setPosition(position);
+    }
+
+    void draw (sf::RenderWindow& window) override {
+        window.draw(finishblcok);
+    }
+
+    sf::FloatRect collide() override {
+        return finishblock.getGlobalBounds();
     }
 };
