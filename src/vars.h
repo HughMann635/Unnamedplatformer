@@ -18,6 +18,9 @@ float gravity = 1800.f;
 float jumpforce = 600.f;
 float movespeed = 260.f;
 
+bool swimming = false;
+bool zerogactive = false;
+
 //Circle can accelerate up to a speed of 300 or so
 float circleaccel = 30.f;
 float circlemax = 300.f;
