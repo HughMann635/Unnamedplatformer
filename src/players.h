@@ -55,7 +55,7 @@ public:
                 velocity.y = -125.f;
             }
             else {
-                velocity.y *= 0.98;
+                velocity.y *= 0.96;
             }
         } 
 
