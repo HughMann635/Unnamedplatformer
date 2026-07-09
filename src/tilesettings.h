@@ -175,26 +175,27 @@ public:
         }
     }
 
-    void groundCollide(sf::FloatRect& bounds1, sf::FloatRect& bounds2) {
-        float topside1 = bounds1.position.y;
-        float leftside1 = bounds1.position.x;
-        float rightside1 = bounds1.position.x + bounds1.size.x;
-        float bottomside1 = bounds1.position.y + bounds1.size.y;
+    void groundCollide(player& player, sf::FloatRect& bounds) {
+        float topside1 = player.playershape.getPosition().y;
+        float leftside1 = player.playershape.getPosition().y;
+        float rightside1 = player.playershape.getPosition().y + player.playershape.getSize().x;
+        float bottomside1 = player.playershape.getPosition().y + player.playershape.getSize().y;
 
-        float topside2 = bounds2.position.y;
-        float leftside2 = bounds2.position.x;
-        float rightside2 = bounds2.position.x + bounds2.size.x;
-        float bottomside2 = bounds2.position.y + bounds2.size.y;
+        float topside2 = bounds.position.y;
+        float leftside2 = bounds.position.x;
+        float rightside2 = bounds.position.x + bounds.size.x;
+        float bottomside2 = bounds.position.y + bounds.size.y;
 
+        //any comments here are for my own sake
         if (topside1 < bottomside2 && bottomside1 > topside2 && leftside1 < rightside2 && rightside1 > leftside2) {
-            float topovlp = bottomside2-topside1;
-            float bottomovlp = bottomside1-topside2;
-            float leftovlp = rightside2-leftside1;
-            float rightovlp = rightside1-leftside2;
+            float topovlp = bottomside2-topside1; //hit from below i.e. knocking on the roof
+            float bottomovlp = bottomside1-topside2; //hit from above i.e. landing
+            float leftovlp = rightside2-leftside1; //hit on left side
+            float rightovlp = rightside1-leftside2; //right hit
             
             float lowestoverlap = std::min({topovlp, bottomovlp, leftovlp, rightovlp});
             if (lowestoverlap == topovlp) {
-                
+
             } else if (lowestoverlap == bottomovlp) {
 
             } else if (lowestoverlap == rightovlp) {
