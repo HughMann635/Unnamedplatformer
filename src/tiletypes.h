@@ -6,7 +6,7 @@
 class tileTypes {
 public:
     virtual void draw (sf::RenderWindow& window) {}
-    virtual sf::FloatRect collide();
+    virtual sf::FloatRect collide() = 0;
     virtual ~tileTypes() {}
 };
 
