@@ -65,9 +65,9 @@ public:
             gravity = 1800.f; 
         }
 
-        if (!grounded) {
-			velocity.y += gravity * deltatime;
-		}
+        if (!grounded) velocity.y += gravity * deltatime;
+        
+        if (velocity.y == 0) grounded = true;
 
 		playershape.move(velocity * deltatime);
 

@@ -186,24 +186,26 @@ public:
         float rightside2 = bounds.position.x + bounds.size.x;
         float bottomside2 = bounds.position.y + bounds.size.y;
 
+        float topovlp = bottomside2-topside1; //hit from below i.e. knocking on the roof
+        float bottomovlp = bottomside1-topside2; //hit from above i.e. landing
+        float leftovlp = rightside2-leftside1; //hit on left side
+        float rightovlp = rightside1-leftside2; //right hit
+        
+        float lowestoverlap = std::min({topovlp, bottomovlp, leftovlp, rightovlp});
+
         //any comments here are for my own sake
         if (topside1 < bottomside2 && bottomside1 > topside2 && leftside1 < rightside2 && rightside1 > leftside2) {
-            float topovlp = bottomside2-topside1; //hit from below i.e. knocking on the roof
-            float bottomovlp = bottomside1-topside2; //hit from above i.e. landing
-            float leftovlp = rightside2-leftside1; //hit on left side
-            float rightovlp = rightside1-leftside2; //right hit
-            
-            float lowestoverlap = std::min({topovlp, bottomovlp, leftovlp, rightovlp});
             if (lowestoverlap == topovlp) {
                 Player.playershape.setPosition(sf::Vector2f(Player.playershape.getPosition().x, bottomside2));
                 Player.velocity.y = 0;
             } else if (lowestoverlap == bottomovlp) {
-                Player.playershape.setPosition(sf::Vector2f(Player.playershape.getPosition().x, topside2));
+                Player.playershape.setPosition(sf::Vector2f(Player.playershape.getPosition().x, topside2-Player.playershape.getSize().x));
                 Player.velocity.y = 0;
             } else if (lowestoverlap == rightovlp) {
-
+                Player.playershape.setPosition(sf::Vector2f(leftside2, Player.playershape.getPosition().y));
+                Player.velocity.x = 0;
             } else if (lowestoverlap == leftovlp) {
-
+                
             }
         }
     }
