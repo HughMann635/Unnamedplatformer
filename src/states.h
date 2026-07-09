@@ -5,3 +5,6 @@
 #include "scenes.h"
 
 #include <string>
+
+//gamestates file
+//will not do anything here till I get a playables game working

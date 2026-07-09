@@ -152,9 +152,13 @@ public:
                     running = false;
                     break;
                     case tiletype::water:
+                    swimming = true;
+                    break;
                     case tiletype::zero_g:
+                    zerogactive = true;
+                    break;
                     case tiletype::block_push:
-                    Player.velocity.y = -500.f;
+                    Player.velocity.y = -500.f; //placeholder, will create logic later
                     break;
                     case tiletype::spring:
                     Player.velocity.y = -1000.f;
@@ -162,6 +166,8 @@ public:
                     default: 
                     break;
                 }
+                swimming = false;
+                zerogactive = false;
             }
         }
     }
