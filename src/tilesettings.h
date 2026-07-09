@@ -127,13 +127,13 @@ public:
     }
 
     void checkCollisions (player& Player) {
+        swimming = false;
+        zerogactive = false;
         for (auto& pos: tilelist) {
             if (pos.type == tiletype::empty || pos.type == tiletype::spawn) { continue; }
 
             sf::FloatRect playerbounds = Player.playershape.getGlobalBounds();
             sf::FloatRect tilebounds = pos.tile -> collide();
-            swimming = false;
-            zerogactive = false;
 
             if (!playerbounds.findIntersection(tilebounds)) { continue; }
             else {

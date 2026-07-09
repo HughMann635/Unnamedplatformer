@@ -25,18 +25,16 @@ public:
         if ( event->is<sf::Event::KeyPressed>() ) {
             auto& key = event->getIf<sf::Event::KeyPressed>()->code;
             if (key == sf::Keyboard::Key::Up || key == sf::Keyboard::Key::W) {
-                if (swimming || zerogactive) {
-                    velocity.y = 20.f;
-                    gravity = 0.f;
-                } else if (grounded) {
+                if (grounded && !swimming && !zerogactive) {
                     velocity.y -= jumpforce;
                     grounded = false;
                 }
             } 
             if (key == sf::Keyboard::Key::Down || key == sf::Keyboard::Key::S) {
-                if (swimming || zerogactive) {
-                    velocity.y += jumpforce;
-                }
+                velocity.y += 50.f;
+            }
+            if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::W)) {
+                velocity.y = -50.f;
             }
         }
     }
@@ -48,11 +46,8 @@ public:
 		} else {
             velocity.x = 0.f; 
         }
-
-		if (swimming || zerogactive) {
-            velocity.y += 0;
-        }
-        else if (!grounded) {
+        
+        if (!grounded) {
 			velocity.y += gravity * deltatime;
 		}
 
