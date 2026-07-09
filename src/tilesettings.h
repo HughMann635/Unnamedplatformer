@@ -201,6 +201,7 @@ public:
             } else if (lowestoverlap == bottomovlp) {
                 Player.playershape.setPosition(sf::Vector2f(Player.playershape.getPosition().x, topside2-Player.playershape.getSize().y));
                 Player.velocity.y = 0;
+                Player.grounded = true;
             } else if (lowestoverlap == rightovlp) {
                 Player.playershape.setPosition(sf::Vector2f(leftside2-Player.playershape.getSize().x, Player.playershape.getPosition().y));
                 Player.velocity.x = 0;

@@ -16,7 +16,6 @@ int main()
 	window.setFramerateLimit(60);
 
 	player player;
-	ground ground;
 	sky sky;
 	tilemap map;
 	sf::Clock timer;
@@ -41,7 +40,6 @@ int main()
 		map.checkCollisions(player);
 		player.jump(deltatime);
 		player.updatepos(deltatime);
-		player.checkground(ground.getgroundlevel());
 
 		window.clear();
 		window.setView(view);

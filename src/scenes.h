@@ -4,23 +4,6 @@
 #include <cstdlib> 
 #include "tilemap.h"
 
-class ground {
-public:
-    sf::RectangleShape groundblock;
-    ground() {
-        groundblock = sf::RectangleShape( sf::Vector2f(width, 40.f));
-        groundblock.setFillColor(sf::Color(255,200,200));
-        groundblock.setPosition(sf::Vector2f(0.f, height-40.f));
-    }
-
-    float getgroundlevel() {
-        return groundblock.getPosition().y;
-    }
-
-    void drawscreen (sf::RenderWindow& window) {
-        window.draw(groundblock);
-    }
-};
 class sky {
 public:
     std::vector<sf::CircleShape> starlist;

@@ -66,7 +66,7 @@ public:
         }
 
         if (!grounded) velocity.y += gravity * deltatime;
-        
+
         if (velocity.y == 0) grounded = true;
 
 		playershape.move(velocity * deltatime);
@@ -75,18 +75,6 @@ public:
         bound.x = std::clamp(bound.x, 0.f, (float)width-playerdim);
         playershape.setPosition(bound);
     }
-
-    void checkground (float groundlevel) {
-        float playerlevel = playershape.getPosition().y+playerdim;
-
-        if (playerlevel >= groundlevel) {
-            playershape.setPosition(sf::Vector2f(playershape.getPosition().x, groundlevel-playerdim));
-            grounded = true;
-            velocity.y = 0.f;
-        } else {
-            grounded = false;
-        }
-    } 
 
     void drawscreen (sf::RenderWindow& window) {
         window.draw(playershape);
