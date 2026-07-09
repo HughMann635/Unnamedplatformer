@@ -33,7 +33,7 @@ int main()
 		float deltatime = timer.restart().asSeconds();
 		
 		while ( const std::optional event = window.pollEvent() ) {
-			if ( event->is<sf::Event::Closed>() )
+			if ( event->is<sf::Event::Closed>() || running == false)
 				window.close();
 			player.jump(event);
 		}

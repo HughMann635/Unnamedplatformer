@@ -11,7 +11,7 @@ enum class tiletype {
     empty,
     spawn,
     exit,
-    solid,
+    ground,
     //Obstacles / non-player entities
     spike,
     doublespike,
@@ -63,7 +63,7 @@ public:
                         tilelist.push_back(std::move(new_tile));
                         break;
                     case '#':
-                        new_tile.type = tiletype::solid;
+                        new_tile.type = tiletype::ground;
                         new_tile.tile = std::make_unique<ground_>(sf::Vector2f(j*playerdim, i*playerdim));
                         tilelist.push_back(std::move(new_tile));
                         break;   
@@ -118,6 +118,33 @@ public:
                         tilelist.push_back(std::move(new_tile));
                         break;
                 }
+            }
+        }
+    }
+
+    void checkCollisions (sf::FloatRect collide()) {
+        for (auto& pos: tilelist) {
+            if (pos.type == tiletype::empty) { continue; }
+
+            sf::FloatRect playerbounds = player.playershape.getGlobalBounds();
+            sf::FloatRect tilebounds = pos.tile -> collide();
+            
+            switch (pos.type) {
+                case tiletype::empty:
+                continue;
+                case tiletype::ground:
+                continue; //WILL CHANGE LATER
+                case tiletype::spike:
+                case tiletype::doublespike:
+                case tiletype::lava:
+                case tiletype::blackhole:
+                running = false;
+                case tiletype::water:
+                case tiletype::zero_g:
+                case tiletype::block_push:
+                player.playershape.velocity.y = -500.f;
+                case tiletype::spring:
+                player.playershape.velocity.y = -1000.f;
             }
         }
     }
