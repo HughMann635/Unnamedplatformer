@@ -122,13 +122,14 @@ public:
         }
     }
 
-    void checkCollisions (sf::FloatRect collide()) {
+    void checkCollisions (sf::FloatRect collide(), player& Player) {
         for (auto& pos: tilelist) {
             if (pos.type == tiletype::empty) { continue; }
 
-            sf::FloatRect playerbounds = player.playershape.getGlobalBounds();
+            sf::FloatRect playerbounds = Player.playershape.getGlobalBounds();
             sf::FloatRect tilebounds = pos.tile -> collide();
             
+            //MOST OF THESE ARE PLACEHOLDER ACTIONS
             switch (pos.type) {
                 case tiletype::empty:
                 continue;
@@ -142,9 +143,9 @@ public:
                 case tiletype::water:
                 case tiletype::zero_g:
                 case tiletype::block_push:
-                player.playershape.velocity.y = -500.f;
+                Player.velocity.y = -500.f;
                 case tiletype::spring:
-                player.playershape.velocity.y = -1000.f;
+                Player.velocity.y = -1000.f;
             }
         }
     }
