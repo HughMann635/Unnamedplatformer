@@ -175,11 +175,11 @@ public:
         }
     }
 
-    void groundCollide(player& player, sf::FloatRect& bounds) {
-        float topside1 = player.playershape.getPosition().y;
-        float leftside1 = player.playershape.getPosition().y;
-        float rightside1 = player.playershape.getPosition().y + player.playershape.getSize().x;
-        float bottomside1 = player.playershape.getPosition().y + player.playershape.getSize().y;
+    void groundCollide(player& Player, sf::FloatRect& bounds) {
+        float topside1 = Player.playershape.getPosition().y;
+        float leftside1 = Player.playershape.getPosition().y;
+        float rightside1 = Player.playershape.getPosition().y + Player.playershape.getSize().x;
+        float bottomside1 = Player.playershape.getPosition().y + Player.playershape.getSize().y;
 
         float topside2 = bounds.position.y;
         float leftside2 = bounds.position.x;
@@ -195,7 +195,8 @@ public:
             
             float lowestoverlap = std::min({topovlp, bottomovlp, leftovlp, rightovlp});
             if (lowestoverlap == topovlp) {
-
+                Player.playershape.setPosition(sf::Vector2f(Player.playershape.getPosition().x, bottomside2));
+                Player.velocity.y = 0;
             } else if (lowestoverlap == bottomovlp) {
 
             } else if (lowestoverlap == rightovlp) {
