@@ -142,7 +142,10 @@ public:
                     case tiletype::empty:
                     break;
                     case tiletype::ground:
-                    break; //WILL CHANGE LATER
+                    //WILL UNCOMMENT ONCE I GET IT WORKING
+                    //if I get it working
+                    //groundCollide(playerbounds, tilebounds);
+                    break;
                     case tiletype::spike:
                     case tiletype::doublespike:
                     case tiletype::lava:
@@ -169,6 +172,24 @@ public:
                     break;
                 }
             }
+        }
+    }
+
+    void groundCollide(sf::FloatRect& bounds1, sf::FloatRect& bounds2) {
+        float topside1 = bounds1.position.y;
+        float leftside1 = bounds1.position.x;
+        float rightside1 = bounds1.position.x + bounds1.size.x;
+        float bottomside1 = bounds1.position.y + bounds1.size.y;
+
+        float topside2 = bounds2.position.y;
+        float leftside2 = bounds2.position.x;
+        float rightside2 = bounds2.position.x + bounds2.size.x;
+        float bottomside2 = bounds2.position.y + bounds2.size.y;
+
+        //comments for my own sake I still don't get how ts works
+        //when top side of one is below bottom side of other
+        if (topside1 < bottomside2 && bottomside1 > topside2 && leftside1 < rightside2 && rightside1 > leftside2) {
+
         }
     }
 
