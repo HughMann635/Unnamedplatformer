@@ -25,11 +25,18 @@ public:
         if ( event->is<sf::Event::KeyPressed>() ) {
             auto& key = event->getIf<sf::Event::KeyPressed>()->code;
             if (key == sf::Keyboard::Key::Up || key == sf::Keyboard::Key::W) {
-                if (grounded) {
+                if (swimming || zerogactive) {
+                    velocity.y -= jumpforce;
+                } else if (grounded) {
                     velocity.y -= jumpforce;
                     grounded = false;
                 }
             } 
+            if (key == sf::Keyboard::Key::Down || key == sf::Keyboard::Key::S) {
+                if (swimming || zerogactive) {
+                    velocity.y += jumpforce;
+                }
+            }
         }
     }
     void updatepos (float deltatime) {
@@ -41,7 +48,10 @@ public:
             velocity.x = 0.f; 
         }
 
-		if (!grounded) {
+		if (swimming || zerogactive) {
+            velocity.y += 0;
+        }
+        else if (!grounded) {
 			velocity.y += gravity * deltatime;
 		}
 
