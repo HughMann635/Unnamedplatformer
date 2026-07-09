@@ -31,9 +31,11 @@ public:
         if (swimming) {
             if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Down) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::S)) {
                 velocity.y += 50.f;
+                grounded = false;
             }
             if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::W)) {
                 velocity.y = -125.f;
+                grounded = false;
             }
         } 
     }
@@ -53,7 +55,7 @@ public:
                 velocity.y = -125.f;
             }
             else {
-                velocity.y *= 0.983;
+                velocity.y *= 0.98;
             }
         } 
 
@@ -62,10 +64,10 @@ public:
         } else if (zerogactive) {
             gravity = 0.f;
         } else if (!swimming && !zerogactive) { 
-            gravity = 1800.f; 
+            gravity = 1800.f;
         }
 
-        if (!grounded) velocity.y += gravity * deltatime;
+        velocity.y += gravity * deltatime;
 
         if (velocity.y == 0) grounded = true;
 
@@ -74,6 +76,8 @@ public:
         sf::Vector2f bound = playershape.getPosition();
         bound.x = std::clamp(bound.x, 0.f, (float)width-playerdim);
         playershape.setPosition(bound);
+        swimming = false;
+        zerogactive = false;
     }
 
     void drawscreen (sf::RenderWindow& window) {

@@ -37,9 +37,9 @@ int main()
 				window.close();
 		}
 		
-		map.checkCollisions(player);
 		player.jump(deltatime);
 		player.updatepos(deltatime);
+		map.checkCollisions(player);
 
 		window.clear();
 		window.setView(view);
