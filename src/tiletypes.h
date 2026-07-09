@@ -6,6 +6,7 @@
 class tileTypes {
 public:
     virtual void draw (sf::RenderWindow& window) {}
+    virtual sf::FloatRect collide();
     virtual ~tileTypes() {}
 };
 
@@ -25,6 +26,11 @@ public:
     void draw (sf::RenderWindow& window) override {
         window.draw(ground_block);
     }
+
+    sf::FloatRect collide() override {
+        return ground_block.getGlobalBounds();
+    }
+
 };
 
 class spike : public tileTypes {
@@ -44,6 +50,11 @@ public:
     void draw (sf::RenderWindow& window) override {
         window.draw(spikeblock);
     }
+
+    sf::FloatRect collide() override {
+        return spikeblock.getGlobalBounds();
+    }
+
 };
 
 class doublespike : public tileTypes {
@@ -72,6 +83,10 @@ public:
         window.draw(twospikes[0]);
         window.draw(twospikes[1]);
     }
+
+    sf::FloatRect collide() override {
+        return sf::FloatRect(twospikes[0].getPosition(), sf::Vector2f(20.f, 10.f));
+    }
 };
 
 //Black circle with particles orbiting it 
@@ -88,6 +103,11 @@ public:
     void draw (sf::RenderWindow& window) override {
         window.draw(blackholeblock);
     }
+
+    sf::FloatRect collide() override {
+        return blackholeblock.getGlobalBounds();
+    } 
+
 };
 //Lava - kills upon entering
 class lava : public tileTypes {
@@ -105,6 +125,10 @@ public:
 
     void draw (sf::RenderWindow& window) override {
         window.draw(lavablock);
+    }
+
+    sf::FloatRect collide() override {
+        return lavablock.getGlobalBounds();
     }
 };
 
@@ -124,6 +148,10 @@ public:
     void draw (sf::RenderWindow& window) override {
         window.draw(waterblock);
     }
+
+    sf::FloatRect collide() override {
+        return waterblock.getGlobalBounds();
+    }
 };
 
 class zero_g : public tileTypes {
@@ -141,6 +169,10 @@ class zero_g : public tileTypes {
 
     void draw (sf::RenderWindow& window) override {
         window.draw(zero_gblock);
+    }
+
+    sf::FloatRect collide() override {
+        return zero_gblock.getGlobalBounds();
     }
 };
 
@@ -162,6 +194,10 @@ public:
 
     void draw (sf::RenderWindow& window) override {
         window.draw(blockblock);
+    }
+
+    sf::FloatRect collide() override {
+        return blockblock.getGlobalBounds();
     }
 };
 
@@ -187,5 +223,9 @@ public:
 
     void draw (sf::RenderWindow& window) override {
         window.draw(springblock);
+    }
+
+    sf::FloatRect collide() override {
+        return springblock.getGlobalBounds();
     }
 };
