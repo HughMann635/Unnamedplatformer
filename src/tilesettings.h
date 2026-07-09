@@ -198,7 +198,8 @@ public:
                 Player.playershape.setPosition(sf::Vector2f(Player.playershape.getPosition().x, bottomside2));
                 Player.velocity.y = 0;
             } else if (lowestoverlap == bottomovlp) {
-
+                Player.playershape.setPosition(sf::Vector2f(Player.playershape.getPosition().x, topside2));
+                Player.velocity.y = 0;
             } else if (lowestoverlap == rightovlp) {
 
             } else if (lowestoverlap == leftovlp) {
