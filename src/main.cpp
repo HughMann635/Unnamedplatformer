@@ -40,6 +40,7 @@ int main()
 
 		player.updatepos(deltatime);
 		player.checkground(ground.getgroundlevel());
+		tilesettings.checkCollisions();
 
 		window.clear();
 		window.setView(view);

@@ -30,7 +30,6 @@ public:
     sf::FloatRect collide() override {
         return ground_block.getGlobalBounds();
     }
-
 };
 
 class spike : public tileTypes {
