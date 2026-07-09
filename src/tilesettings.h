@@ -144,7 +144,7 @@ public:
                     case tiletype::ground:
                     //WILL UNCOMMENT ONCE I GET IT WORKING
                     //if I get it working
-                    //groundCollide(playerbounds, tilebounds);
+                    groundCollide(Player, tilebounds);
                     break;
                     case tiletype::spike:
                     case tiletype::doublespike:
