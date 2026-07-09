@@ -5,8 +5,9 @@
 #include <string>
 #include "vars.h"
 #include "tiletypes.h"
+#include "players.h"
 
-class player;
+//class player;
 
 enum class tiletype {
     //Basic tile types
@@ -126,28 +127,40 @@ public:
 
     void checkCollisions (player& Player) {
         for (auto& pos: tilelist) {
-            if (pos.type == tiletype::empty) { continue; }
+            if (pos.type == tiletype::empty || pos.type == tiletype::spawn) { continue; }
 
             sf::FloatRect playerbounds = Player.playershape.getGlobalBounds();
             sf::FloatRect tilebounds = pos.tile -> collide();
             
-            //MOST OF THESE ARE PLACEHOLDER ACTIONS
-            switch (pos.type) {
-                case tiletype::empty:
-                continue;
-                case tiletype::ground:
-                continue; //WILL CHANGE LATER
-                case tiletype::spike:
-                case tiletype::doublespike:
-                case tiletype::lava:
-                case tiletype::blackhole:
-                running = false;
-                case tiletype::water:
-                case tiletype::zero_g:
-                case tiletype::block_push:
-                Player.velocity.y = -500.f;
-                case tiletype::spring:
-                Player.velocity.y = -1000.f;
+            if (!playerbounds.findIntersection(tilebounds)) { continue; }
+            else {
+                //MOST OF THESE ARE PLACEHOLDER ACTIONS
+                switch (pos.type) {
+                    case tiletype::empty:
+                    break;
+                    case tiletype::ground:
+                    break; //WILL CHANGE LATER
+                    case tiletype::spike:
+                    case tiletype::doublespike:
+                    case tiletype::lava:
+                    case tiletype::blackhole:
+                    std::cout << "You died :(";
+                    running = false;
+                    break;
+                    case tiletype::exit:
+                    running = false;
+                    break;
+                    case tiletype::water:
+                    case tiletype::zero_g:
+                    case tiletype::block_push:
+                    Player.velocity.y = -500.f;
+                    break;
+                    case tiletype::spring:
+                    Player.velocity.y = -1000.f;
+                    break;
+                    default: 
+                    break;
+                }
             }
         }
     }
