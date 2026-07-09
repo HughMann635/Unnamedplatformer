@@ -30,8 +30,8 @@ public:
                     grounded = false;
                 }
             }
-            if (swimming || zerogactive) {
-                if (key == sf::Keyboard::Key::Down || key == sf::Keyboard::Key::S) {
+            if (swimming) {
+                if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Down) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::S)) {
                     velocity.y += 50.f;
                 }
                 if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::W)) {
@@ -48,6 +48,17 @@ public:
 		} else {
             velocity.x = 0.f; 
         }
+        if (zerogactive) {
+            if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Down) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::S)) {
+                velocity.y = 50.f;
+            }
+            if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::W)) {
+                velocity.y = -125.f;
+            }
+            else {
+                velocity.y = 0;
+            }
+        } 
 
         if (!grounded) {
 			velocity.y += gravity * deltatime;
