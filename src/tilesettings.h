@@ -132,7 +132,9 @@ public:
 
             sf::FloatRect playerbounds = Player.playershape.getGlobalBounds();
             sf::FloatRect tilebounds = pos.tile -> collide();
-            
+            swimming = false;
+            zerogactive = false;
+
             if (!playerbounds.findIntersection(tilebounds)) { continue; }
             else {
                 //MOST OF THESE ARE PLACEHOLDER ACTIONS
@@ -166,8 +168,6 @@ public:
                     default: 
                     break;
                 }
-                swimming = false;
-                zerogactive = false;
             }
         }
     }

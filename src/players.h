@@ -26,7 +26,8 @@ public:
             auto& key = event->getIf<sf::Event::KeyPressed>()->code;
             if (key == sf::Keyboard::Key::Up || key == sf::Keyboard::Key::W) {
                 if (swimming || zerogactive) {
-                    velocity.y -= jumpforce;
+                    velocity.y = 20.f;
+                    gravity = 0.f;
                 } else if (grounded) {
                     velocity.y -= jumpforce;
                     grounded = false;
