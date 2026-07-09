@@ -189,7 +189,15 @@ public:
         //comments for my own sake I still don't get how ts works
         //when top side of one is below bottom side of other
         if (topside1 < bottomside2 && bottomside1 > topside2 && leftside1 < rightside2 && rightside1 > leftside2) {
-
+            float topovlp = bottomside2-topside1;
+            float bottomovlp = bottomside1-topside2;
+            float leftovlp = rightside2-leftside1;
+            float rightovlp = rightside1-leftside2;
+            
+            float lowestoverlap = std::min({topovlp, bottomovlp, leftovlp, rightovlp});
+            switch (float lowestoverlap) {
+                case topoverlap:
+            }
         }
     }
 
