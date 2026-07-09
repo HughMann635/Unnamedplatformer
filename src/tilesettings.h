@@ -205,7 +205,8 @@ public:
                 Player.playershape.setPosition(sf::Vector2f(leftside2, Player.playershape.getPosition().y));
                 Player.velocity.x = 0;
             } else if (lowestoverlap == leftovlp) {
-                
+                Player.playershape.setPosition(sf::Vector2f(rightside2, Player.playershape.getPosition().y));
+                Player.velocity.x = 0;
             }
         }
     }
