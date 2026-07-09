@@ -177,8 +177,8 @@ public:
 
     void groundCollide(player& Player, sf::FloatRect& bounds) {
         float topside1 = Player.playershape.getPosition().y;
-        float leftside1 = Player.playershape.getPosition().y;
-        float rightside1 = Player.playershape.getPosition().y + Player.playershape.getSize().x;
+        float leftside1 = Player.playershape.getPosition().x;
+        float rightside1 = Player.playershape.getPosition().x + Player.playershape.getSize().x;
         float bottomside1 = Player.playershape.getPosition().y + Player.playershape.getSize().y;
 
         float topside2 = bounds.position.y;
@@ -199,10 +199,10 @@ public:
                 Player.playershape.setPosition(sf::Vector2f(Player.playershape.getPosition().x, bottomside2));
                 Player.velocity.y = 0;
             } else if (lowestoverlap == bottomovlp) {
-                Player.playershape.setPosition(sf::Vector2f(Player.playershape.getPosition().x, topside2-Player.playershape.getSize().x));
+                Player.playershape.setPosition(sf::Vector2f(Player.playershape.getPosition().x, topside2-Player.playershape.getSize().y));
                 Player.velocity.y = 0;
             } else if (lowestoverlap == rightovlp) {
-                Player.playershape.setPosition(sf::Vector2f(leftside2, Player.playershape.getPosition().y));
+                Player.playershape.setPosition(sf::Vector2f(leftside2-Player.playershape.getSize().x, Player.playershape.getPosition().y));
                 Player.velocity.x = 0;
             } else if (lowestoverlap == leftovlp) {
                 Player.playershape.setPosition(sf::Vector2f(rightside2, Player.playershape.getPosition().y));

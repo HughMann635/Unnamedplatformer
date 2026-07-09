@@ -8,6 +8,7 @@
 #include "ui.h"
 #include "vars.h"
 #include "tilesettings.h"
+#include "tilemap.h"
 
 int main()
 {
