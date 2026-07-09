@@ -40,10 +40,6 @@ public:
         }
     }
     void updatepos (float deltatime) {
-        movespeed = 260.f;
-        if (swimming) { movespeed *= 0.88; }
-        if (zerogactive) { movespeed *= 0.94; }
-        
         if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Right) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::D)) {
             velocity.x = movespeed;
 		} else if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Left) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::A)) {
@@ -53,13 +49,13 @@ public:
         }
         if (zerogactive) {
             if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Down) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::S)) {
-                velocity.y = 50.f;
+                velocity.y = 125.f;
             }
             else if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::W)) {
                 velocity.y = -125.f;
             }
             else {
-                velocity.y = 0;
+                velocity.y *= 0.97;
             }
         } 
 
