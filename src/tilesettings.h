@@ -186,8 +186,6 @@ public:
         float rightside2 = bounds2.position.x + bounds2.size.x;
         float bottomside2 = bounds2.position.y + bounds2.size.y;
 
-        //comments for my own sake I still don't get how ts works
-        //when top side of one is below bottom side of other
         if (topside1 < bottomside2 && bottomside1 > topside2 && leftside1 < rightside2 && rightside1 > leftside2) {
             float topovlp = bottomside2-topside1;
             float bottomovlp = bottomside1-topside2;
@@ -195,8 +193,14 @@ public:
             float rightovlp = rightside1-leftside2;
             
             float lowestoverlap = std::min({topovlp, bottomovlp, leftovlp, rightovlp});
-            switch (float lowestoverlap) {
-                case topoverlap:
+            if (lowestoverlap == topovlp) {
+                
+            } else if (lowestoverlap == bottomovlp) {
+
+            } else if (lowestoverlap == rightovlp) {
+
+            } else if (lowestoverlap == leftovlp) {
+
             }
         }
     }
