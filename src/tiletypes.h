@@ -200,7 +200,7 @@ public:
     }
 };
 
-class spring : public tileTypes{
+class spring : public tileTypes {
 public:
     sf::ConvexShape springblock;
     spring(sf::Vector2f position) {
@@ -226,5 +226,14 @@ public:
 
     sf::FloatRect collide() override {
         return springblock.getGlobalBounds();
+    }
+};
+
+class finish : public tileTypes {
+public:
+    sf::ConvexShape finishblock;
+    finish (sf::Vector2f position) {
+        finishblock.setPointCount(4);
+        finishblock.setPoint(0, sf::Vector2f(0, 0));
     }
 };
