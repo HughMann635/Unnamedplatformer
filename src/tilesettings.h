@@ -212,11 +212,11 @@ public:
         }
     }
 
-    void push_block (player& Player, sf::FloatRect& bounds) {
-        float topside1 = Player.playershape.getPosition().y;
-        float leftside1 = Player.playershape.getPosition().x;
-        float rightside1 = Player.playershape.getPosition().x + Player.playershape.getSize().x;
-        float bottomside1 = Player.playershape.getPosition().y + Player.playershape.getSize().y;
+    void push_block (entity& Object, sf::FloatRect& bounds) {
+        float topside1 = Object.shape().getPosition().y;
+        float leftside1 = Object.shape().getPosition().x;
+        float rightside1 = Object.shape().getPosition().x + Object.shape().getGlobalBounds().size.x;
+        float bottomside1 = Object.shape().getPosition().y + Object.shape().getGlobalBounds().size.y;
 
         float topside2 = bounds.position.y;
         float leftside2 = bounds.position.x;
@@ -232,18 +232,18 @@ public:
 
         if (topside1 < bottomside2 && bottomside1 > topside2 && leftside1 < rightside2 && rightside1 > leftside2) {
             if (lowestoverlap == topovlp) {
-                Player.playershape.setPosition(sf::Vector2f(Player.playershape.getPosition().x, bottomside2));
-                Player.velocity.y = 0;
+                Object.shape().setPosition(sf::Vector2f(Object.shape().getPosition().x, bottomside2));
+                Object.velocity.y = 0;
             } else if (lowestoverlap == bottomovlp) {
-                Player.playershape.setPosition(sf::Vector2f(Player.playershape.getPosition().x, topside2-Player.playershape.getSize().y));
-                Player.velocity.y = 0;
-                Player.grounded = true;
+                Object.shape().setPosition(sf::Vector2f(Object.shape().getPosition().x, topside2-Object.shape().getGlobalBounds().size.y));
+                Object.velocity.y = 0;
+                Object.grounded = true;
             } else if (lowestoverlap == rightovlp) {
-                Player.playershape.setPosition(sf::Vector2f(leftside2-Player.playershape.getSize().x, Player.playershape.getPosition().y));
-                Player.velocity.x = -trianglepushspeed;
+                Object.shape().setPosition(sf::Vector2f(leftside2-Object.shape().getGlobalBounds().size.x, Object.shape().getPosition().y));
+                Object.velocity.x = -trianglepushspeed;
             } else if (lowestoverlap == leftovlp) {
-                Player.playershape.setPosition(sf::Vector2f(rightside2, Player.playershape.getPosition().y));
-                Player.velocity.x = trianglepushspeed;
+                Object.shape().setPosition(sf::Vector2f(rightside2, Object.shape().getPosition().y));
+                Object.velocity.x = trianglepushspeed;
             }
         }
     }
