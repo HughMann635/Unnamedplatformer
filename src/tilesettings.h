@@ -126,13 +126,13 @@ public:
         }
     }
 
-    void checkCollisions (player& Player) {
+    void checkCollisions (entity& Object) {
         swimming = false;
         zerogactive = false;
         for (auto& pos: tilelist) {
             if (pos.type == tiletype::empty || pos.type == tiletype::spawn) { continue; }
 
-            sf::FloatRect playerbounds = Player.playershape.getGlobalBounds();
+            sf::FloatRect playerbounds = Object.shape().getGlobalBounds();
             sf::FloatRect tilebounds = pos.tile -> collide();
 
             if (!playerbounds.findIntersection(tilebounds)) { continue; }
@@ -142,9 +142,7 @@ public:
                     case tiletype::empty:
                     break;
                     case tiletype::ground:
-                    //WILL UNCOMMENT ONCE I GET IT WORKING
-                    //if I get it working
-                    groundCollide(Player, tilebounds);
+                    groundCollide(Object, tilebounds);
                     break;
                     case tiletype::spike:
                     case tiletype::doublespike:
@@ -163,10 +161,10 @@ public:
                     zerogactive = true;
                     break;
                     case tiletype::block_push:
-                    push_block(Player, tilebounds);
+                    push_block(Object, tilebounds);
                     break;
                     case tiletype::spring:
-                    Player.velocity.y = -1000.f;
+                    Object.velocity.y = -1000.f;
                     break;
                     default: 
                     break;
