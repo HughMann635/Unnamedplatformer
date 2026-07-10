@@ -15,10 +15,7 @@ public:
     virtual sf::Shape& shape() = 0;
 
     void moveobject (float deltatime, float gravity) {
-        
-        if (!grounded) velocity.y += gravity * deltatime;
-        if (velocity.y == 0) grounded = true;
-
+        velocity.y += gravity * deltatime;
         shape().move(velocity * deltatime);
     }
 
@@ -35,6 +32,10 @@ public:
 
         sf::Vector2f velocity = (sf::Vector2f(0.f, gravity));
         grounded = false;
+    }
+
+    sf::Shape& shape() override {
+        return playershape;
     }
 
     void jump (float deltatime) {
@@ -55,6 +56,7 @@ public:
             }
         } 
     }
+
     void updatepos (float deltatime) {
         if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Right) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::D)) {
             velocity.x = movespeed;
@@ -83,11 +85,7 @@ public:
             gravity = 1800.f;
         }
 
-        velocity.y += gravity * deltatime;
-
-        if (velocity.y == 0) grounded = true;
-
-		playershape.move(velocity * deltatime);
+        moveobject(deltatime, gravity);
 
         sf::Vector2f bound = playershape.getPosition();
         bound.x = std::clamp(bound.x, 0.f, (float)width-playerdim);
