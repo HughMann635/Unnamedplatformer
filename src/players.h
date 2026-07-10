@@ -7,11 +7,20 @@
 
 //In the future, will make separate classes for each playable powerup
 
-class player {
+//I had to make a master class for every object affected by physics so I didn't completely lose my mind
+class entity {
+public: 
+    sf::Vector2f velocity;
+    bool grounded;
+    virtual sf::Shape shape() = 0;
+
+    
+
+};
+
+class player : public entity{
 public:
     sf::RectangleShape playershape;
-	sf::Vector2f velocity;
-    bool grounded;
 
     player() {
         playershape = sf::RectangleShape(sf::Vector2f(playerdim, playerdim));
