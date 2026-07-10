@@ -139,12 +139,14 @@ public:
 
             sf::FloatRect playerbounds = Object.shape().getGlobalBounds();
             if (blockbounds.findIntersection(playerbounds)) {
-                if (Object.shape().getPosition().x < block_ -> shape().getPosition().x) {
-                    block_ -> velocity.x = trianglepushspeed;
-                    blockbounds = block_ -> collide();
-                } else if (Object.shape().getPosition().x > block_ -> shape().getPosition().x) {
-                    block_ -> velocity.x = -trianglepushspeed;
-                    blockbounds = block_ -> collide();
+                if ((Object.shape().getPosition().y + playerbounds.size.y > blockbounds.position.y + 1.f && Object.velocity.x != 0.f)) {
+                    if (Object.shape().getPosition().x < block_ -> shape().getPosition().x) {
+                        block_ -> velocity.x = trianglepushspeed;
+                        blockbounds = block_ -> collide();
+                    } else if (Object.shape().getPosition().x > block_ -> shape().getPosition().x) {
+                        block_ -> velocity.x = -trianglepushspeed;
+                        blockbounds = block_ -> collide();
+                    }
                 }
             }
 
@@ -156,9 +158,6 @@ public:
                         switch (rest.type) {
                             //will add behavior later
                             case tiletype::ground:
-                            groundCollide(*block_, restbounds);
-                            blockbounds = block_ -> collide();
-                            break;
                             case tiletype::block_push:
                             groundCollide(*block_, restbounds);
                             blockbounds = block_ -> collide();                            
