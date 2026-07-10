@@ -126,7 +126,7 @@ public:
         }
     }
 
-    void checkCollisions (player& Player) {
+    void checkCollisions (player& Player, block& Block) {
         swimming = false;
         zerogactive = false;
         for (auto& pos: tilelist) {
@@ -163,7 +163,7 @@ public:
                     zerogactive = true;
                     break;
                     case tiletype::block_push:
-                    push_block(Player, tilebounds);
+                    push_block(Player, Block, tilebounds);
                     break;
                     case tiletype::spring:
                     Player.velocity.y = -1000.f;
@@ -212,7 +212,7 @@ public:
         }
     }
 
-    void push_block (player& Player, sf::FloatRect& bounds) {
+    void push_block (player& Player, block& Block, sf::FloatRect& bounds) {
         float topside1 = Player.playershape.getPosition().y;
         float leftside1 = Player.playershape.getPosition().x;
         float rightside1 = Player.playershape.getPosition().x + Player.playershape.getSize().x;
