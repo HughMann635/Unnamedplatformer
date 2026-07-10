@@ -189,16 +189,17 @@ public:
         blockblock.setPosition(position);
     }
 
-    void draw (sf::RenderWindow& window) override {
-        window.draw(blockblock);
-    }
-
     sf::FloatRect collide() override {
         return blockblock.getGlobalBounds();
     }
 
     void moveblock (float deltatime) {
-        velocity.y += gravity * deltatime;
+        velocity.x += 0;
+        velocity.y += 1800.f * deltatime;
+    }
+
+    void draw (sf::RenderWindow& window) override {
+        window.draw(blockblock);
     }
 
 };
