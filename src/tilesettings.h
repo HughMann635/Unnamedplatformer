@@ -171,6 +171,19 @@ public:
                 }
             }
         }
+        for (auto& pos: tilelist) {
+            if (pos.type != tiletype::block_push) { continue; }
+
+            block* block_ = dynamic_cast<block*>(pos.tile.get());
+            if (!block_) { continue; }
+
+            sf::FloatRect blockbounds = block_ -> collide();
+
+            for (auto& rest: tilelist) {
+               
+            }
+            }
+        }
     }
 
     void groundCollide(entity& Object, sf::FloatRect& bounds) {
