@@ -203,7 +203,7 @@ public:
                 Object.velocity.y = 0;
                 Object.grounded = true;
             } else if (lowestoverlap == rightovlp) {
-                Object.shape().setPosition(sf::Vector2f(leftside2-Object.shape().getGlobalBounds().size.x, Object.shape().getGlobalBounds().size.y));
+                Object.shape().setPosition(sf::Vector2f(leftside2-Object.shape().getGlobalBounds().size.x, Object.shape().getPosition().y));
                 Object.velocity.x = 0;
             } else if (lowestoverlap == leftovlp) {
                 Object.shape().setPosition(sf::Vector2f(rightside2, Object.shape().getPosition().y));
