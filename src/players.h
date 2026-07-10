@@ -12,10 +12,17 @@ class entity {
 public: 
     sf::Vector2f velocity;
     bool grounded;
-    virtual sf::Shape shape() = 0;
+    virtual sf::Shape& shape() = 0;
 
-    
+    void moveobject (float deltatime, float gravity) {
+        
+        if (!grounded) velocity.y += gravity * deltatime;
+        if (velocity.y == 0) grounded = true;
 
+        shape().move(velocity * deltatime);
+    }
+
+    virtual ~entity() = default;
 };
 
 class player : public entity{
