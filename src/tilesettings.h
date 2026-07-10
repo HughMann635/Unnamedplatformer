@@ -130,6 +130,51 @@ public:
         swimming = false;
         zerogactive = false;
         for (auto& pos: tilelist) {
+            if (pos.type != tiletype::block_push) { continue; }
+
+            block* block_ = dynamic_cast<block*>(pos.tile.get());
+            if (!block_) { continue; }
+
+            sf::FloatRect blockbounds = block_ -> collide();
+
+            sf::FloatRect playerbounds = Object.shape().getGlobalBounds();
+            if (blockbounds.findIntersection(playerbounds)) {
+                if (Object.shape().getPosition().x < block_ -> shape().getPosition().x) {
+                    block_ -> velocity.x = trianglepushspeed;
+                    blockbounds = block_ -> collide();
+                } else if (Object.shape().getPosition().x > block_ -> shape().getPosition().x) {
+                    block_ -> velocity.x = -trianglepushspeed;
+                    blockbounds = block_ -> collide();
+                }
+            }
+
+            for (auto& rest: tilelist) {
+               if (pos.tile != rest.tile && rest.type != tiletype::empty && rest.type != tiletype::spawn) {
+                    sf::FloatRect restbounds = rest.tile -> collide();
+                    if (!blockbounds.findIntersection(restbounds)) { continue; }
+                    else {
+                        switch (rest.type) {
+                            //will add behavior later
+                            case tiletype::ground:
+                            groundCollide(*block_, restbounds);
+                            blockbounds = block_ -> collide();
+                            break;
+                            case tiletype::block_push:
+                            groundCollide(*block_, restbounds);
+                            blockbounds = block_ -> collide();                            
+                            break;
+                            case tiletype::zero_g:
+                            block_->velocity.y = 0;
+                            break;
+                            case tiletype::water:
+                            block_->velocity.y = 200;
+                            break;
+                            break;
+                        }
+                    }
+                }
+            }
+            for (auto& pos: tilelist) {
             if (pos.type == tiletype::empty || pos.type == tiletype::spawn) { continue; }
 
             sf::FloatRect playerbounds = Object.shape().getGlobalBounds();
@@ -168,49 +213,8 @@ public:
                     break;
                     default: 
                     break;
-                }
-            }
-        }
-        for (auto& pos: tilelist) {
-            if (pos.type != tiletype::block_push) { continue; }
-
-            block* block_ = dynamic_cast<block*>(pos.tile.get());
-            if (!block_) { continue; }
-
-            sf::FloatRect blockbounds = block_ -> collide();
-
-            sf::FloatRect playerbounds = Object.shape().getGlobalBounds();
-            if (blockbounds.findIntersection(playerbounds)) {
-                if (Object.shape().getPosition().x < block_ -> shape().getPosition().x) {
-                    block_ -> velocity.x = trianglepushspeed;
-                } else if (Object.shape().getPosition().x > block_ -> shape().getPosition().x) {
-                    block_ -> velocity.x = -trianglepushspeed;
-                }
-            }
-
-            for (auto& rest: tilelist) {
-               if (pos.tile != rest.tile && rest.type != tiletype::empty && rest.type != tiletype::spawn) {
-                    sf::FloatRect restbounds = rest.tile -> collide();
-                    if (!blockbounds.findIntersection(restbounds)) { continue; }
-                    else {
-                        switch (rest.type) {
-                            //will add behavior later
-                            case tiletype::ground:
-                            groundCollide(*block_, restbounds);
-                            break;
-                            case tiletype::block_push:
-                            groundCollide(*block_, restbounds);
-                            break;
-                            case tiletype::zero_g:
-                            block_->velocity.y = 0;
-                            break;
-                            case tiletype::water:
-                            block_->velocity.y = 200;
-                            break;
-                            break;
-                        }
                     }
-               }
+                }
             }
         }
     }
