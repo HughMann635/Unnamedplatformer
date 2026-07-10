@@ -180,8 +180,24 @@ public:
             sf::FloatRect blockbounds = block_ -> collide();
 
             for (auto& rest: tilelist) {
-               
-            }
+               if (pos.tile != rest.tile && rest.type != tiletype::empty && rest.type != tiletype::spawn) {
+                    sf::FloatRect restbounds = rest.tile -> collide();
+                    if (!blockbounds.findIntersection(restbounds)) { continue; }
+                    else {
+                        switch (rest.type) {
+                            //will add behavior later
+                            case tiletype::ground:
+                            groundCollide(*block_, restbounds);
+                            case tiletype::block_push:
+                            groundCollide(*block_, restbounds);
+                            case tiletype::zero_g:
+                            block_->velocity.y = 0;
+                            case tiletype::water:
+                            block_->velocity.y = 200;
+                            break;
+                        }
+                    }
+               }
             }
         }
     }
