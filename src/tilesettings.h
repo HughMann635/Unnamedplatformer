@@ -240,10 +240,12 @@ public:
                 Player.grounded = true;
             } else if (lowestoverlap == rightovlp) {
                 Player.playershape.setPosition(sf::Vector2f(leftside2-Player.playershape.getSize().x, Player.playershape.getPosition().y));
-                Player.velocity.x = 0;
+                Player.velocity.x = -trianglepushspeed;
+                Block.velocity.x = -trianglepushspeed;
             } else if (lowestoverlap == leftovlp) {
                 Player.playershape.setPosition(sf::Vector2f(rightside2, Player.playershape.getPosition().y));
-                Player.velocity.x = 0;
+                Player.velocity.x = trianglepushspeed;
+                Block.velocity.x = -trianglepushspeed;
             }
         }
     }
