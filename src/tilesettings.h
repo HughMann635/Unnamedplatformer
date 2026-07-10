@@ -248,6 +248,14 @@ public:
         }
     }
 
+    void updatemap (float deltatime) {
+        for (auto& pos: tilelist) {
+            if (pos.type != tiletype::empty && pos.type != tiletype::spawn) {
+                pos.tile -> movetile(deltatime);
+            }
+        }
+    }
+
     void drawmap (sf::RenderWindow& window) {
         for (auto& pos: tilelist) {
             if (pos.type != tiletype::empty && pos.type != tiletype::spawn) {

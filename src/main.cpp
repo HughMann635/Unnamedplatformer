@@ -40,6 +40,7 @@ int main()
 		player.jump(deltatime);
 		player.updatepos(deltatime);
 		map.checkCollisions(player);
+		map.updatemap(deltatime);
 
 		window.clear();
 		window.setView(view);
