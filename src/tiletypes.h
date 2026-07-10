@@ -7,6 +7,7 @@ class tileTypes {
 public:
     virtual void draw (sf::RenderWindow& window) {}
     virtual sf::FloatRect collide() = 0;
+    virtual void move (float deltatime) {} 
     virtual ~tileTypes() {}
 };
 
@@ -193,7 +194,7 @@ public:
         return blockblock.getGlobalBounds();
     }
 
-    void moveblock (float deltatime) {
+    void move (float deltatime) override {
         velocity.x += 0;
         velocity.y += 1800.f * deltatime;
     }

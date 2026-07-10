@@ -126,7 +126,7 @@ public:
         }
     }
 
-    void checkCollisions (player& Player, block& Block) {
+    void checkCollisions (player& Player) {
         swimming = false;
         zerogactive = false;
         for (auto& pos: tilelist) {
@@ -163,7 +163,7 @@ public:
                     zerogactive = true;
                     break;
                     case tiletype::block_push:
-                    push_block(Player, Block, tilebounds);
+                    push_block(Player, tilebounds);
                     break;
                     case tiletype::spring:
                     Player.velocity.y = -1000.f;
@@ -212,7 +212,7 @@ public:
         }
     }
 
-    void push_block (player& Player, block& Block, sf::FloatRect& bounds) {
+    void push_block (player& Player, sf::FloatRect& bounds) {
         float topside1 = Player.playershape.getPosition().y;
         float leftside1 = Player.playershape.getPosition().x;
         float rightside1 = Player.playershape.getPosition().x + Player.playershape.getSize().x;
@@ -241,11 +241,9 @@ public:
             } else if (lowestoverlap == rightovlp) {
                 Player.playershape.setPosition(sf::Vector2f(leftside2-Player.playershape.getSize().x, Player.playershape.getPosition().y));
                 Player.velocity.x = -trianglepushspeed;
-                Block.velocity.x = -trianglepushspeed;
             } else if (lowestoverlap == leftovlp) {
                 Player.playershape.setPosition(sf::Vector2f(rightside2, Player.playershape.getPosition().y));
                 Player.velocity.x = trianglepushspeed;
-                Block.velocity.x = -trianglepushspeed;
             }
         }
     }

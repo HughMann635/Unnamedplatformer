@@ -13,7 +13,7 @@
 int main()
 {
 	sf::RenderWindow window( sf::VideoMode( { width, height } ), title );
-	window.setFramerateLimit(60);
+	window.setFramerateLimit(120);
 
 	player player;
 	sky sky;
