@@ -163,7 +163,7 @@ public:
                     zerogactive = true;
                     break;
                     case tiletype::block_push:
-                    Player.velocity.y = -500.f; //placeholder, will create logic later
+                    //push();
                     break;
                     case tiletype::spring:
                     Player.velocity.y = -1000.f;

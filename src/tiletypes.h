@@ -178,9 +178,7 @@ class zero_g : public tileTypes {
 class block : public tileTypes{
 public:
     sf::ConvexShape blockblock;
-    //sf::Vector2<float> blockx; 
-    //sf::Vector2<float> blocky;
-    //might implement these later for push code
+    sf::Vector2f velocity;
     block(sf::Vector2f position) {
         blockblock.setPointCount(4);
         blockblock.setPoint(0, sf::Vector2f(0, 0));
@@ -198,6 +196,11 @@ public:
     sf::FloatRect collide() override {
         return blockblock.getGlobalBounds();
     }
+
+    void moveblock (float deltatime) {
+        
+    }
+
 };
 
 class spring : public tileTypes {
