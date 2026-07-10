@@ -176,10 +176,9 @@ class zero_g : public tileTypes {
     }
 };
 
-class block : public tileTypes{
+class block : public tileTypes, public entity {
 public:
     sf::ConvexShape blockblock;
-    sf::Vector2f velocity;
     block(sf::Vector2f position) {
         blockblock.setPointCount(4);
         blockblock.setPoint(0, sf::Vector2f(0, 0));
@@ -190,6 +189,11 @@ public:
         blockblock.setPosition(position);
 
         velocity = sf::Vector2f(0.f, 0.f);
+        grounded = false;
+    }
+
+    sf::Shape& shape() override {
+        return blockblock;
     }
 
     sf::FloatRect collide() override {
