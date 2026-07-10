@@ -179,6 +179,15 @@ public:
 
             sf::FloatRect blockbounds = block_ -> collide();
 
+            sf::FloatRect playerbounds = Object.shape().getGlobalBounds();
+            if (blockbounds.findIntersection(playerbounds)) {
+                if (Object.shape().getPosition().x < block_ -> shape().getPosition().x) {
+                    block_ -> velocity.x = trianglepushspeed;
+                } else if (Object.shape().getPosition().x > block_ -> shape().getPosition().x) {
+                    block_ -> velocity.x = -trianglepushspeed;
+                }
+            }
+
             for (auto& rest: tilelist) {
                if (pos.tile != rest.tile && rest.type != tiletype::empty && rest.type != tiletype::spawn) {
                     sf::FloatRect restbounds = rest.tile -> collide();
@@ -271,10 +280,8 @@ public:
                 Object.grounded = true;
             } else if (lowestoverlap == rightovlp) {
                 Object.shape().setPosition(sf::Vector2f(leftside2-Object.shape().getGlobalBounds().size.x, Object.shape().getPosition().y));
-                Object.velocity.x = -trianglepushspeed;
             } else if (lowestoverlap == leftovlp) {
                 Object.shape().setPosition(sf::Vector2f(rightside2, Object.shape().getPosition().y));
-                Object.velocity.x = trianglepushspeed;
             }
         }
     }
