@@ -7,7 +7,7 @@ class tileTypes {
 public:
     virtual void draw (sf::RenderWindow& window) {}
     virtual sf::FloatRect collide() = 0;
-    virtual void move (float deltatime) {} 
+    virtual void movetile (float deltatime) {} 
     virtual ~tileTypes() {}
 };
 
@@ -188,21 +188,23 @@ public:
         blockblock.setPoint(3, sf::Vector2f(0, 20));
         blockblock.setFillColor(sf::Color(100, 100, 100));
         blockblock.setPosition(position);
+
+        velocity = sf::Vector2f(0.f, 0.f);
     }
 
     sf::FloatRect collide() override {
         return blockblock.getGlobalBounds();
     }
 
-    void move (float deltatime) override {
-        velocity.x += 0;
+    void movetile (float deltatime) override {
         velocity.y += 1800.f * deltatime;
+        velocity.x += 0;
+        blockblock.move(velocity * deltatime);
     }
 
     void draw (sf::RenderWindow& window) override {
         window.draw(blockblock);
     }
-
 };
 
 class spring : public tileTypes {
