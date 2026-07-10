@@ -198,7 +198,7 @@ public:
     }
 
     void moveblock (float deltatime) {
-        
+        velocity.y += gravity * deltatime;
     }
 
 };

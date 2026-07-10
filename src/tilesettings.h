@@ -163,7 +163,7 @@ public:
                     zerogactive = true;
                     break;
                     case tiletype::block_push:
-                    //push();
+                    push_block(Player, tilebounds);
                     break;
                     case tiletype::spring:
                     Player.velocity.y = -1000.f;
@@ -191,9 +191,45 @@ public:
         float leftovlp = rightside2-leftside1; //hit on left side
         float rightovlp = rightside1-leftside2; //right hit
         
+        //any comments here are for my own sake
         float lowestoverlap = std::min({topovlp, bottomovlp, leftovlp, rightovlp});
 
-        //any comments here are for my own sake
+        if (topside1 < bottomside2 && bottomside1 > topside2 && leftside1 < rightside2 && rightside1 > leftside2) {
+            if (lowestoverlap == topovlp) {
+                Player.playershape.setPosition(sf::Vector2f(Player.playershape.getPosition().x, bottomside2));
+                Player.velocity.y = 0;
+            } else if (lowestoverlap == bottomovlp) {
+                Player.playershape.setPosition(sf::Vector2f(Player.playershape.getPosition().x, topside2-Player.playershape.getSize().y));
+                Player.velocity.y = 0;
+                Player.grounded = true;
+            } else if (lowestoverlap == rightovlp) {
+                Player.playershape.setPosition(sf::Vector2f(leftside2-Player.playershape.getSize().x, Player.playershape.getPosition().y));
+                Player.velocity.x = 0;
+            } else if (lowestoverlap == leftovlp) {
+                Player.playershape.setPosition(sf::Vector2f(rightside2, Player.playershape.getPosition().y));
+                Player.velocity.x = 0;
+            }
+        }
+    }
+
+    void push_block (player& Player, sf::FloatRect& bounds) {
+        float topside1 = Player.playershape.getPosition().y;
+        float leftside1 = Player.playershape.getPosition().x;
+        float rightside1 = Player.playershape.getPosition().x + Player.playershape.getSize().x;
+        float bottomside1 = Player.playershape.getPosition().y + Player.playershape.getSize().y;
+
+        float topside2 = bounds.position.y;
+        float leftside2 = bounds.position.x;
+        float rightside2 = bounds.position.x + bounds.size.x;
+        float bottomside2 = bounds.position.y + bounds.size.y;
+
+        float topovlp = bottomside2-topside1;
+        float bottomovlp = bottomside1-topside2;
+        float leftovlp = rightside2-leftside1;
+        float rightovlp = rightside1-leftside2;
+        
+        float lowestoverlap = std::min({topovlp, bottomovlp, leftovlp, rightovlp});
+
         if (topside1 < bottomside2 && bottomside1 > topside2 && leftside1 < rightside2 && rightside1 > leftside2) {
             if (lowestoverlap == topovlp) {
                 Player.playershape.setPosition(sf::Vector2f(Player.playershape.getPosition().x, bottomside2));
