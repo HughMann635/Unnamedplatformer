@@ -188,12 +188,16 @@ public:
                             //will add behavior later
                             case tiletype::ground:
                             groundCollide(*block_, restbounds);
+                            break;
                             case tiletype::block_push:
                             groundCollide(*block_, restbounds);
+                            break;
                             case tiletype::zero_g:
                             block_->velocity.y = 0;
+                            break;
                             case tiletype::water:
                             block_->velocity.y = 200;
+                            break;
                             break;
                         }
                     }
