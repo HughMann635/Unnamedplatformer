@@ -205,7 +205,7 @@ public:
                 zerogactive = true;
                 break;
                 case tiletype::block_push:
-                push_block(Object, tilebounds);
+                groundCollide(Object, tilebounds);
                 break;
                 case tiletype::spring:
                 Object.velocity.y = -1000.f;
@@ -250,40 +250,6 @@ public:
             } else if (lowestoverlap == leftovlp) {
                 Object.shape().setPosition(sf::Vector2f(rightside2, Object.shape().getPosition().y));
                 Object.velocity.x = 0;
-            }
-        }
-    }
-
-    void push_block (entity& Object, sf::FloatRect& bounds) {
-        float topside1 = Object.shape().getPosition().y;
-        float leftside1 = Object.shape().getPosition().x;
-        float rightside1 = Object.shape().getPosition().x + Object.shape().getGlobalBounds().size.x;
-        float bottomside1 = Object.shape().getPosition().y + Object.shape().getGlobalBounds().size.y;
-
-        float topside2 = bounds.position.y;
-        float leftside2 = bounds.position.x;
-        float rightside2 = bounds.position.x + bounds.size.x;
-        float bottomside2 = bounds.position.y + bounds.size.y;
-
-        float topovlp = bottomside2-topside1;
-        float bottomovlp = bottomside1-topside2;
-        float leftovlp = rightside2-leftside1;
-        float rightovlp = rightside1-leftside2;
-        
-        float lowestoverlap = std::min({topovlp, bottomovlp, leftovlp, rightovlp});
-
-        if (topside1 < bottomside2 && bottomside1 > topside2 && leftside1 < rightside2 && rightside1 > leftside2) {
-            if (lowestoverlap == topovlp) {
-                Object.shape().setPosition(sf::Vector2f(Object.shape().getPosition().x, bottomside2));
-                Object.velocity.y = 0;
-            } else if (lowestoverlap == bottomovlp) {
-                Object.shape().setPosition(sf::Vector2f(Object.shape().getPosition().x, topside2-Object.shape().getGlobalBounds().size.y));
-                Object.velocity.y = 0;
-                Object.grounded = true;
-            } else if (lowestoverlap == rightovlp) {
-                Object.shape().setPosition(sf::Vector2f(leftside2-Object.shape().getGlobalBounds().size.x, Object.shape().getPosition().y));
-            } else if (lowestoverlap == leftovlp) {
-                Object.shape().setPosition(sf::Vector2f(rightside2, Object.shape().getPosition().y));
             }
         }
     }
