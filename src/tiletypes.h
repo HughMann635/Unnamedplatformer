@@ -203,9 +203,8 @@ public:
     }
 
     void movetile (float deltatime) override {
-        velocity.y += blockgravity * deltatime;
+        moveobject(deltatime, blockgravity);
         velocity.x *= 0.87;
-        blockblock.move(velocity * deltatime);
     }
 
     void draw (sf::RenderWindow& window) override {
