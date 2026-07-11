@@ -139,13 +139,14 @@ public:
 
             sf::FloatRect playerbounds = Object.shape().getGlobalBounds();
             if (blockbounds.findIntersection(playerbounds)) {
-                if ((Object.shape().getPosition().y + playerbounds.size.y > blockbounds.position.y + 1.f)) {
-                    if (Object.shape().getPosition().x + Object.shape().getGlobalBounds().size.y / 2 < block_ -> shape().getPosition().x + block_ -> shape().getGlobalBounds().size.y / 2) {
+                float playercenter = playerbounds.position.y + playerbounds.size.y / 2;
+                float blocktop = blockbounds.position.y;
+                float blockbottom = blockbounds.position.y + blockbounds.size.y;
+                if ((playercenter > blocktop && playercenter < blockbottom)) {
+                    if (Object.shape().getPosition().x < block_ -> shape().getPosition().x) {
                         block_ -> velocity.x = trianglepushspeed;
-                        std::cout<<"right push";
-                    } else if (Object.shape().getPosition().x + Object.shape().getGlobalBounds().size.y / 2 > block_ -> shape().getPosition().x + block_ -> shape().getGlobalBounds().size.y / 2) {
+                    } else if (Object.shape().getPosition().x > block_ -> shape().getPosition().x) {
                         block_ -> velocity.x = -trianglepushspeed;
-                        std::cout<<"left push";
                     }
                 }
             }
@@ -161,6 +162,7 @@ public:
                             break;
                             case tiletype::block_push:
                             block_ -> velocity.x = 0;
+                            break;
                             case tiletype::zero_g:
                             block_->velocity.y = 0;
                             break;
