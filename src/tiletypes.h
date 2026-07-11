@@ -186,6 +186,8 @@ public:
         blockblock.setPoint(2, sf::Vector2f(20, 20));
         blockblock.setPoint(3, sf::Vector2f(0, 20));
         blockblock.setFillColor(sf::Color(100, 100, 100));
+        blockblock.setOutlineColor(sf::Color(75, 75, 75));
+        blockblock.setOutlineThickness(-2);
         blockblock.setPosition(position);
 
         velocity = sf::Vector2f(0.f, 0.f);
