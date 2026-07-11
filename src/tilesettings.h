@@ -156,7 +156,6 @@ public:
                     if (!blockbounds.findIntersection(restbounds)) { continue; }
                     else {
                         switch (rest.type) {
-                            //will add behavior later
                             case tiletype::ground:
                             case tiletype::block_push:
                             groundCollide(*block_, restbounds);
@@ -173,46 +172,46 @@ public:
                     }
                 }
             }
-            for (auto& pos: tilelist) {
-            if (pos.type == tiletype::empty || pos.type == tiletype::spawn) { continue; }
+        }
+        for (auto& pos: tilelist) {
+        if (pos.type == tiletype::empty || pos.type == tiletype::spawn) { continue; }
 
-            sf::FloatRect playerbounds = Object.shape().getGlobalBounds();
-            sf::FloatRect tilebounds = pos.tile -> collide();
+        sf::FloatRect playerbounds = Object.shape().getGlobalBounds();
+        sf::FloatRect tilebounds = pos.tile -> collide();
 
-            if (!playerbounds.findIntersection(tilebounds)) { continue; }
-            else {
-                //MOST OF THESE ARE PLACEHOLDER ACTIONS
-                switch (pos.type) {
-                    case tiletype::empty:
-                    break;
-                    case tiletype::ground:
-                    groundCollide(Object, tilebounds);
-                    break;
-                    case tiletype::spike:
-                    case tiletype::doublespike:
-                    case tiletype::lava:
-                    case tiletype::blackhole:
-                    std::cout << "You died :(";
-                    running = false;
-                    break;
-                    case tiletype::exit:
-                    running = false;
-                    break;
-                    case tiletype::water:
-                    swimming = true;
-                    break;
-                    case tiletype::zero_g:
-                    zerogactive = true;
-                    break;
-                    case tiletype::block_push:
-                    push_block(Object, tilebounds);
-                    break;
-                    case tiletype::spring:
-                    Object.velocity.y = -1000.f;
-                    break;
-                    default: 
-                    break;
-                    }
+        if (!playerbounds.findIntersection(tilebounds)) { continue; }
+        else {
+            //MOST OF THESE ARE PLACEHOLDER ACTIONS
+            switch (pos.type) {
+                case tiletype::empty:
+                break;
+                case tiletype::ground:
+                groundCollide(Object, tilebounds);
+                break;
+                case tiletype::spike:
+                case tiletype::doublespike:
+                case tiletype::lava:
+                case tiletype::blackhole:
+                std::cout << "You died :(";
+                running = false;
+                break;
+                case tiletype::exit:
+                running = false;
+                break;
+                case tiletype::water:
+                swimming = true;
+                break;
+                case tiletype::zero_g:
+                zerogactive = true;
+                break;
+                case tiletype::block_push:
+                push_block(Object, tilebounds);
+                break;
+                case tiletype::spring:
+                Object.velocity.y = -1000.f;
+                break;
+                default: 
+                break;
                 }
             }
         }
