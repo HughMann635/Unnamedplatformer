@@ -164,10 +164,12 @@ public:
                             block_ -> velocity.x = 0;
                             break;
                             case tiletype::zero_g:
-                            block_->velocity.y = 0;
+                            blockgravity = 0;
                             break;
                             case tiletype::water:
-                            block_->velocity.y = 200;
+                            case tiletype::lava:
+                            blockgravity = 500;
+                            break;
                             default:
                             break;
                         }

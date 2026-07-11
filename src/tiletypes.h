@@ -203,7 +203,7 @@ public:
     }
 
     void movetile (float deltatime) override {
-        velocity.y += 1800.f * deltatime;
+        velocity.y += blockgravity * deltatime;
         velocity.x *= 0.87;
         blockblock.move(velocity * deltatime);
     }
