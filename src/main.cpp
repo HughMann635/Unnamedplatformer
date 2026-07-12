@@ -32,6 +32,12 @@ int main()
 	while ( window.isOpen() ) {
 		float deltatime = timer.restart().asSeconds();
 		
+		if (restart == true) {
+			map.tilelist.clear();
+			map.loadmap(levels[0][0]);
+			player.playershape.setPosition(map.spawn);
+			restart = false;
+		} 
 		while ( const std::optional event = window.pollEvent() ) {
 			if ( event->is<sf::Event::Closed>() || running == false)
 				window.close();

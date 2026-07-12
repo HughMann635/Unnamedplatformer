@@ -223,7 +223,7 @@ public:
                     case tiletype::doublespike:
                     case tiletype::lava:
                     case tiletype::blackhole:
-                    running = false;
+                    restart = true;
                     break;
                     case tiletype::exit:
                     running = false;

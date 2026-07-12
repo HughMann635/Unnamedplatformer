@@ -9,6 +9,7 @@ const int camwidth = 960;
 const int camheight = 540;
 const int stars = 700;
 bool running = true;
+bool restart = false;
 
 //Player and physics settings
 //This is also the dimension of all tiles in the game
