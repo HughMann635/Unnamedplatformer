@@ -241,6 +241,24 @@ public:
     }
 };
 
+//the only way to justify the amount of time I spent on block-pushing physics
+//if a block or the player is on the button, a door will open
+class button : public tileTypes {
+public:
+    sf::ConvexShape buttonblock;
+    button (sf::Vector2f position) {
+
+    }
+};
+
+class door : public tileTypes {
+public:
+    sf::ConvexShape doorblock;
+    door (sf::Vector2f position) {
+
+    }
+};
+
 class finish : public tileTypes {
 public:
     sf::ConvexShape finishblock;

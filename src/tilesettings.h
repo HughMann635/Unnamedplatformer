@@ -151,6 +151,7 @@ public:
                     }
                 }
                 
+                //WILL CHANGE TO DETECT COORDINATES probably
                 if (zerogactive) {
                     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) {
                         block_ -> velocity.y = trianglepushspeed;
@@ -158,7 +159,7 @@ public:
                         block_ -> velocity.y = -trianglepushspeed;
                     }
                 }
-            }
+        }
 
             for (auto& rest: tilelist) {
                if (pos.tile != rest.tile && rest.type != tiletype::empty && rest.type != tiletype::spawn) {
