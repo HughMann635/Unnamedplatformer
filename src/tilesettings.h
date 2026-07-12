@@ -138,24 +138,28 @@ public:
 
             sf::FloatRect blockbounds = block_ -> collide();
 
+
             sf::FloatRect playerbounds = Object.shape().getGlobalBounds();
             if (blockbounds.findIntersection(playerbounds)) {
-                float playercenter = playerbounds.position.y + playerbounds.size.y / 2;
+                float playercentery = playerbounds.position.y + playerbounds.size.y / 2;
+                float playercenterx = playerbounds.position.x + playerbounds.size.x / 2;
                 float blocktop = blockbounds.position.y;
                 float blockbottom = blockbounds.position.y + blockbounds.size.y;
-                if ((playercenter > blocktop && playercenter < blockbottom)) {
+                float blockright = blockbounds.position.x;
+                float blockleft = blockbounds.position.x + blockbounds.size.x;
+                if ((playercentery > blocktop && playercentery < blockbottom)) {
                     if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))) {
                         block_ -> velocity.x = trianglepushspeed;
                     } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) {
                         block_ -> velocity.x = -trianglepushspeed;
                     }
                 }
-                
-                //WILL CHANGE TO DETECT COORDINATES probably
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) {
-                    block_ -> velocity.y = trianglepushspeed;
-                } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) {
-                    block_ -> velocity.y = -trianglepushspeed;
+                if ((playercenterx < blockleft && playercenterx > blockright)) {
+                    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) {
+                        block_ -> velocity.y = trianglepushspeed;
+                    } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) {
+                        block_ -> velocity.y = -trianglepushspeed;
+                    }
                 }
         }
 
