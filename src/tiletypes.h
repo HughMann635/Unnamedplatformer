@@ -248,15 +248,28 @@ public:
     sf::ConvexShape buttonblock[3];
     button (sf::Vector2f position) {
         buttonblock[0].setPointCount(4);
-        buttonblock[0].setPoint(0, sf::Vector2f(10, 2.5));
-        buttonblock[0].setPoint(1, sf::Vector2f(17.5, 10));
-        buttonblock[0].setPoint(2, sf::Vector2f(10, 17.5));
-        buttonblock[0].setPoint(3, sf::Vector2f(2.5, 10));
+        buttonblock[0].setPoint(0, sf::Vector2f(10, 4));
+        buttonblock[0].setPoint(1, sf::Vector2f(16, 10));
+        buttonblock[0].setPoint(2, sf::Vector2f(10, 16));
+        buttonblock[0].setPoint(3, sf::Vector2f(4, 10));
         buttonblock[0].setFillColor(sf::Color(0, 255, 0));
         buttonblock[0].setPosition(position);
+
+        buttonblock[1].setPointCount(8);
+        buttonblock[1].setPoint(0, sf::Vector2f(7, 4));
+        buttonblock[1].setPoint(1, sf::Vector2f(13, 4));
+        buttonblock[1].setPoint(2, sf::Vector2f(16, 7));
+        buttonblock[1].setPoint(3, sf::Vector2f(16, 13));
+        buttonblock[1].setPoint(4, sf::Vector2f(13, 16));
+        buttonblock[1].setPoint(5, sf::Vector2f(7, 16));
+        buttonblock[1].setPoint(6, sf::Vector2f(4, 13));
+        buttonblock[1].setPoint(7, sf::Vector2f(4, 7));
+        buttonblock[1].setFillColor(sf::Color(0, 150, 0));
+        buttonblock[1].setPosition(position);
     }
 
     void draw (sf::RenderWindow& window) {
+        window.draw(buttonblock[1]);
         window.draw(buttonblock[0]);
     }
 
@@ -267,9 +280,42 @@ public:
 
 class door : public tileTypes {
 public:
-    sf::ConvexShape doorblock;
+    sf::ConvexShape doorblock[4];
     door (sf::Vector2f position) {
+        doorblock[0].setPointCount(4);
+        doorblock[0].setPoint(0, sf::Vector2f(0, 0));
+        doorblock[0].setPoint(1, sf::Vector2f(20, 0));
+        doorblock[0].setPoint(2, sf::Vector2f(20, 20));
+        doorblock[0].setPoint(3, sf::Vector2f(0, 20));
+        doorblock[0].setFillColor(sf::Color(60, 60, 70));
+        
+        doorblock[1].setPointCount(4);
+        doorblock[1].setPoint(0, sf::Vector2f(0, 0));
+        doorblock[1].setPoint(1, sf::Vector2f(10, 6));
+        doorblock[1].setPoint(2, sf::Vector2f(10, 14));
+        doorblock[1].setPoint(3, sf::Vector2f(0, 20));
+        doorblock[1].setFillColor(sf::Color(70, 60, 80));
+        
+        doorblock[2].setPointCount(4);
+        doorblock[2].setPoint(0, sf::Vector2f(20, 0));
+        doorblock[2].setPoint(1, sf::Vector2f(10, 6));
+        doorblock[2].setPoint(2, sf::Vector2f(10, 14));
+        doorblock[2].setPoint(3, sf::Vector2f(20, 20));
+        doorblock[2].setFillColor(sf::Color(70, 60, 80));
 
+        for (int i = 0; i < 3; i++) {
+            doorblock[i].setOutlineColor(sf::Color(25, 21, 30));
+            doorblock[i].setOutlineThickness(-1);
+            doorblock[i].setPosition(position);
+        }
+    }
+
+    void draw (sf::RenderWindow& window) override {
+        for (int i = 0; i < 3; i++) window.draw(doorblock[i]);
+    }
+
+    sf::FloatRect collide() override {
+        return sf::FloatRect(doorblock[0].getPosition(), sf::Vector2f(playerdim, playerdim));
     }
 };
 
