@@ -152,12 +152,10 @@ public:
                 }
                 
                 //WILL CHANGE TO DETECT COORDINATES probably
-                if (zerogactive) {
-                    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) {
-                        block_ -> velocity.y = trianglepushspeed;
-                    } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) {
-                        block_ -> velocity.y = -trianglepushspeed;
-                    }
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) {
+                    block_ -> velocity.y = trianglepushspeed;
+                } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) {
+                    block_ -> velocity.y = -trianglepushspeed;
                 }
         }
 
