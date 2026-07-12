@@ -179,6 +179,7 @@ class zero_g : public tileTypes {
 class block : public tileTypes, public entity {
 public:
     sf::ConvexShape blockblock;
+    float blockgravity = 1800.f;
     block(sf::Vector2f position) {
         blockblock.setPointCount(4);
         blockblock.setPoint(0, sf::Vector2f(0, 0));
