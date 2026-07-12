@@ -129,6 +129,7 @@ public:
     void checkCollisions (entity& Object) {
         swimming = false;
         zerogactive = false;
+
         for (auto& pos: tilelist) {
             if (pos.type != tiletype::block_push) { continue; }
 
@@ -143,10 +144,18 @@ public:
                 float blocktop = blockbounds.position.y;
                 float blockbottom = blockbounds.position.y + blockbounds.size.y;
                 if ((playercenter > blocktop && playercenter < blockbottom)) {
-                    if (Object.shape().getPosition().x < block_ -> shape().getPosition().x) {
+                    if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))) {
                         block_ -> velocity.x = trianglepushspeed;
-                    } else if (Object.shape().getPosition().x > block_ -> shape().getPosition().x) {
+                    } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) {
                         block_ -> velocity.x = -trianglepushspeed;
+                    }
+                }
+                
+                if (zerogactive) {
+                    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) {
+                        block_ -> velocity.y = trianglepushspeed;
+                    } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) {
+                        block_ -> velocity.y = -trianglepushspeed;
                     }
                 }
             }
@@ -196,7 +205,6 @@ public:
                     case tiletype::doublespike:
                     case tiletype::lava:
                     case tiletype::blackhole:
-                    std::cout << "You died :(";
                     running = false;
                     break;
                     case tiletype::exit:
