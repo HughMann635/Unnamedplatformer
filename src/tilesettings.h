@@ -145,8 +145,8 @@ public:
                 float playercenterx = playerbounds.position.x + playerbounds.size.x / 2;
                 float blocktop = blockbounds.position.y;
                 float blockbottom = blockbounds.position.y + blockbounds.size.y;
-                float blockright = blockbounds.position.x;
-                float blockleft = blockbounds.position.x + blockbounds.size.x;
+                float blockleft = blockbounds.position.x;
+                float blockright = blockbounds.position.x + blockbounds.size.x;
                 if ((playercentery > blocktop && playercentery < blockbottom)) {
                     if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))) {
                         block_ -> velocity.x = trianglepushspeed;
@@ -154,7 +154,7 @@ public:
                         block_ -> velocity.x = -trianglepushspeed;
                     }
                 }
-                if ((playercenterx < blockleft && playercenterx > blockright)) {
+                if ((playercenterx > blockleft && playercenterx < blockright)) {
                     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) {
                         block_ -> velocity.y = trianglepushspeed;
                     } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) {
