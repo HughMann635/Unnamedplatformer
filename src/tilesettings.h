@@ -142,14 +142,15 @@ public:
         swimming = false;
         zerogactive = false;
 
+        //BLOCK COLLISION
         for (auto& pos: tilelist) {
+            //1. BLOCK + PLAYER PUSH LOGIC
             if (pos.type != tiletype::block_push) { continue; }
 
             block* block_ = dynamic_cast<block*>(pos.tile.get());
             if (!block_) { continue; }
 
             sf::FloatRect blockbounds = block_ -> collide();
-
 
             sf::FloatRect playerbounds = Object.shape().getGlobalBounds();
             if (blockbounds.findIntersection(playerbounds)) {
@@ -173,8 +174,8 @@ public:
                         block_ -> velocity.y = -trianglepushspeed;
                     }
                 }
-        }
-
+            }
+            //2. BLOCK + WORLD COLLISION
             for (auto& rest: tilelist) {
                if (pos.tile != rest.tile && rest.type != tiletype::empty && rest.type != tiletype::spawn) {
                     sf::FloatRect restbounds = rest.tile -> collide();
@@ -202,6 +203,8 @@ public:
                 }
             }
         }
+
+        //PLAYER COLLISION
         for (auto& pos: tilelist) {
             if (pos.type == tiletype::empty || pos.type == tiletype::spawn) { continue; }
 
