@@ -245,9 +245,23 @@ public:
 //if a block or the player is on the button, a door will open
 class button : public tileTypes {
 public:
-    sf::ConvexShape buttonblock;
+    sf::ConvexShape buttonblock[3];
     button (sf::Vector2f position) {
+        buttonblock[0].setPointCount(4);
+        buttonblock[0].setPoint(0, sf::Vector2f(10, 2.5));
+        buttonblock[0].setPoint(1, sf::Vector2f(17.5, 10));
+        buttonblock[0].setPoint(2, sf::Vector2f(10, 17.5));
+        buttonblock[0].setPoint(3, sf::Vector2f(2.5, 10));
+        buttonblock[0].setFillColor(sf::Color(0, 255, 0));
+        buttonblock[0].setPosition(position);
+    }
 
+    void draw (sf::RenderWindow& window) {
+        window.draw(buttonblock[0]);
+    }
+
+    sf::FloatRect collide() override {
+        return sf::FloatRect(sf::Vector2f(2.5, 2.5), sf::Vector2f(15, 15));
     }
 };
 

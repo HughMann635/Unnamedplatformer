@@ -21,6 +21,7 @@ enum class tiletype {
     block_push,
     spring,
     blackhole,
+    button,
     //Environments
     lava,
     water,
@@ -119,6 +120,11 @@ public:
                     case '^':
                         new_tile.type = tiletype::spring;
                         new_tile.tile = std::make_unique<spring>(sf::Vector2f(j*playerdim, i*playerdim));
+                        tilelist.push_back(std::move(new_tile));
+                        break;
+                    case 'O':
+                        new_tile.type = tiletype::button;
+                        new_tile.tile = std::make_unique<button>(sf::Vector2f(j*playerdim, i*playerdim));
                         tilelist.push_back(std::move(new_tile));
                         break;
                 }
