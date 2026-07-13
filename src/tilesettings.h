@@ -207,6 +207,7 @@ public:
                             break;
                             case tiletype::block_push:
                             block_ -> velocity.x = 0;
+                            groundCollide(*block_, restbounds);
                             break;
                             case tiletype::zero_g:
                             block_ -> blockgravity = 0;
