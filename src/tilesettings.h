@@ -216,9 +216,10 @@ public:
                             case tiletype::lava:
                             block_ -> blockgravity = 500;
                             break;
-                            case tiletype::button:
-                            //pressed = true;
-                            break;
+                            case tiletype::button: {
+                            button* button_ = dynamic_cast<button*>(pos.tile.get());
+                            if (button_) button_ -> pressed = true;
+                            break; }
                             default:
                             break;
                         }
@@ -264,9 +265,10 @@ public:
                     case tiletype::spring:
                     Object.velocity.y = -1000.f;
                     break;
-                    case tiletype::button:
-                    //pressed = true;
-                    break;
+                    case tiletype::button: {
+                    button* button_ = dynamic_cast<button*>(pos.tile.get());
+                    if (button_) button_ -> pressed = true;
+                    break; }
                     default: 
                     break;
                     }
