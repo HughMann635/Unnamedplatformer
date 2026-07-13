@@ -148,7 +148,7 @@ public:
         swimming = false;
         zerogactive = false;
 
-        //BUTTON RESETS
+        //BUTTON + DOOR RESETS
         for (auto& pos: tilelist) {
             if (pos.type == tiletype::button) {
                 button* button_ = dynamic_cast<button*>(pos.tile.get());
@@ -156,6 +156,14 @@ public:
                     continue;
                 } else {
                     button_ -> pressed = false;
+                }
+            }
+            if (pos.type == tiletype::door) {
+                door* door_ = dynamic_cast<door*>(pos.tile.get());
+                if (!door_) {
+                    continue;
+                } else {
+                    door_ -> opened = false;
                 }
             }
         }
