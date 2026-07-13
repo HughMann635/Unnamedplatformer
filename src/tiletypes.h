@@ -326,7 +326,7 @@ public:
 
     sf::FloatRect collide() override {
         if (opened) {
-            return sf::FloatRect(doorblock[0].getPosition(), sf::Vector2f(0, 0));
+            return sf::FloatRect(sf::Vector2f(1300, 1300), sf::Vector2f(playerdim, playerdim));
         } else {
             return sf::FloatRect(doorblock[0].getPosition(), sf::Vector2f(playerdim, playerdim));
         }

@@ -168,6 +168,45 @@ public:
             }
         }
 
+        for (auto& pos: tilelist) {
+            if (pos.type == tiletype::button) {
+                button* button_ = dynamic_cast<button*>(pos.tile.get());
+                if (!button_) continue;
+                sf::FloatRect buttonbounds = button_ -> collide();
+                for (auto& other: tilelist) {
+                    if (other.type == tiletype::block_push && buttonbounds.findIntersection(other.tile -> collide())) {
+                        button_ -> pressed = true;
+                    }
+                    if (buttonbounds.findIntersection(Object.shape().getGlobalBounds())) {
+                        button_ -> pressed = true;
+                    }
+                }
+            }
+        }
+        /*for (auto& pos: tilelist) {
+            if (pos.type == tiletype::door) {
+                door* door_ = dynamic_cast<door*>(pos.tile.get());
+                if (door_) {
+                    door_ -> opened = false;
+                } 
+            }
+        }*/
+
+        //DOOR CHECK
+        for (auto& pos: tilelist) {
+            if (pos.type != tiletype::button) continue;
+            button* button_ = dynamic_cast<button*>(pos.tile.get());
+            if (!button_ || !button_ -> pressed) continue;
+
+            for (auto& other: tilelist) {
+                if (other.type != tiletype::door) continue;
+                door* door_ = dynamic_cast<door*>(other.tile.get());
+                if (door_ && door_ -> id == button_ -> id) {
+                    door_ -> opened = true;
+                }
+            }
+        }
+
         //BLOCK COLLISION
         for (auto& pos: tilelist) {
             //1. BLOCK + PLAYER PUSH LOGIC
@@ -233,6 +272,8 @@ public:
                     else {
                         switch (rest.type) {
                             case tiletype::ground:
+                            groundCollide(*block_, restbounds);
+                            break;
                             case tiletype::door:
                             groundCollide(*block_, restbounds);                      
                             break;
@@ -259,7 +300,7 @@ public:
                             block_ -> blockgravity = 500;
                             break;
                             case tiletype::button: {
-                            button* button_ = dynamic_cast<button*>(pos.tile.get());
+                            button* button_ = dynamic_cast<button*>(rest.tile.get());
                             if (button_) button_ -> pressed = true;
                             break; }
                             default:
@@ -283,6 +324,8 @@ public:
                     case tiletype::empty:
                     break;
                     case tiletype::ground:
+                    groundCollide(Object, tilebounds);
+                    break;
                     case tiletype::door:
                     groundCollide(Object, tilebounds);
                     break;
@@ -313,21 +356,6 @@ public:
                     break; }
                     default: 
                     break;
-                }
-            }
-        }
-        
-        //DOOR CHECK
-        for (auto& pos: tilelist) {
-            if (pos.type != tiletype::button) continue;
-            button* button_ = dynamic_cast<button*>(pos.tile.get());
-            if (!button_ || !button_ -> pressed) continue;
-
-            for (auto& other: tilelist) {
-                if (other.type != tiletype::door) continue;
-                door* door_ = dynamic_cast<door*>(other.tile.get());
-                if (door_ && door_ -> id == button_ -> id) {
-                    door_ -> opened = true;
                 }
             }
         }
