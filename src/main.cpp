@@ -37,6 +37,7 @@ int main()
 			map.loadmap(levels[0][0]);
 			player.playershape.setPosition(map.spawn);
 			player.velocity = sf::Vector2f(0.f, 0.f);
+			gravity = 1800.f;
 			restart = false;
 		} 
 		while ( const std::optional event = window.pollEvent() ) {
