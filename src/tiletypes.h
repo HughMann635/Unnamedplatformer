@@ -249,7 +249,7 @@ public:
     sf::ConvexShape buttonblock[3];
     int id;
     bool pressed = false;
-    button (sf::Vector2f position) {
+    button (sf::Vector2f position, int id_button = 0) : id(id_button) {
         buttonblock[0].setPointCount(4);
         buttonblock[0].setPoint(0, sf::Vector2f(10, 4));
         buttonblock[0].setPoint(1, sf::Vector2f(16, 10));
@@ -294,7 +294,7 @@ public:
     sf::ConvexShape doorblock[4];
     int id;
     bool opened = false;
-    door (sf::Vector2f position) {
+    door (sf::Vector2f position, int id_door = 0) : id(id_door) {
         doorblock[0].setPointCount(4);
         doorblock[0].setPoint(0, sf::Vector2f(0, 0));
         doorblock[0].setPoint(1, sf::Vector2f(20, 0));
