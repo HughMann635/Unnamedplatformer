@@ -184,6 +184,7 @@ public:
                     else {
                         switch (rest.type) {
                             case tiletype::ground:
+                            case tiletype::door:
                             groundCollide(*block_, restbounds);                      
                             break;
                             case tiletype::block_push:
@@ -196,6 +197,9 @@ public:
                             case tiletype::water:
                             case tiletype::lava:
                             block_ -> blockgravity = 500;
+                            break;
+                            case tiletype::button:
+                            //pressed = true;
                             break;
                             default:
                             break;
@@ -218,6 +222,7 @@ public:
                     case tiletype::empty:
                     break;
                     case tiletype::ground:
+                    case tiletype::door:
                     groundCollide(Object, tilebounds);
                     break;
                     case tiletype::spike:
@@ -240,6 +245,9 @@ public:
                     break;
                     case tiletype::spring:
                     Object.velocity.y = -1000.f;
+                    break;
+                    case tiletype::button:
+                    //pressed = true;
                     break;
                     default: 
                     break;

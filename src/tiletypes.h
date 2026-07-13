@@ -324,7 +324,7 @@ public:
     }
 
     void draw (sf::RenderWindow& window) override {
-        for (int i = 0; i < 3; i++) window.draw(doorblock[i]);
+        if (!opened) for (int i = 0; i < 3; i++) window.draw(doorblock[i]);
     }
 
     sf::FloatRect collide() override {
