@@ -247,13 +247,19 @@ public:
 class button : public tileTypes {
 public:
     sf::ConvexShape buttonblock[3];
+    int id;
+    bool pressed = false;
     button (sf::Vector2f position) {
         buttonblock[0].setPointCount(4);
         buttonblock[0].setPoint(0, sf::Vector2f(10, 4));
         buttonblock[0].setPoint(1, sf::Vector2f(16, 10));
         buttonblock[0].setPoint(2, sf::Vector2f(10, 16));
         buttonblock[0].setPoint(3, sf::Vector2f(4, 10));
-        buttonblock[0].setFillColor(sf::Color(0, 255, 0));
+        if (pressed) {
+            buttonblock[1].setFillColor(sf::Color(0, 255, 0));
+        } else {
+            buttonblock[1].setFillColor(sf::Color(0, 200, 0));
+        }
         buttonblock[0].setPosition(position);
 
         buttonblock[1].setPointCount(8);
@@ -265,7 +271,11 @@ public:
         buttonblock[1].setPoint(5, sf::Vector2f(7, 16));
         buttonblock[1].setPoint(6, sf::Vector2f(4, 13));
         buttonblock[1].setPoint(7, sf::Vector2f(4, 7));
-        buttonblock[1].setFillColor(sf::Color(0, 150, 0));
+        if (pressed) {
+            buttonblock[1].setFillColor(sf::Color(0, 150, 0));
+        } else {
+            buttonblock[1].setFillColor(sf::Color(0, 95, 0));
+        }
         buttonblock[1].setPosition(position);
     }
 
@@ -282,6 +292,8 @@ public:
 class door : public tileTypes {
 public:
     sf::ConvexShape doorblock[4];
+    int id;
+    bool opened = false;
     door (sf::Vector2f position) {
         doorblock[0].setPointCount(4);
         doorblock[0].setPoint(0, sf::Vector2f(0, 0));
@@ -316,7 +328,11 @@ public:
     }
 
     sf::FloatRect collide() override {
-        return sf::FloatRect(doorblock[0].getPosition(), sf::Vector2f(playerdim, playerdim));
+        if (opened) {
+            return sf::FloatRect(doorblock[0].getPosition(), sf::Vector2f(0, 0));
+        } else {
+            return sf::FloatRect(doorblock[0].getPosition(), sf::Vector2f(playerdim, playerdim));
+        }
     }
 };
 
