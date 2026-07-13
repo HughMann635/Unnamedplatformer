@@ -256,9 +256,9 @@ public:
         buttonblock[0].setPoint(2, sf::Vector2f(10, 16));
         buttonblock[0].setPoint(3, sf::Vector2f(4, 10));
         if (pressed) {
-            buttonblock[1].setFillColor(sf::Color(0, 255, 0));
+            buttonblock[0].setFillColor(sf::Color(0, 210, 0));
         } else {
-            buttonblock[1].setFillColor(sf::Color(0, 200, 0));
+            buttonblock[0].setFillColor(sf::Color(200, 0, 0));
         }
         buttonblock[0].setPosition(position);
 
@@ -274,7 +274,7 @@ public:
         if (pressed) {
             buttonblock[1].setFillColor(sf::Color(0, 150, 0));
         } else {
-            buttonblock[1].setFillColor(sf::Color(0, 95, 0));
+            buttonblock[1].setFillColor(sf::Color(95, 0, 0));
         }
         buttonblock[1].setPosition(position);
     }
