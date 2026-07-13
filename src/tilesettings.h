@@ -230,6 +230,7 @@ public:
                             break;
                             case tiletype::block_push: {
                             block_ -> velocity.x = 0;
+                            //technically not just pasted from claude, but I used its code as inspiration
                             float blockleft  = blockbounds.position.x;
                             float blockright = blockbounds.position.x + blockbounds.size.x;
                             float restleft   = restbounds.position.x;
@@ -304,9 +305,24 @@ public:
                     break; }
                     default: 
                     break;
-                    }
                 }
             }
+        }
+        
+        //DOOR CHECK
+        for (auto& pos: tilelist) {
+            if (pos.type != tiletype::button) continue;
+            button* button_ = dynamic_cast<button*>(pos.tile.get());
+            if (!button_ || !button_ -> pressed) continue;
+
+            for (auto& other: tilelist) {
+                if (other.type != tiletype::door) continue;
+                door* door_ = dynamic_cast<door*>(other.tile.get());
+                if (door_ && door_ -> id == button_ -> id) {
+                    door_ -> opened = true;
+                }
+            }
+        }
     }
 
     void groundCollide(entity& Object, sf::FloatRect& bounds) {
