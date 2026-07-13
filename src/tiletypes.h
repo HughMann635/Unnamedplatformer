@@ -255,11 +255,6 @@ public:
         buttonblock[0].setPoint(1, sf::Vector2f(16, 10));
         buttonblock[0].setPoint(2, sf::Vector2f(10, 16));
         buttonblock[0].setPoint(3, sf::Vector2f(4, 10));
-        if (pressed) {
-            buttonblock[0].setFillColor(sf::Color(0, 210, 0));
-        } else {
-            buttonblock[0].setFillColor(sf::Color(200, 0, 0));
-        }
         buttonblock[0].setPosition(position);
 
         buttonblock[1].setPointCount(8);
@@ -271,21 +266,23 @@ public:
         buttonblock[1].setPoint(5, sf::Vector2f(7, 16));
         buttonblock[1].setPoint(6, sf::Vector2f(4, 13));
         buttonblock[1].setPoint(7, sf::Vector2f(4, 7));
-        if (pressed) {
-            buttonblock[1].setFillColor(sf::Color(0, 150, 0));
-        } else {
-            buttonblock[1].setFillColor(sf::Color(95, 0, 0));
-        }
         buttonblock[1].setPosition(position);
     }
 
     void draw (sf::RenderWindow& window) {
+        if (pressed) {
+            buttonblock[0].setFillColor(sf::Color(0, 210, 0));
+            buttonblock[1].setFillColor(sf::Color(0, 150, 0));
+        } else {
+            buttonblock[0].setFillColor(sf::Color(200, 0, 0));
+            buttonblock[1].setFillColor(sf::Color(95, 0, 0));
+        }
         window.draw(buttonblock[1]);
         window.draw(buttonblock[0]);
     }
 
     sf::FloatRect collide() override {
-        return sf::FloatRect(sf::Vector2f(2.5, 2.5), sf::Vector2f(15, 15));
+        return sf::FloatRect(sf::Vector2f(buttonblock[0].getPosition().x + 2.5, buttonblock[0].getPosition().y + 2.5), sf::Vector2f(15, 15));
     }
 };
 
