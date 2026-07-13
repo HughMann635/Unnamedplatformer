@@ -182,17 +182,40 @@ public:
                 if ((playercentery > blocktop && playercentery < blockbottom)) {
                     if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))) {
                         block_ -> velocity.x = trianglepushspeed;
+                        Object.velocity.x = trianglepushspeed;
+                        Object.grounded = false;
                     } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) {
                         block_ -> velocity.x = -trianglepushspeed;
+                        Object.velocity.x = -trianglepushspeed;
+                        Object.grounded = false;
                     }
                 }
                 if ((playercenterx > blockleft && playercenterx < blockright)) {
-                    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) {
+                    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S) && Object.grounded) {
                         block_ -> velocity.y = trianglepushspeed;
-                    } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) {
+                        Object.velocity.y = trianglepushspeed;
+                    } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W) && Object.grounded) {
                         block_ -> velocity.y = -trianglepushspeed;
+                        Object.velocity.y = -trianglepushspeed;
                     }
                 }
+                //this was all claude
+                float blockBottom = blockbounds.position.y + blockbounds.size.y;
+                float playerTop = playerbounds.position.y;
+                float overlapY = blockBottom - playerTop;
+
+                float blockLeft  = blockbounds.position.x;
+                float blockRight = blockbounds.position.x + blockbounds.size.x;
+                float playerLeft  = playerbounds.position.x;
+                float playerRight = playerbounds.position.x + playerbounds.size.x;
+                float overlapX = std::min(blockRight, playerRight) - std::max(blockLeft, playerLeft);
+
+                if (overlapY > 0 && overlapY < overlapX && block_ -> velocity.y >= 0) {
+                    block_ -> shape().setPosition(sf::Vector2f(block_ -> shape().getPosition().x, playerTop - blockbounds.size.y));
+                    block_ -> velocity.y = 0;
+                    blockbounds = block_ -> collide();
+                }
+                //k no more claude
             }
             //2. BLOCK + WORLD COLLISION
             for (auto& rest: tilelist) {
@@ -205,10 +228,19 @@ public:
                             case tiletype::door:
                             groundCollide(*block_, restbounds);                      
                             break;
-                            case tiletype::block_push:
+                            case tiletype::block_push: {
                             block_ -> velocity.x = 0;
-                            groundCollide(*block_, restbounds);
-                            break;
+                            float blockleft  = blockbounds.position.x;
+                            float blockright = blockbounds.position.x + blockbounds.size.x;
+                            float restleft   = restbounds.position.x;
+                            float restright  = restbounds.position.x + restbounds.size.x;
+                            float overlapx = std::min(blockright, restright) - std::max(blockleft, restleft);
+                            if ((blockbounds.position.y + blockbounds.size.y) - restbounds.position.y > 0 && (blockbounds.position.y + blockbounds.size.y) - restbounds.position.y < overlapx) {
+                                block_ -> shape().setPosition(sf::Vector2f(block_ -> shape().getPosition().x, restbounds.position.y - blockbounds.size.y));
+                                block_ -> velocity.y = 0;
+                                blockbounds = block_ -> collide();
+                            }
+                            break; }
                             case tiletype::zero_g:
                             block_ -> blockgravity = 0;
                             block_ -> velocity.y *= 0.96;
