@@ -168,6 +168,7 @@ public:
             }
         }
 
+        //BUTTON CHECK
         for (auto& pos: tilelist) {
             if (pos.type == tiletype::button) {
                 button* button_ = dynamic_cast<button*>(pos.tile.get());
@@ -183,14 +184,6 @@ public:
                 }
             }
         }
-        /*for (auto& pos: tilelist) {
-            if (pos.type == tiletype::door) {
-                door* door_ = dynamic_cast<door*>(pos.tile.get());
-                if (door_) {
-                    door_ -> opened = false;
-                } 
-            }
-        }*/
 
         //DOOR CHECK
         for (auto& pos: tilelist) {
@@ -201,8 +194,15 @@ public:
             for (auto& other: tilelist) {
                 if (other.type != tiletype::door) continue;
                 door* door_ = dynamic_cast<door*>(other.tile.get());
+                sf::FloatRect doorbounds = door_ -> collide();
                 if (door_ && door_ -> id == button_ -> id) {
-                    door_ -> opened = true;
+                    for (auto& other: tilelist) {
+                        if (other.type == tiletype::block_push && !doorbounds.findIntersection(other.tile -> collide()) && !doorbounds.findIntersection(Object.shape().getGlobalBounds())) {
+                            door_ -> opened = true;
+                        } else {
+                            door_ -> opened = false;
+                        }
+                    }
                 }
             }
         }
