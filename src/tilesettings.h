@@ -148,6 +148,18 @@ public:
         swimming = false;
         zerogactive = false;
 
+        //BUTTON RESETS
+        for (auto& pos: tilelist) {
+            if (pos.type == tiletype::button) {
+                button* button_ = dynamic_cast<button*>(pos.tile.get());
+                if (!button_) {
+                    continue;
+                } else {
+                    button_ -> pressed = false;
+                }
+            }
+        }
+
         //BLOCK COLLISION
         for (auto& pos: tilelist) {
             //1. BLOCK + PLAYER PUSH LOGIC
