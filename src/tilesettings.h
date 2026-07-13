@@ -47,6 +47,8 @@ struct Tile {
 // B = black hole
 // P = pushable block
 // ^ = spring
+// O = button (looks like a circle so yeah)
+// D = door
 
 class tilemap {
 public:
@@ -55,6 +57,8 @@ public:
     sf::Vector2f finishpoint;
 
     void loadmap (std::string level) {
+        int buttoncount = 0;
+        int doorcount = 0;
         for (int i = 0; i < 36; i++) {
             for (int j = 0; j < 65; j++) {
                 if (level[i*65+j] == '\n') {
@@ -125,12 +129,14 @@ public:
                         break;
                     case 'O':
                         new_tile.type = tiletype::button;
-                        new_tile.tile = std::make_unique<button>(sf::Vector2f(j*playerdim, i*playerdim));
+                        new_tile.tile = std::make_unique<button>(sf::Vector2f(j*playerdim, i*playerdim), buttoncount);
+                        buttoncount++;
                         tilelist.push_back(std::move(new_tile));
                         break;
                     case 'D':
                         new_tile.type = tiletype::door;
-                        new_tile.tile = std::make_unique<door>(sf::Vector2f(j*playerdim, i*playerdim));
+                        new_tile.tile = std::make_unique<door>(sf::Vector2f(j*playerdim, i*playerdim), doorcount);
+                        doorcount++;
                         tilelist.push_back(std::move(new_tile));
                         break;
                 }
