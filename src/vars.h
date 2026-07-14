@@ -22,9 +22,8 @@ float movespeed = 260.f;
 bool swimming = false;
 bool zerogactive = false;
 
-//Circle can accelerate up to a speed of 300 or so
-float circleaccel = 30.f;
-float circlemax = 300.f;
+float circleaccel = 8.f;
+float circlemax = 320.f;
 //Triangle moves at a normal speed but when pushing an object, it slows down and pushes the object at the same speed
 float trianglepushspeed = 115.f;
 

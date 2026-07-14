@@ -29,7 +29,7 @@ int main()
 	map.loadmap(levels[0][0]);
 	player.shape().setPosition(map.spawn);
 
-	while ( window.isOpen() ) {
+	while (window.isOpen()) {
 		float deltatime = timer.restart().asSeconds();
 		
 		if (restart == true) {
