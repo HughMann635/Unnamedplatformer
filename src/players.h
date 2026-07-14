@@ -147,8 +147,12 @@ public:
 		} else if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Left) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::A)) {
             if (velocity.x >= -circlemax && !zerogactive) velocity.x += -circleaccel;
             else if (zerogactive) velocity.x = -movespeed;
-		} else {
-            zerogactive || swimming ? velocity.x *= 0.8 : velocity.x *= 0.f; 
+		} else if (swimming || zerogactive) {
+            velocity.x *= 0.94; 
+        } else {
+            if (velocity.x > 0) velocity.x -= circleaccel;
+            else if (velocity.x < 0) velocity.x += circleaccel;
+            else velocity.x = 0;
         }
         if (zerogactive) {
             if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Down) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::S)) {

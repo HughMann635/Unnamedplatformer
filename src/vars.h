@@ -23,8 +23,9 @@ bool swimming = false;
 bool zerogactive = false;
 
 float circleaccel = 8.f;
-float circlemax = 320.f;
-//Triangle moves at a normal speed but when pushing an object, it slows down and pushes the object at the same speed
+float circlemax = 400.f;
+//Triangle was initially gonna be the only character that could push blocks; this is now the push speed for any block
+//Keeping the name for old times sake :')
 float trianglepushspeed = 115.f;
 
 //Game settings
