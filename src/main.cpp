@@ -56,6 +56,7 @@ int main()
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num1)) currentplayer = std::make_unique<square>();
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num2)) currentplayer = std::make_unique<circle>();
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num3)) currentplayer = std::make_unique<triangle>();
 
 		currentplayer -> shape().setPosition(lastframe_pos);
 		currentplayer -> velocity = lastframe_vel;
