@@ -18,6 +18,7 @@ int main()
 	std::unique_ptr<player> currentplayer = std::make_unique<square>();
 	sky sky;
 	tilemap map;
+	sf::Vector2f lastframe_pos;
 	sf::Clock timer;
 
 	sf::View view;
@@ -49,6 +50,12 @@ int main()
 		currentplayer -> updatepos(deltatime);
 		map.checkCollisions(*currentplayer);
 		map.updatemap(deltatime);
+		lastframe_pos = sf::Vector2f(currentplayer -> shape().getPosition());
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num1)) currentplayer = std::make_unique<square>();
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num2)) currentplayer = std::make_unique<circle>();
+
+		currentplayer -> shape().setPosition(lastframe_pos);
 
 		window.clear();
 		window.setView(view);
