@@ -5,8 +5,6 @@
 #include "vars.h"
 #include "scenes.h"
 
-//In the future, will make separate classes for each playable powerup
-
 //I had to make a master class for every object affected by physics so I didn't completely lose my mind
 class entity {
 public: 
@@ -24,9 +22,17 @@ public:
 
 class player : public entity{
 public:
+    virtual void jump (float deltatime) = 0;
+    virtual void updatepos (float deltatime) = 0;
+    virtual void drawscreen (sf::RenderWindow& window) = 0;
+    virtual ~player() = default;
+};
+
+class square: public player {
+public:
     sf::RectangleShape playershape;
 
-    player() {
+    square() {
         playershape = sf::RectangleShape(sf::Vector2f(playerdim, playerdim));
 	    playershape.setFillColor(sf::Color::Red);
 
@@ -38,7 +44,7 @@ public:
         return playershape;
     }
 
-    void jump (float deltatime) {
+    void jump (float deltatime) override {
         if (sf::Keyboard::isKeyPressed ( sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::W)) {
             if (grounded && !swimming && !zerogactive) {
                 velocity.y -= jumpforce;
@@ -57,7 +63,7 @@ public:
         } 
     }
 
-    void updatepos (float deltatime) {
+    void updatepos (float deltatime) override {
         if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Right) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::D)) {
             velocity.x = movespeed;
 		} else if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Left) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::A)) {
@@ -94,7 +100,7 @@ public:
         zerogactive = false;
     }
 
-    void drawscreen (sf::RenderWindow& window) {
+    void drawscreen (sf::RenderWindow& window) override {
         window.draw(playershape);
     }
 };

@@ -15,7 +15,7 @@ int main()
 	sf::RenderWindow window( sf::VideoMode( { width, height } ), title );
 	window.setFramerateLimit(120);
 
-	player player;
+	square player;
 	sky sky;
 	tilemap map;
 	sf::Clock timer;
