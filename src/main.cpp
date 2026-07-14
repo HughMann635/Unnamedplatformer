@@ -19,6 +19,7 @@ int main()
 	sky sky;
 	tilemap map;
 	sf::Vector2f lastframe_pos;
+	sf::Vector2f lastframe_vel;
 	sf::Clock timer;
 
 	sf::View view;
@@ -51,11 +52,13 @@ int main()
 		map.checkCollisions(*currentplayer);
 		map.updatemap(deltatime);
 		lastframe_pos = sf::Vector2f(currentplayer -> shape().getPosition());
+		lastframe_vel = sf::Vector2f(currentplayer -> velocity);
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num1)) currentplayer = std::make_unique<square>();
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num2)) currentplayer = std::make_unique<circle>();
 
 		currentplayer -> shape().setPosition(lastframe_pos);
+		currentplayer -> velocity = lastframe_vel;
 
 		window.clear();
 		window.setView(view);

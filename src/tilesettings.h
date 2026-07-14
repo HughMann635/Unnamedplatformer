@@ -189,7 +189,7 @@ public:
 
         //DOOR SAFETY CHECK
         //y'know how an elevator door doesn't close on your hand
-        //yeah this is supposedly like that
+        //yeah this is like that
         for (auto& pos: tilelist) {
             if (pos.type != tiletype::button) continue;
             button* button_ = dynamic_cast<button*>(pos.tile.get());
@@ -256,11 +256,11 @@ public:
                 float blockleft = blockbounds.position.x;
                 float blockright = blockbounds.position.x + blockbounds.size.x;
                 if ((playercentery > blocktop && playercentery < blockbottom)) {
-                    if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))) {
+                    if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) && Object.velocity.x > 0) {
                         block_ -> velocity.x = trianglepushspeed;
                         Object.velocity.x = trianglepushspeed;
                         Object.grounded = false;
-                    } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) {
+                    } else if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) && Object.velocity.x < 0) {
                         block_ -> velocity.x = -trianglepushspeed;
                         Object.velocity.x = -trianglepushspeed;
                         Object.grounded = false;
