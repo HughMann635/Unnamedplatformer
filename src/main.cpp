@@ -15,19 +15,19 @@ int main()
 	sf::RenderWindow window( sf::VideoMode( { width, height } ), title );
 	window.setFramerateLimit(120);
 
-	circle player;
+	std::unique_ptr<player> currentplayer = std::make_unique<square>();
 	sky sky;
 	tilemap map;
 	sf::Clock timer;
 
 	sf::View view;
 	view.setSize(sf::Vector2f(camwidth, camheight));
-	view.setCenter(sf::Vector2f(player.shape().getPosition().x, player.shape().getPosition().y));
+	view.setCenter(sf::Vector2f(currentplayer -> shape().getPosition().x, currentplayer -> shape().getPosition().y));
 
 	sky.makestars(stars);
 
 	map.loadmap(levels[0][0]);
-	player.shape().setPosition(map.spawn);
+	currentplayer -> shape().setPosition(map.spawn);
 
 	while (window.isOpen()) {
 		float deltatime = timer.restart().asSeconds();
@@ -35,8 +35,8 @@ int main()
 		if (restart == true) {
 			map.tilelist.clear();
 			map.loadmap(levels[0][0]);
-			player.shape().setPosition(map.spawn);
-			player.velocity = sf::Vector2f(0.f, 0.f);
+			currentplayer -> shape().setPosition(map.spawn);
+			currentplayer -> velocity = sf::Vector2f(0.f, 0.f);
 			gravity = 1800.f;
 			restart = false;
 		} 
@@ -45,40 +45,40 @@ int main()
 				window.close();
 		}
 		
-		player.jump(deltatime);
-		player.updatepos(deltatime);
-		map.checkCollisions(player);
+		currentplayer -> jump(deltatime);
+		currentplayer -> updatepos(deltatime);
+		map.checkCollisions(*currentplayer);
 		map.updatemap(deltatime);
 
 		window.clear();
 		window.setView(view);
 		sky.drawsky(window);
 		sky.drawstars(window);
-		player.drawscreen(window);
+		currentplayer -> drawscreen(window);
 		map.drawmap(window);
-		if (player.shape().getPosition().x < camwidth/2.f) {
-			if (player.shape().getPosition().y < camheight/2.f) {
+		if (currentplayer -> shape().getPosition().x < camwidth/2.f) {
+			if (currentplayer -> shape().getPosition().y < camheight/2.f) {
 				view.setCenter(sf::Vector2f(camwidth/2.f, camheight/2.f));
-			} else if (player.shape().getPosition().y > height-camheight/2.f) {
+			} else if (currentplayer -> shape().getPosition().y > height-camheight/2.f) {
 				view.setCenter(sf::Vector2f(camwidth/2.f, height-camheight/2.f));
 			} else {
-				view.setCenter(sf::Vector2f(camwidth/2.f, player.shape().getPosition().y));
+				view.setCenter(sf::Vector2f(camwidth/2.f, currentplayer -> shape().getPosition().y));
 			}
-		} else if (player.shape().getPosition().x > width-camwidth/2.f) {
-			if (player.shape().getPosition().y < camheight/2.f) {
+		} else if (currentplayer -> shape().getPosition().x > width-camwidth/2.f) {
+			if (currentplayer -> shape().getPosition().y < camheight/2.f) {
 				view.setCenter(sf::Vector2f(width-camwidth/2.f, camheight/2.f));
-			} else if (player.shape().getPosition().y > height-camheight/2.f) {
+			} else if (currentplayer -> shape().getPosition().y > height-camheight/2.f) {
 				view.setCenter(sf::Vector2f(width-camwidth/2.f, height-camheight/2.f));
 			} else {
-				view.setCenter(sf::Vector2f(width-camwidth/2.f, player.shape().getPosition().y));
+				view.setCenter(sf::Vector2f(width-camwidth/2.f, currentplayer -> shape().getPosition().y));
 			}
 		} else {
-			if (player.shape().getPosition().y < camheight/2.f) {
-				view.setCenter(sf::Vector2f(player.shape().getPosition().x, camheight/2.f));
-			} else if (player.shape().getPosition().y > height-camheight/2.f) {
-				view.setCenter(sf::Vector2f(player.shape().getPosition().x, height-camheight/2.f));
+			if (currentplayer -> shape().getPosition().y < camheight/2.f) {
+				view.setCenter(sf::Vector2f(currentplayer -> shape().getPosition().x, camheight/2.f));
+			} else if (currentplayer -> shape().getPosition().y > height-camheight/2.f) {
+				view.setCenter(sf::Vector2f(currentplayer -> shape().getPosition().x, height-camheight/2.f));
 			} else {
-				view.setCenter(sf::Vector2f(player.shape().getPosition().x, player.shape().getPosition().y));
+				view.setCenter(sf::Vector2f(currentplayer -> shape().getPosition().x, currentplayer -> shape().getPosition().y));
 			}
 		}
 		window.display();
