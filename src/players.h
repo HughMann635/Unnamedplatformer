@@ -148,7 +148,7 @@ public:
             if (velocity.x >= -circlemax && !zerogactive) velocity.x += -circleaccel;
             else if (zerogactive) velocity.x = -movespeed;
 		} else if (swimming || zerogactive) {
-            velocity.x *= 0.94; 
+            velocity.x *= 0.8; 
         } else {
             if (velocity.x > 0) velocity.x -= circleaccel;
             else if (velocity.x < 0) velocity.x += circleaccel;
