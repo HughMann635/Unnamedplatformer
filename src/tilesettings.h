@@ -177,10 +177,45 @@ public:
                 for (auto& other: tilelist) {
                     if (other.type == tiletype::block_push && buttonbounds.findIntersection(other.tile -> collide())) {
                         button_ -> pressed = true;
+                        button_ -> presscheck = true;
                     }
                     if (buttonbounds.findIntersection(Object.shape().getGlobalBounds())) {
                         button_ -> pressed = true;
+                        button_ -> presscheck = true;
                     }
+                }
+            }
+        }
+
+        //DOOR SAFETY CHECK
+        //y'know how an elevator door doesn't close on your hand
+        //yeah this is supposedly like that
+        for (auto& pos: tilelist) {
+            if (pos.type != tiletype::button) continue;
+            button* button_ = dynamic_cast<button*>(pos.tile.get());
+            if (!button_ || !button_ -> presscheck) continue;
+
+            bool occupied = false;
+            for (auto& rest: tilelist) {
+                if (rest.type != tiletype::door) continue;
+                door* door_ = dynamic_cast<door*>(rest.tile.get());
+                if (!door_ || door_ -> id != button_ -> id) continue;
+
+                sf::FloatRect doorbounds = door_ -> collide();
+                if (doorbounds.findIntersection(Object.shape().getGlobalBounds())) {
+                    occupied = true;
+                    break;
+                }
+                for (auto& others: tilelist) {
+                    if (others.type != tiletype::block_push) continue;
+                    if (doorbounds.findIntersection(others.tile -> collide())) {
+                        occupied = true;
+                        break;
+                    }
+                }
+                if (!occupied) {
+                    door_ -> opened = false;
+                    button_ -> presscheck = false;
                 }
             }
         }
@@ -189,20 +224,14 @@ public:
         for (auto& pos: tilelist) {
             if (pos.type != tiletype::button) continue;
             button* button_ = dynamic_cast<button*>(pos.tile.get());
-            if (!button_ || !button_ -> pressed) continue;
+            if (!button_ || (!button_ -> presscheck && !button_ -> pressed)) continue;
 
             for (auto& other: tilelist) {
                 if (other.type != tiletype::door) continue;
                 door* door_ = dynamic_cast<door*>(other.tile.get());
                 sf::FloatRect doorbounds = door_ -> collide();
                 if (door_ && door_ -> id == button_ -> id) {
-                    for (auto& other: tilelist) {
-                        if (other.type == tiletype::block_push && !doorbounds.findIntersection(other.tile -> collide()) && !doorbounds.findIntersection(Object.shape().getGlobalBounds())) {
-                            door_ -> opened = true;
-                        } else {
-                            door_ -> opened = false;
-                        }
-                    }
+                    door_ -> opened = true;
                 }
             }
         }

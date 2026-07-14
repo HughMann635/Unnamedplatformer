@@ -249,6 +249,7 @@ public:
     sf::ConvexShape buttonblock[3];
     int id;
     bool pressed = false;
+    bool presscheck = false;
     button (sf::Vector2f position, int id_button = 0) : id(id_button) {
         buttonblock[0].setPointCount(4);
         buttonblock[0].setPoint(0, sf::Vector2f(10, 4));
