@@ -65,9 +65,11 @@ public:
 
     void updatepos (float deltatime) override {
         if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Right) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::D)) {
-            velocity.x = movespeed;
+            if (velocity.x > movespeed) velocity.x -= circleaccel*0.7;
+            else velocity.x = movespeed;
 		} else if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Left) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::A)) {
-            velocity.x = -movespeed;
+            if (velocity.x < -movespeed) velocity.x += circleaccel*0.7;
+            else velocity.x = -movespeed;
 		} else {
             zerogactive || swimming ? velocity.x *= 0.8 : velocity.x *= 0.f; 
         }
@@ -150,8 +152,8 @@ public:
 		} else if (swimming || zerogactive) {
             velocity.x *= 0.8; 
         } else {
-            if (velocity.x > 0) velocity.x -= circleaccel;
-            else if (velocity.x < 0) velocity.x += circleaccel;
+            if (velocity.x > 0) velocity.x -= circleaccel*0.7;
+            else if (velocity.x < 0) velocity.x += circleaccel*0.7;
             else velocity.x = 0;
         }
         if (zerogactive) {
