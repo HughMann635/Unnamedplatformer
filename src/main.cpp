@@ -22,12 +22,12 @@ int main()
 
 	sf::View view;
 	view.setSize(sf::Vector2f(camwidth, camheight));
-	view.setCenter(sf::Vector2f(player.playershape.getPosition().x, player.playershape.getPosition().y));
+	view.setCenter(sf::Vector2f(player.shape().getPosition().x, player.shape().getPosition().y));
 
 	sky.makestars(stars);
 
 	map.loadmap(levels[0][0]);
-	player.playershape.setPosition(map.spawn);
+	player.shape().setPosition(map.spawn);
 
 	while ( window.isOpen() ) {
 		float deltatime = timer.restart().asSeconds();
@@ -35,7 +35,7 @@ int main()
 		if (restart == true) {
 			map.tilelist.clear();
 			map.loadmap(levels[0][0]);
-			player.playershape.setPosition(map.spawn);
+			player.shape().setPosition(map.spawn);
 			player.velocity = sf::Vector2f(0.f, 0.f);
 			gravity = 1800.f;
 			restart = false;
@@ -56,29 +56,29 @@ int main()
 		sky.drawstars(window);
 		player.drawscreen(window);
 		map.drawmap(window);
-		if (player.playershape.getPosition().x < camwidth/2.f) {
-			if (player.playershape.getPosition().y < camheight/2.f) {
+		if (player.shape().getPosition().x < camwidth/2.f) {
+			if (player.shape().getPosition().y < camheight/2.f) {
 				view.setCenter(sf::Vector2f(camwidth/2.f, camheight/2.f));
-			} else if (player.playershape.getPosition().y > height-camheight/2.f) {
+			} else if (player.shape().getPosition().y > height-camheight/2.f) {
 				view.setCenter(sf::Vector2f(camwidth/2.f, height-camheight/2.f));
 			} else {
-				view.setCenter(sf::Vector2f(camwidth/2.f, player.playershape.getPosition().y));
+				view.setCenter(sf::Vector2f(camwidth/2.f, player.shape().getPosition().y));
 			}
-		} else if (player.playershape.getPosition().x > width-camwidth/2.f) {
-			if (player.playershape.getPosition().y < camheight/2.f) {
+		} else if (player.shape().getPosition().x > width-camwidth/2.f) {
+			if (player.shape().getPosition().y < camheight/2.f) {
 				view.setCenter(sf::Vector2f(width-camwidth/2.f, camheight/2.f));
-			} else if (player.playershape.getPosition().y > height-camheight/2.f) {
+			} else if (player.shape().getPosition().y > height-camheight/2.f) {
 				view.setCenter(sf::Vector2f(width-camwidth/2.f, height-camheight/2.f));
 			} else {
-				view.setCenter(sf::Vector2f(width-camwidth/2.f, player.playershape.getPosition().y));
+				view.setCenter(sf::Vector2f(width-camwidth/2.f, player.shape().getPosition().y));
 			}
 		} else {
-			if (player.playershape.getPosition().y < camheight/2.f) {
-				view.setCenter(sf::Vector2f(player.playershape.getPosition().x, camheight/2.f));
-			} else if (player.playershape.getPosition().y > height-camheight/2.f) {
-				view.setCenter(sf::Vector2f(player.playershape.getPosition().x, height-camheight/2.f));
+			if (player.shape().getPosition().y < camheight/2.f) {
+				view.setCenter(sf::Vector2f(player.shape().getPosition().x, camheight/2.f));
+			} else if (player.shape().getPosition().y > height-camheight/2.f) {
+				view.setCenter(sf::Vector2f(player.shape().getPosition().x, height-camheight/2.f));
 			} else {
-				view.setCenter(sf::Vector2f(player.playershape.getPosition().x, player.playershape.getPosition().y));
+				view.setCenter(sf::Vector2f(player.shape().getPosition().x, player.shape().getPosition().y));
 			}
 		}
 		window.display();
