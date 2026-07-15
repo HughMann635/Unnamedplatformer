@@ -83,6 +83,8 @@ void square::drawscreen (sf::RenderWindow& window)  {
     window.draw(playershape);
 }
 
+
+
 circle::circle() {
     playershape = sf::CircleShape(playerdim/2);
     playershape.setFillColor(sf::Color(0, 255, 255));
@@ -124,8 +126,8 @@ void circle::updatepos (float deltatime, tilemap& map)  {
     } else if (swimming || zerogactive) {
         velocity.x *= 0.8; 
     } else {
-        if (velocity.x > 0) velocity.x -= circleaccel*0.7;
-        else if (velocity.x < 0) velocity.x += circleaccel*0.7;
+        if (velocity.x > 0) velocity.x -= circleaccel/2;
+        else if (velocity.x < 0) velocity.x += circleaccel/2;
         else velocity.x = 0;
     }
     if (zerogactive) {
@@ -162,6 +164,8 @@ void circle::updatepos (float deltatime, tilemap& map)  {
 void circle::drawscreen (sf::RenderWindow& window)  {
     window.draw(playershape);
 }
+
+
 
 triangle::triangle() {
     playershape.setPointCount(3);

@@ -256,11 +256,11 @@ public:
                 float blockleft = blockbounds.position.x;
                 float blockright = blockbounds.position.x + blockbounds.size.x;
                 if ((playercentery > blocktop && playercentery < blockbottom)) {
-                    if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) && Object.velocity.x > 0) {
+                    if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) && Object.shape().getPosition().x < blockbounds.position.x) {
                         block_ -> velocity.x = trianglepushspeed;
                         Object.velocity.x = trianglepushspeed;
                         Object.grounded = false;
-                    } else if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) && Object.velocity.x < 0) {
+                    } else if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) && Object.shape().getPosition().x > blockbounds.position.x) {
                         block_ -> velocity.x = -trianglepushspeed;
                         Object.velocity.x = -trianglepushspeed;
                         Object.grounded = false;
