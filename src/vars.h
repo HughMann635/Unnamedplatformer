@@ -1,41 +1,42 @@
 #pragma once
+#include <SFML/System.hpp>
 #include <string>
 
 //window settings
 const int width = 1280;
 const int height = 720;
-std::string title = "Shape Game";
+inline std::string title = "Shape Game";
 const int camwidth = 960;
 const int camheight = 540;
 const int stars = 700;
-bool running = true;
-bool restart = false;
+inline bool running = true;
+inline bool restart = false;
 
 //Player and physics settings
 //This is also the dimension of all tiles in the game
 const float playerdim = 20.f; 
 
-float gravity = 1800.f;
-float jumpforce = 600.f;
-float movespeed = 230.f;
+inline float gravity = 1800.f;
+inline float jumpforce = 600.f;
+inline float movespeed = 230.f;
 
-bool swimming = false;
-bool zerogactive = false;
+inline bool swimming = false;
+inline bool zerogactive = false;
 
-float circleaccel = 8.f;
-float circlemax = 400.f;
+inline float circleaccel = 8.f;
+inline float circlemax = 400.f;
 //Triangle was initially gonna be the only character that could push blocks; this is now the push speed for any block
 //Keeping the name for old times sake :')
-float trianglepushspeed = 115.f;
-sf::Clock tp_timer;
+inline float trianglepushspeed = 115.f;
+inline sf::Clock tp_timer;
 
 //Game settings
-bool circlelocked = true;
-bool trianglelocked = true;
-bool octagonlocked = true;
-bool hexagonlocked = true;
-bool squareactive = true;
-bool circleactive = false;
-bool triangleactive = false;
-bool octagonactive = false;
-bool hexagonactive = false;
+inline bool circlelocked = true;
+inline bool trianglelocked = true;
+inline bool octagonlocked = true;
+inline bool hexagonlocked = true;
+inline bool squareactive = true;
+inline bool circleactive = false;
+inline bool triangleactive = false;
+inline bool octagonactive = false;
+inline bool hexagonactive = false;

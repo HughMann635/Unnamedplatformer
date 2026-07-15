@@ -3,7 +3,7 @@
 #include <string>
 
 //Will fill these in once I actually decide on level layouts lmao
-std::string levels[5][6] = {
+inline std::string levels[5][6] = {
     {
         "****************************************************************\n"
         "****************************************************************\n"
