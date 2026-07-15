@@ -70,6 +70,8 @@ void square::updatepos (float deltatime, tilemap& map) {
 
     moveobject(deltatime, gravity);
 
+    if (playershape.getPosition().y > 720) restart = true;
+
     sf::Vector2f bound = playershape.getPosition();
     bound.x = std::clamp(bound.x, 0.f, (float)width-playerdim);
     playershape.setPosition(bound);
@@ -148,6 +150,8 @@ void circle::updatepos (float deltatime, tilemap& map)  {
 
     moveobject(deltatime, gravity);
 
+    if (playershape.getPosition().y > 720) restart = true;
+
     sf::Vector2f bound = playershape.getPosition();
     bound.x = std::clamp(bound.x, 0.f, (float)width-playerdim);
     playershape.setPosition(bound);
@@ -224,7 +228,7 @@ void triangle::updatepos (float deltatime, tilemap& map)  {
                     velocity = sf::Vector2f(0, 0);
                     tp_timer.restart();
                 }
-            } else if ((sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Down) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::S))) {
+            } else if (((sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Down) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::S))) && shape().getPosition().y < (height-40)) {
                 if (!map.predictCollision(sf::FloatRect(sf::Vector2f(shape().getPosition().x, shape().getPosition().y-40), sf::Vector2f(20, 17.3)))) {
                     playershape.setPosition(sf::Vector2f(playershape.getPosition().x, playershape.getPosition().y + 40));
                     velocity = sf::Vector2f(0, 0);
@@ -256,9 +260,10 @@ void triangle::updatepos (float deltatime, tilemap& map)  {
 
     moveobject(deltatime, gravity);
 
+    if (playershape.getPosition().y > 720) restart = true;
+
     sf::Vector2f bound = playershape.getPosition();
     bound.x = std::clamp(bound.x, 0.f, (float)width-playerdim);
-    bound.y = std::clamp(bound.y, -1000.f, (float)height-playerdim);
     playershape.setPosition(bound);
     swimming = false;
     zerogactive = false;
