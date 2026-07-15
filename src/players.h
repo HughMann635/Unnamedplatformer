@@ -196,9 +196,9 @@ public:
 
     triangle() {
         playershape.setPointCount(3);
-        playershape.setPoint(0, sf::Vector2f(0, 20));
-        playershape.setPoint(1, sf::Vector2f(10, 2.7));
-        playershape.setPoint(2, sf::Vector2f(20, 20));
+        playershape.setPoint(0, sf::Vector2f(0, 17.3));
+        playershape.setPoint(1, sf::Vector2f(10, 0));
+        playershape.setPoint(2, sf::Vector2f(20, 17.3));
 	    playershape.setFillColor(sf::Color(0, 255, 0));
 
         velocity = (sf::Vector2f(0.f, gravity));
