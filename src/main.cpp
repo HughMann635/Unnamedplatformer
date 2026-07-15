@@ -28,7 +28,7 @@ int main()
 
 	sky.makestars(stars);
 
-	map.loadmap(levels[0][0]);
+	map.loadmap(levels[0][1]);
 	currentplayer -> shape().setPosition(map.spawn);
 
 	while (window.isOpen()) {
@@ -36,7 +36,7 @@ int main()
 		
 		if (restart == true) {
 			map.tilelist.clear();
-			map.loadmap(levels[0][0]);
+			map.loadmap(levels[0][1]);
 			currentplayer -> shape().setPosition(map.spawn);
 			currentplayer -> velocity = sf::Vector2f(0.f, 0.f);
 			gravity = 1800.f;

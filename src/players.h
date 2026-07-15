@@ -239,15 +239,22 @@ public:
             zerogactive || swimming ? velocity.x *= 0.8 : velocity.x *= 0.f; 
         }
 
-        if ((sf::Keyboard::isKeyPressed (sf::Keyboard::Key::LShift) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::RShift))) {
-            if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Right) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::D)) {
-                playershape.setPosition(sf::Vector2f(playershape.getPosition().x + 10, playershape.getPosition().y));
-            } else if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Left) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::A)) {
-                playershape.setPosition(sf::Vector2f(playershape.getPosition().x - 10, playershape.getPosition().y));
-            } else if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::W)) {
-                playershape.setPosition(sf::Vector2f(playershape.getPosition().x, playershape.getPosition().y - 10));
-            } else if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Down) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::S)) {
-                playershape.setPosition(sf::Vector2f(playershape.getPosition().x, playershape.getPosition().y + 10));
+        if (tp_timer.getElapsedTime().asSeconds() >= 5.f) {
+            if ((sf::Keyboard::isKeyPressed (sf::Keyboard::Key::LShift) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::RShift))) {
+                if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Right) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::D)) {
+                    playershape.setPosition(sf::Vector2f(playershape.getPosition().x + 100, playershape.getPosition().y));
+                    velocity = sf::Vector2f(0, 0);
+                } else if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Left) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::A)) {
+                    playershape.setPosition(sf::Vector2f(playershape.getPosition().x - 100, playershape.getPosition().y));
+                    velocity = sf::Vector2f(0, 0);
+                } else if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::W)) {
+                    playershape.setPosition(sf::Vector2f(playershape.getPosition().x, playershape.getPosition().y - 100));
+                    velocity = sf::Vector2f(0, 0);
+                } else if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Down) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::S)) {
+                    playershape.setPosition(sf::Vector2f(playershape.getPosition().x, playershape.getPosition().y + 100));
+                    velocity = sf::Vector2f(0, 0);
+                }
+                tp_timer.restart();
             }
         }
 

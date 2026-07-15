@@ -27,6 +27,7 @@ float circlemax = 400.f;
 //Triangle was initially gonna be the only character that could push blocks; this is now the push speed for any block
 //Keeping the name for old times sake :')
 float trianglepushspeed = 115.f;
+sf::Clock tp_timer;
 
 //Game settings
 bool circlelocked = true;
