@@ -48,7 +48,7 @@ int main()
 		}
 		
 		currentplayer -> jump(deltatime);
-		currentplayer -> updatepos(deltatime);
+		currentplayer -> updatepos(deltatime, map);
 		map.checkCollisions(*currentplayer);
 		map.updatemap(deltatime);
 		lastframe_pos = sf::Vector2f(currentplayer -> shape().getPosition());

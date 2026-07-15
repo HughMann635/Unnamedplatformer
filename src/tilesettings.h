@@ -425,6 +425,15 @@ public:
         }
     }
 
+    bool predictCollision(sf::FloatRect futurepos) {
+        for (auto& pos: tilelist) {
+            if ((pos.type == tiletype::ground || pos.type == tiletype::block_push || pos.type == tiletype::door) && (pos.tile -> collide().findIntersection(futurepos))) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     void updatemap (float deltatime) {
         for (auto& pos: tilelist) {
             if (pos.type != tiletype::empty && pos.type != tiletype::spawn) {
