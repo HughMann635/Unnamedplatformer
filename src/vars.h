@@ -31,6 +31,7 @@ inline float trianglepushspeed = 115.f;
 inline int jumpcount = 2;
 inline sf::Clock tp_timer;
 inline sf::Clock jump_timer;
+inline bool wallhugging = false;
 
 //Game settings
 inline bool circlelocked = true;
