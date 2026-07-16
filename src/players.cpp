@@ -88,7 +88,7 @@ void square::drawscreen (sf::RenderWindow& window)  {
 
 circle::circle() {
     playershape = sf::CircleShape(playerdim/2);
-    playershape.setFillColor(sf::Color(0, 255, 255));
+    playershape.setFillColor(sf::Color(0, 145, 255));
 
     velocity = (sf::Vector2f(0.f, gravity));
     grounded = false;
@@ -277,7 +277,6 @@ void triangle::updatepos (float deltatime, tilemap& map)  {
 }
 
 void triangle::drawscreen (sf::RenderWindow& window)  {
-
     window.draw(playershape);
 }
 
