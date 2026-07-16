@@ -281,12 +281,12 @@ void triangle::drawscreen (sf::RenderWindow& window)  {
 
 hexagon::hexagon() {
     playershape.setPointCount(6);
-    playershape.setPoint(0, sf::Vector2f(5, 20));
-    playershape.setPoint(1, sf::Vector2f(15, 20));
-    playershape.setPoint(2, sf::Vector2f(20, 16.12701665)); //i.e. 20 minus root 75
-    playershape.setPoint(3, sf::Vector2f(15, 12.2540333)); // 20 minus root 75 doubled
-    playershape.setPoint(4, sf::Vector2f(5, 12.2540333));
-    playershape.setPoint(5, sf::Vector2f(0, 16.12701665));
+    playershape.setPoint(0, sf::Vector2f(5, 0));
+    playershape.setPoint(1, sf::Vector2f(15, 0));
+    playershape.setPoint(2, sf::Vector2f(20, (20-11.33974596)));
+    playershape.setPoint(3, sf::Vector2f(15, (20-2.67949192)));
+    playershape.setPoint(4, sf::Vector2f(5, (20-2.67949192)));
+    playershape.setPoint(5, sf::Vector2f(0, (20-11.33974596)));
 
     velocity = sf::Vector2f(0.f, gravity);
     grounded = false;
