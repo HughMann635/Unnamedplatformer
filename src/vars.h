@@ -29,6 +29,7 @@ inline float circlemax = 400.f;
 //Keeping the name for old times sake :')
 inline float trianglepushspeed = 115.f;
 inline sf::Clock tp_timer;
+inline sf::Clock jump_timer;
 
 //Game settings
 inline bool circlelocked = true;

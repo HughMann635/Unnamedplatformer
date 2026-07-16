@@ -309,11 +309,17 @@ sf::Shape& hexagon::shape() {
 
 void hexagon::jump (float deltatime) {
     if (sf::Keyboard::isKeyPressed ( sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::W)) {
-        if (grounded && !swimming && !zerogactive) {
-            velocity.y -= jumpforce;
+        if (jumpcount > 0 && !swimming && !zerogactive && jump_timer.getElapsedTime().asMilliseconds() > 200) {
+            velocity.y = -jumpforce;
             grounded = false;
+            jump_timer.restart();
         }
     }
+    if (grounded && jumpcount == 0) jumpcount = 2;
+    if (!grounded && jumpcount > 0) {
+        jumpcount -= 1;
+        if (jumpcount > 0) grounded = true;
+    } 
     if (swimming) {
         if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Down) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::S)) {
             velocity.y += 50.f;
@@ -337,36 +343,6 @@ void hexagon::updatepos (float deltatime, tilemap& map) {
         else velocity.x = -movespeed;
     } else {
         zerogactive || swimming ? velocity.x *= 0.8 : velocity.x *= 0.f; 
-    }
-
-    if (tp_timer.getElapsedTime().asSeconds() >= 3.f) {
-        if ((sf::Keyboard::isKeyPressed (sf::Keyboard::Key::LShift) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::RShift))) {
-            if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Right) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::D)) {
-                if (!map.predictCollision(sf::FloatRect(sf::Vector2f(shape().getPosition().x+40, shape().getPosition().y), sf::Vector2f(20, 17.3)))) {
-                    playershape.setPosition(sf::Vector2f(playershape.getPosition().x + 40, playershape.getPosition().y));
-                    velocity = sf::Vector2f(0, 0);
-                    tp_timer.restart();
-                }
-            } else if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Left) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::A)) {
-                if (!map.predictCollision(sf::FloatRect(sf::Vector2f(shape().getPosition().x-40, shape().getPosition().y), sf::Vector2f(20, 17.3)))) {
-                    playershape.setPosition(sf::Vector2f(playershape.getPosition().x - 40, playershape.getPosition().y));
-                    velocity = sf::Vector2f(0, 0);
-                    tp_timer.restart();
-                }
-            } else if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::W)) {
-                if (!map.predictCollision(sf::FloatRect(sf::Vector2f(shape().getPosition().x, shape().getPosition().y-40), sf::Vector2f(20, 17.3)))) {                        
-                    playershape.setPosition(sf::Vector2f(playershape.getPosition().x, playershape.getPosition().y - 40));
-                    velocity = sf::Vector2f(0, 0);
-                    tp_timer.restart();
-                }
-            } else if (((sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Down) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::S))) && shape().getPosition().y < (height-40)) {
-                if (!map.predictCollision(sf::FloatRect(sf::Vector2f(shape().getPosition().x, shape().getPosition().y-40), sf::Vector2f(20, 17.3)))) {
-                    playershape.setPosition(sf::Vector2f(playershape.getPosition().x, playershape.getPosition().y + 40));
-                    velocity = sf::Vector2f(0, 0);
-                    tp_timer.restart();
-                }
-            }
-        }
     }
 
     if (zerogactive) {
