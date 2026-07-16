@@ -287,15 +287,9 @@ hexagon::hexagon() {
     playershape.setPointCount(6);
     playershape.setPoint(0, sf::Vector2f(5.f, 0.f));
     playershape.setPoint(1, sf::Vector2f(15.f, 0.f));
-    
-    // Rightmost point (exactly in the middle at Y = 10)
     playershape.setPoint(2, sf::Vector2f(20.f, 9.f));
-    
-    // Bottom flat edge (Y = 20)
     playershape.setPoint(3, sf::Vector2f(15.f, 18.f));
     playershape.setPoint(4, sf::Vector2f(5.f, 18.f));
-    
-    // Leftmost point (exactly in the middle at Y = 10)
     playershape.setPoint(5, sf::Vector2f(0.f, 9.f));
     playershape.setFillColor(sf::Color(255, 235, 0));
 
@@ -312,14 +306,12 @@ void hexagon::jump (float deltatime) {
         if (jumpcount > 0 && !swimming && !zerogactive && jump_timer.getElapsedTime().asMilliseconds() > 200) {
             velocity.y = -jumpforce;
             grounded = false;
+            jumpcount -= 1;
+            //if (jumpcount > 0) grounded = true;
             jump_timer.restart();
         }
     }
-    if (grounded && jumpcount == 0) jumpcount = 2;
-    if (!grounded && jumpcount > 0) {
-        jumpcount -= 1;
-        if (jumpcount > 0) grounded = true;
-    } 
+    if (grounded) jumpcount = 2;
     if (swimming) {
         if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Down) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::S)) {
             velocity.y += 50.f;

@@ -67,7 +67,6 @@ public:
 class hexagon : public player {
 public:
     sf::ConvexShape playershape;
-    int jumpcount = 2;
 
     hexagon();
     sf::Shape& shape() override;

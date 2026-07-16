@@ -48,6 +48,7 @@ int main()
 		}
 		
 		currentplayer -> jump(deltatime);
+		currentplayer -> grounded = false;
 		currentplayer -> updatepos(deltatime, map);
 		map.checkCollisions(*currentplayer);
 		map.updatemap(deltatime);
