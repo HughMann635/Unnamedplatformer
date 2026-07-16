@@ -59,6 +59,7 @@ int main()
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num2)) currentplayer = std::make_unique<circle>();
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num3)) currentplayer = std::make_unique<triangle>();
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num4)) currentplayer = std::make_unique<hexagon>();
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num5)) currentplayer = std::make_unique<octagon>();
 
 		currentplayer -> shape().setPosition(lastframe_pos);
 		currentplayer -> velocity = lastframe_vel;
