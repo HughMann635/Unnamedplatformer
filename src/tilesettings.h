@@ -378,7 +378,7 @@ public:
                     break;
                     case tiletype::spring:
                     Object.velocity.y = -1000.f;
-                    jumpcount = 1;
+                    jumpcount = 2;
                     break;
                     case tiletype::button: {
                     button* button_ = dynamic_cast<button*>(pos.tile.get());

@@ -303,11 +303,9 @@ sf::Shape& hexagon::shape() {
 
 void hexagon::jump (float deltatime) {
     if (sf::Keyboard::isKeyPressed ( sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::W)) {
-        if (jumpcount > 0 && !swimming && !zerogactive && jump_timer.getElapsedTime().asMilliseconds() > 200) {
+        if (jumpcount > 1 && !swimming && !zerogactive && jump_timer.getElapsedTime().asMilliseconds() > 200) {
             velocity.y = -jumpforce;
-            grounded = false;
             jumpcount -= 1;
-            //if (jumpcount > 0) grounded = true;
             jump_timer.restart();
         }
     }
