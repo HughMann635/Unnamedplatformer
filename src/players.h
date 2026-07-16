@@ -65,6 +65,7 @@ public:
 };
 
 class hexagon : public player {
+public:
     sf::ConvexShape playershape;
 
     hexagon();
@@ -75,6 +76,7 @@ class hexagon : public player {
 };
 
 class octagon : public player {
+public:
     sf::ConvexShape playershape;
 
     octagon();
