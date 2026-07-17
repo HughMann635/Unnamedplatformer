@@ -37,6 +37,7 @@ int main()
 		if (restart == true) {
 			map.tilelist.clear();
 			map.loadmap(levels[setnum][levelnum]);
+			currentplayer = std::make_unique<square>();
 			currentplayer -> shape().setPosition(map.spawn);
 			currentplayer -> velocity = sf::Vector2f(0.f, 0.f);
 			gravity = 1800.f;
@@ -55,6 +56,7 @@ int main()
 			}
 
 			map.tilelist.clear();
+			currentplayer = std::make_unique<square>();
 			map.loadmap(levels[setnum][levelnum]);
 			currentplayer -> shape().setPosition(map.spawn);
 			currentplayer -> velocity = sf::Vector2f(0.f, 0.f);
