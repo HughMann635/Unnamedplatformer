@@ -399,6 +399,15 @@ void octagon::jump (float deltatime) {
             velocity.y = -jumpforce;
             grounded = false;
         }
+        else if (!grounded && wallhuggingright) {
+            velocity.y = -jumpforce;
+            velocity.x = -movespeed;
+            walljumped = true;
+        } else if (!grounded && wallhuggingleft) {
+            velocity.y = -jumpforce;
+            velocity.x = movespeed;
+            walljumped = true;
+        }
     }
     if (swimming) {
         if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Down) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::S)) {
@@ -410,32 +419,11 @@ void octagon::jump (float deltatime) {
             grounded = false;
         }
     }
-    if (wallhuggingleft && (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::W))) {
-        velocity.y = -jumpforce;
-        walljumped = true;
-    }
-    if (wallhuggingright && (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::W))) {
-        velocity.y = -jumpforce;
-        walljumped = true;
-    }
 }
 
 void octagon::updatepos (float deltatime, tilemap& map) {
     if (walljumped) {
-        if (wallhuggingleft) {
-            preserved_vel >= movespeed ? velocity.x += preserved_vel : velocity.x += movespeed;
-        } 
-        else if (wallhuggingright) {
-            preserved_vel <= -movespeed ? velocity.x -= preserved_vel : velocity.x -= movespeed;
-        }
-        wallhuggingright = false;
-        wallhuggingleft = false;
-        if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down)) {
-            velocity.x = 0;
-            velocity.y += 500;
-            walljumped = false;
-        }
-        if (grounded) walljumped = false;
+        velocity.x += 0;
     } else {
         if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Right) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::D)) {
             if (velocity.x > movespeed && grounded) velocity.x -= circleaccel*0.7;
@@ -448,6 +436,13 @@ void octagon::updatepos (float deltatime, tilemap& map) {
         } else {
             zerogactive || swimming ? velocity.x *= 0.8 : velocity.x *= 0.f; 
         }
+    }
+
+    if ((sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down)) && !grounded) {
+        wallhuggingright = false;
+        wallhuggingleft = false;
+        if (walljumped) walljumped = false;
+        else velocity.x = 0;
     }
 
     if (zerogactive) {
@@ -470,6 +465,11 @@ void octagon::updatepos (float deltatime, tilemap& map) {
         gravity = 1800.f;
     }
 
+    wallhuggingright = false;
+    wallhuggingleft = false;
+    if (grounded) {
+        walljumped = false;
+    }
     moveobject(deltatime, gravity);
 
     if (playershape.getPosition().y > 720) restart = true;

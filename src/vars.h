@@ -33,7 +33,6 @@ inline sf::Clock tp_timer;
 inline sf::Clock jump_timer;
 inline bool wallhuggingleft = false;
 inline bool wallhuggingright = false;
-inline float preserved_vel = 0.f; 
 
 //Game settings
 inline bool circlelocked = true;
