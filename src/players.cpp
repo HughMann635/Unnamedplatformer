@@ -399,14 +399,20 @@ void octagon::jump (float deltatime) {
             velocity.y = -jumpforce;
             grounded = false;
         }
-        else if (!grounded && wallhuggingright) {
+        else if (!grounded && !swimming && !zerogactive && wallhuggingright && !jumpkeyheld) {
             velocity.y = -jumpforce;
             velocity.x = -movespeed;
             walljumped = true;
-        } else if (!grounded && wallhuggingleft) {
+        } else if (!grounded && !swimming && !zerogactive && wallhuggingleft && !jumpkeyheld) {
             velocity.y = -jumpforce;
             velocity.x = movespeed;
             walljumped = true;
+        }
+    } else {
+        if (!grounded && !swimming && !zerogactive && wallhuggingright) {
+            velocity.y = 0;
+        } else if (!grounded && !swimming && !zerogactive && wallhuggingleft) {
+            velocity.y = 0;
         }
     }
     if (swimming) {
@@ -419,9 +425,12 @@ void octagon::jump (float deltatime) {
             grounded = false;
         }
     }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) jumpkeyheld = true;
+    else jumpkeyheld = false;
 }
 
 void octagon::updatepos (float deltatime, tilemap& map) {
+    if (walljumpcancel) walljumped = false;
     if (walljumped) {
         velocity.x += 0;
     } else {
@@ -439,8 +448,6 @@ void octagon::updatepos (float deltatime, tilemap& map) {
     }
 
     if ((sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down)) && !grounded) {
-        wallhuggingright = false;
-        wallhuggingleft = false;
         if (walljumped) walljumped = false;
         else velocity.x = 0;
     }
@@ -470,6 +477,7 @@ void octagon::updatepos (float deltatime, tilemap& map) {
     if (grounded) {
         walljumped = false;
     }
+    walljumpcancel = false;
     moveobject(deltatime, gravity);
 
     if (playershape.getPosition().y > 720) restart = true;

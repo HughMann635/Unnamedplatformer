@@ -380,6 +380,7 @@ public:
                     break;
                     case tiletype::spring:
                     Object.velocity.y = -1000.f;
+                    walljumpcancel = true;
                     jumpcount = 2;
                     break;
                     case tiletype::button: {
