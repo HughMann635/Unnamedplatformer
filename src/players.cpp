@@ -412,25 +412,41 @@ void octagon::jump (float deltatime) {
     }
     if (wallhuggingleft && (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::W))) {
         velocity.y = -jumpforce;
-        wallhuggingleft = false;
+        walljumped = true;
     }
     if (wallhuggingright && (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::W))) {
         velocity.y = -jumpforce;
-        wallhuggingright = false;
+        walljumped = true;
     }
 }
 
 void octagon::updatepos (float deltatime, tilemap& map) {
-    if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Right) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::D)) {
-        if (velocity.x > movespeed && grounded) velocity.x -= circleaccel*0.7;
-        else if (velocity.x > movespeed && !grounded) velocity.x -= 0;
-        else velocity.x = movespeed;
-    } else if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Left) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::A)) {
-        if (velocity.x < -movespeed && grounded) velocity.x += circleaccel*0.7;
-        else if (velocity.x < -movespeed && !grounded) velocity.x -= 0;
-        else velocity.x = -movespeed;
+    if (walljumped) {
+        if (wallhuggingleft) {
+            preserved_vel >= movespeed ? velocity.x += preserved_vel : velocity.x += movespeed;
+        } 
+        else if (wallhuggingright) {
+            preserved_vel >= movespeed ? velocity.x -= preserved_vel : velocity.x -= movespeed;
+        }
+        wallhuggingright = false;
+        wallhuggingleft = false;
+        if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down)) {
+            velocity.x = 0;
+            velocity.y += 50;
+            walljumped = false;
+        }
     } else {
-        zerogactive || swimming ? velocity.x *= 0.8 : velocity.x *= 0.f; 
+        if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Right) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::D)) {
+            if (velocity.x > movespeed && grounded) velocity.x -= circleaccel*0.7;
+            else if (velocity.x > movespeed && !grounded) velocity.x -= 0;
+            else velocity.x = movespeed;
+        } else if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Left) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::A)) {
+            if (velocity.x < -movespeed && grounded) velocity.x += circleaccel*0.7;
+            else if (velocity.x < -movespeed && !grounded) velocity.x -= 0;
+            else velocity.x = -movespeed;
+        } else {
+            zerogactive || swimming ? velocity.x *= 0.8 : velocity.x *= 0.f; 
+        }
     }
 
     if (zerogactive) {
