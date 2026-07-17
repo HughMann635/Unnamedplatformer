@@ -400,12 +400,28 @@ void octagon::jump (float deltatime) {
             grounded = false;
         }
         else if (!grounded && !swimming && !zerogactive && wallhuggingright && !jumpkeyheld) {
-            velocity.y = -jumpforce;
-            velocity.x = -movespeed;
+            if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::LShift)) {
+                velocity.y = -0.85 * jumpforce;
+                velocity.x = -1.4 * jumpforce;
+            } else if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::RShift)) {
+                velocity.y = -1.4* jumpforce;
+                velocity.x = -0.85 * jumpforce;
+            } else {
+                velocity.y = -jumpforce;
+                velocity.x = -movespeed;
+            }
             walljumped = true;
         } else if (!grounded && !swimming && !zerogactive && wallhuggingleft && !jumpkeyheld) {
-            velocity.y = -jumpforce;
-            velocity.x = movespeed;
+            if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::LShift)) {
+                velocity.y = -0.92 * jumpforce;
+                velocity.x = 1.15 * jumpforce;
+            } else if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::RShift)) {
+                velocity.y = -1.28 * jumpforce;
+                velocity.x = 0.56 * jumpforce;
+            } else {
+                velocity.y = -jumpforce;
+                velocity.x = movespeed;
+            }
             walljumped = true;
         }
     } else {
