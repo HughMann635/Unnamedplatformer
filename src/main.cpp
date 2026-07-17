@@ -28,7 +28,7 @@ int main()
 
 	sky.makestars(stars);
 
-	map.loadmap(levels[0][1]);
+	map.loadmap(levels[setnum][levelnum]);
 	currentplayer -> shape().setPosition(map.spawn);
 
 	while (window.isOpen()) {
@@ -36,12 +36,33 @@ int main()
 		
 		if (restart == true) {
 			map.tilelist.clear();
-			map.loadmap(levels[0][1]);
+			map.loadmap(levels[setnum][levelnum]);
 			currentplayer -> shape().setPosition(map.spawn);
 			currentplayer -> velocity = sf::Vector2f(0.f, 0.f);
 			gravity = 1800.f;
 			restart = false;
 		} 
+
+		if (newlevel == true) {
+			levelnum += 1;
+			if (levelnum > 5) {
+				levelnum = 0;
+				setnum += 1;
+			}
+			//BEATING THE GAME (will update later)
+			if (setnum > 4) {
+				std::cout << "Congrats!";
+				running = false; 
+			}
+
+			map.tilelist.clear();
+			map.loadmap(levels[setnum][levelnum]);
+			currentplayer -> shape().setPosition(map.spawn);
+			currentplayer -> velocity = sf::Vector2f(0.f, 0.f);
+			gravity = 1800.f;
+			newlevel = false;
+		} 
+
 		while ( const std::optional event = window.pollEvent() ) {
 			if ( event->is<sf::Event::Closed>() || running == false)
 				window.close();
@@ -55,11 +76,11 @@ int main()
 		lastframe_pos = sf::Vector2f(currentplayer -> shape().getPosition());
 		lastframe_vel = sf::Vector2f(currentplayer -> velocity);
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num1)) currentplayer = std::make_unique<square>();
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num2)) currentplayer = std::make_unique<circle>();
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num3)) currentplayer = std::make_unique<triangle>();
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num4)) currentplayer = std::make_unique<hexagon>();
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num5)) currentplayer = std::make_unique<octagon>();
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num1) && !dynamic_cast<square*>(currentplayer.get())) currentplayer = std::make_unique<square>();
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num2) && !dynamic_cast<circle*>(currentplayer.get())) currentplayer = std::make_unique<circle>();
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num3) && !dynamic_cast<triangle*>(currentplayer.get())) currentplayer = std::make_unique<triangle>();
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num4) && !dynamic_cast<hexagon*>(currentplayer.get())) currentplayer = std::make_unique<hexagon>();
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num5) && !dynamic_cast<octagon*>(currentplayer.get())) currentplayer = std::make_unique<octagon>();
 
 		currentplayer -> shape().setPosition(lastframe_pos);
 		currentplayer -> velocity = lastframe_vel;

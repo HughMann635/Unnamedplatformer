@@ -367,7 +367,7 @@ public:
                     restart = true;
                     break;
                     case tiletype::exit:
-                    running = false;
+                    newlevel = true;
                     break;
                     case tiletype::water:
                     swimming = true;

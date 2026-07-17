@@ -11,6 +11,7 @@ const int camheight = 540;
 const int stars = 700;
 inline bool running = true;
 inline bool restart = false;
+inline bool newlevel = false;
 
 //Player and physics settings
 //This is also the dimension of all tiles in the game
@@ -37,6 +38,8 @@ inline bool walljumpcancel = false;
 inline bool jumpkeyheld = false;
 
 //Game settings
+inline int levelnum = 0;
+inline int setnum = 0;
 inline bool circlelocked = true;
 inline bool trianglelocked = true;
 inline bool octagonlocked = true;
