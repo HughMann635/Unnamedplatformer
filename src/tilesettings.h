@@ -419,9 +419,11 @@ public:
                 Object.velocity.y = 0;
                 Object.grounded = true;
             } else if (lowestoverlap == rightovlp) {
+                preserved_vel = Object.velocity.x;
                 Object.shape().setPosition(sf::Vector2f(leftside2-Object.shape().getGlobalBounds().size.x, Object.shape().getPosition().y));
                 wallhuggingright = true;
             } else if (lowestoverlap == leftovlp) {
+                preserved_vel = Object.velocity.x;
                 Object.shape().setPosition(sf::Vector2f(rightside2, Object.shape().getPosition().y));
                 wallhuggingleft = true;
             }

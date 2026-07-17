@@ -412,12 +412,10 @@ void octagon::jump (float deltatime) {
     }
     if (wallhuggingleft && (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::W))) {
         velocity.y = -jumpforce;
-        velocity.x += movespeed;
         wallhuggingleft = false;
     }
     if (wallhuggingright && (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::W))) {
         velocity.y = -jumpforce;
-        velocity.x -= movespeed;
         wallhuggingright = false;
     }
 }
