@@ -410,7 +410,14 @@ void octagon::jump (float deltatime) {
             grounded = false;
         }
     }
-    
+    if (wallhuggingleft && (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::W))) {
+        velocity.y += jumpforce;
+        velocity.x += movespeed;
+    }
+    if (wallhuggingright && (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::W))) {
+        velocity.y += jumpforce;
+        velocity.x -= movespeed;
+    }
 }
 
 void octagon::updatepos (float deltatime, tilemap& map) {
