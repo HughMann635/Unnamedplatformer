@@ -420,10 +420,10 @@ public:
                 Object.grounded = true;
             } else if (lowestoverlap == rightovlp) {
                 Object.shape().setPosition(sf::Vector2f(leftside2-Object.shape().getGlobalBounds().size.x, Object.shape().getPosition().y));
-                wallhuggingleft = true;
+                wallhuggingright = true;
             } else if (lowestoverlap == leftovlp) {
                 Object.shape().setPosition(sf::Vector2f(rightside2, Object.shape().getPosition().y));
-                wallhuggingright = true;
+                wallhuggingleft = true;
             }
         }
     }

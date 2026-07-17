@@ -396,7 +396,7 @@ sf::Shape& octagon::shape() {
 void octagon::jump (float deltatime) {
     if (sf::Keyboard::isKeyPressed ( sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::W)) {
         if (grounded && !swimming && !zerogactive) {
-            velocity.y -= jumpforce;
+            velocity.y = -jumpforce;
             grounded = false;
         }
     }
@@ -411,12 +411,14 @@ void octagon::jump (float deltatime) {
         }
     }
     if (wallhuggingleft && (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::W))) {
-        velocity.y += jumpforce;
+        velocity.y = -jumpforce;
         velocity.x += movespeed;
+        wallhuggingleft = false;
     }
     if (wallhuggingright && (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::W))) {
-        velocity.y += jumpforce;
+        velocity.y = -jumpforce;
         velocity.x -= movespeed;
+        wallhuggingright = false;
     }
 }
 
