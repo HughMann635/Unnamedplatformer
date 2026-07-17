@@ -414,10 +414,10 @@ void octagon::jump (float deltatime) {
         } else if (!grounded && !swimming && !zerogactive && wallhuggingleft && !jumpkeyheld) {
             if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::LShift)) {
                 velocity.y = -0.92 * jumpforce;
-                velocity.x = 1.15 * jumpforce;
+                velocity.x = 1.1 * jumpforce;
             } else if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::RShift)) {
                 velocity.y = -1.28 * jumpforce;
-                velocity.x = 0.56 * jumpforce;
+                velocity.x = 0.36 * jumpforce;
             } else {
                 velocity.y = -jumpforce;
                 velocity.x = movespeed;
