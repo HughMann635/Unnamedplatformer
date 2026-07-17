@@ -48,11 +48,10 @@ int main()
 			if (levelnum > 5) {
 				levelnum = 0;
 				setnum += 1;
-			}
-			//BEATING THE GAME (will update later)
-			if (setnum > 4) {
-				std::cout << "Congrats!";
-				running = false; 
+				if (setnum > 4) {
+					std::cout << "Congrats!";
+					window.close();
+				}
 			}
 
 			map.tilelist.clear();
