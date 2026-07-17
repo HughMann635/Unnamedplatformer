@@ -147,6 +147,8 @@ public:
     void checkCollisions (entity& Object) {
         swimming = false;
         zerogactive = false;
+        wallhuggingright = false;
+        wallhuggingleft = false;
 
         //BUTTON + DOOR RESETS
         for (auto& pos: tilelist) {

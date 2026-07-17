@@ -426,15 +426,16 @@ void octagon::updatepos (float deltatime, tilemap& map) {
             preserved_vel >= movespeed ? velocity.x += preserved_vel : velocity.x += movespeed;
         } 
         else if (wallhuggingright) {
-            preserved_vel >= movespeed ? velocity.x -= preserved_vel : velocity.x -= movespeed;
+            preserved_vel <= -movespeed ? velocity.x -= preserved_vel : velocity.x -= movespeed;
         }
         wallhuggingright = false;
         wallhuggingleft = false;
         if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down)) {
             velocity.x = 0;
-            velocity.y += 50;
+            velocity.y += 500;
             walljumped = false;
         }
+        if (grounded) walljumped = false;
     } else {
         if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Right) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::D)) {
             if (velocity.x > movespeed && grounded) velocity.x -= circleaccel*0.7;
