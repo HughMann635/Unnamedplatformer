@@ -59,6 +59,15 @@ int main()
 			break;
 		}
 	}
+	for (auto& pos: map.tilelist) {
+		if (pos.type == tiletype::spring) {
+			spring* G = dynamic_cast<spring*>(pos.tile.get());
+			auto verticeslist = getvertices(G -> springblock);
+			std::cout << "SPRING COORDS\n";
+			for (auto& rest: verticeslist) std::cout << rest.x << "," << rest.y << "\n";
+			break;
+		}
+	}
 
 	while (window.isOpen()) {
 		float deltatime = timer.restart().asSeconds();
@@ -118,6 +127,11 @@ int main()
 		if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Enter)) jumpkeyheld = false;
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Enter) && !jumpkeyheld) {
 			auto verticeslist = getvertices(currentplayer -> shape());
+			if (dynamic_cast<square*>(currentplayer.get())) std::cout << "SQUARE COORDS\n";
+			if (dynamic_cast<circle*>(currentplayer.get())) std::cout << "CIRCLE COORDS\n";
+			if (dynamic_cast<triangle*>(currentplayer.get())) std::cout << "TRIANGLE COORDS\n";
+			if (dynamic_cast<hexagon*>(currentplayer.get())) std::cout << "HEXAGON COORDS\n";
+			if (dynamic_cast<octagon*>(currentplayer.get())) std::cout << "OCTAGON COORDS\n";
 			for (auto& pos: verticeslist) std::cout << pos.x << "," << pos.y << "\n";
 			jumpkeyheld = true;
 		}
