@@ -124,8 +124,8 @@ int main()
 		currentplayer -> shape().setPosition(lastframe_pos);
 		currentplayer -> velocity = lastframe_vel;
 
-		if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Enter)) jumpkeyheld = false;
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Enter) && !jumpkeyheld) {
+		if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Enter)) enterkeyheld = false;
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Enter) && !enterkeyheld) {
 			auto verticeslist = getvertices(currentplayer -> shape());
 			if (dynamic_cast<square*>(currentplayer.get())) std::cout << "SQUARE COORDS\n";
 			if (dynamic_cast<circle*>(currentplayer.get())) std::cout << "CIRCLE COORDS\n";
@@ -133,7 +133,7 @@ int main()
 			if (dynamic_cast<hexagon*>(currentplayer.get())) std::cout << "HEXAGON COORDS\n";
 			if (dynamic_cast<octagon*>(currentplayer.get())) std::cout << "OCTAGON COORDS\n";
 			for (auto& pos: verticeslist) std::cout << pos.x << "," << pos.y << "\n";
-			jumpkeyheld = true;
+			enterkeyheld = true;
 		}
 
 		window.clear();
