@@ -9,6 +9,7 @@
 #include "vars.h"
 #include "tilesettings.h"
 #include "tilemap.h"
+#include "sat(TESTING).h"
 
 int main()
 {
@@ -30,6 +31,15 @@ int main()
 
 	map.loadmap(levels[setnum][levelnum]);
 	currentplayer -> shape().setPosition(map.spawn);
+
+	for (auto& pos: map.tilelist) {
+		if (pos.type == tiletype::ground) {
+			ground_* G = dynamic_cast<ground_*>(pos.tile.get());
+			auto verticeslist_ = getvertices(G -> ground_block);
+			for (auto& rest: verticeslist_) std::cout << rest.x << "," << rest.y << "\n";
+			break;
+		}
+	}
 
 	while (window.isOpen()) {
 		float deltatime = timer.restart().asSeconds();
@@ -85,6 +95,13 @@ int main()
 
 		currentplayer -> shape().setPosition(lastframe_pos);
 		currentplayer -> velocity = lastframe_vel;
+
+		if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Enter)) jumpkeyheld = false;
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Enter) && !jumpkeyheld) {
+			auto verticeslist = getvertices(currentplayer -> shape());
+			for (auto& pos: verticeslist) std::cout << pos.x << "," << pos.y << "\n";
+			jumpkeyheld = true;
+		}
 
 		window.clear();
 		window.setView(view);
