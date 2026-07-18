@@ -35,8 +35,27 @@ int main()
 	for (auto& pos: map.tilelist) {
 		if (pos.type == tiletype::ground) {
 			ground_* G = dynamic_cast<ground_*>(pos.tile.get());
-			auto verticeslist_ = getvertices(G -> ground_block);
-			for (auto& rest: verticeslist_) std::cout << rest.x << "," << rest.y << "\n";
+			auto verticeslist = getvertices(G -> ground_block);
+			std::cout << "GROUND COORDS\n";
+			for (auto& rest: verticeslist) std::cout << rest.x << "," << rest.y << "\n";
+			break;
+		}
+	}
+	for (auto& pos: map.tilelist) {
+		if (pos.type == tiletype::spike) {
+			spike* G = dynamic_cast<spike*>(pos.tile.get());
+			auto verticeslist = getvertices(G -> spikeblock);
+			std::cout << "SPIKR COORDS\n";
+			for (auto& rest: verticeslist) std::cout << rest.x << "," << rest.y << "\n";
+			break;
+		}
+	}
+	for (auto& pos: map.tilelist) {
+		if (pos.type == tiletype::lava) {
+			lava* G = dynamic_cast<lava*>(pos.tile.get());
+			auto verticeslist = getvertices(G -> lavablock);
+			std::cout << "LAVA COORDS\n";
+			for (auto& rest: verticeslist) std::cout << rest.x << "," << rest.y << "\n";
 			break;
 		}
 	}
