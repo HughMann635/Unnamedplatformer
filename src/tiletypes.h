@@ -95,7 +95,7 @@ class blackhole : public tileTypes {
 public:
     sf::CircleShape blackholeblock;
     blackhole(sf::Vector2f position) {
-        blackholeblock.setRadius(7.5);
+        blackholeblock.setRadius(15);
         blackholeblock.setFillColor(sf::Color::Black);
         blackholeblock.setPosition(position);
     }

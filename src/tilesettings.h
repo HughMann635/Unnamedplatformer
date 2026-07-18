@@ -114,7 +114,7 @@ public:
                         break;
                     case 'B':
                         new_tile.type = tiletype::blackhole;
-                        new_tile.tile = std::make_unique<blackhole>(sf::Vector2f(j*playerdim, i*playerdim));
+                        new_tile.tile = std::make_unique<blackhole>(sf::Vector2f(j*playerdim+5, i*playerdim+5));
                         tilelist.push_back(std::move(new_tile));
                         break;
                     case 'P':
