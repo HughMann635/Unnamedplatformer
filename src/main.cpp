@@ -86,6 +86,7 @@ int main()
 
 		currentplayer -> shape().setPosition(lastframe_pos);
 		currentplayer -> velocity = lastframe_vel;
+		currentplayer -> shape().rotate(sf::degrees(10));
 
 		//SAT COLLISION STUFF
 		if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Enter)) enterkeyheld = false;
@@ -151,6 +152,7 @@ int main()
 		sky.drawstars(window);
 		currentplayer -> drawscreen(window);
 		map.drawmap(window);
+		//DEBUG DRAWING STUFF
 		if (draw) {
 			for (auto& pos: map.tilelist) {
 				if (pos.type == tiletype::block_push) {
@@ -171,6 +173,8 @@ int main()
 			}
 			drawdebug(window, getvertices(currentplayer -> shape()));
 		}
+		
+		//CAM SETTINGS
 		if (currentplayer -> shape().getPosition().x < camwidth/2.f) {
 			if (currentplayer -> shape().getPosition().y < camheight/2.f) {
 				view.setCenter(sf::Vector2f(camwidth/2.f, camheight/2.f));

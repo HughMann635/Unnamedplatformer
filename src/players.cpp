@@ -175,6 +175,7 @@ triangle::triangle() {
     playershape.setPoint(2, sf::Vector2f(20, 17.3));
     playershape.setFillColor(sf::Color(0, 255, 0));
 
+    playershape.setOrigin(sf::Vector2f(playershape.getLocalBounds().size.x/2, playershape.getLocalBounds().size.y/2));
     velocity = (sf::Vector2f(0.f, gravity));
     grounded = false;
 }
@@ -382,7 +383,7 @@ octagon::octagon() {
     playershape.setPoint(6, sf::Vector2f(0, 14));
     playershape.setPoint(7, sf::Vector2f(0, 6));
     playershape.setFillColor(sf::Color(160, 100, 200));
-    
+
     velocity = sf::Vector2f(0.f, gravity);
     grounded = false;
 }
