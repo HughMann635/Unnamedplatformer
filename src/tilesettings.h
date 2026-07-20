@@ -3,9 +3,11 @@
 #include <vector>
 #include <memory>
 #include <string>
+#include <iostream>
 #include "vars.h"
 #include "tiletypes.h"
 #include "players.h"
+#include "sat(TESTING).h"
 
 //class player;
 
@@ -354,8 +356,16 @@ public:
                 switch (pos.type) {
                     case tiletype::empty:
                     break;
-                    case tiletype::ground:
-                    groundCollide(Object, tilebounds);
+                    case tiletype::ground: {
+                        groundCollide(Object, tilebounds);
+                        auto verticesobj = getvertices(Object.shape());
+                        ground_* G = dynamic_cast<ground_*>(pos.tile.get());
+                        if (!G) continue;
+                        auto verticestile = getvertices(G -> ground_block);
+                        if (!satCollide(verticesobj, verticestile)) {
+                            std::cout << "SAT collide failed";
+                        }
+                    }
                     break;
                     case tiletype::door:
                     groundCollide(Object, tilebounds);

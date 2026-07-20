@@ -3,7 +3,7 @@
 #include <vector>
 #include <cmath>
 
-std::vector<sf::Vector2f> getvertices(sf::Shape& shape) {
+inline std::vector<sf::Vector2f> getvertices(sf::Shape& shape) {
     std::vector<sf::Vector2f> vertices;
     for (int i = 0; i < shape.getPointCount(); i++) {
         vertices.push_back(shape.getTransform().transformPoint(shape.getPoint(i)));
@@ -11,7 +11,7 @@ std::vector<sf::Vector2f> getvertices(sf::Shape& shape) {
     return vertices;
 }
 
-std::vector<sf::Vector2f> getaxes(std::vector<sf::Vector2f> vertices) {
+inline std::vector<sf::Vector2f> getaxes(std::vector<sf::Vector2f> vertices) {
     std::vector<sf::Vector2f> axes;
     for (int i = 0; i < vertices.size(); i++) {
         sf::Vector2f edge = vertices[(i+1) % vertices.size()] - vertices[i];
@@ -22,7 +22,7 @@ std::vector<sf::Vector2f> getaxes(std::vector<sf::Vector2f> vertices) {
     return axes;
 }
 
-void drawdebug(sf::RenderWindow& window, std::vector<sf::Vector2f> vertices) {
+inline void drawdebug(sf::RenderWindow& window, std::vector<sf::Vector2f> vertices) {
     for (auto& pos: vertices) {
         sf::CircleShape vertex;
         vertex.setRadius(1.f);
@@ -46,4 +46,41 @@ void drawdebug(sf::RenderWindow& window, std::vector<sf::Vector2f> vertices) {
         sf::Vertex axisline[2] = { v1, v2 };
         window.draw(axisline, 2, sf::PrimitiveType::Lines);
     }
+}
+
+struct Range {
+public:
+    float min, max;
+};
+
+inline Range projection (std::vector<sf::Vector2f>& vertices, sf::Vector2f axis) {
+    float min = vertices[0].x * axis.x + vertices[0].y * axis.y;
+    float max = min;
+    for (auto& pos: vertices) {
+        float product = pos.x * axis.x + pos.y * axis.y;
+        if (product < min) {
+            min = product; 
+        } if (product > max) {
+            max = product;
+        }
+    }
+    return {min, max};
+}
+
+inline bool satCollide (std::vector<sf::Vector2f>& vertices1, std::vector<sf::Vector2f>& vertices2) {
+    auto axes1 = getaxes(vertices1);
+    auto axes2 = getaxes(vertices2);
+
+    for (auto& pos: axes1) {
+        Range project1 = projection(vertices1, pos);
+        Range project2 = projection(vertices2, pos);
+        if (project1.max < project2.min || project2.max < project1.min) return false;
+    }
+    for (auto& pos: axes2) {
+        Range project1 = projection(vertices1, pos);
+        Range project2 = projection(vertices2, pos);
+        if (project1.max < project2.min || project2.max < project1.min) return false;
+    }
+
+    return true;
 }
