@@ -86,7 +86,7 @@ int main()
 
 		currentplayer -> shape().setPosition(lastframe_pos);
 		currentplayer -> velocity = lastframe_vel;
-		currentplayer -> shape().rotate(sf::degrees(10));
+		currentplayer -> shape().rotate(sf::degrees(3));
 
 		//SAT COLLISION STUFF
 		if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Enter)) enterkeyheld = false;
