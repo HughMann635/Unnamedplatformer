@@ -12,7 +12,10 @@ const int stars = 700;
 inline bool running = true;
 inline bool restart = false;
 inline bool newlevel = false;
+
+//Debug stuff
 inline bool enterkeyheld = false;
+inline bool draw = true;
 
 //Player and physics settings
 //This is also the dimension of all tiles in the game
