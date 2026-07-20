@@ -9,7 +9,7 @@
 square::square() {
     playershape = sf::RectangleShape(sf::Vector2f(playerdim, playerdim));
     playershape.setFillColor(sf::Color::Red);
-    playershape.setOrigin(sf::Vector2f(playershape.getLocalBounds().size.x/2, playershape.getLocalBounds().size.y/2));
+    //playershape.setOrigin(sf::Vector2f(playershape.getLocalBounds().size.x/2, playershape.getLocalBounds().size.y/2));
 
     velocity = (sf::Vector2f(0.f, gravity));
     grounded = false;
@@ -90,7 +90,7 @@ void square::drawscreen (sf::RenderWindow& window)  {
 circle::circle() {
     playershape = sf::CircleShape(playerdim/2);
     playershape.setFillColor(sf::Color(0, 145, 255));
-    playershape.setOrigin(sf::Vector2f(playershape.getLocalBounds().size.x/2, playershape.getLocalBounds().size.y/2));
+    //playershape.setOrigin(sf::Vector2f(playershape.getLocalBounds().size.x/2, playershape.getLocalBounds().size.y/2));
 
     velocity = (sf::Vector2f(0.f, gravity));
     grounded = false;
@@ -177,7 +177,7 @@ triangle::triangle() {
     playershape.setPoint(2, sf::Vector2f(20, 17.3));
     playershape.setFillColor(sf::Color(0, 255, 0));
 
-    playershape.setOrigin(sf::Vector2f(10, 11.526));
+    //playershape.setOrigin(sf::Vector2f(10, 11.526));
     velocity = (sf::Vector2f(0.f, gravity));
     grounded = false;
 }
@@ -294,7 +294,7 @@ hexagon::hexagon() {
     playershape.setPoint(4, sf::Vector2f(5.f, 18.f));
     playershape.setPoint(5, sf::Vector2f(0.f, 9.f));
     playershape.setFillColor(sf::Color(240, 220, 0));
-    playershape.setOrigin(sf::Vector2f(playershape.getLocalBounds().size.x/2, playershape.getLocalBounds().size.y/2));
+    //playershape.setOrigin(sf::Vector2f(playershape.getLocalBounds().size.x/2, playershape.getLocalBounds().size.y/2));
 
     velocity = sf::Vector2f(0.f, gravity);
     grounded = false;
@@ -386,7 +386,7 @@ octagon::octagon() {
     playershape.setPoint(6, sf::Vector2f(0, 14));
     playershape.setPoint(7, sf::Vector2f(0, 6));
     playershape.setFillColor(sf::Color(160, 100, 200));
-    playershape.setOrigin(sf::Vector2f(playershape.getLocalBounds().size.x/2, playershape.getLocalBounds().size.y/2));
+    //playershape.setOrigin(sf::Vector2f(playershape.getLocalBounds().size.x/2, playershape.getLocalBounds().size.y/2));
 
     velocity = sf::Vector2f(0.f, gravity);
     grounded = false;
