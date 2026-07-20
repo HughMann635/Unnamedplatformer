@@ -96,17 +96,13 @@ int main()
 			if (dynamic_cast<triangle*>(currentplayer.get())) std::cout << "TRIANGLE COORDS\n";
 			if (dynamic_cast<hexagon*>(currentplayer.get())) std::cout << "HEXAGON COORDS\n";
 			if (dynamic_cast<octagon*>(currentplayer.get())) std::cout << "OCTAGON COORDS\n";
-			for (auto& pos: verticeslist) {
-				std::cout << pos.x << "," << pos.y << "\n";
-				if (draw) drawdebug(window, verticeslist); 
-			}
+			for (auto& pos: verticeslist) std::cout << pos.x << "," << pos.y << "\n";
 			for (auto& pos: map.tilelist) {
 				if (pos.type == tiletype::ground) {
 					ground_* G = dynamic_cast<ground_*>(pos.tile.get());
 					auto verticeslist = getvertices(G -> ground_block);
 					std::cout << "GROUND COORDS\n";
 					for (auto& rest: verticeslist) std::cout << rest.x << "," << rest.y << "\n";
-					if (draw) drawdebug(window, verticeslist);
 					break;
 				}
 			}
@@ -116,7 +112,6 @@ int main()
 					auto verticeslist = getvertices(G -> spikeblock);
 					std::cout << "SPIKR COORDS\n";
 					for (auto& rest: verticeslist) std::cout << rest.x << "," << rest.y << "\n";
-					if (draw) drawdebug(window, verticeslist);
 					break;
 				}
 			}
@@ -126,7 +121,6 @@ int main()
 					auto verticeslist = getvertices(G -> lavablock);
 					std::cout << "LAVA COORDS\n";
 					for (auto& rest: verticeslist) std::cout << rest.x << "," << rest.y << "\n";
-					if (draw) drawdebug(window, verticeslist);
 					break;
 				}
 			}
@@ -136,7 +130,6 @@ int main()
 					auto verticeslist = getvertices(G -> springblock);
 					std::cout << "SPRING COORDS\n";
 					for (auto& rest: verticeslist) std::cout << rest.x << "," << rest.y << "\n";
-					if (draw) drawdebug(window, verticeslist);
 					break;
 				}
 			}
@@ -146,7 +139,6 @@ int main()
 					auto verticeslist = getvertices(G -> blockblock);
 					std::cout << "ALL PUSHBLOCK COORDS\n";
 					for (auto& rest: verticeslist) std::cout << rest.x << "," << rest.y << "\n";
-					if (draw) drawdebug(window, verticeslist);
 				}
 			}
 			draw = !draw;
@@ -154,6 +146,36 @@ int main()
 		}
 
 		window.clear();
+		if (draw) {
+			for (auto& pos: map.tilelist) {
+				if (pos.type == tiletype::block_push) {
+					block* G = dynamic_cast<block*>(pos.tile.get());
+					auto verticeslist = getvertices(G -> blockblock);
+					drawdebug(window, verticeslist);
+					break;
+				}
+				if (pos.type == tiletype::ground) {
+					ground_* G = dynamic_cast<ground_*>(pos.tile.get());
+					auto verticeslist = getvertices(G -> ground_block);
+					drawdebug(window, verticeslist);
+					break;
+				}
+				if (pos.type == tiletype::lava) {
+					lava* G = dynamic_cast<lava*>(pos.tile.get());
+					auto verticeslist = getvertices(G -> lavablock);
+					drawdebug(window, verticeslist);
+					break;
+				}
+				if (pos.type == tiletype::spike) {
+					spike* G = dynamic_cast<spike*>(pos.tile.get());
+					auto verticeslist = getvertices(G -> spikeblock);
+					drawdebug(window, verticeslist);
+					break;
+				}
+				drawdebug(window, getvertices(currentplayer -> shape()));
+			}
+		}
+
 		window.setView(view);
 		sky.drawsky(window);
 		sky.drawstars(window);

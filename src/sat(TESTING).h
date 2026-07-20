@@ -39,8 +39,8 @@ void drawdebug(sf::RenderWindow& window, std::vector<sf::Vector2f> vertices) {
         v1.position = midpoint;
         v1.color = sf::Color::Magenta;
         sf::Vertex v2;
-        v1.position = axis;
-        v1.color = sf::Color::Magenta;
+        v2.position = axis;
+        v2.color = sf::Color::Magenta;
 
         sf::Vertex axisline[2] = { v1, v2 };
         window.draw(axisline, 2, sf::PrimitiveType::Lines);
