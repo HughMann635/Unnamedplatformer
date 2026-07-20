@@ -25,7 +25,8 @@ std::vector<sf::Vector2f> getaxes(std::vector<sf::Vector2f> vertices) {
 void drawdebug(sf::RenderWindow& window, std::vector<sf::Vector2f> vertices) {
     for (auto& pos: vertices) {
         sf::CircleShape vertex;
-        vertex.setRadius(3.f);
+        vertex.setRadius(1.f);
+        vertex.setOrigin(sf::Vector2f(1.f, 1.f));
         vertex.setPosition(sf::Vector2f(pos.x, pos.y));
         window.draw(vertex);
     }

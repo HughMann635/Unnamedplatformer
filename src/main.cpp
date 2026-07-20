@@ -146,41 +146,31 @@ int main()
 		}
 
 		window.clear();
+		window.setView(view);
+		sky.drawsky(window);
+		sky.drawstars(window);
+		currentplayer -> drawscreen(window);
+		map.drawmap(window);
 		if (draw) {
 			for (auto& pos: map.tilelist) {
 				if (pos.type == tiletype::block_push) {
 					block* G = dynamic_cast<block*>(pos.tile.get());
 					auto verticeslist = getvertices(G -> blockblock);
 					drawdebug(window, verticeslist);
-					break;
-				}
-				if (pos.type == tiletype::ground) {
-					ground_* G = dynamic_cast<ground_*>(pos.tile.get());
-					auto verticeslist = getvertices(G -> ground_block);
-					drawdebug(window, verticeslist);
-					break;
 				}
 				if (pos.type == tiletype::lava) {
 					lava* G = dynamic_cast<lava*>(pos.tile.get());
 					auto verticeslist = getvertices(G -> lavablock);
 					drawdebug(window, verticeslist);
-					break;
 				}
 				if (pos.type == tiletype::spike) {
 					spike* G = dynamic_cast<spike*>(pos.tile.get());
 					auto verticeslist = getvertices(G -> spikeblock);
 					drawdebug(window, verticeslist);
-					break;
 				}
-				drawdebug(window, getvertices(currentplayer -> shape()));
 			}
+			drawdebug(window, getvertices(currentplayer -> shape()));
 		}
-
-		window.setView(view);
-		sky.drawsky(window);
-		sky.drawstars(window);
-		currentplayer -> drawscreen(window);
-		map.drawmap(window);
 		if (currentplayer -> shape().getPosition().x < camwidth/2.f) {
 			if (currentplayer -> shape().getPosition().y < camheight/2.f) {
 				view.setCenter(sf::Vector2f(camwidth/2.f, camheight/2.f));
