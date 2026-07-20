@@ -363,7 +363,13 @@ public:
                         if (!G) continue;
                         auto verticestile = getvertices(G -> ground_block);
                         if (!satCollide(verticesobj, verticestile)) {
-                            std::cout << "SAT collide failed";
+                            std::cout << "SAT collide failed\n";
+                            //debug stuff from claude
+                            std::cout << "  player verts: ";
+                            for (auto& v : verticesobj) std::cout << "(" << v.x << "," << v.y << ") ";
+                            std::cout << "\n  tile verts: ";
+                            for (auto& v : verticestile) std::cout << "(" << v.x << "," << v.y << ") ";
+                            std::cout << "\n";
                         }
                     }
                     break;
