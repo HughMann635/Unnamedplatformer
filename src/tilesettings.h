@@ -372,17 +372,24 @@ public:
                         }
                         sf::Vector2f mtv = sf::Vector2f(0, 0);
                         mtvCheck(verticesobj, verticestile, mtv);
-                        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Enter)) std::cout << mtv.x << "," << mtv.y << "\n";
-                        if (mtv.y < 0) {
-                            Object.grounded = true; 
-                            if (Object.velocity.y > 0) Object.velocity.y = 0;
-                        }
-                        if (mtv.y > 0) Object.velocity.y = 0;
-                        if (mtv.x != 0) {
-                            if (Object.velocity.x > 0) Object.velocity.x = 0;
-                            if (Object.velocity.x < 0) Object.velocity.x = 0;
-                        }
                         Object.shape().move(mtv);
+                        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Enter)) std::cout << mtv.x << "," << mtv.y << "\n";
+                        if (std::abs(mtv.y) > std::abs(mtv.x)) {
+                            if (mtv.y < 0.05) {
+                                Object.grounded = true;
+                                if (Object.velocity.y > 0) Object.velocity.y = 0;
+                            } else if (mtv.y > -0.05) {
+                                if (Object.velocity.y < 0) Object.velocity.y = 0;
+                            }
+                        } else {
+                            if (mtv.x > 0.05) {
+                                Object.velocity.x = 0;
+                                wallhuggingleft = true;
+                            } else if (mtv.x < -0.05) {
+                                Object.velocity.x = 0;
+                                wallhuggingleft = true;
+                            }
+                        }
                     }
                     break;
                     case tiletype::door:
