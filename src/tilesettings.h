@@ -357,7 +357,6 @@ public:
                     case tiletype::empty:
                     break;
                     case tiletype::ground: {
-                        groundCollide(Object, tilebounds);
                         auto verticesobj = getvertices(Object.shape());
                         ground_* G = dynamic_cast<ground_*>(pos.tile.get());
                         if (!G) continue;
@@ -374,6 +373,7 @@ public:
                         sf::Vector2f mtv;
                         mtvCheck(verticesobj, verticestile, mtv);
                         std::cout << mtv.x << "," << mtv.y << "\n";
+                        groundCollide(Object, tilebounds);
                     }
                     break;
                     case tiletype::door:

@@ -98,9 +98,7 @@ inline bool mtvCheck (std::vector<sf::Vector2f>& vertices1, std::vector<sf::Vect
     for (auto& pos: allaxes) {
         Range project1 = projection(vertices1, pos);
         Range project2 = projection(vertices2, pos);
-        float overlap1 = project1.min - project2.max;
-        float overlap2 = project2.min - project1.max;
-        float overlap = std::min(overlap1, overlap2);
+        float overlap = std::min(project1.max, project2.max) - std::max(project1.min, project2.min);
         if (overlap < 0) return false;
         if (overlap < lowestovlp) {
             lowestovlp = overlap;
