@@ -70,6 +70,7 @@ void square::updatepos (float deltatime, tilemap& map) {
         gravity = 1800.f;
     }
 
+    if (grounded) velocity.y = 0;
     moveobject(deltatime, gravity);
 
     if (playershape.getPosition().y > 720) restart = true;
@@ -153,6 +154,7 @@ void circle::updatepos (float deltatime, tilemap& map)  {
         gravity = 1800.f;
     }
 
+    if (grounded) velocity.y = 0;
     moveobject(deltatime, gravity);
 
     if (playershape.getPosition().y > 720) restart = true;
@@ -268,6 +270,7 @@ void triangle::updatepos (float deltatime, tilemap& map)  {
         gravity = 1800.f;
     }
 
+    if (grounded) velocity.y = 0;
     moveobject(deltatime, gravity);
 
     if (playershape.getPosition().y > 720) restart = true;
@@ -358,6 +361,7 @@ void hexagon::updatepos (float deltatime, tilemap& map) {
         gravity = 1800.f;
     }
 
+    if (grounded) velocity.y = 0;
     moveobject(deltatime, gravity);
 
     if (playershape.getPosition().y > 720) restart = true;
@@ -499,6 +503,8 @@ void octagon::updatepos (float deltatime, tilemap& map) {
         walljumped = false;
     }
     walljumpcancel = false;
+
+    if (grounded) velocity.y = 0;
     moveobject(deltatime, gravity);
 
     if (playershape.getPosition().y > 720) restart = true;
