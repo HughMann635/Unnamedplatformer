@@ -12,7 +12,7 @@ inline std::vector<sf::Vector2f> getvertices(sf::Shape& shape) {
     return vertices;
 }
 
-inline std::vector<sf::Vector2f> getaxes(std::vector<sf::Vector2f> vertices) {
+inline std::vector<sf::Vector2f> getaxes(std::vector<sf::Vector2f>& vertices) {
     std::vector<sf::Vector2f> axes;
     for (int i = 0; i < vertices.size(); i++) {
         sf::Vector2f edge = vertices[(i+1) % vertices.size()] - vertices[i];
