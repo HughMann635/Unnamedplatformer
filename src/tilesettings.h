@@ -370,10 +370,12 @@ public:
                             for (auto& v : verticestile) std::cout << "(" << v.x << "," << v.y << ") ";
                             std::cout << "\n";
                         }
-                        sf::Vector2f mtv;
+                        sf::Vector2f mtv = (0, 0);
                         mtvCheck(verticesobj, verticestile, mtv);
                         std::cout << mtv.x << "," << mtv.y << "\n";
-                        groundCollide(Object, tilebounds);
+                        if (mtvCheck(verticesobj, verticestile, mtv)) Object.shape().move(mtv);
+                        if (mtv.y != 0) Object.velocity.y = 0;
+                        if (mtv.x != 0) Object.velocity.x = 0;
                     }
                     break;
                     case tiletype::door:
