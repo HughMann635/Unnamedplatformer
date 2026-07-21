@@ -70,7 +70,7 @@ void square::updatepos (float deltatime, tilemap& map) {
         gravity = 1800.f;
     }
 
-    if (grounded) velocity.y = 0;
+    
     moveobject(deltatime, gravity);
 
     if (playershape.getPosition().y > 720) restart = true;
@@ -154,7 +154,7 @@ void circle::updatepos (float deltatime, tilemap& map)  {
         gravity = 1800.f;
     }
 
-    if (grounded) velocity.y = 0;
+    
     moveobject(deltatime, gravity);
 
     if (playershape.getPosition().y > 720) restart = true;
@@ -270,7 +270,7 @@ void triangle::updatepos (float deltatime, tilemap& map)  {
         gravity = 1800.f;
     }
 
-    if (grounded) velocity.y = 0;
+    
     moveobject(deltatime, gravity);
 
     if (playershape.getPosition().y > 720) restart = true;
@@ -308,14 +308,14 @@ sf::Shape& hexagon::shape() {
 }
 
 void hexagon::jump (float deltatime) {
+    if (grounded) jumpcount = 2;
     if (sf::Keyboard::isKeyPressed ( sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::W)) {
-        if (jumpcount > 1 && !swimming && !zerogactive && jump_timer.getElapsedTime().asMilliseconds() > 200) {
+        if (jumpcount > 0 && !swimming && !zerogactive && jump_timer.getElapsedTime().asMilliseconds() > 200) {
             velocity.y = -jumpforce;
             jumpcount -= 1;
             jump_timer.restart();
         }
     }
-    if (grounded) jumpcount = 2;
     if (swimming) {
         if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Down) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::S)) {
             velocity.y += 50.f;
@@ -361,7 +361,6 @@ void hexagon::updatepos (float deltatime, tilemap& map) {
         gravity = 1800.f;
     }
 
-    if (grounded) velocity.y = 0;
     moveobject(deltatime, gravity);
 
     if (playershape.getPosition().y > 720) restart = true;
@@ -504,7 +503,6 @@ void octagon::updatepos (float deltatime, tilemap& map) {
     }
     walljumpcancel = false;
 
-    if (grounded) velocity.y = 0;
     moveobject(deltatime, gravity);
 
     if (playershape.getPosition().y > 720) restart = true;

@@ -375,17 +375,17 @@ public:
                         Object.shape().move(mtv);
                         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Enter)) std::cout << mtv.x << "," << mtv.y << "\n";
                         if (std::abs(mtv.y) > std::abs(mtv.x)) {
-                            if (mtv.y < 0.05 && Object.velocity.y > 0) {
+                            if (mtv.y < 0 && Object.velocity.y > 0) {
                                 Object.grounded = true;
                                 Object.velocity.y = 0;
-                            } else if (mtv.y > -0.05) {
+                            } else if (mtv.y > 0) {
                                 if (Object.velocity.y < 0) Object.velocity.y = 0;
                             }
                         } else {
-                            if (mtv.x > 0.02) {
+                            if (mtv.x > 0) {
                                 Object.velocity.x = 0;
                                 wallhuggingleft = true;
-                            } else if (mtv.x < -0.02) {
+                            } else if (mtv.x < 0) {
                                 Object.velocity.x = 0;
                                 wallhuggingright = true;
                             }
@@ -416,7 +416,7 @@ public:
                     case tiletype::spring:
                     Object.velocity.y = -1000.f;
                     walljumpcancel = true;
-                    jumpcount = 2;
+                    jumpcount = 1;
                     break;
                     case tiletype::button: {
                     button* button_ = dynamic_cast<button*>(pos.tile.get());

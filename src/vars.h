@@ -15,7 +15,7 @@ inline bool newlevel = false;
 
 //Debug stuff
 inline bool enterkeyheld = false;
-inline bool draw = true;
+inline bool draw = false;
 
 //Player and physics settings
 //This is also the dimension of all tiles in the game
