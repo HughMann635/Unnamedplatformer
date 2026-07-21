@@ -73,8 +73,8 @@ int main()
 		currentplayer -> jump(deltatime);
 		currentplayer -> updatepos(deltatime, map);
 		currentplayer -> grounded = false;
-		map.checkCollisions(*currentplayer);
 		map.updatemap(deltatime);
+		map.checkCollisions(*currentplayer);
 		lastframe_pos = sf::Vector2f(currentplayer -> shape().getPosition());
 		lastframe_vel = sf::Vector2f(currentplayer -> velocity);
 
@@ -86,7 +86,7 @@ int main()
 
 		currentplayer -> shape().setPosition(lastframe_pos);
 		currentplayer -> velocity = lastframe_vel;
-
+		
 		//SAT COLLISION STUFF
 		if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Enter)) enterkeyheld = false;
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Enter) && !enterkeyheld) {

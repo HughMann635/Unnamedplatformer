@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include <cmath>
+#include <limits>
 
 inline std::vector<sf::Vector2f> getvertices(sf::Shape& shape) {
     std::vector<sf::Vector2f> vertices;
@@ -82,5 +83,46 @@ inline bool satCollide (std::vector<sf::Vector2f>& vertices1, std::vector<sf::Ve
         if (project1.max < project2.min || project2.max < project1.min) return false;
     }
 
+    return true;
+}
+
+inline bool mtvCheck (std::vector<sf::Vector2f>& vertices1, std::vector<sf::Vector2f>& vertices2, sf::Vector2f& mtv) {
+    auto axes1 = getaxes(vertices1);
+    auto axes2 = getaxes(vertices2);
+    std::vector<sf::Vector2f> allaxes;
+    allaxes.insert(allaxes.end(), axes1.begin(), axes1.end());
+    allaxes.insert(allaxes.end(), axes2.begin(), axes2.end());
+    float lowestovlp = std::numeric_limits<float>::max();
+    sf::Vector2f lowestaxis;
+
+    for (auto& pos: allaxes) {
+        Range project1 = projection(vertices1, pos);
+        Range project2 = projection(vertices2, pos);
+        float overlap1 = project1.min - project2.max;
+        float overlap2 = project2.min - project1.max;
+        float overlap = std::min(overlap1, overlap2);
+        if (overlap < 0) return false;
+        if (overlap < lowestovlp) {
+            lowestovlp = overlap;
+            lowestaxis = pos;
+        }
+    }
+
+    sf::Vector2f center1 = sf::Vector2f(0.f, 0.f);
+    sf::Vector2f center2 = sf::Vector2f(0.f, 0.f);
+    for (auto& pos: vertices1) {
+        center1 += pos;
+    }
+    for (auto& pos: vertices2) {
+        center2 += pos;
+    }
+    center1 /= static_cast<float>(vertices1.size());
+    center2 /= static_cast<float>(vertices2.size());
+    sf::Vector2f direction = center1 - center2;
+
+    float dotproduct = direction.x * lowestaxis.x + direction.y * lowestaxis.y;
+    if (dotproduct < 0) lowestaxis *= -1.f; 
+
+    mtv = lowestaxis * lowestovlp;
     return true;
 }
