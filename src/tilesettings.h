@@ -371,6 +371,9 @@ public:
                             for (auto& v : verticestile) std::cout << "(" << v.x << "," << v.y << ") ";
                             std::cout << "\n";
                         }
+                        sf::Vector2f mtv;
+                        mtvCheck(verticesobj, verticestile, mtv);
+                        std::cout << mtv.x << "," << mtv.y << "\n";
                     }
                     break;
                     case tiletype::door:
