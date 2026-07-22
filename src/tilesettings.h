@@ -179,7 +179,7 @@ public:
         wallhuggingleft = false;
         landed = false; //PLACEHOLDER
 
-/*
+
         //BUTTON + DOOR RESETS
         for (auto& pos: tilelist) {
             if (pos.type == tiletype::button) {
@@ -205,13 +205,12 @@ public:
             if (pos.type == tiletype::button) {
                 button* button_ = dynamic_cast<button*>(pos.tile.get());
                 if (!button_) continue;
-                sf::FloatRect buttonbounds = button_ -> collide();
                 for (auto& other: tilelist) {
-                    if (other.type == tiletype::block_push && buttonbounds.findIntersection(other.tile -> collide())) {
+                    if ((other.type == tiletype::block_push) && satCollide(getvertices(other.tile -> collide()), getvertices(button_ -> collide()))) {
                         button_ -> pressed = true;
                         button_ -> presscheck = true;
                     }
-                    if (buttonbounds.findIntersection(Object.shape().getGlobalBounds())) {
+                    if (satCollide(getvertices(Object.shape()), getvertices(button_ -> collide()))) {
                         button_ -> pressed = true;
                         button_ -> presscheck = true;
                     }
@@ -232,15 +231,13 @@ public:
                 if (rest.type != tiletype::door) continue;
                 door* door_ = dynamic_cast<door*>(rest.tile.get());
                 if (!door_ || door_ -> id != button_ -> id) continue;
-
-                sf::FloatRect doorbounds = door_ -> collide();
-                if (doorbounds.findIntersection(Object.shape().getGlobalBounds())) {
+                if (satCollide(getvertices(Object.shape()), getvertices(door_ -> collide()))) {
                     occupied = true;
                     break;
                 }
                 for (auto& others: tilelist) {
                     if (others.type != tiletype::block_push) continue;
-                    if (doorbounds.findIntersection(others.tile -> collide())) {
+                    if (satCollide(getvertices(Object.shape()), getvertices(others.tile -> collide()))) {
                         occupied = true;
                         break;
                     }
@@ -261,13 +258,12 @@ public:
             for (auto& other: tilelist) {
                 if (other.type != tiletype::door) continue;
                 door* door_ = dynamic_cast<door*>(other.tile.get());
-                sf::FloatRect doorbounds = door_ -> collide();
                 if (door_ && door_ -> id == button_ -> id) {
                     door_ -> opened = true;
                 }
             }
         }
-
+/*
         //BLOCK COLLISION
         for (auto& pos: tilelist) {
             //1. BLOCK + PLAYER PUSH LOGIC
