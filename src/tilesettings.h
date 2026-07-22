@@ -386,7 +386,7 @@ public:
                     }
                     break;
                     case tiletype::door: {
-                    auto verticesobj = getvertices(Object.shape());
+                        auto verticesobj = getvertices(Object.shape());
                         door* G = dynamic_cast<door*>(pos.tile.get());
                         if (!G) continue;
                         auto verticestile = getvertices(G -> doorblock[0]);
@@ -428,8 +428,33 @@ public:
                     case tiletype::zero_g:
                     zerogactive = true;
                     break;
-                    case tiletype::block_push:
-                    groundCollide(Object, tilebounds);
+                    case tiletype::block_push: {
+                        auto verticesobj = getvertices(Object.shape());
+                        block* G = dynamic_cast<block*>(pos.tile.get());
+                        if (!G) continue;
+                        auto verticestile = getvertices(G -> blockblock);
+                        sf::Vector2f mtv = sf::Vector2f(0, 0);
+                        mtvCheck(verticesobj, verticestile, mtv);
+                        Object.shape().move(mtv);
+                        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Enter)) std::cout << mtv.x << "," << mtv.y << "\n";
+                        if (std::abs(mtv.y) > std::abs(mtv.x)) {
+                            if (mtv.y < 0 && Object.velocity.y > 0) {
+                                Object.grounded = true;
+                                Object.velocity.y = 0;
+                                landed = true;
+                            } else if (mtv.y > 0) {
+                                if (Object.velocity.y < 0) Object.velocity.y = 0;
+                            }
+                        } else if (std::abs(mtv.x) > std::abs(mtv.y)){
+                            if (mtv.x > 0) {
+                                if (!walljumped) Object.velocity.x = 0;
+                                wallhuggingleft = true;
+                            } else if (mtv.x < 0) {
+                                if (!walljumped) Object.velocity.x = 0;
+                                wallhuggingright = true;
+                            }
+                        }
+                    }
                     break;
                     case tiletype::spring:
                     Object.velocity.y = -1000.f;
