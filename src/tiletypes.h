@@ -87,8 +87,13 @@ public:
     }
 
     sf::Shape& collide() override {
-        return twospikes[0], twospikes[1];
+        return twospikes[0];
     }
+
+    sf::Shape& getspike2() {
+        return twospikes[1];
+    } 
+
 };
 
 //Black circle with particles orbiting it 

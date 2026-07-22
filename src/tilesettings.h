@@ -402,11 +402,18 @@ public:
                     }
                     break;
                     case tiletype::spike:
-                    case tiletype::doublespike:
                     case tiletype::lava:
                     case tiletype::blackhole:
                     restart = true;
                     break;
+                    case tiletype::doublespike: {
+                        doublespike* G = dynamic_cast<doublespike*>(pos.tile.get());
+                        auto spikevertices = getvertices(G->collide());
+                        if (G && satCollide(getvertices(Object.shape()), spikevertices)) restart = true;
+                        auto spikevertices2 = getvertices(G->getspike2());
+                        if (G && satCollide(getvertices(Object.shape()), spikevertices2)) restart = true;
+                        break;
+                    }
                     case tiletype::exit:
                     newlevel = true;
                     break;
