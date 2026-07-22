@@ -406,13 +406,6 @@ sf::Shape& octagon::shape() {
 //GIMMICK: wall jump
 //now I gotta implement wall jump somehow
 void octagon::jump (float deltatime) {
-    std::cout << "jump(): grounded=" << grounded 
-              << " wL=" << wallhuggingleft 
-              << " wR=" << wallhuggingright
-              << " walljumped=" << walljumped
-              << " jumpkeyheld=" << jumpkeyheld
-              << " vy=" << velocity.y
-              << " vx=" << velocity.x << "\n";
     if (sf::Keyboard::isKeyPressed ( sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::W)) {
         if (grounded && !swimming && !zerogactive) {
             velocity.y = -jumpforce;

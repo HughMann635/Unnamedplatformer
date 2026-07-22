@@ -362,15 +362,6 @@ public:
                         ground_* G = dynamic_cast<ground_*>(pos.tile.get());
                         if (!G) continue;
                         auto verticestile = getvertices(G -> ground_block);
-                        if (!satCollide(verticesobj, verticestile)) {
-                            std::cout << "SAT collide failed\n";
-                            //debug stuff from claude
-                            std::cout << "  player verts: ";
-                            for (auto& v : verticesobj) std::cout << "(" << v.x << "," << v.y << ") ";
-                            std::cout << "\n  tile verts: ";
-                            for (auto& v : verticestile) std::cout << "(" << v.x << "," << v.y << ") ";
-                            std::cout << "\n";
-                        }
                         sf::Vector2f mtv = sf::Vector2f(0, 0);
                         mtvCheck(verticesobj, verticestile, mtv);
                         Object.shape().move(mtv);
