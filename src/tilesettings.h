@@ -449,9 +449,11 @@ public:
                             if (mtv.x > 0) {
                                 if (!walljumped) Object.velocity.x = 0;
                                 wallhuggingleft = true;
+                                if (Object.velocity.x < 0) Object.velocity.x = 0;
                             } else if (mtv.x < 0) {
                                 if (!walljumped) Object.velocity.x = 0;
                                 wallhuggingright = true;
+                                if (Object.velocity.x > 0) Object.velocity.x = 0;
                             }
                         }
                     }
@@ -510,15 +512,25 @@ public:
     }
 
     bool predictCollision(sf::Shape& shape, sf::Vector2f transform) {
-        auto vertices = getvertices(shape);
-        for (auto& pos: vertices) {
+        auto shapevertices = getvertices(shape);
+        for (auto& pos: shapevertices) {
             pos.x += transform.x;
             pos.y += transform.y;
         }
-        
+
         for (auto& pos: tilelist) {
-            if ((pos.type == tiletype::ground || pos.type == tiletype::block_push || pos.type == tiletype::door) && (satCollide(getvertices(pos.tile -> collide()), vertices))) {
-                return true;
+            if ((pos.type == tiletype::ground || pos.type == tiletype::block_push || pos.type == tiletype::door)) {
+                sf::Shape& tile = pos.tile -> collide();
+                auto tilevertices = getvertices(tile);
+                if (satCollide(shapevertices, tilevertices)) {
+                    std::cout << "[TP BLOCKED] TILE COORDS: X: " 
+                    << tile.getPosition().x 
+                    << " Y: " << tile.getPosition().y << "\n" << "YOUR COORDS: X: " 
+                    << shape.getPosition().x 
+                    << " Y: " << shape.getPosition().y << "\n";
+                    tp_timer.reset();
+                    return true;
+                }
             }
         }
         return false;

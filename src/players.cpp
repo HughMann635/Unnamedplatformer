@@ -225,25 +225,25 @@ void triangle::updatepos (float deltatime, tilemap& map)  {
     if (tp_timer.getElapsedTime().asSeconds() >= 3.f) {
         if ((sf::Keyboard::isKeyPressed (sf::Keyboard::Key::LShift) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::RShift))) {
             if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Right) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::D)) {
-                if (!map.predictCollision(sf::FloatRect(sf::Vector2f(shape().getPosition().x+40, shape().getPosition().y), sf::Vector2f(20, 17.3)))) {
+                if (!map.predictCollision(shape(), sf::Vector2f(40, 0))) {
                     playershape.setPosition(sf::Vector2f(playershape.getPosition().x + 40, playershape.getPosition().y));
                     velocity = sf::Vector2f(0, 0);
                     tp_timer.restart();
                 }
             } else if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Left) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::A)) {
-                if (!map.predictCollision(sf::FloatRect(sf::Vector2f(shape().getPosition().x-40, shape().getPosition().y), sf::Vector2f(20, 17.3)))) {
+                if (!map.predictCollision(shape(), sf::Vector2f(-40, 0))) {
                     playershape.setPosition(sf::Vector2f(playershape.getPosition().x - 40, playershape.getPosition().y));
                     velocity = sf::Vector2f(0, 0);
                     tp_timer.restart();
                 }
             } else if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::W)) {
-                if (!map.predictCollision(sf::FloatRect(sf::Vector2f(shape().getPosition().x, shape().getPosition().y-40), sf::Vector2f(20, 17.3)))) {                        
+                if (!map.predictCollision(shape(), sf::Vector2f(0, -40))) {                        
                     playershape.setPosition(sf::Vector2f(playershape.getPosition().x, playershape.getPosition().y - 40));
                     velocity = sf::Vector2f(0, 0);
                     tp_timer.restart();
                 }
             } else if (((sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Down) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::S))) && shape().getPosition().y < (height-40)) {
-                if (!map.predictCollision(sf::FloatRect(sf::Vector2f(shape().getPosition().x, shape().getPosition().y-40), sf::Vector2f(20, 17.3)))) {
+                if (!map.predictCollision(shape(), sf::Vector2f(0, 40))) {
                     playershape.setPosition(sf::Vector2f(playershape.getPosition().x, playershape.getPosition().y + 40));
                     velocity = sf::Vector2f(0, 0);
                     tp_timer.restart();
