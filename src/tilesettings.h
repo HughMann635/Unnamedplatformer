@@ -206,11 +206,11 @@ public:
                 button* button_ = dynamic_cast<button*>(pos.tile.get());
                 if (!button_) continue;
                 for (auto& other: tilelist) {
-                    if ((other.type == tiletype::block_push) && satCollide(getvertices(other.tile -> collide()), getvertices(button_ -> collide()))) {
+                    if ((other.type == tiletype::block_push) && other.tile -> collide().getGlobalBounds().findIntersection(button_ -> collide().getGlobalBounds())) {
                         button_ -> pressed = true;
                         button_ -> presscheck = true;
                     }
-                    if (satCollide(getvertices(Object.shape()), getvertices(button_ -> collide()))) {
+                    if (Object.shape().getGlobalBounds().findIntersection(button_ -> collide().getGlobalBounds())) {
                         button_ -> pressed = true;
                         button_ -> presscheck = true;
                     }
@@ -231,13 +231,13 @@ public:
                 if (rest.type != tiletype::door) continue;
                 door* door_ = dynamic_cast<door*>(rest.tile.get());
                 if (!door_ || door_ -> id != button_ -> id) continue;
-                if (satCollide(getvertices(Object.shape()), getvertices(door_ -> collide()))) {
+                if (Object.shape().getGlobalBounds().findIntersection(door_ -> collide().getGlobalBounds())) {
                     occupied = true;
                     break;
                 }
                 for (auto& others: tilelist) {
                     if (others.type != tiletype::block_push) continue;
-                    if (satCollide(getvertices(Object.shape()), getvertices(others.tile -> collide()))) {
+                    if (others.tile -> collide().getGlobalBounds().findIntersection(door_ -> collide().getGlobalBounds())) {
                         occupied = true;
                         break;
                     }
@@ -371,8 +371,7 @@ public:
 
         //PLAYER COLLISION
         for (auto& pos: tilelist) {
-            if (pos.type == tiletype::empty || pos.type == tiletype::spawn) { continue; }
-
+            if (pos.type == tiletype::empty || pos.type == tiletype::spawn || !Object.shape().getGlobalBounds().findIntersection(pos.tile -> collide().getGlobalBounds())) { continue; }
             auto playerbounds = getvertices(Object.shape());
             auto tilebounds = getvertices(pos.tile -> collide());
 
