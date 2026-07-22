@@ -263,7 +263,7 @@ public:
                 }
             }
         }
-/*
+
         //BLOCK COLLISION
         for (auto& pos: tilelist) {
             //1. BLOCK + PLAYER PUSH LOGIC
@@ -273,7 +273,7 @@ public:
             if (!block_) { continue; }
             block_ -> blockgravity = 1800;
 
-            sf::FloatRect blockbounds = block_ -> collide();
+            sf::FloatRect blockbounds = block_ -> collide().getGlobalBounds();
 
             sf::FloatRect playerbounds = Object.shape().getGlobalBounds();
             if (blockbounds.findIntersection(playerbounds)) {
@@ -317,14 +317,14 @@ public:
                 if (overlapY > 0 && overlapY < overlapX && block_ -> velocity.y >= 0) {
                     block_ -> shape().setPosition(sf::Vector2f(block_ -> shape().getPosition().x, playerTop - blockbounds.size.y));
                     block_ -> velocity.y = 0;
-                    blockbounds = block_ -> collide();
+                    blockbounds = block_ -> collide().getGlobalBounds();
                 }
                 //k no more claude
             }
             //2. BLOCK + WORLD COLLISION
             for (auto& rest: tilelist) {
                 if (pos.tile != rest.tile && rest.type != tiletype::empty && rest.type != tiletype::spawn) {
-                    sf::FloatRect restbounds = rest.tile -> collide();
+                    sf::FloatRect restbounds = rest.tile -> collide().getGlobalBounds();
                     if (!blockbounds.findIntersection(restbounds)) { continue; }
                     else {
                         switch (rest.type) {
@@ -345,7 +345,7 @@ public:
                             if ((blockbounds.position.y + blockbounds.size.y) - restbounds.position.y > 0 && (blockbounds.position.y + blockbounds.size.y) - restbounds.position.y < overlapx) {
                                 block_ -> shape().setPosition(sf::Vector2f(block_ -> shape().getPosition().x, restbounds.position.y - blockbounds.size.y));
                                 block_ -> velocity.y = 0;
-                                blockbounds = block_ -> collide();
+                                blockbounds = block_ -> collide().getGlobalBounds();
                             }
                             break; }
                             case tiletype::zero_g:
@@ -367,7 +367,6 @@ public:
                 }
             }
         }
-*/
 
         //PLAYER COLLISION
         for (auto& pos: tilelist) {
