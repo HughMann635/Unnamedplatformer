@@ -21,6 +21,8 @@ public:
         ground_block.setPoint(2, sf::Vector2f(20, 20));
         ground_block.setPoint(3, sf::Vector2f(0, 20));
         ground_block.setFillColor(sf::Color(255, 200, 200));
+        ground_block.setOutlineColor(sf::Color(215, 160, 160));
+        ground_block.setOutlineThickness(-1.f);
         ground_block.setPosition(sf::Vector2f(position));
     }    
 
