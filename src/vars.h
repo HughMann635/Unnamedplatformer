@@ -12,6 +12,7 @@ const int stars = 700;
 inline bool running = true;
 inline bool restart = false;
 inline bool newlevel = false;
+inline bool swapped = false;
 
 //Debug stuff
 inline bool enterkeyheld = false;

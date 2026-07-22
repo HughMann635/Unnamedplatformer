@@ -70,22 +70,25 @@ int main()
 				window.close();
 		}
 		
+		swapped = false;
+		map.checkCollisions(*currentplayer);
 		currentplayer -> jump(deltatime);
 		currentplayer -> updatepos(deltatime, map);
 		currentplayer -> grounded = false;
 		map.updatemap(deltatime);
-		map.checkCollisions(*currentplayer);
 		lastframe_pos = sf::Vector2f(currentplayer -> shape().getPosition());
 		lastframe_vel = sf::Vector2f(currentplayer -> velocity);
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num1) && !dynamic_cast<square*>(currentplayer.get())) currentplayer = std::make_unique<square>();
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num2) && !dynamic_cast<circle*>(currentplayer.get())) currentplayer = std::make_unique<circle>();
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num3) && !dynamic_cast<triangle*>(currentplayer.get())) currentplayer = std::make_unique<triangle>();
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num4) && !dynamic_cast<hexagon*>(currentplayer.get())) currentplayer = std::make_unique<hexagon>();
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num5) && !dynamic_cast<octagon*>(currentplayer.get())) currentplayer = std::make_unique<octagon>();
-
-		currentplayer -> shape().setPosition(lastframe_pos);
-		currentplayer -> velocity = lastframe_vel;
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num1) && !dynamic_cast<square*>(currentplayer.get())) currentplayer = std::make_unique<square>(); swapped = true;
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num2) && !dynamic_cast<circle*>(currentplayer.get())) currentplayer = std::make_unique<circle>(); swapped = true;
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num3) && !dynamic_cast<triangle*>(currentplayer.get())) currentplayer = std::make_unique<triangle>(); swapped = true;
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num4) && !dynamic_cast<hexagon*>(currentplayer.get())) currentplayer = std::make_unique<hexagon>(); swapped = true;
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num5) && !dynamic_cast<octagon*>(currentplayer.get())) currentplayer = std::make_unique<octagon>(); swapped = true;
+		
+		if (swapped) {
+			currentplayer -> shape().setPosition(lastframe_pos);
+			currentplayer -> velocity = lastframe_vel;
+		}
 		
 		//SAT COLLISION STUFF
 		if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Enter)) enterkeyheld = false;
