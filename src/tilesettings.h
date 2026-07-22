@@ -151,6 +151,7 @@ public:
         zerogactive = false;
         wallhuggingright = false;
         wallhuggingleft = false;
+        landed = false;
 
         //BUTTON + DOOR RESETS
         for (auto& pos: tilelist) {
@@ -378,15 +379,16 @@ public:
                             if (mtv.y < 0 && Object.velocity.y > 0) {
                                 Object.grounded = true;
                                 Object.velocity.y = 0;
+                                landed = true;
                             } else if (mtv.y > 0) {
                                 if (Object.velocity.y < 0) Object.velocity.y = 0;
                             }
-                        } else {
+                        } else if (std::abs(mtv.x) > std::abs(mtv.y)){
                             if (mtv.x > 0) {
-                                Object.velocity.x = 0;
+                                if (!walljumped) Object.velocity.x = 0;
                                 wallhuggingleft = true;
                             } else if (mtv.x < 0) {
-                                Object.velocity.x = 0;
+                                if (!walljumped) Object.velocity.x = 0;
                                 wallhuggingright = true;
                             }
                         }

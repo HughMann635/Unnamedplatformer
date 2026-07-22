@@ -78,7 +78,6 @@ public:
 class octagon : public player {
 public:
     sf::ConvexShape playershape;
-    bool walljumped = false;
 
     octagon();
     sf::Shape& shape() override;

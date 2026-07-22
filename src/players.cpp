@@ -71,7 +71,8 @@ void square::updatepos (float deltatime, tilemap& map) {
     }
 
     
-    moveobject(deltatime, gravity);
+    if (!grounded) velocity.y += gravity * deltatime;
+    shape().move(velocity * deltatime);
 
     if (playershape.getPosition().y > 720) restart = true;
 
@@ -155,7 +156,8 @@ void circle::updatepos (float deltatime, tilemap& map)  {
     }
 
     
-    moveobject(deltatime, gravity);
+    if (!grounded) velocity.y += gravity * deltatime;
+    shape().move(velocity * deltatime);
 
     if (playershape.getPosition().y > 720) restart = true;
 
@@ -271,7 +273,8 @@ void triangle::updatepos (float deltatime, tilemap& map)  {
     }
 
     
-    moveobject(deltatime, gravity);
+    if (!grounded) velocity.y += gravity * deltatime;
+    shape().move(velocity * deltatime);
 
     if (playershape.getPosition().y > 720) restart = true;
 
@@ -361,7 +364,8 @@ void hexagon::updatepos (float deltatime, tilemap& map) {
         gravity = 1800.f;
     }
 
-    moveobject(deltatime, gravity);
+    if (!grounded) velocity.y += gravity * deltatime;
+    shape().move(velocity * deltatime);
 
     if (playershape.getPosition().y > 720) restart = true;
 
@@ -402,12 +406,21 @@ sf::Shape& octagon::shape() {
 //GIMMICK: wall jump
 //now I gotta implement wall jump somehow
 void octagon::jump (float deltatime) {
+    std::cout << "jump(): grounded=" << grounded 
+              << " wL=" << wallhuggingleft 
+              << " wR=" << wallhuggingright
+              << " walljumped=" << walljumped
+              << " jumpkeyheld=" << jumpkeyheld
+              << " vy=" << velocity.y
+              << " vx=" << velocity.x << "\n";
     if (sf::Keyboard::isKeyPressed ( sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::W)) {
         if (grounded && !swimming && !zerogactive) {
             velocity.y = -jumpforce;
             grounded = false;
+            walljumped = false;
         }
         else if (!grounded && !swimming && !zerogactive && wallhuggingright && !jumpkeyheld) {
+            walljumped = false;
             if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::LShift)) {
                 velocity.y = -0.85 * jumpforce;
                 velocity.x = -1.4 * jumpforce;
@@ -420,6 +433,7 @@ void octagon::jump (float deltatime) {
             }
             walljumped = true;
         } else if (!grounded && !swimming && !zerogactive && wallhuggingleft && !jumpkeyheld) {
+            walljumped = false;
             if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::LShift)) {
                 velocity.y = -0.92 * jumpforce;
                 velocity.x = 1.1 * jumpforce;
@@ -455,9 +469,7 @@ void octagon::jump (float deltatime) {
 
 void octagon::updatepos (float deltatime, tilemap& map) {
     if (walljumpcancel) walljumped = false;
-    if (walljumped) {
-        velocity.x += 0;
-    } else {
+    if (!walljumped) {
         if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Right) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::D)) {
             if (velocity.x > movespeed && grounded) velocity.x -= circleaccel*0.7;
             else if (velocity.x > movespeed && !grounded) velocity.x -= 0;
@@ -496,14 +508,13 @@ void octagon::updatepos (float deltatime, tilemap& map) {
         gravity = 1800.f;
     }
 
-    wallhuggingright = false;
-    wallhuggingleft = false;
-    if (grounded) {
+    if (landed) {
         walljumped = false;
     }
     walljumpcancel = false;
 
-    moveobject(deltatime, gravity);
+    if (!grounded) velocity.y += gravity * deltatime;
+    shape().move(velocity * deltatime);
 
     if (playershape.getPosition().y > 720) restart = true;
 

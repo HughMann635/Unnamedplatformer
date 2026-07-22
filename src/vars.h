@@ -38,8 +38,10 @@ inline sf::Clock tp_timer;
 inline sf::Clock jump_timer;
 inline bool wallhuggingleft = false;
 inline bool wallhuggingright = false;
+inline bool walljumped = false;
 inline bool walljumpcancel = false;
 inline bool jumpkeyheld = false;
+inline bool landed = false;
 
 //Game settings
 inline int levelnum = 0;
