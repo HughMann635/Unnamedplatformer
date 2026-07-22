@@ -378,9 +378,11 @@ public:
                             if (mtv.x > 0) {
                                 if (!walljumped) Object.velocity.x = 0;
                                 wallhuggingleft = true;
+                                if (Object.velocity.x < 0) Object.velocity.x = 0;
                             } else if (mtv.x < 0) {
                                 if (!walljumped) Object.velocity.x = 0;
                                 wallhuggingright = true;
+                                if (Object.velocity.x > 0) Object.velocity.x = 0;
                             }
                         }
                     }
@@ -406,9 +408,11 @@ public:
                             if (mtv.x > 0) {
                                 if (!walljumped) Object.velocity.x = 0;
                                 wallhuggingleft = true;
+                                if (Object.velocity.x < 0) Object.velocity.x = 0;
                             } else if (mtv.x < 0) {
                                 if (!walljumped) Object.velocity.x = 0;
                                 wallhuggingright = true;
+                                if (Object.velocity.x > 0) Object.velocity.x = 0;
                             }
                         }
                     }
@@ -528,7 +532,7 @@ public:
                     << " Y: " << tile.getPosition().y << "\n" << "YOUR COORDS: X: " 
                     << shape.getPosition().x 
                     << " Y: " << shape.getPosition().y << "\n";
-                    tp_timer.reset();
+                    tp_timer.restart();
                     return true;
                 }
             }

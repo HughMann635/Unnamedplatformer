@@ -75,12 +75,12 @@ inline bool satCollide (std::vector<sf::Vector2f>& vertices1, std::vector<sf::Ve
     for (auto& pos: axes1) {
         Range project1 = projection(vertices1, pos);
         Range project2 = projection(vertices2, pos);
-        if (project1.max < project2.min || project2.max < project1.min) return false;
+        if (project1.max <= project2.min || project2.max <= project1.min) return false;
     }
     for (auto& pos: axes2) {
         Range project1 = projection(vertices1, pos);
         Range project2 = projection(vertices2, pos);
-        if (project1.max < project2.min || project2.max < project1.min) return false;
+        if (project1.max <= project2.min || project2.max <= project1.min) return false;
     }
 
     return true;
@@ -99,7 +99,7 @@ inline bool mtvCheck (std::vector<sf::Vector2f>& vertices1, std::vector<sf::Vect
         Range project1 = projection(vertices1, pos);
         Range project2 = projection(vertices2, pos);
         float overlap = std::min(project1.max, project2.max) - std::max(project1.min, project2.min);
-        if (overlap < 0) return false;
+        if (overlap < 0.1) return false;
         if (overlap < lowestovlp) {
             lowestovlp = overlap;
             lowestaxis = pos;
