@@ -509,9 +509,15 @@ public:
         }
     }
 
-    bool predictCollision(sf::FloatRect futurepos) {
+    bool predictCollision(sf::Shape& shape, sf::Vector2f transform) {
+        auto vertices = getvertices(shape);
+        for (auto& pos: vertices) {
+            pos.x += transform.x;
+            pos.y += transform.y;
+        }
+        
         for (auto& pos: tilelist) {
-            if ((pos.type == tiletype::ground || pos.type == tiletype::block_push || pos.type == tiletype::door) && (pos.tile -> collide().findIntersection(futurepos))) {
+            if ((pos.type == tiletype::ground || pos.type == tiletype::block_push || pos.type == tiletype::door) && (satCollide(getvertices(pos.tile -> collide()), vertices))) {
                 return true;
             }
         }
