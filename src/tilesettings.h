@@ -146,12 +146,39 @@ public:
         }
     }
 
+    void satCollisionResp(std::vector<sf::Vector2f> verticesobj, std::vector<sf::Vector2f> verticestile, entity& Object) {
+        sf::Vector2f mtv = sf::Vector2f(0, 0);
+        mtvCheck(verticesobj, verticestile, mtv);
+        Object.shape().move(mtv);
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Enter)) std::cout << mtv.x << "," << mtv.y << "\n";
+        if (std::abs(mtv.y) > std::abs(mtv.x)) {
+            if (mtv.y < 0 && Object.velocity.y > 0) {
+                Object.grounded = true;
+                Object.velocity.y = 0;
+                landed = true;
+            } else if (mtv.y > 0) {
+                if (Object.velocity.y < 0) Object.velocity.y = 0;
+            }
+        } else if (std::abs(mtv.x) > std::abs(mtv.y)) {
+            if (mtv.x > 0) {
+                if (!walljumped) Object.velocity.x = 0;
+                wallhuggingleft = true;
+                if (Object.velocity.x < 0) Object.velocity.x = 0;
+            } else if (mtv.x < 0) {
+                if (!walljumped) Object.velocity.x = 0;
+                wallhuggingright = true;
+                if (Object.velocity.x > 0) Object.velocity.x = 0;
+            }
+        }
+    }
+
     void checkCollisions (entity& Object) {
         swimming = false;
         zerogactive = false;
         wallhuggingright = false;
         wallhuggingleft = false;
         landed = false; //PLACEHOLDER
+
 /*
         //BUTTON + DOOR RESETS
         for (auto& pos: tilelist) {
@@ -345,6 +372,7 @@ public:
             }
         }
 */
+
         //PLAYER COLLISION
         for (auto& pos: tilelist) {
             if (pos.type == tiletype::empty || pos.type == tiletype::spawn) { continue; }
@@ -362,29 +390,7 @@ public:
                         ground_* G = dynamic_cast<ground_*>(pos.tile.get());
                         if (!G) continue;
                         auto verticestile = getvertices(G -> ground_block);
-                        sf::Vector2f mtv = sf::Vector2f(0, 0);
-                        mtvCheck(verticesobj, verticestile, mtv);
-                        Object.shape().move(mtv);
-                        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Enter)) std::cout << mtv.x << "," << mtv.y << "\n";
-                        if (std::abs(mtv.y) > std::abs(mtv.x)) {
-                            if (mtv.y < 0 && Object.velocity.y > 0) {
-                                Object.grounded = true;
-                                Object.velocity.y = 0;
-                                landed = true;
-                            } else if (mtv.y > 0) {
-                                if (Object.velocity.y < 0) Object.velocity.y = 0;
-                            }
-                        } else if (std::abs(mtv.x) > std::abs(mtv.y)){
-                            if (mtv.x > 0) {
-                                if (!walljumped) Object.velocity.x = 0;
-                                wallhuggingleft = true;
-                                if (Object.velocity.x < 0) Object.velocity.x = 0;
-                            } else if (mtv.x < 0) {
-                                if (!walljumped) Object.velocity.x = 0;
-                                wallhuggingright = true;
-                                if (Object.velocity.x > 0) Object.velocity.x = 0;
-                            }
-                        }
+                        satCollisionResp(verticesobj, verticestile, Object);
                     }
                     break;
                     case tiletype::door: {
@@ -392,29 +398,7 @@ public:
                         door* G = dynamic_cast<door*>(pos.tile.get());
                         if (!G) continue;
                         auto verticestile = getvertices(G -> doorblock[0]);
-                        sf::Vector2f mtv = sf::Vector2f(0, 0);
-                        mtvCheck(verticesobj, verticestile, mtv);
-                        Object.shape().move(mtv);
-                        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Enter)) std::cout << mtv.x << "," << mtv.y << "\n";
-                        if (std::abs(mtv.y) > std::abs(mtv.x)) {
-                            if (mtv.y < 0 && Object.velocity.y > 0) {
-                                Object.grounded = true;
-                                Object.velocity.y = 0;
-                                landed = true;
-                            } else if (mtv.y > 0) {
-                                if (Object.velocity.y < 0) Object.velocity.y = 0;
-                            }
-                        } else if (std::abs(mtv.x) > std::abs(mtv.y)){
-                            if (mtv.x > 0) {
-                                if (!walljumped) Object.velocity.x = 0;
-                                wallhuggingleft = true;
-                                if (Object.velocity.x < 0) Object.velocity.x = 0;
-                            } else if (mtv.x < 0) {
-                                if (!walljumped) Object.velocity.x = 0;
-                                wallhuggingright = true;
-                                if (Object.velocity.x > 0) Object.velocity.x = 0;
-                            }
-                        }
+                        satCollisionResp(verticesobj, verticestile, Object);
                     }
                     break;
                     case tiletype::spike:
@@ -437,29 +421,7 @@ public:
                         block* G = dynamic_cast<block*>(pos.tile.get());
                         if (!G) continue;
                         auto verticestile = getvertices(G -> blockblock);
-                        sf::Vector2f mtv = sf::Vector2f(0, 0);
-                        mtvCheck(verticesobj, verticestile, mtv);
-                        Object.shape().move(mtv);
-                        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Enter)) std::cout << mtv.x << "," << mtv.y << "\n";
-                        if (std::abs(mtv.y) > std::abs(mtv.x)) {
-                            if (mtv.y < 0 && Object.velocity.y > 0) {
-                                Object.grounded = true;
-                                Object.velocity.y = 0;
-                                landed = true;
-                            } else if (mtv.y > 0) {
-                                if (Object.velocity.y < 0) Object.velocity.y = 0;
-                            }
-                        } else if (std::abs(mtv.x) > std::abs(mtv.y)){
-                            if (mtv.x > 0) {
-                                if (!walljumped) Object.velocity.x = 0;
-                                wallhuggingleft = true;
-                                if (Object.velocity.x < 0) Object.velocity.x = 0;
-                            } else if (mtv.x < 0) {
-                                if (!walljumped) Object.velocity.x = 0;
-                                wallhuggingright = true;
-                                if (Object.velocity.x > 0) Object.velocity.x = 0;
-                            }
-                        }
+                        satCollisionResp(verticesobj, verticestile, Object);
                     }
                     break;
                     case tiletype::spring:
