@@ -6,7 +6,7 @@
 class tileTypes {
 public:
     virtual void draw (sf::RenderWindow& window) {}
-    virtual sf::FloatRect collide() = 0;
+    virtual sf::Shape& collide() = 0;
     virtual void movetile (float deltatime) {} 
     virtual ~tileTypes() {}
 };
@@ -28,8 +28,8 @@ public:
         window.draw(ground_block);
     }
 
-    sf::FloatRect collide() override {
-        return ground_block.getGlobalBounds();
+    sf::Shape& collide() override {
+        return ground_block;
     }
 };
 
@@ -51,8 +51,8 @@ public:
         window.draw(spikeblock);
     }
 
-    sf::FloatRect collide() override {
-        return spikeblock.getGlobalBounds();
+    sf::Shape& collide() override {
+        return spikeblock;
     }
 
 };
@@ -84,8 +84,8 @@ public:
         window.draw(twospikes[1]);
     }
 
-    sf::FloatRect collide() override {
-        return sf::FloatRect(twospikes[0].getPosition(), sf::Vector2f(20.f, 10.f));
+    sf::Shape& collide() override {
+        return twospikes[0], twospikes[1];
     }
 };
 
@@ -104,8 +104,8 @@ public:
         window.draw(blackholeblock);
     }
 
-    sf::FloatRect collide() override {
-        return blackholeblock.getGlobalBounds();
+    sf::Shape& collide() override {
+        return blackholeblock;
     } 
 
 };
@@ -127,8 +127,8 @@ public:
         window.draw(lavablock);
     }
 
-    sf::FloatRect collide() override {
-        return lavablock.getGlobalBounds();
+    sf::Shape& collide() override {
+        return lavablock;
     }
 };
 
@@ -149,8 +149,8 @@ public:
         window.draw(waterblock);
     }
 
-    sf::FloatRect collide() override {
-        return waterblock.getGlobalBounds();
+    sf::Shape& collide() override {
+        return waterblock;
     }
 };
 
@@ -171,8 +171,8 @@ class zero_g : public tileTypes {
         window.draw(zero_gblock);
     }
 
-    sf::FloatRect collide() override {
-        return zero_gblock.getGlobalBounds();
+    sf::Shape& collide() override {
+        return zero_gblock;
     }
 };
 
@@ -199,8 +199,8 @@ public:
         return blockblock;
     }
 
-    sf::FloatRect collide() override {
-        return blockblock.getGlobalBounds();
+    sf::Shape& collide() override {
+        return blockblock;
     }
 
     void movetile (float deltatime) override {
@@ -237,8 +237,8 @@ public:
         window.draw(springblock);
     }
 
-    sf::FloatRect collide() override {
-        return springblock.getGlobalBounds();
+    sf::Shape& collide() override {
+        return springblock;
     }
 };
 
@@ -282,8 +282,8 @@ public:
         window.draw(buttonblock[0]);
     }
 
-    sf::FloatRect collide() override {
-        return sf::FloatRect(sf::Vector2f(buttonblock[0].getPosition().x + 2.5, buttonblock[0].getPosition().y + 2.5), sf::Vector2f(15, 15));
+    sf::Shape& collide() override {
+        return buttonblock[1];
     }
 };
 
@@ -314,6 +314,13 @@ public:
         doorblock[2].setPoint(3, sf::Vector2f(20, 20));
         doorblock[2].setFillColor(sf::Color(70, 60, 80));
 
+        doorblock[3].setPointCount(4);
+        doorblock[3].setPoint(0, sf::Vector2f(0, 0));
+        doorblock[3].setPoint(1, sf::Vector2f(0, 0));
+        doorblock[3].setPoint(2, sf::Vector2f(0, 0));
+        doorblock[3].setPoint(3, sf::Vector2f(0, 0));
+        doorblock[3].setFillColor(sf::Color(70, 60, 80));
+
         for (int i = 0; i < 3; i++) {
             doorblock[i].setOutlineColor(sf::Color(25, 21, 30));
             doorblock[i].setOutlineThickness(-1);
@@ -325,11 +332,11 @@ public:
         if (!opened) for (int i = 0; i < 3; i++) window.draw(doorblock[i]);
     }
 
-    sf::FloatRect collide() override {
+    sf::Shape& collide() override {
         if (opened) {
-            return sf::FloatRect(sf::Vector2f(1300, 1300), sf::Vector2f(playerdim, playerdim));
+            return doorblock[3];
         } else {
-            return sf::FloatRect(doorblock[0].getPosition(), sf::Vector2f(playerdim, playerdim));
+            return doorblock[0];
         }
     }
 };
@@ -351,7 +358,7 @@ public:
         window.draw(finishblock);
     }
 
-    sf::FloatRect collide() override {
-        return finishblock.getGlobalBounds();
+    sf::Shape& collide() override {
+        return finishblock;
     }
 };

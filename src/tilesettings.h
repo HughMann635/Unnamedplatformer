@@ -151,8 +151,8 @@ public:
         zerogactive = false;
         wallhuggingright = false;
         wallhuggingleft = false;
-        landed = false;
-
+        landed = false; //PLACEHOLDER
+/*
         //BUTTON + DOOR RESETS
         for (auto& pos: tilelist) {
             if (pos.type == tiletype::button) {
@@ -344,15 +344,15 @@ public:
                 }
             }
         }
-
+*/
         //PLAYER COLLISION
         for (auto& pos: tilelist) {
             if (pos.type == tiletype::empty || pos.type == tiletype::spawn) { continue; }
 
-            sf::FloatRect playerbounds = Object.shape().getGlobalBounds();
-            sf::FloatRect tilebounds = pos.tile -> collide();
+            auto playerbounds = getvertices(Object.shape());
+            auto tilebounds = getvertices(pos.tile -> collide());
 
-            if (!playerbounds.findIntersection(tilebounds)) { continue; }
+            if (!satCollide(playerbounds, tilebounds)) { continue; }
             else {
                 switch (pos.type) {
                     case tiletype::empty:
