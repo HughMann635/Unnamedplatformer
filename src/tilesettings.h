@@ -331,7 +331,7 @@ public:
                         switch (rest.type) {
                             case tiletype::ground: {
                                 auto verticesobj = getvertices(block_ -> collide());
-                                ground_* G = dynamic_cast<ground_*>(pos.tile.get());
+                                ground_* G = dynamic_cast<ground_*>(rest.tile.get());
                                 if (!G) continue;
                                 auto verticestile = getvertices(G -> ground_block);
                                 satCollisionResp(verticesobj, verticestile, *block_); 
@@ -339,7 +339,7 @@ public:
                             }
                             case tiletype::door: {
                                 auto verticesobj = getvertices(block_ -> collide());
-                                door* G = dynamic_cast<door*>(pos.tile.get());
+                                door* G = dynamic_cast<door*>(rest.tile.get());
                                 if (!G) continue;
                                 auto verticestile = getvertices(G -> doorblock[0]);
                                 satCollisionResp(verticesobj, verticestile, *block_); 
@@ -501,12 +501,6 @@ public:
                 sf::Shape& tile = pos.tile -> collide();
                 auto tilevertices = getvertices(tile);
                 if (satCollide(shapevertices, tilevertices)) {
-                    std::cout << "[TP BLOCKED] TILE COORDS: X: " 
-                    << tile.getPosition().x 
-                    << " Y: " << tile.getPosition().y << "\n" << "YOUR COORDS: X: " 
-                    << shape.getPosition().x 
-                    << " Y: " << shape.getPosition().y << "\n";
-                    tp_timer.restart();
                     return true;
                 }
             }
