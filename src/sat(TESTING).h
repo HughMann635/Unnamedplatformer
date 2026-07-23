@@ -39,7 +39,9 @@ inline sf::Vector2f getcircleaxis(sf::Vector2f center, std::vector<sf::Vector2f>
     return circleaxis;
 }
 
-inline void drawdebug(sf::RenderWindow& window, std::vector<sf::Vector2f> vertices) {
+inline void drawdebug(sf::RenderWindow& window, std::vector<sf::Vector2f> vertices, std::vector<sf::Vector2f> tilevertices) {
+    std::vector<sf::Vector2f> axes;
+    sf::Vector2f pt1, pt2, midpoint;
     for (auto& pos: vertices) {
         sf::CircleShape vertex;
         vertex.setRadius(1.f);
@@ -47,14 +49,30 @@ inline void drawdebug(sf::RenderWindow& window, std::vector<sf::Vector2f> vertic
         vertex.setPosition(sf::Vector2f(pos.x, pos.y));
         window.draw(vertex);
     }
-    std::vector<sf::Vector2f> axes = getaxes(vertices);
-    for (int i = 0; i < vertices.size(); i++) {
-        sf::Vector2f pt1 = vertices[i];
-        sf::Vector2f pt2 = vertices[(i+1) % vertices.size()];
-        sf::Vector2f midpoint = (pt1+pt2)/2.f;
-        sf::Vector2f axis = midpoint + axes[i] * 25.f;
+    if (vertices.size() < 15) {
+        axes = getaxes(vertices);
+        for (int i = 0; i < axes.size(); i++) {
+            sf::Vector2f pt1 = vertices[i];
+            sf::Vector2f pt2 = vertices[(i+1) % vertices.size()];
+            sf::Vector2f midpoint = (pt1+pt2)/2.f;
+            sf::Vector2f axis = midpoint + axes[i] * 25.f;
+            sf::Vertex v1;
+            v1.position = midpoint;
+            v1.color = sf::Color::Magenta;
+            sf::Vertex v2;
+            v2.position = axis;
+            v2.color = sf::Color::Magenta;
+    
+            sf::Vertex axisline[2] = { v1, v2 };
+            window.draw(axisline, 2, sf::PrimitiveType::Lines);
+        }
+    } else {
+        sf::Vector2f center;
+        for (auto& pos: vertices) center += pos;
+        center /= static_cast<float>(vertices.size());
+        sf::Vector2f axis = center + getcircleaxis(center, tilevertices) * 25.f;
         sf::Vertex v1;
-        v1.position = midpoint;
+        v1.position = center;
         v1.color = sf::Color::Magenta;
         sf::Vertex v2;
         v2.position = axis;

@@ -156,24 +156,47 @@ int main()
 		map.drawmap(window);
 		//DEBUG DRAWING STUFF
 		if (draw) {
-			for (auto& pos: map.tilelist) {
+			auto playervertices = getvertices(currentplayer->shape());
+			sf::Vector2f center = sf::Vector2f(0, 0);
+			for (const auto& pos : playervertices) center += pos;
+    		center /= static_cast<float>(playervertices.size());
+			std::vector<sf::Vector2f> closestvertices;
+    		float closestdist = std::numeric_limits<float>::max();
+
+			for (auto& pos : map.tilelist) {
+				std::vector<sf::Vector2f> tilevertices;
+		
 				if (pos.type == tiletype::block_push) {
 					block* G = dynamic_cast<block*>(pos.tile.get());
-					auto verticeslist = getvertices(G -> blockblock);
-					drawdebug(window, verticeslist);
+					if (G) tilevertices = getvertices(G->blockblock);
+					drawdebug(window, tilevertices, tilevertices);
 				}
-				if (pos.type == tiletype::lava) {
+				else if (pos.type == tiletype::lava) {
 					lava* G = dynamic_cast<lava*>(pos.tile.get());
-					auto verticeslist = getvertices(G -> lavablock);
-					drawdebug(window, verticeslist);
+					if (G) tilevertices = getvertices(G->lavablock);
+					drawdebug(window, tilevertices, tilevertices);
 				}
-				if (pos.type == tiletype::spike) {
+				else if (pos.type == tiletype::spike) {
 					spike* G = dynamic_cast<spike*>(pos.tile.get());
-					auto verticeslist = getvertices(G -> spikeblock);
-					drawdebug(window, verticeslist);
+					if (G) tilevertices = getvertices(G->spikeblock);
+					drawdebug(window, tilevertices, tilevertices);
+				}
+				else if (pos.type == tiletype::ground) {
+					ground_* G = dynamic_cast<ground_*>(pos.tile.get());
+					if (G) tilevertices = getvertices(G->ground_block);
+				}
+				sf::Vector2f tilecenter = sf::Vector2f(0, 0);
+				for (auto& rest: tilevertices) tilecenter += rest;
+				if (!tilevertices.empty()) {
+					tilecenter /= static_cast<float>(tilevertices.size());
+					float dist = (center.x - tilecenter.x) * (center.x - tilecenter.x) + (center.y - tilecenter.y) * (center.y - tilecenter.y);
+					if (dist < closestdist) {
+						closestdist = dist;
+						closestvertices = tilevertices;
+					}
 				}
 			}
-			drawdebug(window, getvertices(currentplayer -> shape()));
+			drawdebug(window, playervertices, closestvertices);
 		}
 		
 		//CAM SETTINGS
