@@ -450,7 +450,7 @@ public:
         }
     }
 
-    void groundCollide(entity& Object, sf::FloatRect& bounds) {
+    /*void groundCollide(entity& Object, sf::FloatRect& bounds) {
         float topside1 = Object.shape().getPosition().y;
         float leftside1 = Object.shape().getPosition().x;
         float rightside1 = Object.shape().getPosition().x + Object.shape().getGlobalBounds().size.x;
@@ -486,7 +486,7 @@ public:
             }
         }
     }
-
+*/
     bool predictCollision(sf::Shape& shape, sf::Vector2f transform) {
         auto shapevertices = getvertices(shape);
         for (auto& pos: shapevertices) {
