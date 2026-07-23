@@ -274,9 +274,10 @@ public:
             block_ -> blockgravity = 1800;
 
             sf::FloatRect blockbounds = block_ -> collide().getGlobalBounds();
-
+            auto blockvertices = getvertices(block_ -> collide());
             sf::FloatRect playerbounds = Object.shape().getGlobalBounds();
-            if (blockbounds.findIntersection(playerbounds)) {
+            auto playervertices = getvertices(Object.shape());
+            if (satCollide(playervertices, blockvertices)) {
                 float playercentery = playerbounds.position.y + playerbounds.size.y / 2;
                 float playercenterx = playerbounds.position.x + playerbounds.size.x / 2;
                 float blocktop = blockbounds.position.y;
@@ -328,12 +329,22 @@ public:
                     if (!blockbounds.findIntersection(restbounds)) { continue; }
                     else {
                         switch (rest.type) {
-                            case tiletype::ground:
-                            groundCollide(*block_, restbounds);
-                            break;
-                            case tiletype::door:
-                            groundCollide(*block_, restbounds);                      
-                            break;
+                            case tiletype::ground: {
+                                auto verticesobj = getvertices(block_ -> collide());
+                                ground_* G = dynamic_cast<ground_*>(pos.tile.get());
+                                if (!G) continue;
+                                auto verticestile = getvertices(G -> ground_block);
+                                satCollisionResp(verticesobj, verticestile, *block_); 
+                                break;
+                            }
+                            case tiletype::door: {
+                                auto verticesobj = getvertices(block_ -> collide());
+                                door* G = dynamic_cast<door*>(pos.tile.get());
+                                if (!G) continue;
+                                auto verticestile = getvertices(G -> doorblock[0]);
+                                satCollisionResp(verticesobj, verticestile, *block_); 
+                                break;
+                            }                   
                             case tiletype::block_push: {
                             block_ -> velocity.x = 0;
                             //technically not just pasted from claude, but I used its code as inspiration
