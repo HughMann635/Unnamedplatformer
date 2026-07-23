@@ -148,8 +148,6 @@ int main()
 			enterkeyheld = true;
 		}
 
-		
-
 		window.clear();
 		window.setView(view);
 		sky.drawsky(window);

@@ -23,6 +23,22 @@ inline std::vector<sf::Vector2f> getaxes(std::vector<sf::Vector2f>& vertices) {
     return axes;
 }
 
+inline sf::Vector2f getcircleaxis(sf::Vector2f center, std::vector<sf::Vector2f>& vertices) {
+    float lowestdist = std::numeric_limits<float>::max();
+    sf::Vector2f nearestvertex;
+    for (auto& pos: vertices) {
+        sf::Vector2f dist = sf::Vector2f((center.x - pos.x)*(center.x - pos.x), (center.y - pos.y)*(center.y - pos.y));
+        if (dist.x + dist.y < lowestdist) {
+            lowestdist = dist.x + dist.y;
+            nearestvertex = pos;
+        }
+    }
+    sf::Vector2f circleaxis = center - nearestvertex;
+    float length = sqrt(circleaxis.x * circleaxis.x + circleaxis.y * circleaxis.y);
+    circleaxis /= length;
+    return circleaxis;
+}
+
 inline void drawdebug(sf::RenderWindow& window, std::vector<sf::Vector2f> vertices) {
     for (auto& pos: vertices) {
         sf::CircleShape vertex;
@@ -87,16 +103,38 @@ inline bool satCollide (std::vector<sf::Vector2f>& vertices1, std::vector<sf::Ve
 }
 
 inline bool mtvCheck (std::vector<sf::Vector2f>& vertices1, std::vector<sf::Vector2f>& vertices2, sf::Vector2f& mtv) {
-    auto axes1 = getaxes(vertices1);
-    auto axes2 = getaxes(vertices2);
     std::vector<sf::Vector2f> allaxes;
-    allaxes.insert(allaxes.end(), axes1.begin(), axes1.end());
-    allaxes.insert(allaxes.end(), axes2.begin(), axes2.end());
+    sf::Vector2f circlecenter;
+    float radius;
+    if (vertices1.size() < 15) {
+        auto axes1 = getaxes(vertices1);
+        allaxes.insert(allaxes.end(), axes1.begin(), axes1.end());
+    } else {
+        for (auto& pos: vertices1) {
+            circlecenter += pos;
+        }
+        circlecenter /= static_cast<float>(vertices1.size());
+        sf::Vector2f dist = vertices1[0] - circlecenter;
+        radius = sqrt(dist.x * dist.x + dist.y * dist.y);
+        sf::Vector2f circleaxis = getcircleaxis(circlecenter, vertices2);
+        allaxes.push_back(circleaxis);
+    }
+    if (vertices2.size() < 15) {
+        auto axes2 = getaxes(vertices2);
+        allaxes.insert(allaxes.end(), axes2.begin(), axes2.end());
+    }
+
     float lowestovlp = std::numeric_limits<float>::max();
     sf::Vector2f lowestaxis;
 
     for (auto& pos: allaxes) {
-        Range project1 = projection(vertices1, pos);
+        Range project1;
+        if (vertices1.size() < 15) {
+            project1 = projection(vertices1, pos); 
+        } else { 
+            float centerproj = circlecenter.x * pos.x + circlecenter.y * pos.y;
+            project1 = {centerproj - radius, centerproj + radius};
+        }
         Range project2 = projection(vertices2, pos);
         float overlap = std::min(project1.max, project2.max) - std::max(project1.min, project2.min);
         if (overlap < 0.1) return false;
