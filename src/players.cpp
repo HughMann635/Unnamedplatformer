@@ -73,6 +73,7 @@ void square::updatepos (float deltatime, tilemap& map) {
     
     if (!grounded) velocity.y += gravity * deltatime;
     shape().move(velocity * deltatime);
+    shape().rotate(sf::degrees(4));
 
     if (playershape.getPosition().y > 720) restart = true;
 

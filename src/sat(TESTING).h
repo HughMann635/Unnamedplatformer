@@ -70,7 +70,7 @@ inline void drawdebug(sf::RenderWindow& window, std::vector<sf::Vector2f> vertic
         sf::Vector2f center;
         for (auto& pos: vertices) center += pos;
         center /= static_cast<float>(vertices.size());
-        sf::Vector2f axis = center + getcircleaxis(center, tilevertices) * 25.f;
+        sf::Vector2f axis = center + getcircleaxis(center, tilevertices) * -25.f;
         sf::Vertex v1;
         v1.position = center;
         v1.color = sf::Color::Magenta;

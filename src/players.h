@@ -13,6 +13,9 @@ public:
     sf::Vector2f velocity;
     bool grounded;
     virtual sf::Shape& shape() = 0;
+    float angularvelocity;
+    float rotation;
+    float damping;
 
     void moveobject (float deltatime, float gravity) {
         velocity.y += gravity * deltatime;
