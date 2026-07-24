@@ -71,17 +71,31 @@ int main()
 		}
 		
 		swapped = false;
-		currentplayer -> jump(deltatime);
+
 		if ((swimming || zerogactive) && currentplayer -> shape().getRotation().asDegrees() != 0) {
 			currentplayer -> rotating = false;
 			currentplayer -> rotation = 0;
 			currentplayer -> shape().getRotation().asDegrees() > 180 ? currentplayer -> shape().rotate(sf::degrees(1)) : currentplayer -> shape().rotate(sf::degrees(-1));
 			if (abs(currentplayer -> shape().getRotation().asDegrees()) < 5) currentplayer -> shape().setRotation(sf::degrees(0));
-		} else if (currentplayer -> rotating) {
+		} 
+		else if (currentplayer -> rotating) {
 			if (abs(currentplayer -> rotation) <= 5) currentplayer -> rotation += currentplayer -> velocity.x * deltatime; 
 			currentplayer -> shape().rotate(sf::degrees(currentplayer -> rotation));
 			currentplayer -> rotation *= 0.90;
 		}
+		if (currentplayer -> grounded && abs(currentplayer -> velocity.x) <= 10) {
+			float currentangle = currentplayer -> shape().getRotation().asDegrees();
+			float nearestangle = 360.f;
+			for (int i = 0; i < (360/nearestedge); i++) {
+				if (abs(currentangle - i*nearestedge) < nearestangle) {
+					nearestangle = abs(currentangle - i*nearestedge);
+				}
+			}
+			currentplayer -> shape().rotate(sf::degrees(1.5));
+			if (abs(currentplayer -> rotation) <= 5) currentplayer -> shape().setRotation(sf::degrees(nearestangle));
+		}
+		
+		currentplayer -> jump(deltatime);
 		currentplayer -> updatepos(deltatime, map);
 		currentplayer -> grounded = false;
 		map.updatemap(deltatime);
@@ -89,11 +103,30 @@ int main()
 		lastframe_pos = sf::Vector2f(currentplayer -> shape().getPosition());
 		lastframe_vel = sf::Vector2f(currentplayer -> velocity);
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num1) && !dynamic_cast<square*>(currentplayer.get())) currentplayer = std::make_unique<square>(); swapped = true;
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num2) && !dynamic_cast<circle*>(currentplayer.get())) currentplayer = std::make_unique<circle>(); swapped = true;
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num3) && !dynamic_cast<triangle*>(currentplayer.get())) currentplayer = std::make_unique<triangle>(); swapped = true;
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num4) && !dynamic_cast<hexagon*>(currentplayer.get())) currentplayer = std::make_unique<hexagon>(); swapped = true;
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num5) && !dynamic_cast<octagon*>(currentplayer.get())) currentplayer = std::make_unique<octagon>(); swapped = true;
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num1) && !dynamic_cast<square*>(currentplayer.get())) { 
+			currentplayer = std::make_unique<square>(); 
+			swapped = true; 
+			nearestedge = 90.f; 
+		}
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num2) && !dynamic_cast<circle*>(currentplayer.get())) { 
+			currentplayer = std::make_unique<circle>(); 
+			swapped = true; 
+		}
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num3) && !dynamic_cast<triangle*>(currentplayer.get())) { 
+			currentplayer = std::make_unique<triangle>(); 
+			swapped = true; 
+			nearestedge = 120.f; 
+		}
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num4) && !dynamic_cast<hexagon*>(currentplayer.get())) { 
+			currentplayer = std::make_unique<hexagon>(); 
+			swapped = true; 
+			nearestedge = 60.f; 
+		}
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num5) && !dynamic_cast<octagon*>(currentplayer.get())) { 
+			currentplayer = std::make_unique<octagon>(); 
+			swapped = true; 
+			nearestedge = 45.f; 
+		}
 		
 		if (swapped) {
 			currentplayer -> shape().setPosition(lastframe_pos);

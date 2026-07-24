@@ -25,6 +25,7 @@ const float playerdim = 20.f;
 inline float gravity = 1800.f;
 inline float jumpforce = 600.f;
 inline float movespeed = 230.f;
+inline float nearestedge = 90.f;
 
 inline bool swimming = false;
 inline bool zerogactive = false;
