@@ -73,7 +73,7 @@ int main()
 		swapped = false;
 		currentplayer -> jump(deltatime);
 		if (currentplayer -> rotating) {
-			currentplayer -> shape().rotate(sf::degrees(currentplayer -> velocity.x / 40));
+			currentplayer -> shape().rotate(sf::degrees(currentplayer -> velocity.x / 31.4159265));
 		}
 		currentplayer -> updatepos(deltatime, map);
 		currentplayer -> grounded = false;
