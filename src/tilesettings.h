@@ -298,8 +298,10 @@ public:
                         block_ -> velocity.y = trianglepushspeed;
                         Object.velocity.y = trianglepushspeed;
                     } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W) && Object.grounded) {
-                        block_ -> velocity.y = -trianglepushspeed;
-                        Object.velocity.y = -trianglepushspeed;
+                        if (zerogactive) {
+                            block_ -> velocity.y = -trianglepushspeed;
+                            Object.velocity.y = -trianglepushspeed;
+                        }   
                     }
                 }
                 //this was all claude
