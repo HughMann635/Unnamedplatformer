@@ -72,7 +72,15 @@ int main()
 		
 		swapped = false;
 		currentplayer -> jump(deltatime);
-		if (4 > 3) {
+		if ((swimming || zerogactive) && currentplayer -> shape().getRotation().asDegrees() != 0) {
+			currentplayer -> rotating = false;
+			float currentangle = currentplayer -> shape().getRotation().asDegrees();
+			if (currentangle > 180.f) currentangle -= 360;
+			float resetrotate = (currentplayer -> shape().getRotation().asDegrees()) / 30.f;
+			currentplayer -> shape().rotate(sf::degrees(resetrotate));
+			if (abs(currentplayer -> shape().getRotation().asDegrees()) < 5) currentplayer -> shape().setRotation(sf::degrees(0));
+		}
+		else if (currentplayer -> rotating) {
 			if (abs(currentplayer -> rotation) <= 5) currentplayer -> rotation += currentplayer -> velocity.x * deltatime; 
 			currentplayer -> shape().rotate(sf::degrees(currentplayer -> rotation));
 			currentplayer -> rotation *= 0.90;
