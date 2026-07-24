@@ -127,9 +127,11 @@ void circle::updatepos (float deltatime, tilemap& map)  {
     if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Right) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::D)) {
         if (velocity.x <= circlemax && !zerogactive) velocity.x += circleaccel;
         else if (zerogactive) velocity.x = movespeed;
+        rotating = true;
     } else if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Left) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::A)) {
         if (velocity.x >= -circlemax && !zerogactive) velocity.x += -circleaccel;
         else if (zerogactive) velocity.x = -movespeed;
+        rotating = true;
     } else if (swimming || zerogactive) {
         velocity.x *= 0.8; 
     } else {
@@ -216,10 +218,12 @@ void triangle::updatepos (float deltatime, tilemap& map)  {
         if (velocity.x > movespeed && grounded) velocity.x -= circleaccel*0.7;
         else if (velocity.x > movespeed && !grounded) velocity.x -= 0;
         else velocity.x = movespeed;
+        rotating = true;
     } else if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Left) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::A)) {
         if (velocity.x < -movespeed && grounded) velocity.x += circleaccel*0.7;
         else if (velocity.x < -movespeed && !grounded) velocity.x -= 0;
         else velocity.x = -movespeed;
+        rotating = true;
     } else {
         zerogactive || swimming ? velocity.x *= 0.8 : velocity.x *= 0.f; 
     }
@@ -338,10 +342,12 @@ void hexagon::updatepos (float deltatime, tilemap& map) {
         if (velocity.x > movespeed && grounded) velocity.x -= circleaccel*0.7;
         else if (velocity.x > movespeed && !grounded) velocity.x -= 0;
         else velocity.x = movespeed;
+        rotating = true;
     } else if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Left) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::A)) {
         if (velocity.x < -movespeed && grounded) velocity.x += circleaccel*0.7;
         else if (velocity.x < -movespeed && !grounded) velocity.x -= 0;
         else velocity.x = -movespeed;
+        rotating = true;
     } else {
         zerogactive || swimming ? velocity.x *= 0.8 : velocity.x *= 0.f; 
     }
@@ -469,10 +475,12 @@ void octagon::updatepos (float deltatime, tilemap& map) {
             if (velocity.x > movespeed && grounded) velocity.x -= circleaccel*0.7;
             else if (velocity.x > movespeed && !grounded) velocity.x -= 0;
             else velocity.x = movespeed;
+            rotating = true;
         } else if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Left) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::A)) {
             if (velocity.x < -movespeed && grounded) velocity.x += circleaccel*0.7;
             else if (velocity.x < -movespeed && !grounded) velocity.x -= 0;
             else velocity.x = -movespeed;
+            rotating = true;
         } else {
             zerogactive || swimming ? velocity.x *= 0.8 : velocity.x *= 0.f; 
         }
