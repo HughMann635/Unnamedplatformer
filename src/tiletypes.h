@@ -188,6 +188,7 @@ public:
     sf::ConvexShape blockblock;
     float blockgravity = 1800.f;
     block(sf::Vector2f position) {
+        rotating = false;
         blockblock.setPointCount(4);
         blockblock.setPoint(0, sf::Vector2f(0, 0));
         blockblock.setPoint(1, sf::Vector2f(20, 0));

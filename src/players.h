@@ -13,15 +13,15 @@ public:
     sf::Vector2f velocity;
     bool grounded;
     virtual sf::Shape& shape() = 0;
-    float angularvelocity;
-    float rotation;
-    float damping;
+    float angularvelocity = 0;
+    float rotation = 0;
+    float damping = 0.98;
+    bool rotating = true;
 
     void moveobject (float deltatime, float gravity) {
         velocity.y += gravity * deltatime;
         shape().move(velocity * deltatime);
     }
-
     virtual ~entity() = default;
 };
 

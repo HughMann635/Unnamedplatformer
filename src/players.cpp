@@ -9,7 +9,7 @@
 square::square() {
     playershape = sf::RectangleShape(sf::Vector2f(playerdim, playerdim));
     playershape.setFillColor(sf::Color::Red);
-    //playershape.setOrigin(sf::Vector2f(playershape.getLocalBounds().size.x/2, playershape.getLocalBounds().size.y/2));
+    playershape.setOrigin(sf::Vector2f(playershape.getLocalBounds().size.x/2, playershape.getLocalBounds().size.y/2));
 
     velocity = (sf::Vector2f(0.f, gravity));
     grounded = false;
@@ -43,10 +43,12 @@ void square::updatepos (float deltatime, tilemap& map) {
         if (velocity.x > movespeed && grounded) velocity.x -= circleaccel*0.7;
         else if (velocity.x > movespeed && !grounded) velocity.x -= 0;
         else velocity.x = movespeed;
+        rotating = true;
     } else if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Left) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::A)) {
         if (velocity.x < -movespeed && grounded) velocity.x += circleaccel*0.7;
         else if (velocity.x < -movespeed && !grounded) velocity.x -= 0;
         else velocity.x = -movespeed;
+        rotating = true;
     } else {
         zerogactive || swimming ? velocity.x *= 0.8 : velocity.x *= 0.f; 
     }
@@ -73,7 +75,6 @@ void square::updatepos (float deltatime, tilemap& map) {
     
     if (!grounded) velocity.y += gravity * deltatime;
     shape().move(velocity * deltatime);
-    shape().rotate(sf::degrees(4));
 
     if (playershape.getPosition().y > 720) restart = true;
 
