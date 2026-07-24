@@ -79,7 +79,7 @@ void square::updatepos (float deltatime, tilemap& map) {
     if (playershape.getPosition().y > 720) restart = true;
 
     sf::Vector2f bound = playershape.getPosition();
-    bound.x = std::clamp(bound.x, 0.f, (float)width-playerdim);
+    bound.x = std::clamp(bound.x, 10.f, (float)width-playerdim/2);
     playershape.setPosition(bound);
     swimming = false;
     zerogactive = false;
@@ -166,7 +166,7 @@ void circle::updatepos (float deltatime, tilemap& map)  {
     if (playershape.getPosition().y > 720) restart = true;
 
     sf::Vector2f bound = playershape.getPosition();
-    bound.x = std::clamp(bound.x, 0.f, (float)width-playerdim);
+    bound.x = std::clamp(bound.x, 10.f, (float)width-playerdim/2);
     playershape.setPosition(bound);
     swimming = false;
     zerogactive = false;
@@ -285,7 +285,7 @@ void triangle::updatepos (float deltatime, tilemap& map)  {
     if (playershape.getPosition().y > 720) restart = true;
 
     sf::Vector2f bound = playershape.getPosition();
-    bound.x = std::clamp(bound.x, 0.f, (float)width-playerdim);
+    bound.x = std::clamp(bound.x, 10.f, (float)width-playerdim/2);
     playershape.setPosition(bound);
     swimming = false;
     zerogactive = false;
@@ -378,7 +378,7 @@ void hexagon::updatepos (float deltatime, tilemap& map) {
     if (playershape.getPosition().y > 720) restart = true;
 
     sf::Vector2f bound = playershape.getPosition();
-    bound.x = std::clamp(bound.x, 0.f, (float)width-playerdim);
+    bound.x = std::clamp(bound.x, 10.f, (float)width-playerdim/2);
     playershape.setPosition(bound);
     swimming = false;
     zerogactive = false;
@@ -522,7 +522,7 @@ void octagon::updatepos (float deltatime, tilemap& map) {
     if (playershape.getPosition().y > 720) restart = true;
 
     sf::Vector2f bound = playershape.getPosition();
-    bound.x = std::clamp(bound.x, 0.f, (float)width-playerdim);
+    bound.x = std::clamp(bound.x, 10.f, (float)width-playerdim/2);
     playershape.setPosition(bound);
     swimming = false;
     zerogactive = false;
