@@ -75,7 +75,7 @@ int main()
 		if ((swimming || zerogactive) && currentplayer -> shape().getRotation().asDegrees() != 0) {
 			currentplayer -> rotating = false;
 			currentplayer -> rotation = 0;
-			currentplayer -> shape().rotate(sf::degrees(1));
+			currentplayer -> shape().getRotation().asDegrees() > 180 ? currentplayer -> shape().rotate(sf::degrees(1)) : currentplayer -> shape().rotate(sf::degrees(-1));
 			if (abs(currentplayer -> shape().getRotation().asDegrees()) < 5) currentplayer -> shape().setRotation(sf::degrees(0));
 		} else if (currentplayer -> rotating) {
 			if (abs(currentplayer -> rotation) <= 5) currentplayer -> rotation += currentplayer -> velocity.x * deltatime; 
