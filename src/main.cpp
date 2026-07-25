@@ -78,12 +78,12 @@ int main()
 			currentplayer -> shape().getRotation().asDegrees() > 180 ? currentplayer -> shape().rotate(sf::degrees(1)) : currentplayer -> shape().rotate(sf::degrees(-1));
 			if (abs(currentplayer -> shape().getRotation().asDegrees()) < 5) currentplayer -> shape().setRotation(sf::degrees(0));
 		} 
-		else if (currentplayer -> rotating) {
-			if (abs(currentplayer -> rotation) <= 5) currentplayer -> rotation += currentplayer -> velocity.x * deltatime; 
-			currentplayer -> shape().rotate(sf::degrees(currentplayer -> rotation));
+		if (currentplayer -> rotating) {
+			if (std::abs(currentplayer -> rotation) <= std::abs(currentplayer -> velocity.x / (playerdim))) currentplayer -> rotation += 1.15 * currentplayer -> velocity.x / movespeed; 
+			currentplayer -> shape().rotate(sf::radians(currentplayer -> rotation * deltatime));
 			currentplayer -> rotation *= 0.90;
 		}
-		if (currentplayer -> grounded && std::abs(currentplayer -> velocity.x) <= 10.f) {
+		if (currentplayer -> grounded && std::abs(currentplayer -> velocity.x) <= 5.f) {
 			float currentangle = currentplayer -> shape().getRotation().asDegrees();
 			float nearestangle = 360.f;
 			for (int i = 0; i <= (360 / nearestedge); i++) {
