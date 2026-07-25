@@ -471,6 +471,17 @@ public:
         return false;
     }
 
+    bool cliffCheck (sf::Vector2f vertex) {
+        sf::FloatRect groundpoint = sf::FloatRect(sf::Vector2f(vertex.x - 1, vertex.y), sf::Vector2f(2.f, 2.f));
+        for (auto& pos: tilelist) {
+            if (pos.type == tiletype::ground || pos.type == tiletype::block_push || pos.type == tiletype::door) {
+                sf::FloatRect groundbounds = pos.tile -> collide().getGlobalBounds();
+                if (groundpoint.findIntersection(groundbounds)) return true;
+            }
+        }
+        return false;
+    }
+
     void updatemap (float deltatime) {
         for (auto& pos: tilelist) {
             if (pos.type != tiletype::empty && pos.type != tiletype::spawn) {
