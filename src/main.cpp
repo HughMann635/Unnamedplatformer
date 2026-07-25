@@ -83,16 +83,18 @@ int main()
 			currentplayer -> shape().rotate(sf::degrees(currentplayer -> rotation));
 			currentplayer -> rotation *= 0.90;
 		}
-		if (currentplayer -> grounded && abs(currentplayer -> velocity.x) <= 10) {
+		if (currentplayer -> grounded && std::abs(currentplayer -> velocity.x) <= 10.f) {
 			float currentangle = currentplayer -> shape().getRotation().asDegrees();
 			float nearestangle = 360.f;
-			for (int i = 0; i < (360/nearestedge); i++) {
-				if (abs(currentangle - i*nearestedge) < nearestangle) {
-					nearestangle = abs(currentangle - i*nearestedge);
+			for (int i = 0; i <= (360 / nearestedge); i++) {
+				if (std::abs(std::fmod(currentangle - i * nearestedge + 540.f, 360.f) - 180.f) < std::abs(std::fmod(currentangle - nearestangle + 540.f, 360.f) - 180.f)) {
+					nearestangle = i * nearestedge;
 				}
 			}
-			currentplayer -> shape().rotate(sf::degrees(1.5));
-			if (abs(currentplayer -> rotation) <= 5) currentplayer -> shape().setRotation(sf::degrees(nearestangle));
+			if (std::fmod(currentangle - nearestangle + 540.f, 360.f) - 180.f > 1.f) currentplayer -> shape().rotate(sf::degrees(-1.f)); 
+			else if (std::fmod(currentangle - nearestangle + 540.f, 360.f) - 180.f < -1.f) currentplayer -> shape().rotate(sf::degrees(1.f));
+			else currentplayer -> shape().setRotation(sf::degrees(nearestangle));
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LShift)) std::cout << currentangle << "," << nearestangle << "\n";
 		}
 		
 		currentplayer -> jump(deltatime);
