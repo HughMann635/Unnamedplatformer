@@ -91,8 +91,8 @@ int main()
 					nearestangle = i * nearestedge;
 				}
 			}
-			if (std::fmod(currentangle - nearestangle + 540.f, 360.f) - 180.f > 1.f) currentplayer -> shape().rotate(sf::degrees(-1.f)); 
-			else if (std::fmod(currentangle - nearestangle + 540.f, 360.f) - 180.f < -1.f) currentplayer -> shape().rotate(sf::degrees(1.f));
+			if (std::fmod(currentangle - nearestangle + 540.f, 360.f) - 180.f > 3.5) currentplayer -> shape().rotate(sf::degrees(-3.5)); 
+			else if (std::fmod(currentangle - nearestangle + 540.f, 360.f) - 180.f < -3.5) currentplayer -> shape().rotate(sf::degrees(3.5));
 			else currentplayer -> shape().setRotation(sf::degrees(nearestangle));
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LShift)) std::cout << currentangle << "," << nearestangle << "\n";
 		}
@@ -123,6 +123,7 @@ int main()
 			currentplayer = std::make_unique<hexagon>(); 
 			swapped = true; 
 			nearestedge = 60.f; 
+			jumpcount = 1;
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num5) && !dynamic_cast<octagon*>(currentplayer.get())) { 
 			currentplayer = std::make_unique<octagon>(); 
