@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <algorithm>
 
 #include "states.h"
 #include "players.h"
@@ -190,6 +191,9 @@ int main()
 					for (auto& rest: verticeslist) std::cout << rest.x << "," << rest.y << "\n";
 				}
 			}
+			auto vertices = getvertices(currentplayer -> shape());
+			std::sort(vertices.begin(), vertices.end(), [](sf::Vector2f pt1, sf::Vector2f pt2) {return pt1.y > pt2.y; });
+			std::cout << "Left side: " << map.cliffCheck(vertices[0]) << "\nRight side: " << map.cliffCheck(vertices[1]);
 			draw = !draw;
 			enterkeyheld = true;
 		}
