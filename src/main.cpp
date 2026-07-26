@@ -73,25 +73,26 @@ int main()
 		sf::Vector2f btm1 = vertices[0];
 		sf::Vector2f btm2 = vertices[1];
 		sf::Vector2f center = sf::Vector2f(currentplayer -> shape().getPosition().x, currentplayer -> shape().getPosition().y + playerdim / 2);
+		sf::Vector2f edge = sf::Vector2f(0, 0);
 		if (btm1.x > btm2.x) std::swap(btm1, btm2);
 		bool grounded_left = map.cliffCheck(btm1);
 		bool grounded_right = map.cliffCheck(btm2);
 		bool grounded_center = map.cliffCheck(center);
 		bool cantipright = btm1.y == btm2.y && grounded_left && !grounded_right && !grounded_center;
-		bool cantipleft = btm1.y == btm2.y && grounded_right && !grounded_left && !grounded_center;
+		bool cantipleft = btm1.y == btm2.y && grounded_right && !grounded_left && !grounded_center;	
 
-		if (cantipright) {
+		if (cantipright && !tipping_right && !tipping_left) {
 			tipping_right = true;
-		} else if (cantipleft) {
+			edge = sf::Vector2f(std::floor(center.x / playerdim) * playerdim, currentplayer -> shape().getPosition().y + playerdim / 2);
+		} else if (cantipleft && !tipping_right && !tipping_left) {
 			tipping_left = true;
+			edge = sf::Vector2f(std::ceil(center.x / playerdim) * playerdim, currentplayer -> shape().getPosition().y + playerdim / 2);
 		}
 
 		//ROTATING LOGIC
 		if (tipping_right) {
-			sf::Vector2f edge = sf::Vector2f(std::floor(center.x / playerdim) * playerdim, currentplayer -> shape().getPosition().y + playerdim / 2);
 			tipShape(edge, currentplayer -> shape(), deltatime, 1);
 		} else if (tipping_left) {
-			sf::Vector2f edge = sf::Vector2f(std::ceil(center.x / playerdim) * playerdim, currentplayer -> shape().getPosition().y + playerdim / 2);
 			tipShape(edge, currentplayer -> shape(), deltatime, -1);
 		}
 		else if ((swimming || zerogactive) && currentplayer -> shape().getRotation().asDegrees() != 0) {
@@ -119,7 +120,9 @@ int main()
 			currentplayer -> rotation *= 0.90;
 		}
 		
-		if (currentplayer -> shape().getRotation().asDegrees() > 45) {
+		float tilt = currentplayer -> shape().getRotation().asDegrees();
+		if (tilt > 180) tilt -= 360;
+		if (tilt > 45 || tilt < -45) {
 			tipping_right = false;
 			tipping_left = false;
 		}
