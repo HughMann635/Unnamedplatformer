@@ -31,7 +31,7 @@ void entity::rotateobject(sf::Vector2f& edge, tilemap& map, sf::Shape& shape, fl
     float tilt = shape.getRotation().asDegrees() - initialtip;
     if (tilt > 180) tilt -= 360;
     if (tilt < -180) tilt += 360;
-    if (tilt > 45 || tilt < -45) {
+    if (!freefallingtip && (tipping_right || tipping_left) && (tilt > 45 || tilt < -45)) {
         freefallingtip = true;
     }
     if (freefallingtip) {
@@ -66,7 +66,7 @@ void entity::rotateobject(sf::Vector2f& edge, tilemap& map, sf::Shape& shape, fl
             }
             settlepoint = nearestangle;
         }
-        float dist = std::fmod(currentangle - nearestangle + 540.f, 360.f) - 180.f;
+        float dist = std::fmod(currentangle - settlepoint + 540.f, 360.f) - 180.f;
         if (dist > 3.5) shape.rotate(sf::degrees(-3.5)); 
         else if (dist < -3.5) shape.rotate(sf::degrees(3.5));
         else { 
@@ -75,12 +75,12 @@ void entity::rotateobject(sf::Vector2f& edge, tilemap& map, sf::Shape& shape, fl
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LShift)) std::cout << currentangle << "," << nearestangle << "\n";
     }
-    /*else if (rotating) {
+    else if (rotating) {
         if (std::abs(rotation) <= std::abs(velocity.x / (playerdim))) rotation += 1.15 * velocity.x / movespeed; 
         shape.rotate(sf::radians(rotation * deltatime));
         rotation *= 0.90;
-    }*/
-   else settlepoint = -1;
+    }
+    else settlepoint = -1;
 }
 
 
