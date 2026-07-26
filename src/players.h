@@ -15,6 +15,7 @@ public:
     virtual sf::Shape& shape() = 0;
     float rotation = 0;
     bool rotating = true;
+    float initialtip = 0;
 
     void moveobject (float deltatime, float gravity) {
         velocity.y += gravity * deltatime;

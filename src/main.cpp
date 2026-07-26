@@ -72,10 +72,10 @@ int main()
 		swapped = false;
 		currentplayer -> jump(deltatime);
 		currentplayer -> updatepos(deltatime, map);
-		currentplayer -> rotateobject(edge, map, currentplayer -> shape(), deltatime, movespeed, swimming, zerogactive, currentplayer -> grounded);
 		currentplayer -> grounded = false;
 		map.updatemap(deltatime);
 		map.checkCollisions(*currentplayer);
+		currentplayer -> rotateobject(edge, map, currentplayer -> shape(), deltatime, movespeed, swimming, zerogactive, currentplayer -> grounded);
 		lastframe_pos = sf::Vector2f(currentplayer -> shape().getPosition());
 		lastframe_vel = sf::Vector2f(currentplayer -> velocity);
 

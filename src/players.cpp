@@ -20,13 +20,14 @@ void entity::rotateobject(sf::Vector2f& edge, tilemap& map, sf::Shape& shape, fl
 
     if (cantipright && !tipping_right && !tipping_left) {
         tipping_right = true;
+        initialtip = shape.getRotation().asDegrees();
         edge = sf::Vector2f(std::floor(center.x / playerdim) * playerdim, shape.getPosition().y + playerdim / 2);
     } else if (cantipleft && !tipping_right && !tipping_left) {
         tipping_left = true;
+        initialtip = shape.getRotation().asDegrees();
         edge = sf::Vector2f(std::ceil(center.x / playerdim) * playerdim, shape.getPosition().y + playerdim / 2);
     }
 
-    //ROTATING LOGIC
     if (tipping_right) {
         tipShape(edge, shape, deltatime, 1);
     } else if (tipping_left) {
@@ -51,14 +52,15 @@ void entity::rotateobject(sf::Vector2f& edge, tilemap& map, sf::Shape& shape, fl
         else shape.setRotation(sf::degrees(nearestangle));
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LShift)) std::cout << currentangle << "," << nearestangle << "\n";
     }
-    else if (rotating) {
+    /*else if (rotating) {
         if (std::abs(rotation) <= std::abs(velocity.x / (playerdim))) rotation += 1.15 * velocity.x / movespeed; 
         shape.rotate(sf::radians(rotation * deltatime));
         rotation *= 0.90;
-    }
+    }*/
     
-    float tilt = shape.getRotation().asDegrees();
+    float tilt = shape.getRotation().asDegrees() - initialtip;
     if (tilt > 180) tilt -= 360;
+    if (tilt < -180) tilt += 360;
     if (tilt > 45 || tilt < -45) {
         tipping_right = false;
         tipping_left = false;
