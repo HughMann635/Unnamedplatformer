@@ -15,8 +15,8 @@ void entity::rotateobject(sf::Vector2f& edge, tilemap& map, sf::Shape& shape, fl
     bool grounded_left = map.cliffCheck(btm1);
     bool grounded_right = map.cliffCheck(btm2);
     bool grounded_center = map.cliffCheck(center);
-    bool cantipright = btm1.y == btm2.y && grounded_left && !grounded_right && !grounded_center;
-    bool cantipleft = btm1.y == btm2.y && grounded_right && !grounded_left && !grounded_center;	
+    bool cantipright = grounded && btm1.y == btm2.y && grounded_left && !grounded_right && !grounded_center;
+    bool cantipleft = grounded && btm1.y == btm2.y && grounded_right && !grounded_left && !grounded_center;	
 
     if (cantipright && !tipping_right && !tipping_left) {
         tipping_right = true;
@@ -28,7 +28,32 @@ void entity::rotateobject(sf::Vector2f& edge, tilemap& map, sf::Shape& shape, fl
         edge = sf::Vector2f(std::ceil(center.x / playerdim) * playerdim, shape.getPosition().y + playerdim / 2);
     }
 
-    if (tipping_right) {
+    float tilt = shape.getRotation().asDegrees() - initialtip;
+    if (tilt > 180) tilt -= 360;
+    if (tilt < -180) tilt += 360;
+    if (tilt > 45 || tilt < -45) {
+        freefallingtip = true;
+    }
+    if (freefallingtip) {
+        float direction = tipping_right ? 1 : -1;
+        shape.rotate(sf::degrees(direction * deltatime * 100));
+        if ((grounded)) {
+            freefallingtip = false;
+            tipping_right = false;
+            tipping_left = false;
+            float currentangle = shape.getRotation().asDegrees();
+            float nearestangle = 360.f;
+            for (int i = 0; i <= (360 / nearestedge); i++) {
+                if (std::abs(std::fmod(currentangle - i * nearestedge + 540.f, 360.f) - 180.f) < std::abs(std::fmod(currentangle - nearestangle + 540.f, 360.f) - 180.f)) {
+                    nearestangle = i * nearestedge;
+                }
+            }
+            if (std::fmod(currentangle - nearestangle + 540.f, 360.f) - 180.f > 3.5) shape.rotate(sf::degrees(-3.5)); 
+            else if (std::fmod(currentangle - nearestangle + 540.f, 360.f) - 180.f < -3.5) shape.rotate(sf::degrees(3.5));
+            else shape.setRotation(sf::degrees(nearestangle));
+        }
+    }
+    else if (tipping_right) {
         tipShape(edge, shape, deltatime, 1);
     } else if (tipping_left) {
         tipShape(edge, shape, deltatime, -1);
@@ -57,14 +82,6 @@ void entity::rotateobject(sf::Vector2f& edge, tilemap& map, sf::Shape& shape, fl
         shape.rotate(sf::radians(rotation * deltatime));
         rotation *= 0.90;
     }*/
-    
-    float tilt = shape.getRotation().asDegrees() - initialtip;
-    if (tilt > 180) tilt -= 360;
-    if (tilt < -180) tilt += 360;
-    if ((grounded_left && grounded_right)) {
-        tipping_right = false;
-        tipping_left = false;
-    }
 }
 
 
