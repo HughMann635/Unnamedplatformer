@@ -180,3 +180,12 @@ inline bool mtvCheck (std::vector<sf::Vector2f>& vertices1, std::vector<sf::Vect
     mtv = lowestaxis * lowestovlp;
     return true;
 }
+
+inline bool tipShape (sf::Vector2f pivotpoint, sf::Shape& shape, float deltatime, float direction) {
+    float tipspeed = 100.f;
+    float frametip = tipspeed * deltatime * direction;
+    sf::Vector2f position = shape.getPosition();
+    sf::Vector2f dist = position - pivotpoint;
+
+    sf::
+}
