@@ -66,25 +66,35 @@ int main()
 			newlevel = false;
 		} 
 
-		while ( const std::optional event = window.pollEvent() ) {
-			if ( event->is<sf::Event::Closed>() || running == false)
-				window.close();
-		}
-		
-		swapped = false;
+		while ( const std::optional event = window.pollEvent() ) if ( event->is<sf::Event::Closed>() || running == false) window.close();
 
-		if ((swimming || zerogactive) && currentplayer -> shape().getRotation().asDegrees() != 0) {
+		auto vertices = getvertices(currentplayer -> shape());
+		std::sort(vertices.begin(), vertices.end(), [](sf::Vector2f pt1, sf::Vector2f pt2) {return pt1.y > pt2.y; });
+		sf::Vector2f btm1 = vertices[0];
+		sf::Vector2f btm2 = vertices[1];
+		sf::Vector2f center = sf::Vector2f(currentplayer -> shape().getPosition().x, currentplayer -> shape().getPosition().y + playerdim / 2);
+		if (btm1.x > btm2.x) std::swap(btm1, btm2);
+		bool grounded_left = map.cliffCheck(btm1);
+		bool grounded_right = map.cliffCheck(btm2);
+		bool grounded_center = map.cliffCheck(center);
+		bool tipping_right = btm1.y == btm2.y && grounded_left && !grounded_right && !grounded_center;
+		bool tipping_left = btm1.y == btm2.y && grounded_right && !grounded_left && !grounded_center;
+
+		//ROTATING LOGIC
+		if (tipping_right) {
+			sf::Vector2f edge = sf::Vector2f(std::floor(center.x / playerdim) * playerdim, currentplayer -> shape().getPosition().y + playerdim / 2);
+			tipShape(edge, currentplayer -> shape(), deltatime, 1);
+		} else if (tipping_left) {
+			sf::Vector2f edge = sf::Vector2f(std::ceil(center.x / playerdim) * playerdim, currentplayer -> shape().getPosition().y + playerdim / 2);
+			tipShape(edge, currentplayer -> shape(), deltatime, -1);
+		}
+		else if ((swimming || zerogactive) && currentplayer -> shape().getRotation().asDegrees() != 0) {
 			currentplayer -> rotating = false;
 			currentplayer -> rotation = 0;
 			currentplayer -> shape().getRotation().asDegrees() > 180 ? currentplayer -> shape().rotate(sf::degrees(1)) : currentplayer -> shape().rotate(sf::degrees(-1));
 			if (abs(currentplayer -> shape().getRotation().asDegrees()) < 5) currentplayer -> shape().setRotation(sf::degrees(0));
 		} 
-		if (currentplayer -> rotating) {
-			if (std::abs(currentplayer -> rotation) <= std::abs(currentplayer -> velocity.x / (playerdim))) currentplayer -> rotation += 1.15 * currentplayer -> velocity.x / movespeed; 
-			currentplayer -> shape().rotate(sf::radians(currentplayer -> rotation * deltatime));
-			currentplayer -> rotation *= 0.90;
-		}
-		if (currentplayer -> grounded && std::abs(currentplayer -> velocity.x) <= 5.f) {
+		else if (currentplayer -> grounded && std::abs(currentplayer -> velocity.x) <= 5.f) {
 			float currentangle = currentplayer -> shape().getRotation().asDegrees();
 			float nearestangle = 360.f;
 			for (int i = 0; i <= (360 / nearestedge); i++) {
@@ -97,7 +107,13 @@ int main()
 			else currentplayer -> shape().setRotation(sf::degrees(nearestangle));
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LShift)) std::cout << currentangle << "," << nearestangle << "\n";
 		}
+		else if (currentplayer -> rotating) {
+			if (std::abs(currentplayer -> rotation) <= std::abs(currentplayer -> velocity.x / (playerdim))) currentplayer -> rotation += 1.15 * currentplayer -> velocity.x / movespeed; 
+			currentplayer -> shape().rotate(sf::radians(currentplayer -> rotation * deltatime));
+			currentplayer -> rotation *= 0.90;
+		}
 		
+		swapped = false;
 		currentplayer -> jump(deltatime);
 		currentplayer -> updatepos(deltatime, map);
 		currentplayer -> grounded = false;
@@ -191,27 +207,6 @@ int main()
 					for (auto& rest: verticeslist) std::cout << rest.x << "," << rest.y << "\n";
 				}
 			}
-		}
-		
-		auto vertices = getvertices(currentplayer -> shape());
-		std::sort(vertices.begin(), vertices.end(), [](sf::Vector2f pt1, sf::Vector2f pt2) {return pt1.y > pt2.y; });
-		sf::Vector2f btm1 = vertices[0];
-		sf::Vector2f btm2 = vertices[1];
-		sf::Vector2f center = sf::Vector2f(currentplayer -> shape().getPosition().x, currentplayer -> shape().getPosition().y + playerdim / 2);
-		if (btm1.x > btm2.x) std::swap(btm1, btm2);
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q)) {
-			std::cout << "Left side: " << map.cliffCheck(btm1) << "\nRight side: " << map.cliffCheck(btm2) << "\n";
-		}
-
-		bool grounded_left = map.cliffCheck(btm1);
-		bool grounded_right = map.cliffCheck(btm2);
-		bool grounded_center = map.cliffCheck(center);
-		if (btm1.y == btm2.y && grounded_left && !grounded_right && !grounded_center) {
-			sf::Vector2f edge = sf::Vector2f(std::floor(center.x / playerdim) * playerdim, currentplayer -> shape().getPosition().y + playerdim / 2);
-			tipShape(edge, currentplayer -> shape(), deltatime, 1);
-		} else if (btm1.y == btm2.y && grounded_right && !grounded_left && !grounded_center) {
-			sf::Vector2f edge = sf::Vector2f(std::ceil(center.x / playerdim) * playerdim, currentplayer -> shape().getPosition().y + playerdim / 2);
-			tipShape(edge, currentplayer -> shape(), deltatime, -1);
 		}
 
 		window.clear();
