@@ -192,13 +192,26 @@ int main()
 				}
 			}
 		}
+		
+		auto vertices = getvertices(currentplayer -> shape());
+		std::sort(vertices.begin(), vertices.end(), [](sf::Vector2f pt1, sf::Vector2f pt2) {return pt1.y > pt2.y; });
+		sf::Vector2f btm1 = vertices[0];
+		sf::Vector2f btm2 = vertices[1];
+		sf::Vector2f center = currentplayer -> shape().getPosition();
+		if (btm1.x > btm2.x) std::swap(btm1, btm2);
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q)) {
-			auto vertices = getvertices(currentplayer -> shape());
-			std::sort(vertices.begin(), vertices.end(), [](sf::Vector2f pt1, sf::Vector2f pt2) {return pt1.y > pt2.y; });
-			sf::Vector2f btm1 = vertices[0];
-			sf::Vector2f btm2 = vertices[1];
-			if (btm1.x > btm2.x) std::swap(btm1, btm2);
 			std::cout << "Left side: " << map.cliffCheck(btm1) << "\nRight side: " << map.cliffCheck(btm2) << "\n";
+		}
+
+		bool grounded_left = map.cliffCheck(btm1);
+		bool grounded_right = map.cliffCheck(btm2);
+		bool grounded_center = map.cliffCheck(center);
+		if (grounded_left && !grounded_right && !grounded_center) {
+			sf::Vector2f edge = sf::Vector2f(std::floor(center.x / playerdim) * playerdim, currentplayer -> shape().getPosition().y + playerdim / 2);
+			tipShape(edge, currentplayer -> shape(), deltatime, 1);
+		} else if (grounded_right && !grounded_left && !grounded_center) {
+			sf::Vector2f edge = sf::Vector2f(std::ceil(center.x / playerdim) * playerdim, currentplayer -> shape().getPosition().y + playerdim / 2);
+			tipShape(edge, currentplayer -> shape(), deltatime, -1);
 		}
 
 		window.clear();
