@@ -41,16 +41,7 @@ void entity::rotateobject(sf::Vector2f& edge, tilemap& map, sf::Shape& shape, fl
             freefallingtip = false;
             tipping_right = false;
             tipping_left = false;
-            float currentangle = shape.getRotation().asDegrees();
-            float nearestangle = 360.f;
-            for (int i = 0; i <= (360 / nearestedge); i++) {
-                if (std::abs(std::fmod(currentangle - i * nearestedge + 540.f, 360.f) - 180.f) < std::abs(std::fmod(currentangle - nearestangle + 540.f, 360.f) - 180.f)) {
-                    nearestangle = i * nearestedge;
-                }
-            }
-            if (std::fmod(currentangle - nearestangle + 540.f, 360.f) - 180.f > 3.5) shape.rotate(sf::degrees(-3.5)); 
-            else if (std::fmod(currentangle - nearestangle + 540.f, 360.f) - 180.f < -3.5) shape.rotate(sf::degrees(3.5));
-            else shape.setRotation(sf::degrees(nearestangle));
+            settlepoint = -1;
         }
     }
     else if (tipping_right) {
@@ -67,14 +58,21 @@ void entity::rotateobject(sf::Vector2f& edge, tilemap& map, sf::Shape& shape, fl
     else if (grounded && std::abs(velocity.x) <= 5.f) {
         float currentangle = shape.getRotation().asDegrees();
         float nearestangle = 360.f;
-        for (int i = 0; i <= (360 / nearestedge); i++) {
-            if (std::abs(std::fmod(currentangle - i * nearestedge + 540.f, 360.f) - 180.f) < std::abs(std::fmod(currentangle - nearestangle + 540.f, 360.f) - 180.f)) {
-                nearestangle = i * nearestedge;
+        if (settlepoint < 0) {
+            for (int i = 0; i <= (360 / nearestedge); i++) {
+                if (std::abs(std::fmod(currentangle - i * nearestedge + 540.f, 360.f) - 180.f) < std::abs(std::fmod(currentangle - nearestangle + 540.f, 360.f) - 180.f)) {
+                    nearestangle = i * nearestedge;
+                }
             }
+            settlepoint = nearestangle;
         }
-        if (std::fmod(currentangle - nearestangle + 540.f, 360.f) - 180.f > 3.5) shape.rotate(sf::degrees(-3.5)); 
-        else if (std::fmod(currentangle - nearestangle + 540.f, 360.f) - 180.f < -3.5) shape.rotate(sf::degrees(3.5));
-        else shape.setRotation(sf::degrees(nearestangle));
+        float dist = std::fmod(currentangle - nearestangle + 540.f, 360.f) - 180.f;
+        if (dist > 3.5) shape.rotate(sf::degrees(-3.5)); 
+        else if (dist < -3.5) shape.rotate(sf::degrees(3.5));
+        else { 
+            shape.setRotation(sf::degrees(settlepoint));
+            settlepoint = -1; 
+        }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LShift)) std::cout << currentangle << "," << nearestangle << "\n";
     }
     /*else if (rotating) {
@@ -82,6 +80,7 @@ void entity::rotateobject(sf::Vector2f& edge, tilemap& map, sf::Shape& shape, fl
         shape.rotate(sf::radians(rotation * deltatime));
         rotation *= 0.90;
     }*/
+   else settlepoint = -1;
 }
 
 

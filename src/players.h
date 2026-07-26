@@ -17,6 +17,7 @@ public:
     bool rotating = true;
     float initialtip = 0;
     bool freefallingtip = false;
+    float settlepoint = -1;
 
     void moveobject (float deltatime, float gravity) {
         velocity.y += gravity * deltatime;
