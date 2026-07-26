@@ -61,7 +61,7 @@ void entity::rotateobject(sf::Vector2f& edge, tilemap& map, sf::Shape& shape, fl
     float tilt = shape.getRotation().asDegrees() - initialtip;
     if (tilt > 180) tilt -= 360;
     if (tilt < -180) tilt += 360;
-    if (tilt > 45 || tilt < -45) {
+    if ((grounded_left && grounded_right)) {
         tipping_right = false;
         tipping_left = false;
     }
