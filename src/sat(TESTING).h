@@ -183,11 +183,11 @@ inline bool mtvCheck (std::vector<sf::Vector2f>& vertices1, std::vector<sf::Vect
 
 inline void tipShape (sf::Vector2f pivotpoint, sf::Shape& shape, float deltatime, float direction) {
     float tipspeed = 100.f;
-    float frametip = tipspeed * deltatime * direction;
+    float frametip = tipspeed * deltatime * direction * (3.14159265 / 180);
     sf::Vector2f position = shape.getPosition();
     sf::Vector2f dist = position - pivotpoint;
 
-    sf::Vector2f rotationoffset = sf::Vector2f(dist.x * std::cos(frametip) - dist.x * std::sin(frametip), dist.y * std::sin(frametip) + dist.y * std::cos(frametip));
+    sf::Vector2f rotationoffset = sf::Vector2f(dist.x * std::cos(frametip) - dist.y * std::sin(frametip), dist.x * std::sin(frametip) + dist.y * std::cos(frametip));
     shape.setPosition(pivotpoint + rotationoffset);
-    shape.rotate(sf::degrees(frametip));
+    shape.rotate(sf::radians(frametip));
 }
