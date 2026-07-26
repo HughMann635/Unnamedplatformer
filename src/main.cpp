@@ -77,8 +77,14 @@ int main()
 		bool grounded_left = map.cliffCheck(btm1);
 		bool grounded_right = map.cliffCheck(btm2);
 		bool grounded_center = map.cliffCheck(center);
-		bool tipping_right = btm1.y == btm2.y && grounded_left && !grounded_right && !grounded_center;
-		bool tipping_left = btm1.y == btm2.y && grounded_right && !grounded_left && !grounded_center;
+		bool cantipright = btm1.y == btm2.y && grounded_left && !grounded_right && !grounded_center;
+		bool cantipleft = btm1.y == btm2.y && grounded_right && !grounded_left && !grounded_center;
+
+		if (cantipright) {
+			tipping_right = true;
+		} else if (cantipleft) {
+			tipping_left = true;
+		}
 
 		//ROTATING LOGIC
 		if (tipping_right) {
@@ -113,6 +119,11 @@ int main()
 			currentplayer -> rotation *= 0.90;
 		}
 		
+		if (currentplayer -> shape().getRotation().asDegrees() > 45) {
+			tipping_right = false;
+			tipping_left = false;
+		}
+
 		swapped = false;
 		currentplayer -> jump(deltatime);
 		currentplayer -> updatepos(deltatime, map);

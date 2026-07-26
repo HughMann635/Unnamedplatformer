@@ -26,6 +26,8 @@ inline float gravity = 1800.f;
 inline float jumpforce = 600.f;
 inline float movespeed = 230.f;
 inline float nearestedge = 90.f;
+inline bool tipping_right = false; 
+inline bool tipping_left = false;
 
 inline bool swimming = false;
 inline bool zerogactive = false;
