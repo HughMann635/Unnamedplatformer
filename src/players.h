@@ -21,7 +21,7 @@ public:
         shape().move(velocity * deltatime);
     }
     
-    void rotateobject (sf::Vector2f edge, tilemap& map, sf::Shape& shape, float deltatime, float movespeed, bool swimming, bool zerogactive);
+    void rotateobject (sf::Vector2f& edge, tilemap& map, sf::Shape& shape, float deltatime, float movespeed, bool swimming, bool zerogactive, bool grounded);
     
     virtual ~entity() = default;
 };

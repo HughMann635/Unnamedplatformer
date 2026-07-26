@@ -23,6 +23,7 @@ int main()
 	sf::Vector2f lastframe_pos;
 	sf::Vector2f lastframe_vel;
 	sf::Clock timer;
+	sf::Vector2f edge;
 
 	sf::View view;
 	view.setSize(sf::Vector2f(camwidth, camheight));
@@ -68,67 +69,10 @@ int main()
 
 		while ( const std::optional event = window.pollEvent() ) if ( event->is<sf::Event::Closed>() || running == false) window.close();
 
-		auto vertices = getvertices(currentplayer -> shape());
-		std::sort(vertices.begin(), vertices.end(), [](sf::Vector2f pt1, sf::Vector2f pt2) {return pt1.y > pt2.y; });
-		sf::Vector2f btm1 = vertices[0];
-		sf::Vector2f btm2 = vertices[1];
-		sf::Vector2f center = sf::Vector2f(currentplayer -> shape().getPosition().x, currentplayer -> shape().getPosition().y + playerdim / 2);
-		if (btm1.x > btm2.x) std::swap(btm1, btm2);
-		bool grounded_left = map.cliffCheck(btm1);
-		bool grounded_right = map.cliffCheck(btm2);
-		bool grounded_center = map.cliffCheck(center);
-		bool cantipright = btm1.y == btm2.y && grounded_left && !grounded_right && !grounded_center;
-		bool cantipleft = btm1.y == btm2.y && grounded_right && !grounded_left && !grounded_center;	
-
-		if (cantipright && !tipping_right && !tipping_left) {
-			tipping_right = true;
-			edge = sf::Vector2f(std::floor(center.x / playerdim) * playerdim, currentplayer -> shape().getPosition().y + playerdim / 2);
-		} else if (cantipleft && !tipping_right && !tipping_left) {
-			tipping_left = true;
-			edge = sf::Vector2f(std::ceil(center.x / playerdim) * playerdim, currentplayer -> shape().getPosition().y + playerdim / 2);
-		}
-
-		//ROTATING LOGIC
-		if (tipping_right) {
-			tipShape(edge, currentplayer -> shape(), deltatime, 1);
-		} else if (tipping_left) {
-			tipShape(edge, currentplayer -> shape(), deltatime, -1);
-		}
-		else if ((swimming || zerogactive) && currentplayer -> shape().getRotation().asDegrees() != 0) {
-			currentplayer -> rotating = false;
-			currentplayer -> rotation = 0;
-			currentplayer -> shape().getRotation().asDegrees() > 180 ? currentplayer -> shape().rotate(sf::degrees(1)) : currentplayer -> shape().rotate(sf::degrees(-1));
-			if (abs(currentplayer -> shape().getRotation().asDegrees()) < 5) currentplayer -> shape().setRotation(sf::degrees(0));
-		} 
-		else if (currentplayer -> grounded && std::abs(currentplayer -> velocity.x) <= 5.f) {
-			float currentangle = currentplayer -> shape().getRotation().asDegrees();
-			float nearestangle = 360.f;
-			for (int i = 0; i <= (360 / nearestedge); i++) {
-				if (std::abs(std::fmod(currentangle - i * nearestedge + 540.f, 360.f) - 180.f) < std::abs(std::fmod(currentangle - nearestangle + 540.f, 360.f) - 180.f)) {
-					nearestangle = i * nearestedge;
-				}
-			}
-			if (std::fmod(currentangle - nearestangle + 540.f, 360.f) - 180.f > 3.5) currentplayer -> shape().rotate(sf::degrees(-3.5)); 
-			else if (std::fmod(currentangle - nearestangle + 540.f, 360.f) - 180.f < -3.5) currentplayer -> shape().rotate(sf::degrees(3.5));
-			else currentplayer -> shape().setRotation(sf::degrees(nearestangle));
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LShift)) std::cout << currentangle << "," << nearestangle << "\n";
-		}
-		else if (currentplayer -> rotating) {
-			if (std::abs(currentplayer -> rotation) <= std::abs(currentplayer -> velocity.x / (playerdim))) currentplayer -> rotation += 1.15 * currentplayer -> velocity.x / movespeed; 
-			currentplayer -> shape().rotate(sf::radians(currentplayer -> rotation * deltatime));
-			currentplayer -> rotation *= 0.90;
-		}
-		
-		float tilt = currentplayer -> shape().getRotation().asDegrees();
-		if (tilt > 180) tilt -= 360;
-		if (tilt > 45 || tilt < -45) {
-			tipping_right = false;
-			tipping_left = false;
-		}
-
 		swapped = false;
 		currentplayer -> jump(deltatime);
 		currentplayer -> updatepos(deltatime, map);
+		currentplayer -> rotateobject(edge, map, currentplayer -> shape(), deltatime, movespeed, swimming, zerogactive, currentplayer -> grounded);
 		currentplayer -> grounded = false;
 		map.updatemap(deltatime);
 		map.checkCollisions(*currentplayer);

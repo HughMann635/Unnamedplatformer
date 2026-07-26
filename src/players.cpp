@@ -5,7 +5,7 @@
 #include "players.h"
 #include "tilesettings.h"
 
-void entity::rotateobject(sf::Vector2f edge, tilemap& map, sf::Shape& shape, float deltatime, float movespeed, bool swimming, bool zerogactive, bool grounded) {
+void entity::rotateobject(sf::Vector2f& edge, tilemap& map, sf::Shape& shape, float deltatime, float movespeed, bool swimming, bool zerogactive, bool grounded) {
     auto vertices = getvertices(shape);
     std::sort(vertices.begin(), vertices.end(), [](sf::Vector2f pt1, sf::Vector2f pt2) {return pt1.y > pt2.y; });
     sf::Vector2f btm1 = vertices[0];
@@ -38,7 +38,7 @@ void entity::rotateobject(sf::Vector2f edge, tilemap& map, sf::Shape& shape, flo
         shape.getRotation().asDegrees() > 180 ? shape.rotate(sf::degrees(1)) : shape.rotate(sf::degrees(-1));
         if (abs(shape.getRotation().asDegrees()) < 5) shape.setRotation(sf::degrees(0));
     } 
-    else if (grounded && std::abs(currentplayer -> velocity.x) <= 5.f) {
+    else if (grounded && std::abs(velocity.x) <= 5.f) {
         float currentangle = shape.getRotation().asDegrees();
         float nearestangle = 360.f;
         for (int i = 0; i <= (360 / nearestedge); i++) {
@@ -52,7 +52,7 @@ void entity::rotateobject(sf::Vector2f edge, tilemap& map, sf::Shape& shape, flo
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LShift)) std::cout << currentangle << "," << nearestangle << "\n";
     }
     else if (rotating) {
-        if (std::abs(rotation) <= std::abs(currentplayer -> velocity.x / (playerdim))) rotation += 1.15 * currentplayer -> velocity.x / movespeed; 
+        if (std::abs(rotation) <= std::abs(velocity.x / (playerdim))) rotation += 1.15 * velocity.x / movespeed; 
         shape.rotate(sf::radians(rotation * deltatime));
         rotation *= 0.90;
     }
