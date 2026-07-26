@@ -73,7 +73,6 @@ int main()
 		sf::Vector2f btm1 = vertices[0];
 		sf::Vector2f btm2 = vertices[1];
 		sf::Vector2f center = sf::Vector2f(currentplayer -> shape().getPosition().x, currentplayer -> shape().getPosition().y + playerdim / 2);
-		sf::Vector2f edge = sf::Vector2f(0, 0);
 		if (btm1.x > btm2.x) std::swap(btm1, btm2);
 		bool grounded_left = map.cliffCheck(btm1);
 		bool grounded_right = map.cliffCheck(btm2);
