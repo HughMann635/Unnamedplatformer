@@ -191,14 +191,14 @@ int main()
 					for (auto& rest: verticeslist) std::cout << rest.x << "," << rest.y << "\n";
 				}
 			}
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q)) {
 			auto vertices = getvertices(currentplayer -> shape());
 			std::sort(vertices.begin(), vertices.end(), [](sf::Vector2f pt1, sf::Vector2f pt2) {return pt1.y > pt2.y; });
 			sf::Vector2f btm1 = vertices[0];
 			sf::Vector2f btm2 = vertices[1];
 			if (btm1.x > btm2.x) std::swap(btm1, btm2);
 			std::cout << "Left side: " << map.cliffCheck(btm1) << "\nRight side: " << map.cliffCheck(btm2) << "\n";
-			draw = !draw;
-			enterkeyheld = true;
 		}
 
 		window.clear();
