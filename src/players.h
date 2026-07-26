@@ -20,6 +20,9 @@ public:
         velocity.y += gravity * deltatime;
         shape().move(velocity * deltatime);
     }
+    
+    void rotateobject (sf::Vector2f edge, tilemap& map, sf::Shape& shape, float deltatime, float movespeed, bool swimming, bool zerogactive);
+    
     virtual ~entity() = default;
 };
 
