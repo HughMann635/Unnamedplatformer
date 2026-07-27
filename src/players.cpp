@@ -34,6 +34,7 @@ void entity::rotateobject(sf::Vector2f& edge, tilemap& map, sf::Shape& shape, fl
     if (!freefallingtip && (tipping_right || tipping_left) && (tilt > 45 || tilt < -45)) {
         freefallingtip = true;
     }
+
     if (freefallingtip) {
         float direction = tipping_right ? 1 : -1;
         shape.rotate(sf::degrees(direction * deltatime * 100));
@@ -55,7 +56,8 @@ void entity::rotateobject(sf::Vector2f& edge, tilemap& map, sf::Shape& shape, fl
         shape.getRotation().asDegrees() > 180 ? shape.rotate(sf::degrees(1)) : shape.rotate(sf::degrees(-1));
         if (abs(shape.getRotation().asDegrees()) < 5) shape.setRotation(sf::degrees(0));
     } 
-    else if (grounded && std::abs(velocity.x) <= 5.f) {
+    else if (grounded && std::abs(velocity.x) <= 225.f) {
+        float rotation = 0.f;
         float currentangle = shape.getRotation().asDegrees();
         float nearestangle = 360.f;
         if (settlepoint < 0) {
@@ -67,19 +69,19 @@ void entity::rotateobject(sf::Vector2f& edge, tilemap& map, sf::Shape& shape, fl
             settlepoint = nearestangle;
         }
         float dist = std::fmod(currentangle - settlepoint + 540.f, 360.f) - 180.f;
-        if (dist > 3.5) shape.rotate(sf::degrees(-3.5)); 
-        else if (dist < -3.5) shape.rotate(sf::degrees(3.5));
+        if (dist > 1.5) shape.rotate(sf::degrees(-1.5)); 
+        else if (dist < -1.5) shape.rotate(sf::degrees(1.5));
         else { 
             shape.setRotation(sf::degrees(settlepoint));
             settlepoint = -1; 
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LShift)) std::cout << currentangle << "," << nearestangle << "\n";
     }
-    /*else if (rotating) {
+    else if (rotating) {
         if (std::abs(rotation) <= std::abs(velocity.x / (playerdim))) rotation += 1.15 * velocity.x / movespeed; 
         shape.rotate(sf::radians(rotation * deltatime));
         rotation *= 0.90;
-    }*/
+    }
     else settlepoint = -1;
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Y)) {
         std::cout << "tr=" << tipping_right << " tl=" << tipping_left << " ff=" << freefallingtip 
