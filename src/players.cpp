@@ -82,7 +82,6 @@ void entity::rotateobject(sf::Vector2f& edge, tilemap& map, sf::Shape& shape, fl
         shape.rotate(sf::radians(rotation * deltatime));
         rotation *= 0.90;
     }
-    else settlepoint = -1;
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Y)) {
         std::cout << "tr=" << tipping_right << " tl=" << tipping_left << " ff=" << freefallingtip 
                   << " sp=" << settlepoint << " cantipright=" << cantipright << " cantipleft=" << cantipleft
