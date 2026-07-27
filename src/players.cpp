@@ -45,16 +45,16 @@ void entity::rotateobject(sf::Vector2f& edge, tilemap& map, sf::Shape& shape, fl
             settlepoint = -1;
         }
     }
-    else if (tipping_right && !(swimming || zerogactive)) {
+    else if (tipping_right) {
         tipShape(edge, shape, deltatime, 1);
-    } else if (tipping_left && !(swimming || zerogactive)) {
+    } else if (tipping_left) {
         tipShape(edge, shape, deltatime, -1);
     }
     else if ((swimming || zerogactive) && shape.getRotation().asDegrees() != 0) {
         rotating = false;
         rotation = 0;
         shape.getRotation().asDegrees() > 180 ? shape.rotate(sf::degrees(1)) : shape.rotate(sf::degrees(-1));
-        if (abs(shape.getRotation().asDegrees()) < 5) shape.setRotation(sf::degrees(0));
+        if (std::abs(shape.getRotation().asDegrees()) < 5) shape.setRotation(sf::degrees(0));
     } 
     else if (grounded && std::abs(velocity.x) <= 225.f) {
         rotation = 0.f;
