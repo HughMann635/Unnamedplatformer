@@ -5,7 +5,7 @@
 #include "players.h"
 #include "tilesettings.h"
 
-void entity::rotateobject(sf::Vector2f& edge, tilemap& map, sf::Shape& shape, float deltatime, float movespeed, bool swimming, bool zerogactive, bool grounded) {
+void entity::rotateobject(sf::Vector2f& edge, tilemap& map, sf::Shape& shape, float deltatime, float movespeed, bool swimming, bool zerogactive, bool grounded, int nearestedge) {
     auto vertices = getvertices(shape);
     std::sort(vertices.begin(), vertices.end(), [](sf::Vector2f pt1, sf::Vector2f pt2) {return pt1.y > pt2.y; });
     sf::Vector2f btm1 = vertices[0];
@@ -15,8 +15,8 @@ void entity::rotateobject(sf::Vector2f& edge, tilemap& map, sf::Shape& shape, fl
     bool grounded_left = map.cliffCheck(btm1);
     bool grounded_right = map.cliffCheck(btm2);
     bool grounded_center = map.cliffCheck(center);
-    bool cantipright = grounded && btm1.y == btm2.y && grounded_left && !grounded_right && !grounded_center;
-    bool cantipleft = grounded && btm1.y == btm2.y && grounded_right && !grounded_left && !grounded_center;	
+    bool cantipright = grounded && std::abs(btm1.y - btm2.y) < 0.5 && grounded_left && !grounded_right && !grounded_center;
+    bool cantipleft = grounded && std::abs(btm1.y - btm2.y) < 0.5 && grounded_right && !grounded_left && !grounded_center;	
 
     if (cantipright && !tipping_right && !tipping_left) {
         tipping_right = true;
@@ -44,9 +44,9 @@ void entity::rotateobject(sf::Vector2f& edge, tilemap& map, sf::Shape& shape, fl
             settlepoint = -1;
         }
     }
-    else if (tipping_right) {
+    else if (tipping_right && !(swimming || zerogactive)) {
         tipShape(edge, shape, deltatime, 1);
-    } else if (tipping_left) {
+    } else if (tipping_left && !(swimming || zerogactive)) {
         tipShape(edge, shape, deltatime, -1);
     }
     else if ((swimming || zerogactive) && shape.getRotation().asDegrees() != 0) {
@@ -75,12 +75,18 @@ void entity::rotateobject(sf::Vector2f& edge, tilemap& map, sf::Shape& shape, fl
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LShift)) std::cout << currentangle << "," << nearestangle << "\n";
     }
-    else if (rotating) {
+    /*else if (rotating) {
         if (std::abs(rotation) <= std::abs(velocity.x / (playerdim))) rotation += 1.15 * velocity.x / movespeed; 
         shape.rotate(sf::radians(rotation * deltatime));
         rotation *= 0.90;
-    }
+    }*/
     else settlepoint = -1;
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Y)) {
+        std::cout << "tr=" << tipping_right << " tl=" << tipping_left << " ff=" << freefallingtip 
+                  << " sp=" << settlepoint << " cantipright=" << cantipright << " cantipleft=" << cantipleft
+                  << " gl=" << grounded_left << " gr=" << grounded_right << " gc=" << grounded_center << "\n"
+                  << vertices[0].y << "," << vertices[1].y << "\n";
+    }
 }
 
 
