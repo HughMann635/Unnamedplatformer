@@ -69,8 +69,8 @@ void entity::rotateobject(sf::Vector2f& edge, tilemap& map, sf::Shape& shape, fl
             settlepoint = nearestangle;
         }
         float dist = std::fmod(currentangle - settlepoint + 540.f, 360.f) - 180.f;
-        if (dist > 3) shape.rotate(sf::degrees(-3)); 
-        else if (dist < -3) shape.rotate(sf::degrees(3));
+        if (dist > 180 * deltatime) shape.rotate(sf::degrees(-180 * deltatime)); 
+        else if (dist < -180 * deltatime) shape.rotate(sf::degrees(180 * deltatime));
         else { 
             shape.setRotation(sf::degrees(settlepoint));
             settlepoint = -1; 
