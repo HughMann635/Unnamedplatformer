@@ -57,7 +57,7 @@ void entity::rotateobject(sf::Vector2f& edge, tilemap& map, sf::Shape& shape, fl
         if (abs(shape.getRotation().asDegrees()) < 5) shape.setRotation(sf::degrees(0));
     } 
     else if (grounded && std::abs(velocity.x) <= 225.f) {
-        float rotation = 0.f;
+        rotation = 0.f;
         float currentangle = shape.getRotation().asDegrees();
         float nearestangle = 360.f;
         if (settlepoint < 0) {
