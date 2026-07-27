@@ -332,17 +332,28 @@ public:
                 float blockbottom = blockbounds.position.y + blockbounds.size.y;
                 float blockleft = blockbounds.position.x;
                 float blockright = blockbounds.position.x + blockbounds.size.x;
+
                 if ((playercentery > blocktop && playercentery < blockbottom)) {
                     if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) && Object.shape().getPosition().x < blockbounds.position.x) {
-                        block_ -> velocity.x = trianglepushspeed;
-                        Object.velocity.x = trianglepushspeed;
-                        Object.grounded = false;
+                        sf::FloatRect obstaclecheck = sf::FloatRect(sf::Vector2f(blockright, blocktop + 0.5), sf::Vector2f(2, blockbounds.size.y-1));
+                        bool obstacleright = true;
+                        for (auto& rest: tilelist) {
+                            if (!(rest.type == tiletype::block_push || rest.type == tiletype::ground || rest.type == tiletype::door)) continue;
+                            if (obstaclecheck.findIntersection(rest.tile -> collide().getGlobalBounds())) continue;
+                            bool obstacleright = false;
+                        }
+                        if (!obstacleright) {
+                            block_ -> velocity.x = trianglepushspeed;
+                            Object.velocity.x = trianglepushspeed;
+                            Object.grounded = false;
+                        }
                     } else if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) && Object.shape().getPosition().x > blockbounds.position.x) {
                         block_ -> velocity.x = -trianglepushspeed;
                         Object.velocity.x = -trianglepushspeed;
                         Object.grounded = false;
                     }
                 }
+
                 if ((playercenterx > blockleft && playercenterx < blockright)) {
                     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S) && Object.grounded) {
                         block_ -> velocity.y = trianglepushspeed;
@@ -354,6 +365,7 @@ public:
                         }   
                     }
                 }
+
                 if (block_ -> velocity.y > 0) {
                     auto blockvertices = getvertices(block_ -> collide());
                     auto playervertices = getvertices(Object.shape());
