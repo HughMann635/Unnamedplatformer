@@ -304,23 +304,11 @@ public:
                         }   
                     }
                 }
-                //this was all claude
-                float blockBottom = blockbounds.position.y + blockbounds.size.y;
-                float playerTop = playerbounds.position.y;
-                float overlapY = blockBottom - playerTop;
-
-                float blockLeft  = blockbounds.position.x;
-                float blockRight = blockbounds.position.x + blockbounds.size.x;
-                float playerLeft  = playerbounds.position.x;
-                float playerRight = playerbounds.position.x + playerbounds.size.x;
-                float overlapX = std::min(blockRight, playerRight) - std::max(blockLeft, playerLeft);
-
-                if (overlapY > 0 && overlapY < overlapX && block_ -> velocity.y >= 0) {
-                    block_ -> shape().setPosition(sf::Vector2f(block_ -> shape().getPosition().x, playerTop - blockbounds.size.y));
-                    block_ -> velocity.y = 0;
-                    blockbounds = block_ -> collide().getGlobalBounds();
+                if (block_ -> blockblock.getPosition().y + block_ -> blockblock.getSize().y >= Object.shape().getPosition().y) {
+                    auto blockvertices = getvertices(block_ -> collide());
+                    auto playervertices = getvertices(Object.shape());
+                    satCollisionResp(blockvertices, playervertices, *block_);
                 }
-                //k no more claude
             }
             //2. BLOCK + WORLD COLLISION
             for (auto& rest: tilelist) {
@@ -346,18 +334,12 @@ public:
                                 break;
                             }                   
                             case tiletype::block_push: {
-                            block_ -> velocity.x = 0;
-                            //technically not just pasted from claude, but I used its code as inspiration
-                            float blockleft  = blockbounds.position.x;
-                            float blockright = blockbounds.position.x + blockbounds.size.x;
-                            float restleft   = restbounds.position.x;
-                            float restright  = restbounds.position.x + restbounds.size.x;
-                            float overlapx = std::min(blockright, restright) - std::max(blockleft, restleft);
-                            if ((blockbounds.position.y + blockbounds.size.y) - restbounds.position.y > 0 && (blockbounds.position.y + blockbounds.size.y) - restbounds.position.y < overlapx) {
-                                block_ -> shape().setPosition(sf::Vector2f(block_ -> shape().getPosition().x, restbounds.position.y - blockbounds.size.y));
-                                block_ -> velocity.y = 0;
-                                blockbounds = block_ -> collide().getGlobalBounds();
-                            }
+                                auto verticesobj = getvertices(block_ -> collide());
+                                block* G = dynamic_cast<block*>(rest.tile.get());
+                                if (!G) continue;
+                                auto verticestile = getvertices(G -> blockblock);
+                                satCollisionResp(verticesobj, verticestile, *block_);
+                                break;
                             break; }
                             case tiletype::zero_g:
                             block_ -> blockgravity = 0;
