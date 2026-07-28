@@ -385,7 +385,7 @@ public:
 
                 if ((playercenterx > blockleft && playercenterx < blockright)) {
                     if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) && Object.shape().getPosition().y < blockbounds.position.y) {
-                        sf::FloatRect obstaclecheck = sf::FloatRect(sf::Vector2f(blockleft + 0.5, blockbottom + 0.01), sf::Vector2f(blockbounds.size.x - 1, 0.05));
+                        sf::FloatRect obstaclecheck = sf::FloatRect(sf::Vector2f(blockleft + 0.5, blockbottom + 0.05), sf::Vector2f(blockbounds.size.x - 1, 0.05));
                         bool obstaclebelow = false;
                         for (auto& rest: tilelist) {
                             if (pos.tile == rest.tile || !rest.tile) continue;
@@ -436,7 +436,12 @@ public:
         for (auto& pos: tilelist) {
             if (pos.type == tiletype::empty || pos.type == tiletype::spawn || !Object.shape().getGlobalBounds().findIntersection(pos.tile -> collide().getGlobalBounds())) { continue; }
             auto playerbounds = getvertices(Object.shape());
-            auto tilebounds = getvertices(pos.tile -> collide());
+            std::vector<sf::Vector2f> tilebounds;
+            if (pos.type == tiletype::door) {
+                door* G = dynamic_cast<door*>(pos.tile.get());
+                if (!G || G->opened) continue;
+                tilebounds = getvertices(G->doorblock[0]);
+            } else tilebounds = getvertices(pos.tile -> collide());
 
             if (!satCollide(playerbounds, tilebounds)) { continue; }
             else {
