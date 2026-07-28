@@ -129,17 +129,17 @@ void square::updatepos (float deltatime, tilemap& map) {
         else velocity.x = -movespeed;
         rotating = true;
     } else {
-        zerogactive || swimming ? velocity.x *= 0.8 : velocity.x *= 0.f; 
+        zerogactive || swimming ? velocity.x *= 0.71 : velocity.x *= 0.f; 
     }
     if (zerogactive) {
         if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Down) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::S)) {
-            velocity.y = 125.f;
+            velocity.y = 115.f;
         }
         else if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::W)) {
-            velocity.y = -125.f;
+            velocity.y = -115.f;
         }
         else {
-            velocity.y *= 0.96;
+            velocity.y *= 0.71;
         }
     } 
 
