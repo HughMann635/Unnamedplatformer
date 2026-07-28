@@ -372,14 +372,35 @@ public:
                 }
 
                 if ((playercenterx > blockleft && playercenterx < blockright)) {
-                    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S) && Object.grounded) {
-                        block_ -> velocity.y = trianglepushspeed;
-                        Object.velocity.y = trianglepushspeed;
-                    } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W) && Object.grounded) {
-                        if (zerogactive) {
-                            block_ -> velocity.y = -trianglepushspeed;
-                            Object.velocity.y = -trianglepushspeed;
-                        }   
+                    if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))) {
+                        sf::FloatRect obstaclecheck = sf::FloatRect(sf::Vector2f(blockright - 0.5, blockbottom + 0.01), sf::Vector2f(blockbounds.size.x - 1, 0.0001));
+                        bool obstaclebelow = false;
+                        for (auto& rest: tilelist) {
+                            if (pos.tile == rest.tile || !rest.tile) continue;
+                            if (rest.type == tiletype::block_push || rest.type == tiletype::ground || rest.type == tiletype::door) {
+                                if (obstaclecheck.findIntersection(rest.tile -> collide().getGlobalBounds())) {
+                                    obstaclebelow = true;
+                                    break;
+                                }
+                            }
+                        }
+                    } else if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))) {
+                        sf::FloatRect obstaclecheck = sf::FloatRect(sf::Vector2f(blockleft + 0.5, blocktop - 0.01), sf::Vector2f(blockbounds.size.x - 1, 0.0001));
+                        bool obstacletop = false;
+                        for (auto& rest: tilelist) {
+                            if (pos.tile == rest.tile || !rest.tile) continue;
+                            if (rest.type == tiletype::block_push || rest.type == tiletype::ground || rest.type == tiletype::door) {
+                                if (obstaclecheck.findIntersection(rest.tile -> collide().getGlobalBounds())) {
+                                    obstacletop = true;
+                                    break;
+                                }
+                            }
+                        }
+                        if (!obstacletop) {
+                            block_ -> velocity.x = -trianglepushspeed;
+                            Object.velocity.x = -trianglepushspeed;
+                            Object.grounded = false;   
+                        } 
                     }
                 }
 
