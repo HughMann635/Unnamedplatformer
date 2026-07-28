@@ -15,8 +15,8 @@ void entity::rotateobject(sf::Vector2f& edge, tilemap& map, sf::Shape& shape, fl
     bool grounded_left = map.cliffCheck(btm1);
     bool grounded_right = map.cliffCheck(btm2);
     bool grounded_center = map.cliffCheck(center);
-    bool cantipright = grounded && std::abs(btm1.y - btm2.y) < 0.5 && grounded_left && !grounded_right && !grounded_center;
-    bool cantipleft = grounded && std::abs(btm1.y - btm2.y) < 0.5 && grounded_right && !grounded_left && !grounded_center;	
+    bool cantipright = grounded && std::abs(btm1.y - btm2.y) < 0.5 && grounded_left && !grounded_right && !grounded_center && !zerogactive;
+    bool cantipleft = grounded && std::abs(btm1.y - btm2.y) < 0.5 && grounded_right && !grounded_left && !grounded_center && !zerogactive;	
 
     if (cantipright && !tipping_right && !tipping_left) {
         tipping_right = true;
@@ -38,7 +38,7 @@ void entity::rotateobject(sf::Vector2f& edge, tilemap& map, sf::Shape& shape, fl
     if (freefallingtip) {
         float direction = tipping_right ? 1 : -1;
         shape.rotate(sf::degrees(direction * deltatime * 100));
-        if ((grounded)) {
+        if ((grounded) || zerogactive) {
             freefallingtip = false;
             tipping_right = false;
             tipping_left = false;
