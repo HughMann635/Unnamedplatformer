@@ -404,7 +404,7 @@ public:
                         else {
                             if (Object.velocity.y < 0) Object.velocity.y = 0;
                         }
-                    } else if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) && Object.shape().getPosition().y > blockbounds.position.y) {
+                    } else if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) && Object.shape().getPosition().y > blockbounds.position.y && zerogactive) {
                         sf::FloatRect obstaclecheck = sf::FloatRect(sf::Vector2f(blockleft + 0.5, blocktop - 0.07), sf::Vector2f(blockbounds.size.x - 1, 0.07));
                         bool obstacletop = false;
                         for (auto& rest: tilelist) {
