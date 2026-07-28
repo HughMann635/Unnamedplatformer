@@ -520,7 +520,10 @@ public:
         for (auto& pos: tilelist) {
             if ((pos.type == tiletype::ground || pos.type == tiletype::block_push || pos.type == tiletype::door)) {
                 sf::Shape& tile = pos.tile -> collide();
-                auto tilevertices = getvertices(tile);
+                door* G = dynamic_cast<door*>(pos.tile.get());
+                std::vector<sf::Vector2f> tilevertices;
+                if (!G || G -> opened) continue; 
+                tilevertices = getvertices(tile);
                 if (satCollide(shapevertices, tilevertices)) {
                     return true;
                 }
