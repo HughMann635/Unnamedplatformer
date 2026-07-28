@@ -151,7 +151,6 @@ public:
         sf::Vector2f mtv = sf::Vector2f(0, 0);
         mtvCheck(verticesobj, verticestile, mtv);
         Object.shape().move(mtv);
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Enter)) std::cout << mtv.x << "," << mtv.y << "\n";
         if (std::abs(mtv.y) > std::abs(mtv.x)) {
             if (mtv.y < 0 && Object.velocity.y > 0) {
                 Object.grounded = true;
@@ -173,6 +172,8 @@ public:
     }
 
     void checkCollisions (entity& Object) {
+        
+        //STATE VAR RESETS
         swimming = false;
         zerogactive = false;
         wallhuggingright = false;
@@ -403,7 +404,6 @@ public:
                     } else if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) && Object.shape().getPosition().y > blockbounds.position.y) {
                         sf::FloatRect obstaclecheck = sf::FloatRect(sf::Vector2f(blockleft + 0.5, blocktop - 0.07), sf::Vector2f(blockbounds.size.x - 1, 0.07));
                         bool obstacletop = false;
-                        std::cout << "Grounded:" << Object.grounded << "\nZerogactive:" << zerogactive << "\n\n";
                         for (auto& rest: tilelist) {
                             if (pos.tile == rest.tile || !rest.tile) continue;
                             if (rest.type == tiletype::block_push || rest.type == tiletype::ground || rest.type == tiletype::door) {
