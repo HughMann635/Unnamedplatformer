@@ -335,7 +335,7 @@ public:
 
                 if ((playercentery > blocktop && playercentery < blockbottom)) {
                     if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) && Object.shape().getPosition().x < blockbounds.position.x) {
-                        sf::FloatRect obstaclecheck = sf::FloatRect(sf::Vector2f(blockright+0.01, blocktop + 0.5), sf::Vector2f(0, blockbounds.size.y-1));
+                        sf::FloatRect obstaclecheck = sf::FloatRect(sf::Vector2f(blockright+0.01, blocktop + 0.5), sf::Vector2f(0.0001, blockbounds.size.y-1));
                         bool obstacleright = false;
                         for (auto& rest: tilelist) {
                             if (pos.tile == rest.tile || !rest.tile) continue;
@@ -352,13 +352,15 @@ public:
                             Object.grounded = false;
                         }
                     } else if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) && Object.shape().getPosition().x > blockbounds.position.x) {
-                        sf::FloatRect obstaclecheck = sf::FloatRect(sf::Vector2f(blockleft+0.01, blocktop + 0.5), sf::Vector2f(0, blockbounds.size.y - 1));
+                        sf::FloatRect obstaclecheck = sf::FloatRect(sf::Vector2f(blockleft-0.01, blocktop + 0.5), sf::Vector2f(0.0001, blockbounds.size.y - 1));
                         bool obstacleleft = false;
                         for (auto& rest: tilelist) {
                             if (pos.tile == rest.tile || !rest.tile) continue;
                             if (rest.type == tiletype::block_push || rest.type == tiletype::ground || rest.type == tiletype::door) {
-                                obstacleleft = true;
-                                break;
+                                if (obstaclecheck.findIntersection(rest.tile -> collide().getGlobalBounds())) {
+                                    obstacleleft = true;
+                                    break;
+                                }
                             }
                         }
                         if (!obstacleleft) {
