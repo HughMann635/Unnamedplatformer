@@ -212,7 +212,7 @@ void circle::updatepos (float deltatime, tilemap& map)  {
         else if (zerogactive) velocity.x = -movespeed;
         rotating = true;
     } else if (swimming || zerogactive) {
-        velocity.x *= 0.8; 
+        velocity.x *= 0.7; 
     } else {
         if (velocity.x > 0) velocity.x -= circleaccel/2;
         else if (velocity.x < 0) velocity.x += circleaccel/2;
@@ -226,7 +226,7 @@ void circle::updatepos (float deltatime, tilemap& map)  {
             velocity.y = -125.f;
         }
         else {
-            velocity.y *= 0.96;
+            velocity.y *= 0.71;
         }
     } 
 
@@ -304,7 +304,7 @@ void triangle::updatepos (float deltatime, tilemap& map)  {
         else velocity.x = -movespeed;
         rotating = true;
     } else {
-        zerogactive || swimming ? velocity.x *= 0.8 : velocity.x *= 0.f; 
+        zerogactive || swimming ? velocity.x *= 0.71 : velocity.x *= 0.f; 
     }
 
     if (tp_timer.getElapsedTime().asSeconds() >= 3.f) {
@@ -345,7 +345,7 @@ void triangle::updatepos (float deltatime, tilemap& map)  {
             velocity.y = -125.f;
         }
         else {
-            velocity.y *= 0.96;
+            velocity.y *= 0.71;
         }
     } 
 
@@ -428,7 +428,7 @@ void hexagon::updatepos (float deltatime, tilemap& map) {
         else velocity.x = -movespeed;
         rotating = true;
     } else {
-        zerogactive || swimming ? velocity.x *= 0.8 : velocity.x *= 0.f; 
+        zerogactive || swimming ? velocity.x *= 0.71 : velocity.x *= 0.f; 
     }
 
     if (zerogactive) {
@@ -439,7 +439,7 @@ void hexagon::updatepos (float deltatime, tilemap& map) {
             velocity.y = -125.f;
         }
         else {
-            velocity.y *= 0.96;
+            velocity.y *= 0.71;
         }
     } 
 
@@ -561,7 +561,7 @@ void octagon::updatepos (float deltatime, tilemap& map) {
             else velocity.x = -movespeed;
             rotating = true;
         } else {
-            zerogactive || swimming ? velocity.x *= 0.8 : velocity.x *= 0.f; 
+            zerogactive || swimming ? velocity.x *= 0.71 : velocity.x *= 0.f; 
         }
     }
 
@@ -578,7 +578,7 @@ void octagon::updatepos (float deltatime, tilemap& map) {
             velocity.y = -125.f;
         }
         else {
-            velocity.y *= 0.96;
+            velocity.y *= 0.71;
         }
     } 
 
