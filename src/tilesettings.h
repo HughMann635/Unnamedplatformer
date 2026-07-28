@@ -372,8 +372,8 @@ public:
                 }
 
                 if ((playercenterx > blockleft && playercenterx < blockright)) {
-                    if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))) {
-                        sf::FloatRect obstaclecheck = sf::FloatRect(sf::Vector2f(blockright - 0.5, blockbottom + 0.01), sf::Vector2f(blockbounds.size.x - 1, 0.0001));
+                    if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) && Object.shape().getPosition().y < blockbounds.position.y) {
+                        sf::FloatRect obstaclecheck = sf::FloatRect(sf::Vector2f(blockleft + 0.5, blockbottom + 0.02), sf::Vector2f(blockbounds.size.x - 1, 0.0101));
                         bool obstaclebelow = false;
                         for (auto& rest: tilelist) {
                             if (pos.tile == rest.tile || !rest.tile) continue;
@@ -384,8 +384,13 @@ public:
                                 }
                             }
                         }
-                    } else if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))) {
-                        sf::FloatRect obstaclecheck = sf::FloatRect(sf::Vector2f(blockleft + 0.5, blocktop - 0.01), sf::Vector2f(blockbounds.size.x - 1, 0.0001));
+                        if (!obstaclebelow) {
+                            block_ -> velocity.y = trianglepushspeed;
+                            Object.velocity.y = trianglepushspeed;
+                            Object.grounded = false;
+                        }
+                    } else if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) && Object.shape().getPosition().y > blockbounds.position.y && (Object.grounded || zerogactive)) {
+                        sf::FloatRect obstaclecheck = sf::FloatRect(sf::Vector2f(blockleft + 0.5, blocktop - 0.05), sf::Vector2f(blockbounds.size.x - 1, 0.04));
                         bool obstacletop = false;
                         for (auto& rest: tilelist) {
                             if (pos.tile == rest.tile || !rest.tile) continue;
@@ -397,8 +402,8 @@ public:
                             }
                         }
                         if (!obstacletop) {
-                            block_ -> velocity.x = -trianglepushspeed;
-                            Object.velocity.x = -trianglepushspeed;
+                            block_ -> velocity.y = -trianglepushspeed;
+                            Object.velocity.y = -trianglepushspeed;
                             Object.grounded = false;   
                         } 
                     }
