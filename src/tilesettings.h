@@ -335,7 +335,7 @@ public:
 
                 if ((playercentery > blocktop && playercentery < blockbottom)) {
                     if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) && Object.shape().getPosition().x < blockbounds.position.x) {
-                        sf::FloatRect obstaclecheck = sf::FloatRect(sf::Vector2f(blockright+0.01, blocktop + 0.5), sf::Vector2f(0.0001, blockbounds.size.y-1));
+                        sf::FloatRect obstaclecheck = sf::FloatRect(sf::Vector2f(blockright+0.01, blocktop + 0.5), sf::Vector2f(0.05, blockbounds.size.y-1));
                         bool obstacleright = false;
                         for (auto& rest: tilelist) {
                             if (pos.tile == rest.tile || !rest.tile) continue;
@@ -352,7 +352,7 @@ public:
                             Object.grounded = false;
                         }
                     } else if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) && Object.shape().getPosition().x > blockbounds.position.x) {
-                        sf::FloatRect obstaclecheck = sf::FloatRect(sf::Vector2f(blockleft-0.01, blocktop + 0.5), sf::Vector2f(0.0001, blockbounds.size.y - 1));
+                        sf::FloatRect obstaclecheck = sf::FloatRect(sf::Vector2f(blockleft-0.06, blocktop + 0.5), sf::Vector2f(0.05, blockbounds.size.y - 1));
                         bool obstacleleft = false;
                         for (auto& rest: tilelist) {
                             if (pos.tile == rest.tile || !rest.tile) continue;
@@ -373,7 +373,7 @@ public:
 
                 if ((playercenterx > blockleft && playercenterx < blockright)) {
                     if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) && Object.shape().getPosition().y < blockbounds.position.y) {
-                        sf::FloatRect obstaclecheck = sf::FloatRect(sf::Vector2f(blockleft + 0.5, blockbottom + 0.02), sf::Vector2f(blockbounds.size.x - 1, 0.0101));
+                        sf::FloatRect obstaclecheck = sf::FloatRect(sf::Vector2f(blockleft + 0.5, blockbottom + 0.01), sf::Vector2f(blockbounds.size.x - 1, 0.05));
                         bool obstaclebelow = false;
                         for (auto& rest: tilelist) {
                             if (pos.tile == rest.tile || !rest.tile) continue;
@@ -390,7 +390,7 @@ public:
                             Object.grounded = false;
                         }
                     } else if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) && Object.shape().getPosition().y > blockbounds.position.y && (Object.grounded || zerogactive)) {
-                        sf::FloatRect obstaclecheck = sf::FloatRect(sf::Vector2f(blockleft + 0.5, blocktop - 0.05), sf::Vector2f(blockbounds.size.x - 1, 0.04));
+                        sf::FloatRect obstaclecheck = sf::FloatRect(sf::Vector2f(blockleft + 0.5, blocktop - 0.06), sf::Vector2f(blockbounds.size.x - 1, 0.05));
                         bool obstacletop = false;
                         for (auto& rest: tilelist) {
                             if (pos.tile == rest.tile || !rest.tile) continue;
