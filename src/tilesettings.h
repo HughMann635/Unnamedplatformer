@@ -263,6 +263,17 @@ public:
             }
         }
 
+        //PLAYER ENV. DETECTION
+        //need this since player collision checks happen after block checks but player-block pushing logic changes in zero g
+        auto playerverts_ = getvertices(Object.shape());
+        for (auto& pos: tilelist) {
+            if (!pos.tile) continue;
+            if (satCollide(playerverts_, getvertices(pos.tile -> collide()))) {
+                if (pos.type == tiletype::water) swimming = true;
+                if (pos.type == tiletype::zero_g) zerogactive = true;
+            }
+        }
+
         //BLOCK COLLISION
         for (auto& pos: tilelist) {
             if (pos.type != tiletype::block_push) { continue; }
@@ -389,9 +400,10 @@ public:
                             Object.velocity.y = trianglepushspeed;
                             Object.grounded = false;
                         }
-                    } else if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) && Object.shape().getPosition().y > blockbounds.position.y && (Object.grounded || zerogactive)) {
-                        sf::FloatRect obstaclecheck = sf::FloatRect(sf::Vector2f(blockleft + 0.5, blocktop - 0.06), sf::Vector2f(blockbounds.size.x - 1, 0.05));
+                    } else if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) && Object.shape().getPosition().y > blockbounds.position.y) {
+                        sf::FloatRect obstaclecheck = sf::FloatRect(sf::Vector2f(blockleft + 0.5, blocktop - 0.07), sf::Vector2f(blockbounds.size.x - 1, 0.07));
                         bool obstacletop = false;
+                        std::cout << "Grounded:" << Object.grounded << "\nZerogactive:" << zerogactive << "\n\n";
                         for (auto& rest: tilelist) {
                             if (pos.tile == rest.tile || !rest.tile) continue;
                             if (rest.type == tiletype::block_push || rest.type == tiletype::ground || rest.type == tiletype::door) {
