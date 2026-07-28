@@ -268,7 +268,7 @@ public:
         //need this since player collision checks happen after block checks but player-block pushing logic changes in zero g
         auto playerverts_ = getvertices(Object.shape());
         for (auto& pos: tilelist) {
-            if (!pos.tile) continue;
+            if (!pos.tile || pos.type != tiletype::water && pos.type != tiletype::zero_g) continue;
             if (satCollide(playerverts_, getvertices(pos.tile -> collide()))) {
                 if (pos.type == tiletype::water) swimming = true;
                 if (pos.type == tiletype::zero_g) zerogactive = true;
@@ -304,7 +304,7 @@ public:
                             case tiletype::door: {
                                 auto verticesobj = getvertices(block_ -> collide());
                                 door* G = dynamic_cast<door*>(rest.tile.get());
-                                if (!G) continue;
+                                if (!G || G->opened) continue;
                                 auto verticestile = getvertices(G -> doorblock[0]);
                                 satCollisionResp(verticesobj, verticestile, *block_); 
                                 break;
