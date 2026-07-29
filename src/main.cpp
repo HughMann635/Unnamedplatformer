@@ -114,11 +114,6 @@ int main()
 		if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Enter)) enterkeyheld = false;
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Enter) && !enterkeyheld) {
 			auto verticeslist = getvertices(currentplayer -> shape());
-			if (dynamic_cast<square*>(currentplayer.get())) std::cout << "SQUARE COORDS\n";
-			if (dynamic_cast<circle*>(currentplayer.get())) std::cout << "CIRCLE COORDS\n";
-			if (dynamic_cast<triangle*>(currentplayer.get())) std::cout << "TRIANGLE COORDS\n";
-			if (dynamic_cast<hexagon*>(currentplayer.get())) std::cout << "HEXAGON COORDS\n";
-			if (dynamic_cast<octagon*>(currentplayer.get())) std::cout << "OCTAGON COORDS\n";
 			for (auto& pos: verticeslist) std::cout << pos.x << "," << pos.y << "\n";
 			for (auto& pos: map.tilelist) {
 				if (pos.type == tiletype::block_push) {
@@ -126,8 +121,11 @@ int main()
 					auto verticeslist = getvertices(G -> blockblock);
 					std::cout << "ALL PUSHBLOCK COORDS\n";
 					for (auto& rest: verticeslist) std::cout << rest.x << "," << rest.y << "\n";
+					std::cout << "Y-VELOCITY = " << G -> velocity.y << "\n";
+					break;
 				}
 			}
+			enterkeyheld = false;
 		}
 
 		window.clear();
