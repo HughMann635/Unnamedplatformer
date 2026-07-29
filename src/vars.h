@@ -36,9 +36,7 @@ inline bool zerogactive = false;
 
 inline float circleaccel = 8.f;
 inline float circlemax = 500.f;
-//Triangle was initially gonna be the only character that could push blocks; this is now the push speed for any block
-//Keeping the name for old times sake :')
-inline float trianglepushspeed = 115.f;
+inline float pushspeed = 115.f;
 inline int jumpcount = 2;
 inline sf::Clock tp_timer;
 inline sf::Clock jump_timer;

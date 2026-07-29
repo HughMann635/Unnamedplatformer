@@ -9,8 +9,6 @@
 #include "players.h"
 #include "sat(TESTING).h"
 
-//class player;
-
 enum class tiletype {
     //Basic tile types
     empty,
@@ -358,8 +356,8 @@ public:
                             }
                         }
                         if (!obstacleright) {
-                            block_ -> velocity.x = trianglepushspeed;
-                            Object.velocity.x = trianglepushspeed;
+                            block_ -> velocity.x = pushspeed;
+                            Object.velocity.x = pushspeed;
                             Object.grounded = false;
                         }
                     } else if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) && Object.shape().getPosition().x > blockbounds.position.x) {
@@ -375,8 +373,8 @@ public:
                             }
                         }
                         if (!obstacleleft) {
-                            block_ -> velocity.x = -trianglepushspeed;
-                            Object.velocity.x = -trianglepushspeed;
+                            block_ -> velocity.x = -pushspeed;
+                            Object.velocity.x = -pushspeed;
                             Object.grounded = false;   
                         }
                     }
@@ -396,8 +394,8 @@ public:
                             }
                         }
                         if (!obstaclebelow) {
-                            block_ -> velocity.y = trianglepushspeed;
-                            Object.velocity.y = trianglepushspeed;
+                            block_ -> velocity.y = pushspeed;
+                            Object.velocity.y = pushspeed;
                             Object.grounded = false;
                         }
                         else {
@@ -416,8 +414,8 @@ public:
                             }
                         }
                         if (!obstacletop) {
-                            block_ -> velocity.y = -trianglepushspeed;
-                            Object.velocity.y = -trianglepushspeed;
+                            block_ -> velocity.y = -pushspeed;
+                            Object.velocity.y = -pushspeed;
                             Object.grounded = false;   
                         } 
                     }

@@ -69,15 +69,19 @@ int main()
 
 		while ( const std::optional event = window.pollEvent() ) if ( event->is<sf::Event::Closed>() || running == false) window.close();
 
+
+		//WILL ADD BACK EXTRA CHECKCOLLISIONS LATER ONCE I MAKE IT MORE EFFICIENT
+
+
 		swapped = false;
 		currentplayer -> jump(deltatime);
 		blockonhead = false;
 		currentplayer -> grounded = false;
 		currentplayer -> updatepos(deltatime, map);
-		map.checkCollisions(*currentplayer);
+		//map.checkCollisions(*currentplayer);
 		map.updatemap(deltatime);
-		map.checkCollisions(*currentplayer);
-		map.checkCollisions(*currentplayer);
+		//map.checkCollisions(*currentplayer);
+		//map.checkCollisions(*currentplayer);
 		map.checkCollisions(*currentplayer);
 		currentplayer -> rotateobject(edge, map, currentplayer -> shape(), deltatime, movespeed, swimming, zerogactive, currentplayer -> grounded, nearestedge);
 		lastframe_pos = sf::Vector2f(currentplayer -> shape().getPosition());
@@ -138,6 +142,7 @@ int main()
 		sky.drawstars(window);
 		currentplayer -> drawscreen(window);
 		map.drawmap(window);
+		
 		//DEBUG DRAWING STUFF
 		if (draw) {
 			auto playervertices = getvertices(currentplayer->shape());
