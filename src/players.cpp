@@ -191,7 +191,7 @@ sf::Shape& circle::shape()  {
 void circle::jump (float deltatime)  {
     if (sf::Keyboard::isKeyPressed ( sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::W)) {
         if (grounded && !swimming && !zerogactive) {
-            velocity.y -= jumpforce;
+            velocity.y -= blockonhead ? 0 : jumpforce;
             grounded = false;
         }
     }
@@ -281,7 +281,7 @@ sf::Shape& triangle::shape()  {
 void triangle::jump (float deltatime)  {
     if (sf::Keyboard::isKeyPressed ( sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::W)) {
         if (grounded && !swimming && !zerogactive) {
-            velocity.y -= jumpforce;
+            velocity.y -= blockonhead ? 0 : jumpforce;
             grounded = false;
         }
     }
@@ -404,7 +404,7 @@ void hexagon::jump (float deltatime) {
     if (grounded) jumpcount = 2;
     if (sf::Keyboard::isKeyPressed ( sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::W)) {
         if (jumpcount > 0 && !swimming && !zerogactive && jump_timer.getElapsedTime().asMilliseconds() > 200) {
-            velocity.y = -jumpforce;
+            if (!blockonhead) velocity.y = -jumpforce;
             jumpcount -= 1;
             jump_timer.restart();
         }
@@ -500,7 +500,7 @@ sf::Shape& octagon::shape() {
 void octagon::jump (float deltatime) {
     if (sf::Keyboard::isKeyPressed ( sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::W)) {
         if (grounded && !swimming && !zerogactive) {
-            velocity.y = -jumpforce;
+            if (!blockonhead) velocity.y = -jumpforce;
             grounded = false;
             walljumped = false;
         }
