@@ -336,13 +336,13 @@ public:
             }
 
             //2. BLOCK + PLAYER  LOGIC
+            float playercentery = playerbounds.position.y + playerbounds.size.y / 2;
+            float playercenterx = playerbounds.position.x + playerbounds.size.x / 2;
+            float blocktop = blockbounds.position.y;
+            float blockbottom = blockbounds.position.y + blockbounds.size.y;
+            float blockleft = blockbounds.position.x;
+            float blockright = blockbounds.position.x + blockbounds.size.x;
             if (satCollide(playervertices, blockvertices)) {
-                float playercentery = playerbounds.position.y + playerbounds.size.y / 2;
-                float playercenterx = playerbounds.position.x + playerbounds.size.x / 2;
-                float blocktop = blockbounds.position.y;
-                float blockbottom = blockbounds.position.y + blockbounds.size.y;
-                float blockleft = blockbounds.position.x;
-                float blockright = blockbounds.position.x + blockbounds.size.x;
 
                 if ((playercentery > blocktop && playercentery < blockbottom)) {
                     if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) && Object.shape().getPosition().x < blockbounds.position.x) {
@@ -422,16 +422,15 @@ public:
                         } 
                     }
                 }
-                
-                if (Object.shape().getPosition().y - 10 > block_ -> blockblock.getPosition().y && (playercenterx > blockleft && playercenterx < blockright)) {
-                    blockonhead = true;
-                }
 
                 if (block_ -> velocity.y > 0) {
                     auto blockvertices = getvertices(block_ -> collide());
                     auto playervertices = getvertices(Object.shape());
                     satCollisionResp(blockvertices, playervertices, *block_);
                 }
+            }
+            if ((playercenterx > blockleft && playercenterx < blockright) && Object.shape().getPosition().y - 10 > block_ -> blockblock.getPosition().y) {
+                blockonhead = true;
             }
         }
 
