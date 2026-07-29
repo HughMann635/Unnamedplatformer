@@ -80,12 +80,11 @@ public:
                         break;   
                     case 'S':
                         new_tile.type = tiletype::spawn;
-                        spawn = sf::Vector2f(j*playerdim, i*playerdim);
+                        spawn = sf::Vector2f(j*playerdim+(playerdim/2), i*playerdim+(playerdim/2));
                         tilelist.push_back(std::move(new_tile));
                         break;
                     case 'F':
                         new_tile.type = tiletype::exit;
-                        finishpoint = sf::Vector2f(i*playerdim, j*playerdim);
                         new_tile.tile = std::make_unique<finish>(sf::Vector2f(j*playerdim, i*playerdim));
                         tilelist.push_back(std::move(new_tile));
                         break;
@@ -522,7 +521,9 @@ public:
                 sf::Shape& tile = pos.tile -> collide();
                 door* G = dynamic_cast<door*>(pos.tile.get());
                 std::vector<sf::Vector2f> tilevertices;
-                if (!G || G -> opened) continue; 
+                if (pos.type == tiletype::door) {
+                    if (!G || G -> opened) continue;
+                } 
                 tilevertices = getvertices(tile);
                 if (satCollide(shapevertices, tilevertices)) {
                     return true;
