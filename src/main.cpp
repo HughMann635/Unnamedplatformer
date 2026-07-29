@@ -51,7 +51,7 @@ int main()
 			levelnum += 1;
 			if (levelnum > 5) {
 				levelnum = 0;
-				if (setnum = 4) {
+				if (setnum == 4) {
 					std::cout << "Congrats!";
 					window.close();
 				}
