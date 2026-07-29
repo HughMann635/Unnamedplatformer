@@ -102,7 +102,7 @@ void square::jump (float deltatime) {
     if (sf::Keyboard::isKeyPressed ( sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::W)) {
         if (grounded && !swimming && !zerogactive) {
             if (blockonhead) {
-                velocity.y -= jumpforce * 0.1;
+                velocity.y -= 0;
             }
             else {
                 velocity.y -= jumpforce;
