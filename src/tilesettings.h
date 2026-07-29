@@ -157,6 +157,7 @@ public:
                 if (player_) landed = true;
             } else if (mtv.y > 0) {
                 if (Object.velocity.y < 0) Object.velocity.y = 0;
+                blockonhead = true;
             }
         } else if (std::abs(mtv.x) > std::abs(mtv.y)) {
             if (mtv.x > 0) {

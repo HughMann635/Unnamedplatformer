@@ -71,6 +71,7 @@ int main()
 
 		swapped = false;
 		currentplayer -> jump(deltatime);
+		blockonhead = false;
 		currentplayer -> updatepos(deltatime, map);
 		currentplayer -> grounded = false;
 		map.updatemap(deltatime);
