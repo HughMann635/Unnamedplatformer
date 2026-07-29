@@ -74,6 +74,7 @@ int main()
 		blockonhead = false;
 		currentplayer -> grounded = false;
 		currentplayer -> updatepos(deltatime, map);
+		map.checkCollisions(*currentplayer);
 		map.updatemap(deltatime);
 		map.checkCollisions(*currentplayer);
 		currentplayer -> rotateobject(edge, map, currentplayer -> shape(), deltatime, movespeed, swimming, zerogactive, currentplayer -> grounded, nearestedge);
