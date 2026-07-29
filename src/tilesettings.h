@@ -422,7 +422,9 @@ public:
                         } 
                     }
                 }
-
+                
+                if (satCollide(blockvertices, playervertices) && block_ -> velocity.y > 100) block_ -> velocity.y = 100;
+                
                 if (block_ -> velocity.y > 0) {
                     auto blockvertices = getvertices(block_ -> collide());
                     auto playervertices = getvertices(Object.shape());
