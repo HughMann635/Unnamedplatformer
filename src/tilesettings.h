@@ -52,7 +52,8 @@ struct Tile {
 
 class tilemap {
 public:
-    std::vector<Tile> tilelist;
+    std::vector<Tile> statictilelist;
+    std::vector<Tile> dynamictilelist;
     sf::Vector2f spawn;
     sf::Vector2f finishpoint;
 
@@ -69,74 +70,74 @@ public:
                 switch (tilecode) {
                     case '*': 
                         new_tile.type = tiletype::empty;
-                        tilelist.push_back(std::move(new_tile));
+                        statictilelist.push_back(std::move(new_tile));
                         break;
                     case '#':
                         new_tile.type = tiletype::ground;
                         new_tile.tile = std::make_unique<ground_>(sf::Vector2f(j*playerdim, i*playerdim));
-                        tilelist.push_back(std::move(new_tile));
+                        statictilelist.push_back(std::move(new_tile));
                         break;   
                     case 'S':
                         new_tile.type = tiletype::spawn;
                         spawn = sf::Vector2f(j*playerdim+(playerdim/2), i*playerdim+(playerdim/2));
-                        tilelist.push_back(std::move(new_tile));
+                        statictilelist.push_back(std::move(new_tile));
                         break;
                     case 'F':
                         new_tile.type = tiletype::exit;
                         new_tile.tile = std::make_unique<finish>(sf::Vector2f(j*playerdim, i*playerdim));
-                        tilelist.push_back(std::move(new_tile));
+                        statictilelist.push_back(std::move(new_tile));
                         break;
                     case '1':
                         new_tile.type = tiletype::spike;
                         new_tile.tile = std::make_unique<spike>(sf::Vector2f(j*playerdim, i*playerdim));
-                        tilelist.push_back(std::move(new_tile));
+                        statictilelist.push_back(std::move(new_tile));
                         break;
                     case '2':
                         new_tile.type = tiletype::doublespike;
                         new_tile.tile = std::make_unique<doublespike>(sf::Vector2f(j*playerdim, i*playerdim));
-                        tilelist.push_back(std::move(new_tile));
+                        statictilelist.push_back(std::move(new_tile));
                         break;
                     case 'L':
                         new_tile.type = tiletype::lava;
                         new_tile.tile = std::make_unique<lava>(sf::Vector2f(j*playerdim, i*playerdim));
-                        tilelist.push_back(std::move(new_tile));
+                        statictilelist.push_back(std::move(new_tile));
                         break;
                     case 'W':
                         new_tile.type = tiletype::water;
                         new_tile.tile = std::make_unique<water>(sf::Vector2f(j*playerdim,i*playerdim));
-                        tilelist.push_back(std::move(new_tile));
+                        statictilelist.push_back(std::move(new_tile));
                         break;
                     case 'Z':
                         new_tile.type = tiletype::zero_g;
                         new_tile.tile = std::make_unique<zero_g>(sf::Vector2f(j*playerdim,i*playerdim));
-                        tilelist.push_back(std::move(new_tile));
+                        statictilelist.push_back(std::move(new_tile));
                         break;
                     case 'B':
                         new_tile.type = tiletype::blackhole;
                         new_tile.tile = std::make_unique<blackhole>(sf::Vector2f(j*playerdim+5, i*playerdim+5));
-                        tilelist.push_back(std::move(new_tile));
+                        statictilelist.push_back(std::move(new_tile));
                         break;
                     case 'P':
                         new_tile.type = tiletype::block_push; //cuz i cant have two 'B' cases
                         new_tile.tile = std::make_unique<block>(sf::Vector2f(j*playerdim, i*playerdim));
-                        tilelist.push_back(std::move(new_tile));
+                        dynamictilelist.push_back(std::move(new_tile));
                         break;
                     case '^':
                         new_tile.type = tiletype::spring;
                         new_tile.tile = std::make_unique<spring>(sf::Vector2f(j*playerdim, i*playerdim));
-                        tilelist.push_back(std::move(new_tile));
+                        statictilelist.push_back(std::move(new_tile));
                         break;
                     case 'O':
                         new_tile.type = tiletype::button;
                         new_tile.tile = std::make_unique<button>(sf::Vector2f(j*playerdim, i*playerdim), buttoncount);
                         buttoncount++;
-                        tilelist.push_back(std::move(new_tile));
+                        statictilelist.push_back(std::move(new_tile));
                         break;
                     case 'D':
                         new_tile.type = tiletype::door;
                         new_tile.tile = std::make_unique<door>(sf::Vector2f(j*playerdim, i*playerdim), doorcount);
                         doorcount++;
-                        tilelist.push_back(std::move(new_tile));
+                        statictilelist.push_back(std::move(new_tile));
                         break;
                 }
             }
@@ -178,7 +179,7 @@ public:
         landed = false; //PLACEHOLDER
 
         //BUTTON + DOOR RESETS
-        for (auto& pos: tilelist) {
+        for (auto& pos: statictilelist) {
             if (pos.type == tiletype::button) {
                 button* button_ = dynamic_cast<button*>(pos.tile.get());
                 if (!button_) {
@@ -198,11 +199,11 @@ public:
         }
 
         //BUTTON CHECK
-        for (auto& pos: tilelist) {
+        for (auto& pos: statictilelist) {
             if (pos.type == tiletype::button) {
                 button* button_ = dynamic_cast<button*>(pos.tile.get());
                 if (!button_) continue;
-                for (auto& other: tilelist) {
+                for (auto& other: dynamictilelist) {
                     if ((other.type == tiletype::block_push) && other.tile -> collide().getGlobalBounds().findIntersection(button_ -> collide().getGlobalBounds())) {
                         button_ -> pressed = true;
                         button_ -> presscheck = true;
@@ -218,13 +219,13 @@ public:
         //DOOR SAFETY CHECK
         //y'know how an elevator door doesn't close on your hand
         //yeah this is like that
-        for (auto& pos: tilelist) {
+        for (auto& pos: statictilelist) {
             if (pos.type != tiletype::button) continue;
             button* button_ = dynamic_cast<button*>(pos.tile.get());
             if (!button_ || !button_ -> presscheck) continue;
 
             bool occupied = false;
-            for (auto& rest: tilelist) {
+            for (auto& rest: statictilelist) {
                 if (rest.type != tiletype::door) continue;
                 door* door_ = dynamic_cast<door*>(rest.tile.get());
                 if (!door_ || door_ -> id != button_ -> id) continue;
@@ -232,7 +233,7 @@ public:
                     occupied = true;
                     break;
                 }
-                for (auto& others: tilelist) {
+                for (auto& others: dynamictilelist) {
                     if (others.type != tiletype::block_push) continue;
                     if (others.tile -> collide().getGlobalBounds().findIntersection(door_ -> collide().getGlobalBounds())) {
                         occupied = true;
@@ -247,12 +248,12 @@ public:
         }
 
         //DOOR CHECK
-        for (auto& pos: tilelist) {
+        for (auto& pos: statictilelist) {
             if (pos.type != tiletype::button) continue;
             button* button_ = dynamic_cast<button*>(pos.tile.get());
             if (!button_ || (!button_ -> presscheck && !button_ -> pressed)) continue;
 
-            for (auto& other: tilelist) {
+            for (auto& other: statictilelist) {
                 if (other.type != tiletype::door) continue;
                 door* door_ = dynamic_cast<door*>(other.tile.get());
                 if (door_ && door_ -> id == button_ -> id) {
@@ -264,7 +265,7 @@ public:
         //PLAYER ENV. DETECTION
         //need this since player collision checks happen after block checks but player-block pushing logic changes in zero g
         auto playerverts_ = getvertices(Object.shape());
-        for (auto& pos: tilelist) {
+        for (auto& pos: statictilelist) {
             if (!pos.tile || pos.type != tiletype::water && pos.type != tiletype::zero_g) continue;
             if (satCollide(playerverts_, getvertices(pos.tile -> collide()))) {
                 if (pos.type == tiletype::water) swimming = true;
@@ -273,7 +274,7 @@ public:
         }
 
         //BLOCK COLLISION
-        for (auto& pos: tilelist) {
+        for (auto& pos: dynamictilelist) {
             if (pos.type != tiletype::block_push) { continue; }
             block* block_ = dynamic_cast<block*>(pos.tile.get());
             if (!block_) { continue; }
@@ -284,7 +285,7 @@ public:
             auto playervertices = getvertices(Object.shape());
 
             //1. BLOCK + WORLD COLLISION
-            for (auto& rest: tilelist) {
+            for (auto& rest: statictilelist) {
                 if (pos.tile != rest.tile && rest.type != tiletype::empty && rest.type != tiletype::spawn) {
                     sf::FloatRect restbounds = rest.tile -> collide().getGlobalBounds();
                     if (!blockbounds.findIntersection(restbounds)) { continue; }
@@ -341,14 +342,22 @@ public:
             float blockleft = blockbounds.position.x;
             float blockright = blockbounds.position.x + blockbounds.size.x;
             if (satCollide(playervertices, blockvertices)) {
-
                 if ((playercentery > blocktop && playercentery < blockbottom)) {
                     if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) && Object.shape().getPosition().x < blockbounds.position.x) {
                         sf::FloatRect obstaclecheck = sf::FloatRect(sf::Vector2f(blockright+0.01, blocktop + 0.5), sf::Vector2f(0.05, blockbounds.size.y-1));
                         bool obstacleright = false;
-                        for (auto& rest: tilelist) {
+                        for (auto& rest: statictilelist) {
                             if (pos.tile == rest.tile || !rest.tile) continue;
-                            if (rest.type == tiletype::block_push || rest.type == tiletype::ground || rest.type == tiletype::door) {
+                            if (rest.type == tiletype::ground || rest.type == tiletype::door) {
+                                if (obstaclecheck.findIntersection(rest.tile -> collide().getGlobalBounds())) {
+                                    obstacleright = true;
+                                    break;
+                                }
+                            }
+                        }
+                        for (auto& rest: dynamictilelist) {
+                            if (pos.tile == rest.tile || !rest.tile) continue;
+                            if (rest.type == tiletype::block_push) {
                                 if (obstaclecheck.findIntersection(rest.tile -> collide().getGlobalBounds())) {
                                     obstacleright = true;
                                     break;
@@ -363,9 +372,18 @@ public:
                     } else if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) && Object.shape().getPosition().x > blockbounds.position.x) {
                         sf::FloatRect obstaclecheck = sf::FloatRect(sf::Vector2f(blockleft-0.06, blocktop + 0.5), sf::Vector2f(0.05, blockbounds.size.y - 1));
                         bool obstacleleft = false;
-                        for (auto& rest: tilelist) {
+                        for (auto& rest: statictilelist) {
                             if (pos.tile == rest.tile || !rest.tile) continue;
-                            if (rest.type == tiletype::block_push || rest.type == tiletype::ground || rest.type == tiletype::door) {
+                            if (rest.type == tiletype::ground || rest.type == tiletype::door) {
+                                if (obstaclecheck.findIntersection(rest.tile -> collide().getGlobalBounds())) {
+                                    obstacleleft = true;
+                                    break;
+                                }
+                            }
+                        }
+                        for (auto& rest: dynamictilelist) {
+                            if (pos.tile == rest.tile || !rest.tile) continue;
+                            if (rest.type == tiletype::block_push) {
                                 if (obstaclecheck.findIntersection(rest.tile -> collide().getGlobalBounds())) {
                                     obstacleleft = true;
                                     break;
@@ -384,9 +402,18 @@ public:
                     if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) && Object.shape().getPosition().y < blockbounds.position.y) {
                         sf::FloatRect obstaclecheck = sf::FloatRect(sf::Vector2f(blockleft + 0.5, blockbottom + 0.05), sf::Vector2f(blockbounds.size.x - 1, 0.05));
                         bool obstaclebelow = false;
-                        for (auto& rest: tilelist) {
+                        for (auto& rest: statictilelist) {
                             if (pos.tile == rest.tile || !rest.tile) continue;
-                            if (rest.type == tiletype::block_push || rest.type == tiletype::ground || rest.type == tiletype::door) {
+                            if (rest.type == tiletype::ground || rest.type == tiletype::door) {
+                                if (obstaclecheck.findIntersection(rest.tile -> collide().getGlobalBounds())) {
+                                    obstaclebelow = true;
+                                    break;
+                                }
+                            }
+                        }
+                        for (auto& rest: dynamictilelist) {
+                            if (pos.tile == rest.tile || !rest.tile) continue;
+                            if (rest.type == tiletype::block_push) {
                                 if (obstaclecheck.findIntersection(rest.tile -> collide().getGlobalBounds())) {
                                     obstaclebelow = true;
                                     break;
@@ -404,9 +431,18 @@ public:
                     } else if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) && Object.shape().getPosition().y > blockbounds.position.y && zerogactive) {
                         sf::FloatRect obstaclecheck = sf::FloatRect(sf::Vector2f(blockleft + 0.5, blocktop - 0.07), sf::Vector2f(blockbounds.size.x - 1, 0.07));
                         bool obstacletop = false;
-                        for (auto& rest: tilelist) {
+                        for (auto& rest: statictilelist) {
                             if (pos.tile == rest.tile || !rest.tile) continue;
-                            if (rest.type == tiletype::block_push || rest.type == tiletype::ground || rest.type == tiletype::door) {
+                            if (rest.type == tiletype::ground || rest.type == tiletype::door) {
+                                if (obstaclecheck.findIntersection(rest.tile -> collide().getGlobalBounds())) {
+                                    obstacletop = true;
+                                    break;
+                                }
+                            }
+                        }
+                        for (auto& rest: dynamictilelist) {
+                            if (pos.tile == rest.tile || !rest.tile) continue;
+                            if (rest.type == tiletype::block_push) {
                                 if (obstaclecheck.findIntersection(rest.tile -> collide().getGlobalBounds())) {
                                     obstacletop = true;
                                     break;
@@ -433,7 +469,7 @@ public:
         }
 
         //PLAYER COLLISION
-        for (auto& pos: tilelist) {
+        for (auto& pos: statictilelist) {
             if (pos.type == tiletype::empty || pos.type == tiletype::spawn || !Object.shape().getGlobalBounds().findIntersection(pos.tile -> collide().getGlobalBounds())) { continue; }
             auto playerbounds = getvertices(Object.shape());
             std::vector<sf::Vector2f> tilebounds;
@@ -486,14 +522,6 @@ public:
                     case tiletype::zero_g:
                     zerogactive = true;
                     break;
-                    case tiletype::block_push: {
-                        auto verticesobj = getvertices(Object.shape());
-                        block* G = dynamic_cast<block*>(pos.tile.get());
-                        if (!G) continue;
-                        auto verticestile = getvertices(G -> blockblock);
-                        satCollisionResp(verticesobj, verticestile, Object);
-                    }
-                    break;
                     case tiletype::spring:
                     Object.velocity.y = -1000.f;
                     walljumpcancel = true;
@@ -508,6 +536,13 @@ public:
                 }
             }
         }
+        for (auto& pos: dynamictilelist) {
+            block* block_ = dynamic_cast<block*>(pos.tile.get());
+            if (!block_) continue;
+            auto tilebounds = getvertices(block_ -> blockblock);
+            auto verticesobj = getvertices(Object.shape());
+            satCollisionResp(verticesobj, tilebounds, Object);
+        }
     }
 
     bool predictCollision(sf::Shape& shape, sf::Vector2f transform) {
@@ -517,8 +552,8 @@ public:
             pos.y += transform.y;
         }
 
-        for (auto& pos: tilelist) {
-            if ((pos.type == tiletype::ground || pos.type == tiletype::block_push || pos.type == tiletype::door)) {
+        for (auto& pos: statictilelist) {
+            if ((pos.type == tiletype::ground || pos.type == tiletype::door)) {
                 sf::Shape& tile = pos.tile -> collide();
                 door* G = dynamic_cast<door*>(pos.tile.get());
                 std::vector<sf::Vector2f> tilevertices;
@@ -531,22 +566,33 @@ public:
                 }
             }
         }
-        return false;
-    }
-
-    bool cliffCheck (sf::Vector2f vertex) {
-        sf::FloatRect groundpoint = sf::FloatRect(sf::Vector2f(vertex.x - 1, vertex.y), sf::Vector2f(2.f, 2.f));
-        for (auto& pos: tilelist) {
-            if (pos.type == tiletype::ground || pos.type == tiletype::block_push || pos.type == tiletype::door) {
-                sf::FloatRect groundbounds = pos.tile -> collide().getGlobalBounds();
-                if (groundpoint.findIntersection(groundbounds)) return true;
+        for (auto& pos: dynamictilelist) {
+            sf::Shape& tile = pos.tile -> collide();
+            std::vector<sf::Vector2f> tilevertices = getvertices(tile);
+            if (satCollide(shapevertices, tilevertices)) {
+                return true;
             }
         }
         return false;
     }
 
+    bool cliffCheck (sf::Vector2f vertex) {
+        sf::FloatRect groundpoint = sf::FloatRect(sf::Vector2f(vertex.x - 1, vertex.y), sf::Vector2f(2.f, 2.f));
+        for (auto& pos: statictilelist) {
+            if (pos.type == tiletype::ground || pos.type == tiletype::door) {
+                sf::FloatRect groundbounds = pos.tile -> collide().getGlobalBounds();
+                if (groundpoint.findIntersection(groundbounds)) return true;
+            }
+        }
+        for (auto& pos: dynamictilelist) {
+            sf::FloatRect groundbounds = pos.tile -> collide().getGlobalBounds();
+            if (groundpoint.findIntersection(groundbounds)) return true;
+        }
+        return false;
+    }
+
     void updatemap (float deltatime) {
-        for (auto& pos: tilelist) {
+        for (auto& pos: dynamictilelist) {
             if (pos.type != tiletype::empty && pos.type != tiletype::spawn) {
                 pos.tile -> movetile(deltatime);
             }
@@ -554,10 +600,13 @@ public:
     }
 
     void drawmap (sf::RenderWindow& window) {
-        for (auto& pos: tilelist) {
+        for (auto& pos: statictilelist) {
             if (pos.type != tiletype::empty && pos.type != tiletype::spawn) {
                 pos.tile -> draw(window);
             }
+        }
+        for (auto& pos: dynamictilelist) {
+            pos.tile -> draw(window);
         }
     }
 };

@@ -38,7 +38,8 @@ int main()
 		float deltatime = timer.restart().asSeconds();
 		
 		if (restart == true) {
-			map.tilelist.clear();
+			map.statictilelist.clear();
+			map.dynamictilelist.clear();
 			map.loadmap(levels[setnum][levelnum]);
 			currentplayer = std::make_unique<square>();
 			currentplayer -> shape().setPosition(map.spawn);
@@ -58,7 +59,8 @@ int main()
 				setnum += 1;
 			}
 
-			map.tilelist.clear();
+			map.statictilelist.clear();
+			map.dynamictilelist.clear();
 			currentplayer = std::make_unique<square>();
 			map.loadmap(levels[setnum][levelnum]);
 			currentplayer -> shape().setPosition(map.spawn);
@@ -123,7 +125,7 @@ int main()
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Enter) && !enterkeyheld) {
 			auto verticeslist = getvertices(currentplayer -> shape());
 			for (auto& pos: verticeslist) std::cout << pos.x << "," << pos.y << "\n";
-			for (auto& pos: map.tilelist) {
+			for (auto& pos: map.dynamictilelist) {
 				if (pos.type == tiletype::block_push) {
 					block* G = dynamic_cast<block*>(pos.tile.get());
 					auto verticeslist = getvertices(G -> blockblock);
@@ -152,15 +154,9 @@ int main()
 			std::vector<sf::Vector2f> closestvertices;
     		float closestdist = std::numeric_limits<float>::max();
 
-			for (auto& pos : map.tilelist) {
+			for (auto& pos : map.statictilelist) {
 				std::vector<sf::Vector2f> tilevertices;
-		
-				if (pos.type == tiletype::block_push) {
-					block* G = dynamic_cast<block*>(pos.tile.get());
-					if (G) tilevertices = getvertices(G->blockblock);
-					drawdebug(window, tilevertices, tilevertices);
-				}
-				else if (pos.type == tiletype::lava) {
+				if (pos.type == tiletype::lava) {
 					lava* G = dynamic_cast<lava*>(pos.tile.get());
 					if (G) tilevertices = getvertices(G->lavablock);
 					drawdebug(window, tilevertices, tilevertices);
