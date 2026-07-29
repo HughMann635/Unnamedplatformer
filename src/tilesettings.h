@@ -157,7 +157,6 @@ public:
                 if (player_) landed = true;
             } else if (mtv.y > 0) {
                 if (Object.velocity.y < 0) Object.velocity.y = 0;
-                blockonhead = true;
             }
         } else if (std::abs(mtv.x) > std::abs(mtv.y)) {
             if (mtv.x > 0) {
@@ -424,11 +423,14 @@ public:
                     }
                 }
                 
+                if (Object.shape().getPosition().y - 10 > block_ -> blockblock.getPosition().y && (playercenterx > blockleft && playercenterx < blockright)) {
+                    blockonhead = true;
+                }
+
                 if (block_ -> velocity.y > 0) {
                     auto blockvertices = getvertices(block_ -> collide());
                     auto playervertices = getvertices(Object.shape());
                     satCollisionResp(blockvertices, playervertices, *block_);
-                    block_ -> velocity.y = 0;
                 }
             }
         }
