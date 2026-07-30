@@ -19,8 +19,8 @@ public:
     bool freefallingtip = false;
     float settlepoint = -1;
 
-    void moveobject (float deltatime, float gravity) {
-        velocity.y += gravity * deltatime;
+    void moveobject (float deltatime, float gravity, bool grounded) {
+        if (!grounded) velocity.y += gravity * deltatime;
         shape().move(velocity * deltatime);
     }
     

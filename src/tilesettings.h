@@ -146,6 +146,7 @@ public:
 
     void satCollisionResp(std::vector<sf::Vector2f> verticesobj, std::vector<sf::Vector2f> verticestile, entity& Object) {
         player* player_ = dynamic_cast<player*>(&Object);
+        block* block_ = dynamic_cast<block*>(&Object);
         sf::Vector2f mtv = sf::Vector2f(0, 0);
         mtvCheck(verticesobj, verticestile, mtv);
         Object.shape().move(mtv);
@@ -154,8 +155,9 @@ public:
                 Object.grounded = true;
                 Object.velocity.y = 0;
                 if (player_) landed = true;
+                if (block_) block_ -> blockgrounded = true;
             } else if (mtv.y > 0) {
-                if (Object.velocity.y < 0) Object.velocity.y = 0;
+                Object.velocity.y = 0;
             }
         } else if (std::abs(mtv.x) > std::abs(mtv.y)) {
             if (mtv.x > 0) {
@@ -177,6 +179,10 @@ public:
         wallhuggingright = false;
         wallhuggingleft = false;
         landed = false; //PLACEHOLDER
+        for (auto& pos: dynamictilelist) {
+            block* block_ = dynamic_cast<block*>(pos.tile.get());
+            block_ -> blockgrounded = false;
+        }
 
         //BUTTON + DOOR RESETS
         for (auto& pos: statictilelist) {
@@ -275,7 +281,6 @@ public:
 
         //BLOCK COLLISION
         for (auto& pos: dynamictilelist) {
-            if (pos.type != tiletype::block_push) { continue; }
             block* block_ = dynamic_cast<block*>(pos.tile.get());
             if (!block_) { continue; }
             block_ -> blockgravity = 1800;
@@ -306,15 +311,7 @@ public:
                                 auto verticestile = getvertices(G -> doorblock[0]);
                                 satCollisionResp(verticesobj, verticestile, *block_); 
                                 break;
-                            }                   
-                            case tiletype::block_push: {
-                                auto verticesobj = getvertices(block_ -> collide());
-                                block* G = dynamic_cast<block*>(rest.tile.get());
-                                if (!G) continue;
-                                auto verticestile = getvertices(G -> blockblock);
-                                satCollisionResp(verticesobj, verticestile, *block_);
-                                break;
-                            break; }
+                            }
                             case tiletype::zero_g:
                             block_ -> blockgravity = 0;
                             block_ -> velocity.y *= 0.96;
@@ -333,6 +330,22 @@ public:
                     }
                 }
             }
+            for (auto& rest: dynamictilelist) {
+                if (pos.tile == rest.tile) continue;
+                block* G = dynamic_cast<block*>(rest.tile.get());
+                if (!G) continue;
+                sf::FloatRect blockbounds = pos.tile -> collide().getGlobalBounds();
+                sf::FloatRect tilebounds = G -> collide().getGlobalBounds();
+                if (!blockbounds.findIntersection(tilebounds)) continue;
+                auto verticesobj = getvertices(block_ -> collide());
+                auto verticestile = getvertices(G -> blockblock);
+                satCollisionResp(verticesobj, verticestile, *block_);
+                satCollisionResp(verticestile, verticesobj, *G);
+            }
+
+            //TODO: LOOK INTO A FIX
+            //sf::FloatRect inflatedbounds = sf::FloatRect(sf::Vector2f(blockbounds.position.x-0.5, blockbounds.position.y-0.5), sf::Vector2f(blockbounds.size.x+1, blockbounds.size.y+1));
+            //if (inflatedbounds.findIntersection(Object.shape().getGlobalBounds()) && Object.shape().getPosition().y > block_ -> blockblock.getPosition().y) block_ -> blockgrounded = true;
 
             //2. BLOCK + PLAYER  LOGIC
             float playercentery = playerbounds.position.y + playerbounds.size.y / 2;
@@ -456,12 +469,6 @@ public:
                         } 
                     }
                 }
-
-                if (block_ -> velocity.y > 0) {
-                    auto blockvertices = getvertices(block_ -> collide());
-                    auto playervertices = getvertices(Object.shape());
-                    satCollisionResp(blockvertices, playervertices, *block_);
-                }
             }
             if ((playercenterx > blockleft && playercenterx < blockright) && Object.shape().getPosition().y - 10 > block_ -> blockblock.getPosition().y) {
                 blockonhead = true;
@@ -539,9 +546,10 @@ public:
         for (auto& pos: dynamictilelist) {
             block* block_ = dynamic_cast<block*>(pos.tile.get());
             if (!block_) continue;
+            auto playerbounds = getvertices(Object.shape());
             auto tilebounds = getvertices(block_ -> blockblock);
-            auto verticesobj = getvertices(Object.shape());
-            satCollisionResp(verticesobj, tilebounds, Object);
+            if (!satCollide(playerbounds, tilebounds)) { continue; }
+            satCollisionResp(playerbounds, tilebounds, Object);
         }
     }
 
@@ -593,20 +601,18 @@ public:
 
     void updatemap (float deltatime) {
         for (auto& pos: dynamictilelist) {
-            if (pos.type != tiletype::empty && pos.type != tiletype::spawn) {
-                pos.tile -> movetile(deltatime);
-            }
+            pos.tile -> movetile(deltatime);
         }
     }
 
     void drawmap (sf::RenderWindow& window) {
+        for (auto& pos: dynamictilelist) {
+            pos.tile -> draw(window);
+        }
         for (auto& pos: statictilelist) {
             if (pos.type != tiletype::empty && pos.type != tiletype::spawn) {
                 pos.tile -> draw(window);
             }
-        }
-        for (auto& pos: dynamictilelist) {
-            pos.tile -> draw(window);
         }
     }
 };
