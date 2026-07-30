@@ -83,7 +83,7 @@ int main()
 		//map.checkCollisions(*currentplayer);
 		map.updatemap(deltatime);
 		//map.checkCollisions(*currentplayer);
-		//map.checkCollisions(*currentplayer);
+		map.checkCollisions(*currentplayer);
 		map.checkCollisions(*currentplayer);
 		currentplayer -> rotateobject(edge, map, currentplayer -> shape(), deltatime, movespeed, swimming, zerogactive, currentplayer -> grounded, nearestedge);
 		lastframe_pos = sf::Vector2f(currentplayer -> shape().getPosition());

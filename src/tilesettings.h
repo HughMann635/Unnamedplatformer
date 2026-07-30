@@ -553,7 +553,7 @@ public:
             if (std::abs(mtv.y) > std::abs(mtv.x) && mtv.y > 0) {
                 block_ -> velocity.y = 0;
                 block_ -> grounded = true;
-                Object.shape().move(sf::Vector2f(0, mtv.y));
+                block_ -> blockblock.move(sf::Vector2f(0, -mtv.y));
             } else {
                 satCollisionResp(playerbounds, tilebounds, Object);
             }
