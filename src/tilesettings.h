@@ -549,6 +549,18 @@ public:
             auto playerbounds = getvertices(Object.shape());
             auto tilebounds = getvertices(block_ -> blockblock);
             if (!satCollide(playerbounds, tilebounds)) { continue; }
+            sf::Vector2f mtv = sf::Vector2f(0, 0);
+            mtvCheck(playerbounds, tilebounds, mtv);
+            /*if (block_ -> velocity.y > 0 && block_ -> collide().getPosition().y + playerdim - Object.shape().getPosition().y <= 0 ) {
+                block_ -> velocity.y = 0;
+                block_ -> grounded = true;
+                Object.shape().move(mtv);
+            }*/
+            if (std::abs(mtv.y) > std::abs(mtv.x) && mtv.y > 0) {
+                block_ -> velocity.y = 0;
+                block_ -> grounded = true;
+                block_ -> blockblock.move(mtv);
+            }
             satCollisionResp(playerbounds, tilebounds, Object);
         }
     }
