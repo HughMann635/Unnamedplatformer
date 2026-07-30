@@ -155,7 +155,7 @@ public:
                 Object.grounded = true;
                 Object.velocity.y = 0;
                 if (player_) landed = true;
-                if (block_) block_ -> blockgrounded = true;
+                if (block_) block_ -> grounded = true;
             } else if (mtv.y > 0) {
                 Object.velocity.y = 0;
             }
@@ -181,7 +181,7 @@ public:
         landed = false; //PLACEHOLDER
         for (auto& pos: dynamictilelist) {
             block* block_ = dynamic_cast<block*>(pos.tile.get());
-            block_ -> blockgrounded = false;
+            block_ -> grounded = false;
         }
 
         //BUTTON + DOOR RESETS
@@ -314,7 +314,7 @@ public:
                             }
                             case tiletype::zero_g:
                             block_ -> blockgravity = 0;
-                            block_ -> velocity.y *= 0.96;
+                            block_ -> velocity.y *= 0.87;
                             break;
                             case tiletype::water:
                             case tiletype::lava:
@@ -345,7 +345,7 @@ public:
 
             //TODO: LOOK INTO A FIX
             sf::FloatRect inflatedbounds = sf::FloatRect(sf::Vector2f(blockbounds.position.x, blockbounds.position.y-0.5), sf::Vector2f(blockbounds.size.x, blockbounds.size.y+1.5));
-            if (inflatedbounds.findIntersection(Object.shape().getGlobalBounds()) && Object.shape().getPosition().y > block_ -> blockblock.getPosition().y) block_ -> blockgrounded = true;
+            if (inflatedbounds.findIntersection(Object.shape().getGlobalBounds()) && Object.shape().getPosition().y > block_ -> blockblock.getPosition().y) block_ -> grounded = true;
 
             //2. BLOCK + PLAYER  LOGIC
             float playercentery = playerbounds.position.y + playerbounds.size.y / 2;

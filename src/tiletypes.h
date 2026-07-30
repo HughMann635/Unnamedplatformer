@@ -187,7 +187,6 @@ class block : public tileTypes, public entity {
 public:
     sf::ConvexShape blockblock;
     float blockgravity = 1800.f;
-    bool blockgrounded = false;
     block(sf::Vector2f position) {
         rotating = false;
         blockblock.setPointCount(4);
@@ -213,7 +212,7 @@ public:
     }
 
     void movetile (float deltatime) override {
-        moveobject(deltatime, blockgravity, blockgrounded);
+        moveobject(deltatime, blockgravity, grounded);
         velocity.x *= 0.87;
     }
 
