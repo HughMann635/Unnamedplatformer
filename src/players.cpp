@@ -492,8 +492,6 @@ sf::Shape& octagon::shape() {
     return playershape;
 }
 
-//GIMMICK: wall jump
-//now I gotta implement wall jump somehow
 void octagon::jump (float deltatime) {
     if (sf::Keyboard::isKeyPressed ( sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::W)) {
         if (grounded && !swimming && !zerogactive) {

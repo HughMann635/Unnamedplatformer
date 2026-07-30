@@ -2,13 +2,13 @@
 #include <SFML/System.hpp>
 #include <string>
 
-//window settings
+//Window settings
 const int width = 1280;
 const int height = 720;
 inline std::string title = "Shape Game";
 const int camwidth = 960;
 const int camheight = 540;
-const int stars = 700;
+const int stars = 1000;
 inline bool running = true;
 inline bool restart = false;
 inline bool newlevel = false;
@@ -19,9 +19,7 @@ inline bool enterkeyheld = false;
 inline bool draw = false;
 
 //Player and physics settings
-//This is also the dimension of all tiles in the game
-const float playerdim = 20.f; 
-
+const float playerdim = 20.f; //Also the dimensions of every tile in the game 
 inline float gravity = 1800.f;
 inline float jumpforce = 600.f;
 inline float movespeed = 230.f;

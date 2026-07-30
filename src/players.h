@@ -7,7 +7,6 @@
 
 class tilemap;
 
-//I had to make a master class for every object affected by physics so I didn't completely lose my mind
 class entity {
 public: 
     sf::Vector2f velocity;

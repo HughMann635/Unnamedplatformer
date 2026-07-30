@@ -116,6 +116,7 @@ public:
     } 
 
 };
+
 //Lava - kills upon entering
 class lava : public tileTypes {
 public:
