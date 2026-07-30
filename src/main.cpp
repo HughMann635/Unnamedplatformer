@@ -89,6 +89,8 @@ int main()
 		lastframe_pos = sf::Vector2f(currentplayer -> shape().getPosition());
 		lastframe_vel = sf::Vector2f(currentplayer -> velocity);
 
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::R)) restart = true;
+
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num1) && !dynamic_cast<square*>(currentplayer.get())) { 
 			currentplayer = std::make_unique<square>(); 
 			swapped = true; 
