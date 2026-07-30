@@ -343,9 +343,6 @@ public:
                 satCollisionResp(verticestile, verticesobj, *G);
             }
 
-            sf::FloatRect inflatedbounds = sf::FloatRect(sf::Vector2f(blockbounds.position.x+2, blockbounds.position.y-0.5), sf::Vector2f(blockbounds.size.x-4, blockbounds.size.y+1.5));
-            if (inflatedbounds.findIntersection(Object.shape().getGlobalBounds()) && Object.shape().getPosition().y > block_ -> blockblock.getPosition().y) block_ -> grounded = true;
-
             //2. BLOCK + PLAYER  LOGIC
             float playercentery = playerbounds.position.y + playerbounds.size.y / 2;
             float playercenterx = playerbounds.position.x + playerbounds.size.x / 2;
@@ -469,9 +466,7 @@ public:
                     }
                 }
             }
-            if ((playercenterx > blockleft && playercenterx < blockright) && Object.shape().getPosition().y - 10 > block_ -> blockblock.getPosition().y) {
-                blockonhead = true;
-            }
+            if ((playercenterx > blockleft && playercenterx < blockright) && Object.shape().getPosition().y - 10 > block_ -> blockblock.getPosition().y) { blockonhead = true; }
         }
 
         //PLAYER COLLISION
