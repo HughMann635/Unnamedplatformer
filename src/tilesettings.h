@@ -344,7 +344,7 @@ public:
             }
 
             //TODO: LOOK INTO A FIX
-            sf::FloatRect inflatedbounds = sf::FloatRect(sf::Vector2f(blockbounds.position.x+1, blockbounds.position.y-0.5), sf::Vector2f(blockbounds.size.x-2, blockbounds.size.y+1.5));
+            sf::FloatRect inflatedbounds = sf::FloatRect(sf::Vector2f(blockbounds.position.x+5, blockbounds.position.y-0.5), sf::Vector2f(blockbounds.size.x-10, blockbounds.size.y+1.5));
             if (inflatedbounds.findIntersection(Object.shape().getGlobalBounds()) && Object.shape().getPosition().y > block_ -> blockblock.getPosition().y) block_ -> grounded = true;
 
             //2. BLOCK + PLAYER  LOGIC
