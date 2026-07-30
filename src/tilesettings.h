@@ -344,8 +344,8 @@ public:
             }
 
             //TODO: LOOK INTO A FIX
-            //sf::FloatRect inflatedbounds = sf::FloatRect(sf::Vector2f(blockbounds.position.x-0.5, blockbounds.position.y-0.5), sf::Vector2f(blockbounds.size.x+1, blockbounds.size.y+1));
-            //if (inflatedbounds.findIntersection(Object.shape().getGlobalBounds()) && Object.shape().getPosition().y > block_ -> blockblock.getPosition().y) block_ -> blockgrounded = true;
+            sf::FloatRect inflatedbounds = sf::FloatRect(sf::Vector2f(blockbounds.position.x, blockbounds.position.y-0.5), sf::Vector2f(blockbounds.size.x, blockbounds.size.y+1.5));
+            if (inflatedbounds.findIntersection(Object.shape().getGlobalBounds()) && Object.shape().getPosition().y > block_ -> blockblock.getPosition().y) block_ -> blockgrounded = true;
 
             //2. BLOCK + PLAYER  LOGIC
             float playercentery = playerbounds.position.y + playerbounds.size.y / 2;
