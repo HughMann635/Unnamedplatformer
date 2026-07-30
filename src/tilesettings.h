@@ -339,7 +339,7 @@ public:
                 if (!blockbounds.findIntersection(tilebounds)) continue;
                 auto verticesobj = getvertices(block_ -> collide());
                 auto verticestile = getvertices(G -> blockblock);
-                satCollisionResp(verticesobj, verticestile, *block_);
+                //satCollisionResp(verticesobj, verticestile, *block_);
                 satCollisionResp(verticestile, verticesobj, *G);
             }
 
