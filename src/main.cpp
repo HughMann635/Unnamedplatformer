@@ -134,7 +134,6 @@ int main()
 					std::cout << "ALL PUSHBLOCK COORDS\n";
 					for (auto& rest: verticeslist) std::cout << rest.x << "," << rest.y << "\n";
 					std::cout << "Y-VELOCITY = " << G -> velocity.y << "\n";
-					break;
 				}
 			}
 			enterkeyheld = false;

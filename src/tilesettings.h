@@ -343,8 +343,7 @@ public:
                 satCollisionResp(verticestile, verticesobj, *G);
             }
 
-            //TODO: LOOK INTO A FIX
-            sf::FloatRect inflatedbounds = sf::FloatRect(sf::Vector2f(blockbounds.position.x+5, blockbounds.position.y-0.5), sf::Vector2f(blockbounds.size.x-10, blockbounds.size.y+1.5));
+            sf::FloatRect inflatedbounds = sf::FloatRect(sf::Vector2f(blockbounds.position.x+2, blockbounds.position.y-0.5), sf::Vector2f(blockbounds.size.x-4, blockbounds.size.y+1.5));
             if (inflatedbounds.findIntersection(Object.shape().getGlobalBounds()) && Object.shape().getPosition().y > block_ -> blockblock.getPosition().y) block_ -> grounded = true;
 
             //2. BLOCK + PLAYER  LOGIC
@@ -551,17 +550,13 @@ public:
             if (!satCollide(playerbounds, tilebounds)) { continue; }
             sf::Vector2f mtv = sf::Vector2f(0, 0);
             mtvCheck(playerbounds, tilebounds, mtv);
-            /*if (block_ -> velocity.y > 0 && block_ -> collide().getPosition().y + playerdim - Object.shape().getPosition().y <= 0 ) {
-                block_ -> velocity.y = 0;
-                block_ -> grounded = true;
-                Object.shape().move(mtv);
-            }*/
             if (std::abs(mtv.y) > std::abs(mtv.x) && mtv.y > 0) {
                 block_ -> velocity.y = 0;
                 block_ -> grounded = true;
-                block_ -> blockblock.move(mtv);
+                Object.shape().move(sf::Vector2f(0, mtv.y));
+            } else {
+                satCollisionResp(playerbounds, tilebounds, Object);
             }
-            satCollisionResp(playerbounds, tilebounds, Object);
         }
     }
 
