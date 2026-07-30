@@ -80,10 +80,10 @@ int main()
 		blockonhead = false;
 		currentplayer -> grounded = false;
 		currentplayer -> updatepos(deltatime, map);
-		//map.checkCollisions(*currentplayer);
 		map.updatemap(deltatime);
+		//NOTE TO SELF figure out a way to get multiple checkCollisions working
 		//map.checkCollisions(*currentplayer);
-		map.checkCollisions(*currentplayer);
+		//map.checkCollisions(*currentplayer);
 		map.checkCollisions(*currentplayer);
 		currentplayer -> rotateobject(edge, map, currentplayer -> shape(), deltatime, movespeed, swimming, zerogactive, currentplayer -> grounded, nearestedge);
 		lastframe_pos = sf::Vector2f(currentplayer -> shape().getPosition());
