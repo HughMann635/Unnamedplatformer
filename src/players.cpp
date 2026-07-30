@@ -101,13 +101,9 @@ sf::Shape& square::shape() {
 void square::jump (float deltatime) {
     if (sf::Keyboard::isKeyPressed ( sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::W)) {
         if (grounded && !swimming && !zerogactive) {
-            if (blockonhead) {
-                velocity.y -= 0;
-            }
-            else {
-                velocity.y -= jumpforce;
-            }
+            velocity.y = blockonhead ? 0 : -jumpforce;
             grounded = false;
+            jumpcount -= 1;
         }
     }
     if (swimming) {
@@ -193,6 +189,7 @@ void circle::jump (float deltatime)  {
         if (grounded && !swimming && !zerogactive) {
             velocity.y -= blockonhead ? 0 : jumpforce;
             grounded = false;
+            jumpcount -= 1;
         }
     }
     if (swimming) {
@@ -283,6 +280,7 @@ void triangle::jump (float deltatime)  {
         if (grounded && !swimming && !zerogactive) {
             velocity.y -= blockonhead ? 0 : jumpforce;
             grounded = false;
+            jumpcount -= 1;
         }
     }
     if (swimming) {
@@ -401,7 +399,6 @@ sf::Shape& hexagon::shape() {
 }
 
 void hexagon::jump (float deltatime) {
-    if (grounded) jumpcount = 2;
     if (sf::Keyboard::isKeyPressed ( sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::W)) {
         if (jumpcount > 0 && !swimming && !zerogactive && jump_timer.getElapsedTime().asMilliseconds() > 200) {
             if (!blockonhead) velocity.y = -jumpforce;
@@ -503,18 +500,22 @@ void octagon::jump (float deltatime) {
             if (!blockonhead) velocity.y = -jumpforce;
             grounded = false;
             walljumped = false;
+            jumpcount -= 1;
         }
         else if (!grounded && !swimming && !zerogactive && wallhuggingright && !jumpkeyheld) {
             walljumped = false;
             if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::LShift)) {
                 velocity.y = -0.92 * jumpforce;
                 velocity.x = -1.1 * jumpforce;
+                jumpcount -= 1;
             } else if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::RShift)) {
                 velocity.y = -1.28* jumpforce;
                 velocity.x = -0.36 * jumpforce;
+                jumpcount -= 1;
             } else {
                 velocity.y = -jumpforce;
                 velocity.x = -movespeed;
+                jumpcount -= 1;
             }
             walljumped = true;
         } else if (!grounded && !swimming && !zerogactive && wallhuggingleft && !jumpkeyheld) {
@@ -522,12 +523,15 @@ void octagon::jump (float deltatime) {
             if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::LShift)) {
                 velocity.y = -0.92 * jumpforce;
                 velocity.x = 1.1 * jumpforce;
+                jumpcount -= 1;
             } else if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::RShift)) {
                 velocity.y = -1.28 * jumpforce;
                 velocity.x = 0.36 * jumpforce;
+                jumpcount -= 1;
             } else {
                 velocity.y = -jumpforce;
                 velocity.x = movespeed;
+                jumpcount -= 1;
             }
             walljumped = true;
         }

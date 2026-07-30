@@ -71,11 +71,11 @@ int main()
 
 		while ( const std::optional event = window.pollEvent() ) if ( event->is<sf::Event::Closed>() || running == false) window.close();
 
-
 		//WILL ADD BACK EXTRA CHECKCOLLISIONS LATER ONCE I MAKE IT MORE EFFICIENT
-
+		//maybe not actually since it seems to be breaking everything
 
 		swapped = false;
+		if (currentplayer -> grounded) jumpcount = 2;
 		currentplayer -> jump(deltatime);
 		blockonhead = false;
 		currentplayer -> grounded = false;
@@ -109,7 +109,6 @@ int main()
 			currentplayer = std::make_unique<hexagon>(); 
 			swapped = true; 
 			nearestedge = 60.f; 
-			jumpcount = 1;
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num5) && !dynamic_cast<octagon*>(currentplayer.get())) { 
 			currentplayer = std::make_unique<octagon>(); 
