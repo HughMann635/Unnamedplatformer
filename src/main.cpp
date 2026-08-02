@@ -44,6 +44,8 @@ int main()
 			currentplayer = std::make_unique<square>();
 			currentplayer -> shape().setPosition(map.spawn);
 			currentplayer -> velocity = sf::Vector2f(0.f, 0.f);
+			currentplayer -> shape().setRotation(sf::degrees(0));
+			currentplayer -> rotation = 0;
 			gravity = 1800.f;
 			restart = false;
 		} 
