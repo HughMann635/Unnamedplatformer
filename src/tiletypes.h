@@ -62,7 +62,7 @@ public:
 class doublespike : public tileTypes {
 public:
     sf::ConvexShape twospikes[2];
-    doublespike(sf::Vector2f position) {
+    doublespike(sf::Vector2f position, float rotation) {
         twospikes[0].setPointCount(3);
         twospikes[0].setPoint(0, sf::Vector2f(0, 0));
         twospikes[0].setPoint(1, sf::Vector2f(5, 10));
