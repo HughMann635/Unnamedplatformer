@@ -62,7 +62,7 @@ public:
 class doublespike : public tileTypes {
 public:
     sf::ConvexShape twospikes[2];
-    doublespike(sf::Vector2f position, float rotation) {
+    doublespike(sf::Vector2f position, int rotation) {
         twospikes[0].setPointCount(3);
         twospikes[0].setPoint(0, sf::Vector2f(0, 0));
         twospikes[0].setPoint(1, sf::Vector2f(5, 10));
@@ -77,7 +77,9 @@ public:
             twospikes[i].setFillColor(sf::Color::Red);
             twospikes[i].setOutlineColor(sf::Color(150, 0, 0));
             twospikes[i].setOutlineThickness(-1.f);
-            twospikes[i].setPosition(position);
+            twospikes[i].setPosition(sf::Vector2f(position.x + 10, position.y + 10));
+            twospikes[i].setOrigin(sf::Vector2f(10, 10));
+            twospikes[i].rotate(sf::degrees(rotation));
         }
     }
 

@@ -122,28 +122,22 @@ public:
                         break;
                     case '5':
                         new_tile.type = tiletype::doublespike;
-                        new_tile.tile = std::make_unique<doublespike>(sf::Vector2f(j*playerdim, i*playerdim));
+                        new_tile.tile = std::make_unique<doublespike>(sf::Vector2f(j*playerdim, i*playerdim), 0);
                         statictilelist.push_back(std::move(new_tile));
                         break;
                     case '6':
                         new_tile.type = tiletype::doublespike;
-                        new_tile.tile = std::make_unique<doublespike>(sf::Vector2f(j*playerdim, i*playerdim));
-                        new_tile.tile -> collide().move(sf::Vector2f(20, 0));
-                        new_tile.tile -> collide().rotate(sf::degrees(90));
+                        new_tile.tile = std::make_unique<doublespike>(sf::Vector2f(j*playerdim, i*playerdim), 90);
                         statictilelist.push_back(std::move(new_tile));
                         break;
                     case '7':
                         new_tile.type = tiletype::doublespike;
-                        new_tile.tile = std::make_unique<doublespike>(sf::Vector2f(j*playerdim, i*playerdim));
-                        new_tile.tile -> collide().move(sf::Vector2f(20, 20));
-                        new_tile.tile -> collide().rotate(sf::degrees(180));
+                        new_tile.tile = std::make_unique<doublespike>(sf::Vector2f(j*playerdim, i*playerdim), 180);
                         statictilelist.push_back(std::move(new_tile));
                         break;
                     case '8':
                         new_tile.type = tiletype::doublespike;
-                        new_tile.tile = std::make_unique<doublespike>(sf::Vector2f(j*playerdim, i*playerdim));
-                        new_tile.tile -> collide().move(sf::Vector2f(0, 20));
-                        new_tile.tile -> collide().rotate(sf::degrees(270));
+                        new_tile.tile = std::make_unique<doublespike>(sf::Vector2f(j*playerdim, i*playerdim), 270);
                         statictilelist.push_back(std::move(new_tile));
                         break;
                     case 'L':
