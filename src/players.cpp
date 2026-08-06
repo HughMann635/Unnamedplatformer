@@ -108,7 +108,7 @@ void square::jump (float deltatime) {
     }
     if (swimming) {
         if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Down) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::S)) {
-            velocity.y += 50.f;
+            if (velocity.y <= 350.f) velocity.y += 30.f;;
             grounded = false;
         }
         if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::W)) {
@@ -194,7 +194,7 @@ void circle::jump (float deltatime)  {
     }
     if (swimming) {
         if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Down) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::S)) {
-            velocity.y += 50.f;
+            if (velocity.y <= 350.f) velocity.y += 30.f;;
             grounded = false;
         }
         if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::W)) {
@@ -285,7 +285,7 @@ void triangle::jump (float deltatime)  {
     }
     if (swimming) {
         if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Down) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::S)) {
-            velocity.y += 50.f;
+            if (velocity.y <= 350.f) velocity.y += 30.f;;
             grounded = false;
         }
         if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::W)) {
@@ -408,7 +408,7 @@ void hexagon::jump (float deltatime) {
     }
     if (swimming) {
         if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Down) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::S)) {
-            velocity.y += 50.f;
+            if (velocity.y <= 350.f) velocity.y += 30.f;;
             grounded = false;
         }
         if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::W)) {
@@ -542,7 +542,7 @@ void octagon::jump (float deltatime) {
     }
     if (swimming) {
         if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Down) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::S)) {
-            velocity.y += 50.f;
+            if (velocity.y <= 350.f) velocity.y += 30.f;;
             grounded = false;
         }
         if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::W)) {
