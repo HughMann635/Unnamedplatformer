@@ -509,7 +509,7 @@ public:
                     }
                 }
             }
-            if ((playercenterx > blockleft && playercenterx < blockright) && Object.shape().getPosition().y - 10 > block_ -> blockblock.getPosition().y) { blockonhead = true; }
+            if ((playercenterx > blockleft && playercenterx < blockright) && Object.shape().getPosition().y - block_ -> blockblock.getPosition().y < 30 && Object.shape().getPosition().y - block_ -> blockblock.getPosition().y > 0) { blockonhead = true; }
         }
 
         //PLAYER COLLISION
