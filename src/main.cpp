@@ -46,6 +46,9 @@ int main()
 			currentplayer -> velocity = sf::Vector2f(0.f, 0.f);
 			currentplayer -> shape().setRotation(sf::degrees(0));
 			currentplayer -> rotation = 0;
+			currentplayer -> freefallingtip = false;
+			tipping_right = false;
+			tipping_left = false;
 			gravity = 1800.f;
 			restart = false;
 		} 
@@ -68,6 +71,11 @@ int main()
 			currentplayer -> shape().setPosition(map.spawn);
 			currentplayer -> velocity = sf::Vector2f(0.f, 0.f);
 			gravity = 1800.f;
+			currentplayer -> shape().setRotation(sf::degrees(0));
+			currentplayer -> rotating = false;
+			currentplayer -> freefallingtip = false;
+			tipping_right = false;
+			tipping_left = false;
 			newlevel = false;
 		} 
 
@@ -75,6 +83,8 @@ int main()
 
 		//WILL ADD BACK EXTRA CHECKCOLLISIONS LATER ONCE I MAKE IT MORE EFFICIENT
 		//maybe not actually since it seems to be breaking everything
+		//ALSO IMPORTANT
+		//YOU CANT JUMP WHEN UR AT X(120) FSR
 
 		swapped = false;
 		if (currentplayer -> grounded) jumpcount = 2;

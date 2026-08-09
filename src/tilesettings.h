@@ -567,7 +567,7 @@ public:
                     zerogactive = true;
                     break;
                     case tiletype::spring:
-                    Object.velocity.y = -1000.f;
+                    !zerogactive ? Object.velocity.y = -1000.f : Object.velocity.y = -3600.f;
                     walljumpcancel = true;
                     jumpcount = 1;
                     break;
