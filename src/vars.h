@@ -46,7 +46,7 @@ inline bool jumpkeyheld = false;
 inline bool landed = false;
 
 //Game settings
-inline int levelnum = 3;
+inline int levelnum = 4;
 inline int setnum = 0;
 inline bool circlelocked = true;
 inline bool trianglelocked = true;
