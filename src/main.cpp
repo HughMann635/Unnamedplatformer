@@ -84,7 +84,7 @@ int main()
 		//WILL ADD BACK EXTRA CHECKCOLLISIONS LATER ONCE I MAKE IT MORE EFFICIENT
 		//maybe not actually since it seems to be breaking everything
 		//ALSO IMPORTANT
-		//YOU CANT JUMP WHEN UR AT X(120) FSR
+		//ONE DOUBLESPIKE DOESNT WORK
 
 		swapped = false;
 		if (currentplayer -> grounded) jumpcount = 2;
