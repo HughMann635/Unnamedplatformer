@@ -84,7 +84,10 @@ int main()
 		//WILL ADD BACK EXTRA CHECKCOLLISIONS LATER ONCE I MAKE IT MORE EFFICIENT
 		//maybe not actually since it seems to be breaking everything
 		//ALSO IMPORTANT
-		//ONE DOUBLESPIKE DOESNT WORK
+		//TO DO: FIND WAY TO MAKE LVL 17 MORE EFFICIENT
+		//RIGHT NOW IT DRAWS 1K+ TILES WHICH IS VERY INEFFICIENT
+		//possible solution: split drawmap into drawmap for dynamics and drawenv for statics
+		//and add render caching for static tiles
 
 		swapped = false;
 		if (currentplayer -> grounded) jumpcount = 2;
