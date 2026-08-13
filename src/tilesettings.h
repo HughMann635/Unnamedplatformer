@@ -514,7 +514,8 @@ public:
 
         //PLAYER COLLISION
         for (auto& pos: statictilelist) {
-            if (pos.type == tiletype::empty || pos.type == tiletype::spawn || !Object.shape().getGlobalBounds().findIntersection(pos.tile -> collide().getGlobalBounds())) { continue; }
+            doublespike* doublespike_ = dynamic_cast<doublespike*>(pos.tile.get());
+            if (pos.type == tiletype::empty || pos.type == tiletype::spawn || (!Object.shape().getGlobalBounds().findIntersection(pos.tile -> collide().getGlobalBounds()) && !(doublespike_ && Object.shape().getGlobalBounds().findIntersection(doublespike_ -> getspike2().getGlobalBounds())))) { continue; }
             auto playerbounds = getvertices(Object.shape());
             std::vector<sf::Vector2f> tilebounds;
             if (pos.type == tiletype::door) {
@@ -522,8 +523,10 @@ public:
                 if (!G || G->opened) continue;
                 tilebounds = getvertices(G->doorblock[0]);
             } else tilebounds = getvertices(pos.tile -> collide());
-
-            if (!satCollide(playerbounds, tilebounds)) { continue; }
+            doublespike* double_spike = dynamic_cast<doublespike*>(pos.tile.get());
+            std::vector<sf::Vector2f> spikebounds;
+            if (doublespike_) spikebounds = getvertices(double_spike -> getspike2()); 
+            if (!satCollide(playerbounds, tilebounds) && (double_spike && !satCollide(playerbounds, spikebounds))) { continue; }
             else {
                 switch (pos.type) {
                     case tiletype::empty:
