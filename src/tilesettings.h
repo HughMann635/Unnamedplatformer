@@ -391,7 +391,7 @@ public:
                         switch (rest.type) {
                             case tiletype::zero_g:
                             block_ -> blockgravity = 0;
-                            block_ -> velocity.y *= 0.87;
+                            block_ -> velocity.y *= 0;
                             break;
                             case tiletype::water:
                             case tiletype::lava:
