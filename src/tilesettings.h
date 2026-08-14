@@ -338,13 +338,31 @@ public:
         for (auto& pos: dynamictilelist) {
             block* block_ = dynamic_cast<block*>(pos.tile.get());
             if (!block_) { continue; }
-            block_ -> blockgravity = 1800;
             sf::FloatRect blockbounds = block_ -> collide().getGlobalBounds();
             auto blockvertices = getvertices(block_ -> collide());
             sf::FloatRect playerbounds = Object.shape().getGlobalBounds();
             auto playervertices = getvertices(Object.shape());
-
             //1. BLOCK + WORLD COLLISION
+            for (auto& rest: envtilelist) {
+                if (pos.tile != rest.tile && rest.type != tiletype::empty && rest.type != tiletype::spawn) {
+                    sf::FloatRect restbounds = rest.tile -> collide().getGlobalBounds();
+                    if (!blockbounds.findIntersection(restbounds)) { continue; }
+                    else {
+                        switch (rest.type) {
+                            case tiletype::zero_g:
+                            block_ -> blockgravity = 0;
+                            block_ -> velocity.y *= 0;
+                            break;
+                            case tiletype::water:
+                            case tiletype::lava:
+                            block_ -> blockgravity = 500;
+                            break;
+                            default:
+                            block_ -> blockgravity = 1800;
+                        }
+                    }
+                }
+            }
             for (auto& rest: statictilelist) {
                 if (pos.tile != rest.tile && rest.type != tiletype::empty && rest.type != tiletype::spawn) {
                     sf::FloatRect restbounds = rest.tile -> collide().getGlobalBounds();
@@ -377,24 +395,6 @@ public:
                     }
                 }
             }
-            for (auto& rest: envtilelist) {
-                if (pos.tile != rest.tile && rest.type != tiletype::empty && rest.type != tiletype::spawn) {
-                    sf::FloatRect restbounds = rest.tile -> collide().getGlobalBounds();
-                    if (!blockbounds.findIntersection(restbounds)) { continue; }
-                    else {
-                        switch (rest.type) {
-                            case tiletype::zero_g:
-                            block_ -> blockgravity = 0;
-                            block_ -> velocity.y *= 0;
-                            break;
-                            case tiletype::water:
-                            case tiletype::lava:
-                            block_ -> blockgravity = 500;
-                            break;
-                        }
-                    }
-                }
-            }
             for (auto& rest: dynamictilelist) {
                 if (pos.tile == rest.tile) continue;
                 block* G = dynamic_cast<block*>(rest.tile.get());
@@ -404,7 +404,6 @@ public:
                 if (!blockbounds.findIntersection(tilebounds)) continue;
                 auto verticesobj = getvertices(block_ -> collide());
                 auto verticestile = getvertices(G -> blockblock);
-                //satCollisionResp(verticesobj, verticestile, *block_);
                 satCollisionResp(verticestile, verticesobj, *G);
             }
 
@@ -419,7 +418,7 @@ public:
                 if ((playercentery > blocktop && playercentery < blockbottom)) {
                     if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) && Object.shape().getPosition().x < blockbounds.position.x) {
                         sf::FloatRect obstaclecheck = sf::FloatRect(sf::Vector2f(blockright+0.01, blocktop + 0.5), sf::Vector2f(0.05, blockbounds.size.y-1));
-                        bool obstacleright = false;
+                        obstacleright = false;
                         for (auto& rest: statictilelist) {
                             if (pos.tile == rest.tile || !rest.tile) continue;
                             if (rest.type == tiletype::ground || rest.type == tiletype::door) {
@@ -445,7 +444,7 @@ public:
                         }
                     } else if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) && Object.shape().getPosition().x > blockbounds.position.x) {
                         sf::FloatRect obstaclecheck = sf::FloatRect(sf::Vector2f(blockleft-0.06, blocktop + 0.5), sf::Vector2f(0.05, blockbounds.size.y - 1));
-                        bool obstacleleft = false;
+                        obstacleleft = false;
                         for (auto& rest: statictilelist) {
                             if (pos.tile == rest.tile || !rest.tile) continue;
                             if (rest.type == tiletype::ground || rest.type == tiletype::door) {
@@ -474,8 +473,8 @@ public:
 
                 if ((playercenterx > blockleft && playercenterx < blockright)) {
                     if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) && Object.shape().getPosition().y < blockbounds.position.y) {
-                        sf::FloatRect obstaclecheck = sf::FloatRect(sf::Vector2f(blockleft + 0.5, blockbottom + 0.05), sf::Vector2f(blockbounds.size.x - 1, 0.05));
-                        bool obstaclebelow = false;
+                        sf::FloatRect obstaclecheck = sf::FloatRect(sf::Vector2f(blockleft + 0.5, blockbottom + 0.5), sf::Vector2f(blockbounds.size.x - 1, 0.5));
+                        obstaclebelow = false;
                         for (auto& rest: statictilelist) {
                             if (pos.tile == rest.tile || !rest.tile) continue;
                             if (rest.type == tiletype::ground || rest.type == tiletype::door) {
@@ -503,8 +502,8 @@ public:
                             if (Object.velocity.y < 0) Object.velocity.y = 0;
                         }
                     } else if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) && Object.shape().getPosition().y > blockbounds.position.y && zerogactive) {
-                        sf::FloatRect obstaclecheck = sf::FloatRect(sf::Vector2f(blockleft + 0.5, blocktop - 0.07), sf::Vector2f(blockbounds.size.x - 1, 0.07));
-                        bool obstacletop = false;
+                        sf::FloatRect obstaclecheck = sf::FloatRect(sf::Vector2f(blockleft + 0.5, blocktop - 0.05), sf::Vector2f(blockbounds.size.x - 1, 0.05));
+                        obstacletop = false;
                         for (auto& rest: statictilelist) {
                             if (pos.tile == rest.tile || !rest.tile) continue;
                             if (rest.type == tiletype::ground || rest.type == tiletype::door) {
@@ -525,9 +524,13 @@ public:
                         }
                         if (!obstacletop) {
                             block_ -> velocity.y = -pushspeed;
-                            Object.velocity.y = -pushspeed;
-                            Object.grounded = false;   
+                            std::cout << "NO OBSTACLE TOP\n";
                         } 
+                        else {
+                            if (Object.velocity.y < 0) Object.velocity.y = 0;
+                            block_ -> velocity.y = 0;
+                            std::cout << "OBSTACLE TOP\n";
+                        }
                     }
                 }
             }
@@ -636,7 +639,8 @@ public:
             if (std::abs(mtv.y) > std::abs(mtv.x) && mtv.y > 0) {
                 block_ -> velocity.y = 0;
                 block_ -> grounded = true;
-                block_ -> blockblock.move(sf::Vector2f(0, -mtv.y));
+                if (!obstacletop && zerogactive) block_ -> blockblock.move(sf::Vector2f(0, -mtv.y));
+                else Object.shape().move(sf::Vector2f(0, mtv.y));
             } else {
                 satCollisionResp(playerbounds, tilebounds, Object);
             }
