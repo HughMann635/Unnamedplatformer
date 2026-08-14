@@ -86,10 +86,6 @@ public:
                         new_tile.tile = std::make_unique<finish>(sf::Vector2f(j*playerdim, i*playerdim));
                         statictilelist.push_back(std::move(new_tile));
                         break;
-                    case '*': 
-                        new_tile.type = tiletype::empty;
-                        envtilelist.push_back(std::move(new_tile));
-                        break;
                     case '#':
                         new_tile.type = tiletype::ground;
                         new_tile.tile = std::make_unique<ground_>(sf::Vector2f(j*playerdim, i*playerdim));
@@ -197,8 +193,6 @@ public:
                         envtilelist.push_back(std::move(new_tile));
                         break;
                     default:
-                        new_tile.type = tiletype::empty;
-                        envtilelist.push_back(std::move(new_tile));
                         break;
                 }
             }
