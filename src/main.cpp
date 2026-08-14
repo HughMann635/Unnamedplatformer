@@ -31,7 +31,7 @@ int main()
 
 	sky.makestars(stars);
 
-	map.loadmap(levels[setnum][levelnum]);
+	map.loadmap(levels[setnum][levelnum], levels_env[setnum][levelnum]);
 	currentplayer -> shape().setPosition(map.spawn);
 
 	while (window.isOpen()) {
@@ -41,7 +41,7 @@ int main()
 			map.statictilelist.clear();
 			map.dynamictilelist.clear();
 			map.envtilelist.clear();
-			map.loadmap(levels[setnum][levelnum]);
+			map.loadmap(levels[setnum][levelnum], levels_env[setnum][levelnum]);
 			currentplayer = std::make_unique<square>();
 			currentplayer -> shape().setPosition(map.spawn);
 			currentplayer -> velocity = sf::Vector2f(0.f, 0.f);
@@ -69,7 +69,7 @@ int main()
 			map.dynamictilelist.clear();
 			map.envtilelist.clear();
 			currentplayer = std::make_unique<square>();
-			map.loadmap(levels[setnum][levelnum]);
+			map.loadmap(levels[setnum][levelnum], levels_env[setnum][levelnum]);
 			currentplayer -> shape().setPosition(map.spawn);
 			currentplayer -> velocity = sf::Vector2f(0.f, 0.f);
 			gravity = 1800.f;

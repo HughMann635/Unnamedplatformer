@@ -65,7 +65,7 @@ public:
     sf::Vector2f spawn;
     sf::Vector2f finishpoint;
 
-    void loadmap (std::string level) {
+    void loadmap (std::string level, std::string levels_env) {
         int buttoncount = 0;
         int doorcount = 0;
         for (int i = 0; i < 36; i++) {
@@ -88,21 +88,6 @@ public:
                         break;
                     case '*': 
                         new_tile.type = tiletype::empty;
-                        envtilelist.push_back(std::move(new_tile));
-                        break;
-                    case 'L':
-                        new_tile.type = tiletype::lava;
-                        new_tile.tile = std::make_unique<lava>(sf::Vector2f(j*playerdim, i*playerdim));
-                        envtilelist.push_back(std::move(new_tile));
-                        break;
-                    case 'W':
-                        new_tile.type = tiletype::water;
-                        new_tile.tile = std::make_unique<water>(sf::Vector2f(j*playerdim,i*playerdim));
-                        envtilelist.push_back(std::move(new_tile));
-                        break;
-                    case 'Z':
-                        new_tile.type = tiletype::zero_g;
-                        new_tile.tile = std::make_unique<zero_g>(sf::Vector2f(j*playerdim,i*playerdim));
                         envtilelist.push_back(std::move(new_tile));
                         break;
                     case '#':
@@ -184,6 +169,36 @@ public:
                         statictilelist.push_back(std::move(new_tile));
                         break;
                     default:
+                        break;
+                }
+            }
+        }
+        for (int i = 0; i < 36; i++) {
+            for (int j = 0; j < 65; j++) {
+                if (levels_env[i*65+j] == '\n') {
+                    continue;
+                }
+                char tilecode = levels_env[i*65+j];
+                Tile new_tile;
+                switch (tilecode) {
+                    case 'L':
+                        new_tile.type = tiletype::lava;
+                        new_tile.tile = std::make_unique<lava>(sf::Vector2f(j*playerdim, i*playerdim));
+                        envtilelist.push_back(std::move(new_tile));
+                        break;
+                    case 'W':
+                        new_tile.type = tiletype::water;
+                        new_tile.tile = std::make_unique<water>(sf::Vector2f(j*playerdim,i*playerdim));
+                        envtilelist.push_back(std::move(new_tile));
+                        break;
+                    case 'Z':
+                        new_tile.type = tiletype::zero_g;
+                        new_tile.tile = std::make_unique<zero_g>(sf::Vector2f(j*playerdim,i*playerdim));
+                        envtilelist.push_back(std::move(new_tile));
+                        break;
+                    default:
+                        new_tile.type = tiletype::empty;
+                        envtilelist.push_back(std::move(new_tile));
                         break;
                 }
             }
