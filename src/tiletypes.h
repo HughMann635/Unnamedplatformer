@@ -40,9 +40,9 @@ public:
     sf::ConvexShape spikeblock;
     spike(sf::Vector2f position) {
         spikeblock.setPointCount(3);
-        spikeblock.setPoint(0, sf::Vector2f(1, 0));
-        spikeblock.setPoint(1, sf::Vector2f(10, 18));
-        spikeblock.setPoint(2, sf::Vector2f(19, 0));
+        spikeblock.setPoint(0, sf::Vector2f(2, 0));
+        spikeblock.setPoint(1, sf::Vector2f(10, 16));
+        spikeblock.setPoint(2, sf::Vector2f(18, 0));
         spikeblock.setFillColor(sf::Color::Red);
         spikeblock.setOutlineColor(sf::Color(150, 0, 0));
         spikeblock.setOutlineThickness(-2.f);
@@ -64,14 +64,14 @@ public:
     sf::ConvexShape twospikes[2];
     doublespike(sf::Vector2f position, int rotation) {
         twospikes[0].setPointCount(3);
-        twospikes[0].setPoint(0, sf::Vector2f(1, 0));
-        twospikes[0].setPoint(1, sf::Vector2f(5.5, 9));
+        twospikes[0].setPoint(0, sf::Vector2f(2, 0));
+        twospikes[0].setPoint(1, sf::Vector2f(6, 8));
         twospikes[0].setPoint(2, sf::Vector2f(10, 0));
         
         twospikes[1].setPointCount(3);
         twospikes[1].setPoint(0, sf::Vector2f(10, 0));
-        twospikes[1].setPoint(1, sf::Vector2f(14.5, 9));
-        twospikes[1].setPoint(2, sf::Vector2f(19, 0));
+        twospikes[1].setPoint(1, sf::Vector2f(14, 8));
+        twospikes[1].setPoint(2, sf::Vector2f(18, 0));
         
         for (int i = 0; i < 2; i++) {
             twospikes[i].setFillColor(sf::Color::Red);
@@ -151,7 +151,7 @@ public:
         waterblock.setPoint(1, sf::Vector2f(20, 0));
         waterblock.setPoint(2, sf::Vector2f(20, 20));
         waterblock.setPoint(3, sf::Vector2f(0, 20));
-        waterblock.setFillColor(sf::Color(20, 150, 255, 170));
+        waterblock.setFillColor(sf::Color(40, 160, 255, 105));
         waterblock.setPosition(position);    
     }
 

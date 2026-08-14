@@ -332,7 +332,7 @@ public:
         //PLAYER ENV. DETECTION
         //need this since player collision checks happen after block checks but player-block pushing logic changes in zero g
         auto playerverts_ = getvertices(Object.shape());
-        for (auto& pos: statictilelist) {
+        for (auto& pos: envtilelist) {
             if (!pos.tile || pos.type != tiletype::water && pos.type != tiletype::zero_g) continue;
             if (satCollide(playerverts_, getvertices(pos.tile -> collide()))) {
                 if (pos.type == tiletype::water) swimming = true;
@@ -373,6 +373,22 @@ public:
                                 satCollisionResp(verticesobj, verticestile, *block_); 
                                 break;
                             }
+                            case tiletype::button: {
+                            button* button_ = dynamic_cast<button*>(rest.tile.get());
+                            if (button_) button_ -> pressed = true;
+                            break; }
+                            default:
+                            break;
+                        }
+                    }
+                }
+            }
+            for (auto& rest: envtilelist) {
+                if (pos.tile != rest.tile && rest.type != tiletype::empty && rest.type != tiletype::spawn) {
+                    sf::FloatRect restbounds = rest.tile -> collide().getGlobalBounds();
+                    if (!blockbounds.findIntersection(restbounds)) { continue; }
+                    else {
+                        switch (rest.type) {
                             case tiletype::zero_g:
                             block_ -> blockgravity = 0;
                             block_ -> velocity.y *= 0.87;
@@ -380,12 +396,6 @@ public:
                             case tiletype::water:
                             case tiletype::lava:
                             block_ -> blockgravity = 500;
-                            break;
-                            case tiletype::button: {
-                            button* button_ = dynamic_cast<button*>(rest.tile.get());
-                            if (button_) button_ -> pressed = true;
-                            break; }
-                            default:
                             break;
                         }
                     }
@@ -597,6 +607,26 @@ public:
                     if (button_) button_ -> pressed = true;
                     break; }
                     default: 
+                    break;
+                }
+            }
+        }
+        for (auto& pos: envtilelist) {
+            if (pos.type == tiletype::empty || !Object.shape().getGlobalBounds().findIntersection(pos.tile -> collide().getGlobalBounds())) continue;
+            auto playerbounds = getvertices(Object.shape());
+            std::vector<sf::Vector2f> tilebounds = getvertices(pos.tile -> collide());
+            if (satCollide(playerbounds, tilebounds)) {
+                switch (pos.type) {
+                    case tiletype::lava:
+                    restart = true;
+                    break;
+                    case tiletype::water:
+                    swimming = true;
+                    break;
+                    case tiletype::zero_g:
+                    zerogactive = true;
+                    break;
+                    default:
                     break;
                 }
             }
