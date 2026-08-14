@@ -61,6 +61,7 @@ class tilemap {
 public:
     std::vector<Tile> statictilelist;
     std::vector<Tile> dynamictilelist;
+    std::vector<Tile> envtilelist;
     sf::Vector2f spawn;
     sf::Vector2f finishpoint;
 
@@ -75,15 +76,6 @@ public:
                 char tilecode = level[i*65+j];
                 Tile new_tile;
                 switch (tilecode) {
-                    case '*': 
-                        new_tile.type = tiletype::empty;
-                        statictilelist.push_back(std::move(new_tile));
-                        break;
-                    case '#':
-                        new_tile.type = tiletype::ground;
-                        new_tile.tile = std::make_unique<ground_>(sf::Vector2f(j*playerdim, i*playerdim));
-                        statictilelist.push_back(std::move(new_tile));
-                        break;   
                     case 'S':
                         new_tile.type = tiletype::spawn;
                         spawn = sf::Vector2f(j*playerdim+(playerdim/2), i*playerdim+(playerdim/2));
@@ -94,6 +86,30 @@ public:
                         new_tile.tile = std::make_unique<finish>(sf::Vector2f(j*playerdim, i*playerdim));
                         statictilelist.push_back(std::move(new_tile));
                         break;
+                    case '*': 
+                        new_tile.type = tiletype::empty;
+                        envtilelist.push_back(std::move(new_tile));
+                        break;
+                    case 'L':
+                        new_tile.type = tiletype::lava;
+                        new_tile.tile = std::make_unique<lava>(sf::Vector2f(j*playerdim, i*playerdim));
+                        envtilelist.push_back(std::move(new_tile));
+                        break;
+                    case 'W':
+                        new_tile.type = tiletype::water;
+                        new_tile.tile = std::make_unique<water>(sf::Vector2f(j*playerdim,i*playerdim));
+                        envtilelist.push_back(std::move(new_tile));
+                        break;
+                    case 'Z':
+                        new_tile.type = tiletype::zero_g;
+                        new_tile.tile = std::make_unique<zero_g>(sf::Vector2f(j*playerdim,i*playerdim));
+                        envtilelist.push_back(std::move(new_tile));
+                        break;
+                    case '#':
+                        new_tile.type = tiletype::ground;
+                        new_tile.tile = std::make_unique<ground_>(sf::Vector2f(j*playerdim, i*playerdim));
+                        statictilelist.push_back(std::move(new_tile));
+                        break;   
                     case '1':
                         new_tile.type = tiletype::spike;
                         new_tile.tile = std::make_unique<spike>(sf::Vector2f(j*playerdim, i*playerdim));
@@ -140,21 +156,6 @@ public:
                         new_tile.tile = std::make_unique<doublespike>(sf::Vector2f(j*playerdim, i*playerdim), 270);
                         statictilelist.push_back(std::move(new_tile));
                         break;
-                    case 'L':
-                        new_tile.type = tiletype::lava;
-                        new_tile.tile = std::make_unique<lava>(sf::Vector2f(j*playerdim, i*playerdim));
-                        statictilelist.push_back(std::move(new_tile));
-                        break;
-                    case 'W':
-                        new_tile.type = tiletype::water;
-                        new_tile.tile = std::make_unique<water>(sf::Vector2f(j*playerdim,i*playerdim));
-                        statictilelist.push_back(std::move(new_tile));
-                        break;
-                    case 'Z':
-                        new_tile.type = tiletype::zero_g;
-                        new_tile.tile = std::make_unique<zero_g>(sf::Vector2f(j*playerdim,i*playerdim));
-                        statictilelist.push_back(std::move(new_tile));
-                        break;
                     case 'B':
                         new_tile.type = tiletype::blackhole;
                         new_tile.tile = std::make_unique<blackhole>(sf::Vector2f(j*playerdim+5, i*playerdim+5));
@@ -181,6 +182,8 @@ public:
                         new_tile.tile = std::make_unique<door>(sf::Vector2f(j*playerdim, i*playerdim), doorcount);
                         doorcount++;
                         statictilelist.push_back(std::move(new_tile));
+                        break;
+                    default:
                         break;
                 }
             }
@@ -658,6 +661,11 @@ public:
             pos.tile -> draw(window);
         }
         for (auto& pos: statictilelist) {
+            if (pos.type != tiletype::empty && pos.type != tiletype::spawn) {
+                pos.tile -> draw(window);
+            }
+        }
+        for (auto& pos: envtilelist) {
             if (pos.type != tiletype::empty && pos.type != tiletype::spawn) {
                 pos.tile -> draw(window);
             }

@@ -40,6 +40,7 @@ int main()
 		if (restart == true) {
 			map.statictilelist.clear();
 			map.dynamictilelist.clear();
+			map.envtilelist.clear();
 			map.loadmap(levels[setnum][levelnum]);
 			currentplayer = std::make_unique<square>();
 			currentplayer -> shape().setPosition(map.spawn);
@@ -66,6 +67,7 @@ int main()
 
 			map.statictilelist.clear();
 			map.dynamictilelist.clear();
+			map.envtilelist.clear();
 			currentplayer = std::make_unique<square>();
 			map.loadmap(levels[setnum][levelnum]);
 			currentplayer -> shape().setPosition(map.spawn);
