@@ -117,20 +117,20 @@ int main()
 			currentplayer = std::make_unique<circle>(); 
 			swapped = true; 
 		}
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num3) && !dynamic_cast<triangle*>(currentplayer.get())) { 
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num3) && !dynamic_cast<octagon*>(currentplayer.get())) { 
+			currentplayer = std::make_unique<octagon>(); 
+			swapped = true; 
+			nearestedge = 45.f; 
+		}
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num4) && !dynamic_cast<triangle*>(currentplayer.get())) { 
 			currentplayer = std::make_unique<triangle>(); 
 			swapped = true; 
 			nearestedge = 120.f; 
 		}
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num4) && !dynamic_cast<hexagon*>(currentplayer.get())) { 
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num5) && !dynamic_cast<hexagon*>(currentplayer.get())) { 
 			currentplayer = std::make_unique<hexagon>(); 
 			swapped = true; 
 			nearestedge = 60.f; 
-		}
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num5) && !dynamic_cast<octagon*>(currentplayer.get())) { 
-			currentplayer = std::make_unique<octagon>(); 
-			swapped = true; 
-			nearestedge = 45.f; 
 		}
 		
 		if (swapped) {
