@@ -38,7 +38,7 @@ int main()
 		float deltatime = timer.restart().asSeconds();
 		
 		if (restart == true) {
-			map.statictilelist.clear();
+			/*map.statictilelist.clear();
 			map.dynamictilelist.clear();
 			map.envtilelist.clear();
 			map.loadmap(levels[setnum][levelnum], levels_env[setnum][levelnum]);
@@ -51,9 +51,9 @@ int main()
 			tipping_right = false;
 			tipping_left = false;
 			gravity = 1800.f;
-			restart = false;
+			restart = false;*/
+			can_draw = false;
 		} 
-
 		if (newlevel == true) {
 			levelnum += 1;
 			if (levelnum > 5) {
@@ -139,7 +139,10 @@ int main()
 		}
 		
 		//SAT COLLISION STUFF
-		if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Enter)) enterkeyheld = false;
+		if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Enter)) { 
+			enterkeyheld = false;
+			draw = true;
+		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Enter) && !enterkeyheld) {
 			auto verticeslist = getvertices(currentplayer -> shape());
 			for (auto& pos: verticeslist) std::cout << pos.x << "," << pos.y << "\n";
@@ -154,16 +157,36 @@ int main()
 			}
 			enterkeyheld = false;
 		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::I)) can_draw = true;
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::R)) { 
+			can_draw = true;
+			map.statictilelist.clear();
+			map.dynamictilelist.clear();
+			map.envtilelist.clear();
+			map.loadmap(levels[setnum][levelnum], levels_env[setnum][levelnum]);
+			currentplayer = std::make_unique<square>();
+			currentplayer -> shape().setPosition(map.spawn);
+			currentplayer -> velocity = sf::Vector2f(0.f, 0.f);
+			currentplayer -> shape().setRotation(sf::degrees(0));
+			currentplayer -> rotation = 0;
+			currentplayer -> freefallingtip = false;
+			tipping_right = false;
+			tipping_left = false;
+			gravity = 1800.f;
+			restart = false;
+		};
 
-		window.clear();
-		window.setView(view);
-		sky.drawsky(window);
-		sky.drawstars(window);
-		currentplayer -> drawscreen(window);
-		map.drawmap(window);
+		if (can_draw) {
+			window.clear();
+			window.setView(view);
+			sky.drawsky(window);
+			sky.drawstars(window);
+			currentplayer -> drawscreen(window);
+			map.drawmap(window);
+		}
 		
 		//DEBUG DRAWING STUFF
-		if (draw) {
+		if (draw && can_draw) {
 			auto playervertices = getvertices(currentplayer->shape());
 			sf::Vector2f center = sf::Vector2f(0, 0);
 			for (const auto& pos : playervertices) center += pos;

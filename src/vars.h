@@ -17,6 +17,7 @@ inline bool swapped = false;
 //Debug stuff
 inline bool enterkeyheld = false;
 inline bool draw = false;
+inline bool can_draw = true;
 
 //Player and physics settings
 const float playerdim = 20.f; //Also the dimensions of every tile in the game 
@@ -50,7 +51,7 @@ inline bool obstacletop = false;
 inline bool obstaclebelow = false;
 
 //Game settings
-inline int levelnum = 4;
+inline int levelnum = 5;
 inline int setnum = 3;
 inline bool circlelocked = true;
 inline bool trianglelocked = true;
