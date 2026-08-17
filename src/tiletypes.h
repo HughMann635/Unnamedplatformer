@@ -38,7 +38,7 @@ public:
 class spike : public tileTypes {
 public:
     sf::ConvexShape spikeblock;
-    spike(sf::Vector2f position) {
+    spike(sf::Vector2f position, int rotation) {
         spikeblock.setPointCount(3);
         spikeblock.setPoint(0, sf::Vector2f(2, 0));
         spikeblock.setPoint(1, sf::Vector2f(10, 16));
@@ -46,7 +46,9 @@ public:
         spikeblock.setFillColor(sf::Color::Red);
         spikeblock.setOutlineColor(sf::Color(150, 0, 0));
         spikeblock.setOutlineThickness(-2.f);
-        spikeblock.setPosition(position);
+        spikeblock.setOrigin(sf::Vector2f(10, 10));
+        spikeblock.setPosition(sf::Vector2f(position.x + 10, position.y + 10));
+        spikeblock.rotate(sf::degrees(rotation));
     }
 
     void draw (sf::RenderWindow& window) override {
