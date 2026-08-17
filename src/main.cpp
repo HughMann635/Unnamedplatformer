@@ -38,7 +38,7 @@ int main()
 		float deltatime = timer.restart().asSeconds();
 		
 		if (restart == true) {
-			/*map.statictilelist.clear();
+			map.statictilelist.clear();
 			map.dynamictilelist.clear();
 			map.envtilelist.clear();
 			map.loadmap(levels[setnum][levelnum], levels_env[setnum][levelnum]);
@@ -51,8 +51,7 @@ int main()
 			tipping_right = false;
 			tipping_left = false;
 			gravity = 1800.f;
-			restart = false;*/
-			can_draw = false;
+			restart = false;
 		} 
 		if (newlevel == true) {
 			levelnum += 1;
@@ -138,10 +137,10 @@ int main()
 			currentplayer -> velocity = lastframe_vel;
 		}
 		
-		//SAT COLLISION STUFF
+		//DEBUGGING STUFF
+		//DELETE FOR FINAL VERSION
 		if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Enter)) { 
 			enterkeyheld = false;
-			draw = true;
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Enter) && !enterkeyheld) {
 			auto verticeslist = getvertices(currentplayer -> shape());
@@ -176,14 +175,12 @@ int main()
 			restart = false;
 		};
 
-		if (can_draw) {
-			window.clear();
-			window.setView(view);
-			sky.drawsky(window);
-			sky.drawstars(window);
-			currentplayer -> drawscreen(window);
-			map.drawmap(window);
-		}
+		window.clear();
+		window.setView(view);
+		sky.drawsky(window);
+		sky.drawstars(window);
+		currentplayer -> drawscreen(window);
+		map.drawmap(window);
 		
 		//DEBUG DRAWING STUFF
 		if (draw && can_draw) {
