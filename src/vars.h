@@ -51,8 +51,8 @@ inline bool obstacletop = false;
 inline bool obstaclebelow = false;
 
 //Game settings
-inline int levelnum = 5;
-inline int setnum = 3;
+inline int levelnum = 0;
+inline int setnum = 4;
 inline bool circlelocked = true;
 inline bool trianglelocked = true;
 inline bool octagonlocked = true;
