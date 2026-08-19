@@ -383,6 +383,32 @@ public:
                             button* button_ = dynamic_cast<button*>(rest.tile.get());
                             if (button_) button_ -> pressed = true;
                             break; }
+                            case tiletype::blackhole: {
+                                blackhole* ring = dynamic_cast<blackhole*>(rest.tile.get());
+                                if (!ring) continue;
+                                auto ringvertices = getvertices(ring -> collide());
+                                auto verticesobj = getvertices(block_ -> collide());
+                                if (!satCollide(verticesobj, ringvertices)) continue;
+                                block_ -> velocity.x *= 0.96;
+                                block_ -> velocity.y *= 0.96;
+                                block_ -> blockgravity = 0;
+                                blackhole* G = dynamic_cast<blackhole*>(rest.tile.get());
+                                auto blackholevertices = getvertices(G->getblackhole());
+                                sf::Vector2f blackholecenter = G->getblackhole().getPosition() + sf::Vector2f(6, 6);
+                                sf::Vector2f blockcenter = sf::Vector2f(block_ -> collide().getPosition().x + 10, block_ -> collide().getPosition().y + 10);
+                                sf::Vector2f dist = blockcenter - blackholecenter;
+                                float truedist = std::sqrt(dist.x * dist.x + dist.y * dist.y);
+                                if (truedist > 5) {
+                                    sf::Vector2f direction = dist / truedist;
+                                    block_ -> velocity.x -= direction.x * 1800 * deltatime;
+                                    block_ -> velocity.y -= direction.y * 1800 * deltatime;
+                                    block_ -> collide().move(block_ -> velocity * deltatime);
+                                }
+                                else {
+                                    block_ -> collide().setPosition(sf::Vector2f(-20, -20));
+                                }
+                                break;
+                            }
                             default:
                             break;
                         }
