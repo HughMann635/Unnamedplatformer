@@ -33,6 +33,12 @@ int main()
 
 	map.loadmap(levels[setnum][levelnum], levels_env[setnum][levelnum]);
 	currentplayer -> shape().setPosition(map.spawn);
+	
+	sf::RenderTexture env (sf::Vector2u(width, height));
+	env.clear(sf::Color::Transparent);
+	map.drawenv(env);
+	env.display();
+	sf::Sprite envsprite(env.getTexture());
 
 	while (window.isOpen()) {
 		float deltatime = timer.restart().asSeconds();
@@ -42,6 +48,9 @@ int main()
 			map.dynamictilelist.clear();
 			map.envtilelist.clear();
 			map.loadmap(levels[setnum][levelnum], levels_env[setnum][levelnum]);
+			env.clear(sf::Color::Transparent);
+			map.drawenv(env);
+			env.display();
 			currentplayer = std::make_unique<square>();
 			currentplayer -> shape().setPosition(map.spawn);
 			currentplayer -> velocity = sf::Vector2f(0.f, 0.f);
@@ -69,6 +78,10 @@ int main()
 			map.envtilelist.clear();
 			currentplayer = std::make_unique<square>();
 			map.loadmap(levels[setnum][levelnum], levels_env[setnum][levelnum]);
+			env.clear(sf::Color::Transparent);
+			map.drawenv(env);
+			env.display();
+			sf::Sprite envsprite(env.getTexture());
 			currentplayer -> shape().setPosition(map.spawn);
 			currentplayer -> velocity = sf::Vector2f(0.f, 0.f);
 			gravity = 1800.f;
@@ -181,6 +194,7 @@ int main()
 		sky.drawstars(window);
 		currentplayer -> drawscreen(window);
 		map.drawmap(window);
+		window.draw(envsprite);
 		
 		//DEBUG DRAWING STUFF
 		if (draw && can_draw) {
