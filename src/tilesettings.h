@@ -709,10 +709,11 @@ public:
                 pos.tile -> draw(window);
             }
         }
+    }
+
+    void drawenv (sf::RenderTarget& target) {
         for (auto& pos: envtilelist) {
-            if (pos.type != tiletype::empty && pos.type != tiletype::spawn) {
-                pos.tile -> draw(window);
-            }
+            pos.tile -> draw(target);
         }
     }
 };

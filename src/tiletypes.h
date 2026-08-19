@@ -5,7 +5,7 @@
 
 class tileTypes {
 public:
-    virtual void draw (sf::RenderWindow& window) {}
+    virtual void draw (sf::RenderTarget& window) {}
     virtual sf::Shape& collide() = 0;
     virtual void movetile (float deltatime) {} 
     virtual ~tileTypes() {}
@@ -26,7 +26,7 @@ public:
         ground_block.setPosition(sf::Vector2f(position));
     }    
 
-    void draw (sf::RenderWindow& window) override {
+    void draw (sf::RenderTarget& window) override {
         window.draw(ground_block);
     }
 
@@ -51,7 +51,7 @@ public:
         spikeblock.rotate(sf::degrees(rotation));
     }
 
-    void draw (sf::RenderWindow& window) override {
+    void draw (sf::RenderTarget& window) override {
         window.draw(spikeblock);
     }
 
@@ -85,7 +85,7 @@ public:
         }
     }
 
-    void draw (sf::RenderWindow& window) override {
+    void draw (sf::RenderTarget& window) override {
         window.draw(twospikes[0]);
         window.draw(twospikes[1]);
     }
@@ -111,7 +111,7 @@ public:
         blackholeblock.setPosition(position);
     }
     
-    void draw (sf::RenderWindow& window) override {
+    void draw (sf::RenderTarget& window) override {
         window.draw(blackholeblock);
     }
 
@@ -135,7 +135,7 @@ public:
         lavablock.setPosition(position);
     }
 
-    void draw (sf::RenderWindow& window) override {
+    void draw (sf::RenderTarget& window) override {
         window.draw(lavablock);
     }
 
@@ -157,7 +157,7 @@ public:
         waterblock.setPosition(position);    
     }
 
-    void draw (sf::RenderWindow& window) override {
+    void draw (sf::RenderTarget& window) override {
         window.draw(waterblock);
     }
 
@@ -179,7 +179,7 @@ class zero_g : public tileTypes {
         zero_gblock.setPosition(position);
     }
 
-    void draw (sf::RenderWindow& window) override {
+    void draw (sf::RenderTarget& window) override {
         window.draw(zero_gblock);
     }
 
@@ -221,7 +221,7 @@ public:
         velocity.x *= 0.87;
     }
 
-    void draw (sf::RenderWindow& window) override {
+    void draw (sf::RenderTarget& window) override {
         window.draw(blockblock);
     }
 };
@@ -246,7 +246,7 @@ public:
         springblock.setPosition(position);
     }
 
-    void draw (sf::RenderWindow& window) override {
+    void draw (sf::RenderTarget& window) override {
         window.draw(springblock);
     }
 
@@ -283,7 +283,7 @@ public:
         buttonblock[1].setPosition(position);
     }
 
-    void draw (sf::RenderWindow& window) {
+    void draw (sf::RenderTarget& window) {
         if (pressed) {
             buttonblock[0].setFillColor(sf::Color(0, 210, 0));
             buttonblock[1].setFillColor(sf::Color(0, 150, 0));
@@ -341,7 +341,7 @@ public:
         }
     }
 
-    void draw (sf::RenderWindow& window) override {
+    void draw (sf::RenderTarget& window) override {
         if (!opened) for (int i = 0; i < 3; i++) window.draw(doorblock[i]);
     }
 
@@ -367,7 +367,7 @@ public:
         finishblock.setPosition(position);
     }
 
-    void draw (sf::RenderWindow& window) override {
+    void draw (sf::RenderTarget& window) override {
         window.draw(finishblock);
     }
 
