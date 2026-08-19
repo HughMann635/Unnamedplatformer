@@ -595,8 +595,8 @@ public:
                         blackhole* ring = dynamic_cast<blackhole*>(pos.tile.get());
                         auto ringvertices = getvertices(ring->collide());
                         if (!satCollide(playerverts_, ringvertices)) continue;
-                        Object.velocity.x *= 0.95;
-                        Object.velocity.y *= 0.95;
+                        Object.velocity.x *= 0.96;
+                        Object.velocity.y *= 0.96;
                         gravity = 0;
                         Object.grounded = false;
                         inblackhole = true;
@@ -608,11 +608,11 @@ public:
                         float truedist = std::sqrt(dist.x * dist.x + dist.y * dist.y);
                         if (truedist > 0) {
                             sf::Vector2f direction = dist / truedist;
-                            Object.velocity.x -= direction.x * 640 * deltatime;
-                            Object.velocity.y -= direction.y * 640 * deltatime;
+                            Object.velocity.x -= direction.x * 1800 * deltatime;
+                            Object.velocity.y -= direction.y * 1800 * deltatime;
                             Object.shape().move(Object.velocity * deltatime);
                         }
-                        //if (satCollide(getvertices(Object.shape()), blackholevertices)) restart = true;
+                        if (satCollide(getvertices(Object.shape()), blackholevertices)) restart = true;
                         break;
                     }
                     case tiletype::spring:
