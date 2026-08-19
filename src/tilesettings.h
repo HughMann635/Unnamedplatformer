@@ -220,7 +220,7 @@ public:
         if (!player_) Object.velocity.x = 0;
     }
 
-    void checkCollisions (entity& Object) {
+    void checkCollisions (entity& Object, float deltatime) {
         
         //STATE VAR RESETS
         swimming = false;
@@ -574,10 +574,6 @@ public:
                         if (satCollide(verticesobj, verticestile)) restart = true;
                     } 
                     break;
-                    case tiletype::lava:
-                    case tiletype::blackhole:
-                    restart = true;
-                    break;
                     case tiletype::doublespike: {
                         doublespike* G = dynamic_cast<doublespike*>(pos.tile.get());
                         auto spikevertices = getvertices(G->collide());
@@ -586,8 +582,8 @@ public:
                         if (G && satCollide(getvertices(Object.shape()), spikevertices2)) restart = true;
                         break;
                     }
-                    case tiletype::exit:
-                    newlevel = true;
+                    case tiletype::lava:
+                    restart = true;
                     break;
                     case tiletype::water:
                     swimming = true;
@@ -595,6 +591,30 @@ public:
                     case tiletype::zero_g:
                     zerogactive = true;
                     break;
+                    case tiletype::blackhole: {
+                        blackhole* ring = dynamic_cast<blackhole*>(pos.tile.get());
+                        auto ringvertices = getvertices(ring->collide());
+                        if (!satCollide(playerverts_, ringvertices)) continue;
+                        Object.velocity.x *= 0.95;
+                        Object.velocity.y *= 0.95;
+                        gravity = 0;
+                        Object.grounded = false;
+                        inblackhole = true;
+                        blackhole* G = dynamic_cast<blackhole*>(pos.tile.get());
+                        auto blackholevertices = getvertices(G->getblackhole());
+                        sf::Vector2f blackholecenter = G->getblackhole().getPosition() + sf::Vector2f(6, 6);
+                        sf::Vector2f playercenter = sf::Vector2f(Object.shape().getPosition().x, Object.shape().getPosition().y);
+                        sf::Vector2f dist = playercenter - blackholecenter;
+                        float truedist = std::sqrt(dist.x * dist.x + dist.y * dist.y);
+                        if (truedist > 0) {
+                            sf::Vector2f direction = dist / truedist;
+                            Object.velocity.x -= direction.x * 640 * deltatime;
+                            Object.velocity.y -= direction.y * 640 * deltatime;
+                            Object.shape().move(Object.velocity * deltatime);
+                        }
+                        //if (satCollide(getvertices(Object.shape()), blackholevertices)) restart = true;
+                        break;
+                    }
                     case tiletype::spring:
                     !zerogactive ? Object.velocity.y = -1000.f : Object.velocity.y = -3600.f;
                     walljumpcancel = true;
@@ -604,6 +624,9 @@ public:
                     button* button_ = dynamic_cast<button*>(pos.tile.get());
                     if (button_) button_ -> pressed = true;
                     break; }
+                    case tiletype::exit:
+                    newlevel = true;
+                    break;
                     default: 
                     break;
                 }

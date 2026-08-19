@@ -130,7 +130,7 @@ void square::updatepos (float deltatime, tilemap& map) {
         else velocity.x = -movespeed;
         rotating = true;
     } else {
-        zerogactive || swimming ? velocity.x *= 0.71 : velocity.x *= 0.f; 
+        zerogactive || swimming || inblackhole ? velocity.x *= 0.71 : velocity.x *= 0.f; 
     }
     if (zerogactive) {
         if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Down) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::S)) {

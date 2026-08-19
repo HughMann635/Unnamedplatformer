@@ -108,12 +108,13 @@ int main()
 		currentplayer -> jump(deltatime);
 		blockonhead = false;
 		currentplayer -> grounded = false;
-		currentplayer -> updatepos(deltatime, map);
+		if (!inblackhole) currentplayer -> updatepos(deltatime, map);
 		map.updatemap(deltatime);
 		//NOTE TO SELF figure out a way to get multiple checkCollisions working
 		//map.checkCollisions(*currentplayer);
 		//map.checkCollisions(*currentplayer);
-		map.checkCollisions(*currentplayer);
+		inblackhole = false;
+		map.checkCollisions(*currentplayer, deltatime);
 		currentplayer -> rotateobject(edge, map, currentplayer -> shape(), deltatime, movespeed, swimming, zerogactive, currentplayer -> grounded, nearestedge);
 		lastframe_pos = sf::Vector2f(currentplayer -> shape().getPosition());
 		lastframe_vel = sf::Vector2f(currentplayer -> velocity);
@@ -156,7 +157,7 @@ int main()
 			enterkeyheld = false;
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Enter) && !enterkeyheld) {
-			auto verticeslist = getvertices(currentplayer -> shape());
+			/*auto verticeslist = getvertices(currentplayer -> shape());
 			for (auto& pos: verticeslist) std::cout << pos.x << "," << pos.y << "\n";
 			for (auto& pos: map.dynamictilelist) {
 				if (pos.type == tiletype::block_push) {
@@ -166,8 +167,14 @@ int main()
 					for (auto& rest: verticeslist) std::cout << rest.x << "," << rest.y << "\n";
 					std::cout << "Y-VELOCITY = " << G -> velocity.y << "\n";
 				}
+			}*/
+			std::cout << "PLAYER POS:" << currentplayer -> shape().getPosition().x << "," << currentplayer -> shape().getPosition().y << "\n";
+			for (auto& pos: map.statictilelist) {
+				if (pos.type == tiletype::blackhole) {
+					blackhole* G = dynamic_cast<blackhole*>(pos.tile.get());
+					std::cout << "BLACK HOLE POS:" << G -> getblackhole().getPosition().x << "," << G -> getblackhole().getPosition().y << "\n";
+				}
 			}
-			enterkeyheld = false;
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::I)) can_draw = true;
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::R)) { 

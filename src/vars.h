@@ -32,6 +32,7 @@ inline sf::Vector2f edge = sf::Vector2f(0, 0);
 
 inline bool swimming = false;
 inline bool zerogactive = false;
+inline bool inblackhole = false; 
 
 inline float circleaccel = 8.f;
 inline float circlemax = 500.f;

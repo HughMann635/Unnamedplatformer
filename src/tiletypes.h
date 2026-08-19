@@ -105,26 +105,30 @@ public:
 class blackhole : public tileTypes {
 public:
     sf::CircleShape blackholeblock;
-    sf::CircleShape eventhorizon;
+    sf::CircleShape photonring;
     blackhole(sf::Vector2f position) {
         blackholeblock.setRadius(6);
         blackholeblock.setFillColor(sf::Color::Black);
         blackholeblock.setPosition(position+sf::Vector2f(14, 14));
-        eventhorizon.setRadius(20);
-        eventhorizon.setFillColor(sf::Color::Transparent);
-        eventhorizon.setOutlineColor(sf::Color(240, 170, 0));
-        eventhorizon.setOutlineThickness(-1);
-        eventhorizon.setPosition(position);
+        photonring.setRadius(60);
+        photonring.setFillColor(sf::Color::Transparent);
+        photonring.setOutlineColor(sf::Color(240, 170, 0));
+        photonring.setOutlineThickness(-1);
+        photonring.setPosition(position-sf::Vector2f(40, 40));
     }
     
     void draw (sf::RenderTarget& window) override {
         window.draw(blackholeblock);
-        window.draw(eventhorizon);
+        window.draw(photonring);
     }
 
     sf::Shape& collide() override {
-        return eventhorizon;
+        return photonring;
     } 
+
+    sf::Shape& getblackhole() {
+        return blackholeblock;
+    }
 
 };
 
