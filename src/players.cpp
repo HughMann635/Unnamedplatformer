@@ -128,7 +128,7 @@ void square::updatepos (float deltatime, tilemap& map) {
         if (velocity.x < -movespeed && grounded) velocity.x += circleaccel*0.7;
         else if (velocity.x < -movespeed && !grounded) velocity.x -= 0;
         else velocity.x = -movespeed;
-        rotating = true;
+        !(zerogactive || swimming) ? rotating = true : rotating = false;
     } else {
         zerogactive || swimming || inblackhole ? velocity.x *= 0.71 : velocity.x *= 0.f; 
     }
@@ -141,6 +141,11 @@ void square::updatepos (float deltatime, tilemap& map) {
         }
         else {
             velocity.y *= 0.71;
+        }
+        if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Right) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::D)) {
+            velocity.x = 115.f;
+        } else if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Left) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::A)) {
+            velocity.x = -115.f;
         }
     } 
 
@@ -229,6 +234,11 @@ void circle::updatepos (float deltatime, tilemap& map)  {
         }
         else {
             velocity.y *= 0.71;
+        }
+        if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Right) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::D)) {
+            velocity.x = 115.f;
+        } else if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Left) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::A)) {
+            velocity.x = -115.f;
         }
     } 
 
@@ -350,6 +360,11 @@ void triangle::updatepos (float deltatime, tilemap& map)  {
         else {
             velocity.y *= 0.71;
         }
+        if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Right) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::D)) {
+            velocity.x = 115.f;
+        } else if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Left) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::A)) {
+            velocity.x = -115.f;
+        }
     } 
 
     if (swimming) {
@@ -442,6 +457,11 @@ void hexagon::updatepos (float deltatime, tilemap& map) {
         }
         else {
             velocity.y *= 0.71;
+        }
+        if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Right) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::D)) {
+            velocity.x = 115.f;
+        } else if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Left) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::A)) {
+            velocity.x = -115.f;
         }
     } 
 
@@ -586,6 +606,11 @@ void octagon::updatepos (float deltatime, tilemap& map) {
         }
         else {
             velocity.y *= 0.71;
+        }
+        if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Right) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::D)) {
+            velocity.x = 115.f;
+        } else if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Left) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::A)) {
+            velocity.x = -115.f;
         }
     } 
 
