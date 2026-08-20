@@ -427,6 +427,8 @@ public:
                 satCollisionResp(verticestile, verticesobj, *G);
             }
 
+            square* square_ = dynamic_cast<square*>(&Object);
+
             //2. BLOCK + PLAYER  LOGIC
             float playercentery = playerbounds.position.y + playerbounds.size.y / 2;
             float playercenterx = playerbounds.position.x + playerbounds.size.x / 2;
@@ -434,7 +436,7 @@ public:
             float blockbottom = blockbounds.position.y + blockbounds.size.y;
             float blockleft = blockbounds.position.x;
             float blockright = blockbounds.position.x + blockbounds.size.x;
-            if (satCollide(playervertices, blockvertices)) {
+            if (satCollide(playervertices, blockvertices) && square_) {
                 if ((playercentery > blocktop && playercentery < blockbottom)) {
                     if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) && Object.shape().getPosition().x < blockbounds.position.x) {
                         sf::FloatRect obstaclecheck = sf::FloatRect(sf::Vector2f(blockright+0.01, blocktop + 0.5), sf::Vector2f(0.05, blockbounds.size.y-1));
