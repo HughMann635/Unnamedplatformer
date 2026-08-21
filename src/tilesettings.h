@@ -228,6 +228,8 @@ public:
         wallhuggingright = false;
         wallhuggingleft = false;
         landed = false; //PLACEHOLDER
+        square* square_ = dynamic_cast<square*>(&Object);
+
         for (auto& pos: dynamictilelist) {
             block* block_ = dynamic_cast<block*>(pos.tile.get());
             block_ -> grounded = false;
@@ -426,8 +428,6 @@ public:
                 auto verticestile = getvertices(G -> blockblock);
                 satCollisionResp(verticestile, verticesobj, *G);
             }
-
-            square* square_ = dynamic_cast<square*>(&Object);
 
             //2. BLOCK + PLAYER  LOGIC
             float playercentery = playerbounds.position.y + playerbounds.size.y / 2;
@@ -691,7 +691,7 @@ public:
             if (std::abs(mtv.y) > std::abs(mtv.x) && mtv.y > 0) {
                 block_ -> velocity.y = 0;
                 block_ -> grounded = true;
-                if (!obstacletop && zerogactive) block_ -> blockblock.move(sf::Vector2f(0, -mtv.y));
+                if (!obstacletop && zerogactive && square_) block_ -> blockblock.move(sf::Vector2f(0, -mtv.y));
                 else Object.shape().move(sf::Vector2f(0, mtv.y));
             } else {
                 satCollisionResp(playerbounds, tilebounds, Object);
