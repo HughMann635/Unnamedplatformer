@@ -23,10 +23,19 @@ public:
         title.setPosition(sf::Vector2f(width/2-(title.getGlobalBounds().size.x), 100));
 
         startbtn.setFont(font);
-        startbtn.setString("PLAY");
+        startbtn.setString("SPACE TO PLAY"); //WILL MAKE INTO A CLICKABLE BUTTON
         startbtn.setCharacterSize(35);
         startbtn.setFillColor(sf::Color(170, 100, 255));
         startbtn.setPosition(sf::Vector2f(width/2-(title.getGlobalBounds().size.x), 100));
+    }
+
+    void play () {
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space)) state = State::playing;
+    }
+
+    void draw (sf::RenderWindow& window) {
+        window.draw(title);
+        window.draw(startbtn);
     }
 };
 
