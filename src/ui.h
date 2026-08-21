@@ -4,3 +4,11 @@
 #include <string>
 #include "vars.h"
 #include "states.h"
+
+class mainmenu {
+
+};
+
+class playing {
+
+};

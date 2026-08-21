@@ -6,5 +6,11 @@
 
 #include <string>
 
-//gamestates file
-//will not do anything here till I get a playables game working
+enum class State {
+    mainmenu,
+    playing,
+    pause,
+    levelselect
+};
+
+inline State state = State::mainmenu;
