@@ -437,7 +437,7 @@ public:
             float blockleft = blockbounds.position.x;
             float blockright = blockbounds.position.x + blockbounds.size.x;
             if (satCollide(playervertices, blockvertices) && square_) {
-                if ((playercentery > blocktop && playercentery < blockbottom)) {
+                if ((playercentery > blocktop && playercentery < blockbottom) && square_) {
                     if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) && Object.shape().getPosition().x < blockbounds.position.x) {
                         sf::FloatRect obstaclecheck = sf::FloatRect(sf::Vector2f(blockright+0.01, blocktop + 0.5), sf::Vector2f(0.05, blockbounds.size.y-1));
                         obstacleright = false;
@@ -493,7 +493,7 @@ public:
                     }
                 }
 
-                if ((playercenterx > blockleft && playercenterx < blockright)) {
+                if ((playercenterx > blockleft && playercenterx < blockright) && square_) {
                     if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) && Object.shape().getPosition().y < blockbounds.position.y) {
                         sf::FloatRect obstaclecheck = sf::FloatRect(sf::Vector2f(blockleft + 0.5, blockbottom + 0.5), sf::Vector2f(blockbounds.size.x - 1, 0.5));
                         obstaclebelow = false;
