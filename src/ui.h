@@ -62,7 +62,7 @@ public:
     }
 
     void checkexit () {
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)) state = State::mainmenu;
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)) state = State::pause;
     }
 };
 
