@@ -20,7 +20,7 @@ public:
             star = sf::CircleShape(star_radius);
 
             float starx = std::rand() % width;
-            float stary = (std::rand() % height) - 80;
+            float stary = std::rand() % height;
             star.setPosition(sf::Vector2f(starx, stary));
             
             int starbrightness = 134 + std::rand() % 122;
