@@ -99,10 +99,13 @@ public:
     }
 
     void draw (sf::RenderWindow& window) {
-        
+        window.draw(paused);
+        window.draw(resumebtn);
+        window.draw(exitbtn);
     }
 
     void checkaction() {
-
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space)) state = State::playing;
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)) state = State::mainmenu; 
     }
 };
