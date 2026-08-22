@@ -16,7 +16,6 @@ public:
         title(font),
         startbtn(font)
     {
-        //font.openFromFile("AldotheApache.ttf");
         title.setFont(font);
         title.setString("WORLDS OF BLOCKMAN");
         title.setCharacterSize(55);
@@ -41,5 +40,28 @@ public:
 };
 
 class playing {
+public:
+    sf::Font font;
+    sf::Text level;
 
+    playing() :
+        font("AldotheApache.ttf"),
+        level(font)
+    {
+        level.setFont(font);
+        level.setString("Level "+(setnum*6+levelnum+1));
+        level.setCharacterSize(35);
+        level.setPosition(sf::Vector2f((width-level.getGlobalBounds().size.x)/2, 60));
+        level.setFillColor(sf::Color(255, 45, 200));
+    }
+
+    void draw (sf::RenderWindow& window) {
+        level.setString("Level "+std::to_string(setnum*6+levelnum+1));
+        level.setPosition(sf::Vector2f((width-level.getGlobalBounds().size.x)/2, 60));
+        window.draw(level);
+    }
+
+    void checkexit () {
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)) state = State::mainmenu;
+    }
 };

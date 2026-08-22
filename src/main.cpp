@@ -21,6 +21,7 @@ int main()
 	sky sky;
 	tilemap map;
 	mainmenu menu;
+	playing gameui;
 	sf::Vector2f lastframe_pos;
 	sf::Vector2f lastframe_vel;
 	sf::Clock timer;
@@ -42,7 +43,6 @@ int main()
 		window.clear();
 
 		if (state == State::playing) {
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)) state = State::mainmenu;
 			if (!gamestart) {
 				map.loadmap(levels[setnum][levelnum], levels_env[setnum][levelnum]);
 				currentplayer -> shape().setPosition(map.spawn);
@@ -208,7 +208,11 @@ int main()
 			currentplayer -> drawscreen(window);
 			map.drawmap(window);
 			window.draw(envsprite);
-			
+			window.setView(window.getDefaultView());
+			gameui.draw(window);
+			window.setView(view);
+			gameui.checkexit();
+
 			//DEBUG DRAWING STUFF
 			if (draw && can_draw) {
 				auto playervertices = getvertices(currentplayer->shape());
