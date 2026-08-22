@@ -22,6 +22,7 @@ int main()
 	tilemap map;
 	mainmenu menu;
 	playing gameui;
+	pause pausemenu;
 	sf::Vector2f lastframe_pos;
 	sf::Vector2f lastframe_vel;
 	sf::Clock timer;
@@ -285,6 +286,12 @@ int main()
 			sky.drawstars(window);
 			menu.draw(window);
 			menu.play();
+		} else if (state == State::pause) {
+			window.setView(window.getDefaultView());
+			sky.drawsky(window);
+			sky.drawstars(window);
+			pausemenu.draw(window); 
+			pausemenu.checkaction();
 		}
 
 		window.display();
