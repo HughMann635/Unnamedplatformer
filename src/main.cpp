@@ -46,6 +46,8 @@ int main()
 		
 		while ( const std::optional event = window.pollEvent() ) if ( event->is<sf::Event::Closed>() || running == false) window.close();
 
+		window.clear();
+
 		if (state == State::playing) {
 			if (restart == true) {
 				map.statictilelist.clear();
@@ -267,10 +269,15 @@ int main()
 					view.setCenter(sf::Vector2f(currentplayer -> shape().getPosition().x, currentplayer -> shape().getPosition().y));
 				}
 			}
-			window.display();
+			
 		} else if (state == State::mainmenu) {
+			window.setView(window.getDefaultView());
+			sky.drawsky(window);
+			sky.drawstars(window);
 			menu.draw(window);
 			menu.play();
 		}
+		
+		window.display();
 	}
 }

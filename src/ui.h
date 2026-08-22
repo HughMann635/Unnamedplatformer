@@ -27,7 +27,7 @@ public:
         startbtn.setString("SPACE TO PLAY"); //WILL MAKE INTO A CLICKABLE BUTTON
         startbtn.setCharacterSize(35);
         startbtn.setFillColor(sf::Color(170, 100, 255));
-        startbtn.setPosition(sf::Vector2f(width/2-(title.getGlobalBounds().size.x), 100));
+        startbtn.setPosition(sf::Vector2f(width/2-(title.getGlobalBounds().size.x), 500));
     }
 
     void play () {
