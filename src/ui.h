@@ -12,10 +12,11 @@ public:
     sf::Text startbtn;
     
     mainmenu() :
+        font("AldotheApache.ttf"),
         title(font),
         startbtn(font)
     {
-        font.openFromFile("AldotheApache.ttf");
+        //font.openFromFile("AldotheApache.ttf");
         title.setFont(font);
         title.setString("WORLDS OF BLOCKMAN");
         title.setCharacterSize(55);

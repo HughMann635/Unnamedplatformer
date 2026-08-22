@@ -17,3 +17,10 @@ target_compile_features(main PRIVATE cxx_std_17)
 target_link_libraries(main PRIVATE SFML::Graphics)
 
 set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT main)
+
+file(COPY ${CMAKE_SOURCE_DIR}/src/assets/AldotheApache.ttf
+     DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
+
+if(NOT EXISTS "${CMAKE_SOURCE_DIR}/src/assets/AldotheApache.ttf")
+    message(FATAL_ERROR "Font file not found at src/assets/AldotheApache.ttf")
+endif()
