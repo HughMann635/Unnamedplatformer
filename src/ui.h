@@ -65,3 +65,44 @@ public:
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)) state = State::mainmenu;
     }
 };
+
+class pause {
+public:
+    sf::Font font;
+    sf::Text paused;
+    sf::Text resumebtn;
+    sf::Text exitbtn;
+
+    pause() :
+        font("AldotheApache.ttf"),
+        paused(font),
+        resumebtn(font),
+        exitbtn(font)
+    {
+        paused.setFont(font);
+        paused.setString("PAUSED");
+        paused.setFillColor(sf::Color(170, 170, 110));
+        paused.setCharacterSize(35);
+        paused.setPosition(sf::Vector2f((width-paused.getGlobalBounds().size.x)/2, 340));
+
+        resumebtn.setFont(font);
+        resumebtn.setString("RESUME -> ENTER");
+        resumebtn.setFillColor(sf::Color(80, 210, 145));
+        resumebtn.setCharacterSize(25);
+        resumebtn.setPosition(sf::Vector2f((width-resumebtn.getGlobalBounds().size.x)/2, 440));
+
+        exitbtn.setFont(font);
+        exitbtn.setString("EXIT -> ESCAPE");
+        exitbtn.setFillColor(sf::Color(145, 80, 210));
+        exitbtn.setCharacterSize(25);
+        exitbtn.setPosition(sf::Vector2f((width-resumebtn.getGlobalBounds().size.x)/2, 490));
+    }
+
+    void draw (sf::RenderWindow& window) {
+        
+    }
+
+    void checkaction() {
+
+    }
+};
