@@ -13,7 +13,7 @@ inline bool running = true;
 inline bool restart = false;
 inline bool newlevel = false;
 inline bool swapped = false;
-
+inline bool gamestart = false;
 //Debug stuff
 inline bool enterkeyheld = false;
 inline bool draw = false;

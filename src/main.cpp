@@ -25,21 +25,14 @@ int main()
 	sf::Vector2f lastframe_vel;
 	sf::Clock timer;
 	sf::Vector2f edge;
+	sf::RenderTexture env (sf::Vector2u(width, height));
+	sf::Sprite envsprite (env.getTexture());
 
 	sf::View view;
 	view.setSize(sf::Vector2f(camwidth, camheight));
 	view.setCenter(sf::Vector2f(currentplayer -> shape().getPosition().x, currentplayer -> shape().getPosition().y));
 
 	sky.makestars(stars);
-
-	map.loadmap(levels[setnum][levelnum], levels_env[setnum][levelnum]);
-	currentplayer -> shape().setPosition(map.spawn);
-	
-	sf::RenderTexture env (sf::Vector2u(width, height));
-	env.clear(sf::Color::Transparent);
-	map.drawenv(env);
-	env.display();
-	sf::Sprite envsprite(env.getTexture());
 
 	while (window.isOpen()) {
 		float deltatime = timer.restart().asSeconds();
@@ -49,6 +42,18 @@ int main()
 		window.clear();
 
 		if (state == State::playing) {
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)) state = State::mainmenu;
+			if (!gamestart) {
+				map.loadmap(levels[setnum][levelnum], levels_env[setnum][levelnum]);
+				currentplayer -> shape().setPosition(map.spawn);
+				
+				env.clear(sf::Color::Transparent);
+				map.drawenv(env);
+				env.display();
+				envsprite.setTexture((env.getTexture()));
+				gamestart = true;
+			}
+			
 			if (restart == true) {
 				map.statictilelist.clear();
 				map.dynamictilelist.clear();
@@ -277,7 +282,7 @@ int main()
 			menu.draw(window);
 			menu.play();
 		}
-		
+
 		window.display();
 	}
 }
