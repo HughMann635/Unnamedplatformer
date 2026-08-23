@@ -320,10 +320,10 @@ void triangle::updatepos (float deltatime, tilemap& map)  {
         zerogactive || swimming ? velocity.x *= 0.71 : velocity.x *= 0.f; 
     }
 
-    if (tp_timer.getElapsedTime().asSeconds() >= 3.f) {
-        if (triangleshade < 255) {
-            triangleshade += 3;
-        }
+    if (tp_timer.getElapsedTime().asSeconds() >= 3.f && triangleshade < 255) {
+        triangleshade += 2;
+    }
+    if (tp_timer.getElapsedTime().asSeconds() >= 3.f && triangleshade == 255) {
         if ((sf::Keyboard::isKeyPressed (sf::Keyboard::Key::LShift) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::RShift))) {
             if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Right) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::D)) {
                 if (!map.predictCollision(shape(), sf::Vector2f(50, 0))) {
@@ -352,7 +352,7 @@ void triangle::updatepos (float deltatime, tilemap& map)  {
             }
         }
     }
-    if (tp_timer.getElapsedTime().asSeconds() < 3.f && triangleshade > 165) {
+    if (tp_timer.getElapsedTime().asSeconds() < 3.f && triangleshade > 135) {
         triangleshade -= 2;
     }
 
