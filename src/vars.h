@@ -37,6 +37,7 @@ inline float pushspeed = 115.f;
 inline int jumpcount = 2;
 inline sf::Clock tp_timer;
 inline sf::Clock jump_timer;
+inline int triangleshade = 255;
 inline bool wallhuggingleft = false;
 inline bool wallhuggingright = false;
 inline bool walljumped = false;
@@ -50,7 +51,7 @@ inline bool obstaclebelow = false;
 
 //Game settings
 inline int levelnum = 3;
-inline int setnum = 3;
+inline int setnum = 4;
 inline bool circlelocked = true;
 inline bool trianglelocked = true;
 inline bool octagonlocked = true;
