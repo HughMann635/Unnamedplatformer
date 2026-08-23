@@ -321,38 +321,39 @@ void triangle::updatepos (float deltatime, tilemap& map)  {
     }
 
     if (tp_timer.getElapsedTime().asSeconds() >= 3.f) {
-        triangleshade = 255;
+        if (triangleshade < 255) {
+            triangleshade += 3;
+        }
         if ((sf::Keyboard::isKeyPressed (sf::Keyboard::Key::LShift) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::RShift))) {
             if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Right) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::D)) {
                 if (!map.predictCollision(shape(), sf::Vector2f(50, 0))) {
                     playershape.setPosition(sf::Vector2f(playershape.getPosition().x + 50, playershape.getPosition().y));
                     velocity = sf::Vector2f(0, 0);
-                    triangleshade = 45;
                     tp_timer.restart();
                 }
             } else if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Left) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::A)) {
                 if (!map.predictCollision(shape(), sf::Vector2f(-50, 0))) {
                     playershape.setPosition(sf::Vector2f(playershape.getPosition().x - 50, playershape.getPosition().y));
                     velocity = sf::Vector2f(0, 0);
-                    triangleshade = 45;
                     tp_timer.restart();
                 }
             } else if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::W)) {
                 if (!map.predictCollision(shape(), sf::Vector2f(0, -50))) {                        
                     playershape.setPosition(sf::Vector2f(playershape.getPosition().x, playershape.getPosition().y - 50));
                     velocity = sf::Vector2f(0, 0);
-                    triangleshade = 45;
                     tp_timer.restart();
                 }
             } else if (((sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Down) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::S))) && shape().getPosition().y < (height-40)) {
                 if (!map.predictCollision(shape(), sf::Vector2f(0, 50))) {
                     playershape.setPosition(sf::Vector2f(playershape.getPosition().x, playershape.getPosition().y + 50));
                     velocity = sf::Vector2f(0, 0);
-                    triangleshade = 45;
                     tp_timer.restart();
                 }
             }
         }
+    }
+    if (tp_timer.getElapsedTime().asSeconds() < 3.f && triangleshade > 165) {
+        triangleshade -= 2;
     }
 
     if (zerogactive) {
