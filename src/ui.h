@@ -95,7 +95,7 @@ public:
         exitbtn.setString("ESCAPE TO EXIT");
         exitbtn.setFillColor(sf::Color(145, 80, 210));
         exitbtn.setCharacterSize(25);
-        exitbtn.setPosition(sf::Vector2f((width-resumebtn.getGlobalBounds().size.x)/2, 490));
+        exitbtn.setPosition(sf::Vector2f((width-exitbtn.getGlobalBounds().size.x)/2, 490));
     }
 
     void draw (sf::RenderWindow& window) {

@@ -15,10 +15,6 @@ inline bool restart = false;
 inline bool newlevel = false;
 inline bool swapped = false;
 inline bool gamestart = false;
-//Debug stuff
-inline bool enterkeyheld = false;
-inline bool draw = false;
-inline bool can_draw = true;
 
 //Player and physics settings
 const float playerdim = 20.f; //Also the dimensions of every tile in the game 
