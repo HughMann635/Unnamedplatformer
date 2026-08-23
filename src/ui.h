@@ -52,7 +52,7 @@ public:
         level.setString("Level "+(setnum*6+levelnum+1));
         level.setCharacterSize(35);
         level.setPosition(sf::Vector2f((width-level.getGlobalBounds().size.x)/2, 60));
-        level.setFillColor(sf::Color(255, 45, 200));
+        level.setFillColor(sf::Color(255, 45, 200, 200));
     }
 
     void draw (sf::RenderWindow& window) {
