@@ -77,6 +77,7 @@ int main()
 			if (newlevel == true) {
 				levelnum += 1;
 				if (levelnum > 5) {
+					state = State::mainmenu;
 					levelnum = 0;
 					if (setnum == 4) {
 						std::cout << "Congrats!";
@@ -105,6 +106,11 @@ int main()
 				newlevel = false;
 			} 
 			
+			if (setnum == 1) circlelocked = false;
+			if (setnum == 2) octagonlocked = false;
+			if (setnum == 3) trianglelocked = false;
+			if (setnum == 4) hexagonlocked = false;
+
 			//TO DO: FIND WAY TO MAKE LVL 17 MORE EFFICIENT
 			//RIGHT NOW IT DRAWS 1K+ TILES WHICH IS VERY INEFFICIENT
 			//possible solution: split drawmap into drawmap for dynamics and drawenv for statics
@@ -133,21 +139,21 @@ int main()
 				swapped = true; 
 				nearestedge = 90.f; 
 			}
-			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num2) && !dynamic_cast<circle*>(currentplayer.get())) { 
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num2) && !dynamic_cast<circle*>(currentplayer.get()) && !circlelocked) { 
 				currentplayer = std::make_unique<circle>(); 
 				swapped = true; 
 			}
-			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num3) && !dynamic_cast<octagon*>(currentplayer.get())) { 
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num3) && !dynamic_cast<octagon*>(currentplayer.get()) && !octagonlocked) { 
 				currentplayer = std::make_unique<octagon>(); 
 				swapped = true; 
 				nearestedge = 45.f; 
 			}
-			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num4) && !dynamic_cast<triangle*>(currentplayer.get())) { 
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num4) && !dynamic_cast<triangle*>(currentplayer.get()) && !trianglelocked) { 
 				currentplayer = std::make_unique<triangle>(); 
 				swapped = true; 
 				nearestedge = 120.f; 
 			}
-			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num5) && !dynamic_cast<hexagon*>(currentplayer.get())) { 
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num5) && !dynamic_cast<hexagon*>(currentplayer.get()) && !hexagonlocked) { 
 				currentplayer = std::make_unique<hexagon>(); 
 				swapped = true; 
 				nearestedge = 60.f; 
