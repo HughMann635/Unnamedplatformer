@@ -7,7 +7,7 @@
 #include "vars.h"
 #include "tiletypes.h"
 #include "players.h"
-#include "sat(TESTING).h"
+#include "collision.h"
 
 enum class tiletype {
     //Basic tile types

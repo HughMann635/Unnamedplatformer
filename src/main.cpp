@@ -10,7 +10,7 @@
 #include "vars.h"
 #include "tilesettings.h"
 #include "tilemap.h"
-#include "sat(TESTING).h"
+#include "collision.h"
 
 int main()
 {
