@@ -35,6 +35,7 @@ inline float circleaccel = 8.f;
 inline float circlemax = 500.f;
 inline float pushspeed = 115.f;
 inline int jumpcount = 2;
+inline bool tped = false;
 inline sf::Clock tp_timer;
 inline sf::Clock jump_timer;
 inline int triangleshade = 255;

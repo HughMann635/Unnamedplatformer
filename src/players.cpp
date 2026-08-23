@@ -274,7 +274,7 @@ triangle::triangle() {
     playershape.setPoint(0, sf::Vector2f(0, 17.3));
     playershape.setPoint(1, sf::Vector2f(10, 0));
     playershape.setPoint(2, sf::Vector2f(20, 17.3));
-    playershape.setFillColor(sf::Color(0, triangleshade, 0));
+    playershape.setFillColor(sf::Color(0, 255, 0));
 
     playershape.setOrigin(sf::Vector2f(10, 11.526));
     velocity = (sf::Vector2f(0.f, gravity));
@@ -323,36 +323,40 @@ void triangle::updatepos (float deltatime, tilemap& map)  {
     if (tp_timer.getElapsedTime().asSeconds() >= 3.f && triangleshade < 255) {
         triangleshade += 2;
     }
-    if (tp_timer.getElapsedTime().asSeconds() >= 3.f && triangleshade == 255) {
+    if ((tp_timer.getElapsedTime().asSeconds() >= 3.f || !tped) && triangleshade == 255) {
         if ((sf::Keyboard::isKeyPressed (sf::Keyboard::Key::LShift) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::RShift))) {
             if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Right) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::D)) {
                 if (!map.predictCollision(shape(), sf::Vector2f(50, 0))) {
                     playershape.setPosition(sf::Vector2f(playershape.getPosition().x + 50, playershape.getPosition().y));
                     velocity = sf::Vector2f(0, 0);
                     tp_timer.restart();
+                    tped = true;
                 }
             } else if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Left) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::A)) {
                 if (!map.predictCollision(shape(), sf::Vector2f(-50, 0))) {
                     playershape.setPosition(sf::Vector2f(playershape.getPosition().x - 50, playershape.getPosition().y));
                     velocity = sf::Vector2f(0, 0);
                     tp_timer.restart();
+                    tped = true;
                 }
             } else if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::W)) {
                 if (!map.predictCollision(shape(), sf::Vector2f(0, -50))) {                        
                     playershape.setPosition(sf::Vector2f(playershape.getPosition().x, playershape.getPosition().y - 50));
                     velocity = sf::Vector2f(0, 0);
                     tp_timer.restart();
+                    tped = true;
                 }
             } else if (((sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Down) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::S))) && shape().getPosition().y < (height-40)) {
                 if (!map.predictCollision(shape(), sf::Vector2f(0, 50))) {
                     playershape.setPosition(sf::Vector2f(playershape.getPosition().x, playershape.getPosition().y + 50));
                     velocity = sf::Vector2f(0, 0);
                     tp_timer.restart();
+                    tped = true;
                 }
             }
         }
     }
-    if (tp_timer.getElapsedTime().asSeconds() < 3.f && triangleshade > 135) {
+    if ((tp_timer.getElapsedTime().asSeconds() < 3.f && tped) && triangleshade > 135) {
         triangleshade -= 2;
     }
 
