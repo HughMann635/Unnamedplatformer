@@ -546,12 +546,10 @@ public:
                         }
                         if (!obstacletop) {
                             block_ -> velocity.y = -pushspeed;
-                            std::cout << "NO OBSTACLE TOP\n";
                         } 
                         else {
                             if (Object.velocity.y < 0) Object.velocity.y = 0;
                             block_ -> velocity.y = 0;
-                            std::cout << "OBSTACLE TOP\n";
                         }
                     }
                 }
