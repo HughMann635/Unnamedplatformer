@@ -86,13 +86,13 @@ public:
         paused.setPosition(sf::Vector2f((width-paused.getGlobalBounds().size.x)/2, 340));
 
         resumebtn.setFont(font);
-        resumebtn.setString("RESUME -> ENTER");
+        resumebtn.setString("SPACE TO RESUME");
         resumebtn.setFillColor(sf::Color(80, 210, 145));
         resumebtn.setCharacterSize(25);
         resumebtn.setPosition(sf::Vector2f((width-resumebtn.getGlobalBounds().size.x)/2, 440));
 
         exitbtn.setFont(font);
-        exitbtn.setString("EXIT -> ESCAPE");
+        exitbtn.setString("ESCAPE TO EXIT");
         exitbtn.setFillColor(sf::Color(145, 80, 210));
         exitbtn.setCharacterSize(25);
         exitbtn.setPosition(sf::Vector2f((width-resumebtn.getGlobalBounds().size.x)/2, 490));
