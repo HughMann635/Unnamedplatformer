@@ -106,10 +106,10 @@ int main()
 				newlevel = false;
 			} 
 			
-			if (setnum == 1) circlelocked = false;
-			if (setnum == 2) octagonlocked = false;
-			if (setnum == 3) trianglelocked = false;
-			if (setnum == 4) hexagonlocked = false;
+			if (setnum >= 1) circlelocked = false;
+			if (setnum >= 2) octagonlocked = false;
+			if (setnum >= 3) trianglelocked = false;
+			if (setnum >= 4) hexagonlocked = false;
 
 			//TO DO: FIND WAY TO MAKE LVL 17 MORE EFFICIENT
 			//RIGHT NOW IT DRAWS 1K+ TILES WHICH IS VERY INEFFICIENT
