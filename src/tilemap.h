@@ -2,7 +2,6 @@
 #include "vars.h"
 #include <string>
 
-//Will fill these in once I actually decide on level layouts lmao
 inline std::string levels[5][6] = {
     {   //level 1
         "**********************#*****************************************\n"
