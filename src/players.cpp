@@ -87,7 +87,7 @@ void entity::rotateobject(sf::Vector2f& edge, tilemap& map, sf::Shape& shape, fl
 
 square::square() {
     playershape = sf::RectangleShape(sf::Vector2f(playerdim, playerdim));
-    playershape.setFillColor(sf::Color::Red);
+    playershape.setFillColor(sf::Color(255, 30, 0));
     playershape.setOrigin(sf::Vector2f(playershape.getLocalBounds().size.x/2, playershape.getLocalBounds().size.y/2));
 
     velocity = (sf::Vector2f(0.f, gravity));
@@ -402,7 +402,7 @@ hexagon::hexagon() {
     playershape.setPoint(3, sf::Vector2f(15.f, 18.f));
     playershape.setPoint(4, sf::Vector2f(5.f, 18.f));
     playershape.setPoint(5, sf::Vector2f(0.f, 9.f));
-    playershape.setFillColor(sf::Color(240, 220, 0));
+    playershape.setFillColor(sf::Color(255, 210, 0));
     playershape.setOrigin(sf::Vector2f(playershape.getLocalBounds().size.x/2, playershape.getLocalBounds().size.y/2));
 
     velocity = sf::Vector2f(0.f, gravity);
