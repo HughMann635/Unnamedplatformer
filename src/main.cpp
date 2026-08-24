@@ -127,7 +127,8 @@ int main()
 			currentplayer -> jump(deltatime);
 			blockonhead = false;
 			currentplayer -> grounded = false;
-			if (!inblackhole) currentplayer -> updatepos(deltatime, map);
+			if (!inblackhole && currentplayer -> shape().getPosition().y < 730) currentplayer -> updatepos(deltatime, map);
+			if (currentplayer -> shape().getPosition().y > 780) restart = true;
 			map.updatemap(deltatime);
 			inblackhole = false;
 			map.checkCollisions(*currentplayer, deltatime);
@@ -213,6 +214,7 @@ int main()
 				map.dynamictilelist.clear();
 				map.envtilelist.clear();
 				map.loadmap(menulevel, levels_env[0][0]);
+				currentplayer -> shape().setPosition(map.spawn);
 				map.drawmap(window);
 				currentplayer -> drawscreen(window);
 				menuenter = true;

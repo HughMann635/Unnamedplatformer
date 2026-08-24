@@ -161,7 +161,7 @@ void square::updatepos (float deltatime, tilemap& map) {
     if (!grounded && velocity.y <= 1050) velocity.y += gravity * deltatime;
     shape().move(velocity * deltatime);
 
-    if (playershape.getPosition().y > 720) restart = true;
+    if (playershape.getPosition().y > 780) restart = true;
 
     sf::Vector2f bound = playershape.getPosition();
     bound.x = std::clamp(bound.x, 10.f, (float)width-playerdim/2);
@@ -254,7 +254,7 @@ void circle::updatepos (float deltatime, tilemap& map)  {
     if (!grounded && velocity.y <= 1050) velocity.y += gravity * deltatime;
     shape().move(velocity * deltatime);
 
-    if (playershape.getPosition().y > 720) restart = true;
+    if (playershape.getPosition().y > 780) restart = true;
 
     sf::Vector2f bound = playershape.getPosition();
     bound.x = std::clamp(bound.x, 10.f, (float)width-playerdim/2);
@@ -389,7 +389,7 @@ void triangle::updatepos (float deltatime, tilemap& map)  {
     if (!grounded && velocity.y <= 1050) velocity.y += gravity * deltatime;
     shape().move(velocity * deltatime);
 
-    if (playershape.getPosition().y > 720) restart = true;
+    if (playershape.getPosition().y > 780) restart = true;
 
     sf::Vector2f bound = playershape.getPosition();
     bound.x = std::clamp(bound.x, 10.f, (float)width-playerdim/2);
@@ -486,7 +486,7 @@ void hexagon::updatepos (float deltatime, tilemap& map) {
     if (!grounded && velocity.y <= 1050) velocity.y += gravity * deltatime;
     shape().move(velocity * deltatime);
 
-    if (playershape.getPosition().y > 720) restart = true;
+    if (playershape.getPosition().y > 780) restart = true;
 
     sf::Vector2f bound = playershape.getPosition();
     bound.x = std::clamp(bound.x, 10.f, (float)width-playerdim/2);
@@ -634,7 +634,7 @@ void octagon::updatepos (float deltatime, tilemap& map) {
     if (!grounded && velocity.y <= 1050) velocity.y += gravity * deltatime;
     shape().move(velocity * deltatime);
 
-    if (playershape.getPosition().y > 720) restart = true;
+    if (playershape.getPosition().y > 780) restart = true;
 
     sf::Vector2f bound = playershape.getPosition();
     bound.x = std::clamp(bound.x, 10.f, (float)width-playerdim/2);
