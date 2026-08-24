@@ -29,7 +29,14 @@ public:
         startbtn.setPosition(sf::Vector2f((width-startbtn.getGlobalBounds().size.x)/2, 500));
     }
 
-    void play () {
+    void play (sf::RenderWindow& window) {
+        sf::Vector2i mouse_ = sf::Mouse::getPosition(window);
+        sf::Vector2f mousepos = sf::Vector2f((float)mouse_.x, (float)mouse_.y);
+        if (startbtn.getGlobalBounds().contains(mousepos)) {
+            startbtn.setFillColor(sf::Color(255, 170, 30));
+            if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) state = State::playing;
+        }
+        else startbtn.setFillColor(sf::Color(170, 100, 255));
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space)) state = State::playing;
     }
 

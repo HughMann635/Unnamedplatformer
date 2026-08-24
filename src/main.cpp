@@ -237,7 +237,7 @@ int main()
 			currentplayer -> drawscreen(window);
 			window.setView(window.getDefaultView());
 			menu.draw(window);
-			if (!esckeyheld) menu.play();
+			if (!esckeyheld) menu.play(window);
 		} else if (state == State::pause) {
 			sky.drawsky(window);
 			sky.drawstars(window);
