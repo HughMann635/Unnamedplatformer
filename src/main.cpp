@@ -52,7 +52,6 @@ int main()
 				currentplayer -> freefallingtip = false;
 				tipping_right = false;
 				tipping_left = false;
-
 				
 				env.clear(sf::Color::Transparent);
 				map.drawenv(env);
@@ -217,10 +216,16 @@ int main()
 			menu.draw(window);
 			if (!esckeyheld) menu.play();
 		} else if (state == State::pause) {
-			window.setView(window.getDefaultView());
 			sky.drawsky(window);
 			sky.drawstars(window);
+			map.drawmap(window);
+			currentplayer -> drawscreen(window);
+			window.setView(window.getDefaultView());
+			sf::RectangleShape pauseblur(sf::Vector2f(width, height));
+			pauseblur.setFillColor(sf::Color(0, 0, 0, 135));
+			window.draw(pauseblur);
 			pausemenu.draw(window); 
+			window.setView(view);
 			if (!esckeyheld) pausemenu.checkaction();
 		}
 
