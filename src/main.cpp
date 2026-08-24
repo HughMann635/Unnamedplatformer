@@ -47,7 +47,9 @@ int main()
 			if (!gamestart) {
 				map.loadmap(levels[setnum][levelnum], levels_env[setnum][levelnum]);
 				currentplayer -> shape().setPosition(map.spawn);
-				
+				currentplayer -> shape().setRotation(sf::degrees(0));
+				currentplayer -> rotation = 0;
+				currentplayer -> freefallingtip = false;
 				
 				env.clear(sf::Color::Transparent);
 				map.drawenv(env);
