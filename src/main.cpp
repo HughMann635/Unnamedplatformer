@@ -249,7 +249,7 @@ int main()
 			window.draw(pauseblur);
 			pausemenu.draw(window); 
 			window.setView(view);
-			if (!esckeyheld) pausemenu.checkaction();
+			if (!esckeyheld) pausemenu.checkaction(window);
 		}
 
 		window.display();

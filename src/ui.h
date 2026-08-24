@@ -111,7 +111,13 @@ public:
         window.draw(exitbtn);
     }
 
-    void checkaction() {
+    void checkaction(sf::RenderWindow& window) {
+        sf::Vector2i mouse_ = sf::Mouse::getPosition(window);
+        sf::Vector2f mousepos = sf::Vector2f((float)mouse_.x, (float)mouse_.y);
+        if (resumebtn.getGlobalBounds().contains(mousepos)) {
+            resumebtn.setFillColor(sf::Color(80, 210, 145));
+            if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) state = State::playing;
+        }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space)) state = State::playing;
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)) state = State::mainmenu; 
     }
