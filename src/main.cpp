@@ -48,6 +48,7 @@ int main()
 				map.loadmap(levels[setnum][levelnum], levels_env[setnum][levelnum]);
 				currentplayer -> shape().setPosition(map.spawn);
 				
+				
 				env.clear(sf::Color::Transparent);
 				map.drawenv(env);
 				env.display();
@@ -204,6 +205,7 @@ int main()
 			}
 			
 		} else if (state == State::mainmenu) {
+			gamestart = false;
 			window.setView(window.getDefaultView());
 			sky.drawsky(window);
 			sky.drawstars(window);
