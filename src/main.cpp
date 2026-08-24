@@ -46,6 +46,9 @@ int main()
 		if (state == State::playing) {
 			menuenter = false;
 			if (!gamestart) {
+				map.statictilelist.clear();
+				map.dynamictilelist.clear();
+				map.envtilelist.clear();
 				map.loadmap(levels[setnum][levelnum], levels_env[setnum][levelnum]);
 				currentplayer -> shape().setPosition(map.spawn);
 				currentplayer -> shape().setRotation(sf::degrees(0));

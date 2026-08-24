@@ -5,7 +5,7 @@
 //Window settings
 const int width = 1280;
 const int height = 720;
-inline std::string title = "Shape Game";
+inline std::string title = "Worlds of Blockman";
 const int camwidth = 960;
 const int camheight = 540;
 const int stars = 1000;
@@ -53,13 +53,8 @@ inline bool obstaclebelow = false;
 
 //Game settings
 inline int levelnum = 0;
-inline int setnum = 0;
+inline int setnum = 2;
 inline bool circlelocked = true;
 inline bool trianglelocked = true;
 inline bool octagonlocked = true;
 inline bool hexagonlocked = true;
-inline bool squareactive = true;
-inline bool circleactive = false;
-inline bool triangleactive = false;
-inline bool octagonactive = false;
-inline bool hexagonactive = false;
