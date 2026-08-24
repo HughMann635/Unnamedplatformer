@@ -50,6 +50,9 @@ int main()
 				currentplayer -> shape().setRotation(sf::degrees(0));
 				currentplayer -> rotation = 0;
 				currentplayer -> freefallingtip = false;
+				tipping_right = false;
+				tipping_left = false;
+
 				
 				env.clear(sf::Color::Transparent);
 				map.drawenv(env);
