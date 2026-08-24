@@ -44,6 +44,7 @@ int main()
 		window.clear();
 
 		if (state == State::playing) {
+			menuenter = false;
 			if (!gamestart) {
 				map.loadmap(levels[setnum][levelnum], levels_env[setnum][levelnum]);
 				currentplayer -> shape().setPosition(map.spawn);
@@ -128,9 +129,6 @@ int main()
 			currentplayer -> grounded = false;
 			if (!inblackhole) currentplayer -> updatepos(deltatime, map);
 			map.updatemap(deltatime);
-			//NOTE TO SELF figure out a way to get multiple checkCollisions working
-			//map.checkCollisions(*currentplayer);
-			//map.checkCollisions(*currentplayer);
 			inblackhole = false;
 			map.checkCollisions(*currentplayer, deltatime);
 			currentplayer -> rotateobject(edge, map, currentplayer -> shape(), deltatime, movespeed, swimming, zerogactive, currentplayer -> grounded, nearestedge);
@@ -210,9 +208,28 @@ int main()
 			
 		} else if (state == State::mainmenu) {
 			gamestart = false;
-			window.setView(window.getDefaultView());
+			if (!menuenter) {
+				map.statictilelist.clear();
+				map.dynamictilelist.clear();
+				map.envtilelist.clear();
+				map.loadmap(menulevel, levels_env[0][0]);
+				map.drawmap(window);
+				currentplayer -> drawscreen(window);
+				menuenter = true;
+			}
 			sky.drawsky(window);
 			sky.drawstars(window);
+			swapped = false;
+			if (currentplayer -> grounded) jumpcount = 2;
+			currentplayer -> jump(deltatime);
+			currentplayer -> grounded = false;
+			currentplayer -> updatepos(deltatime, map);
+			map.updatemap(deltatime);
+			map.checkCollisions(*currentplayer, deltatime);
+			currentplayer -> rotateobject(edge, map, currentplayer -> shape(), deltatime, movespeed, swimming, zerogactive, currentplayer -> grounded, nearestedge);
+			map.drawmap(window);
+			currentplayer -> drawscreen(window);
+			window.setView(window.getDefaultView());
 			menu.draw(window);
 			if (!esckeyheld) menu.play();
 		} else if (state == State::pause) {
