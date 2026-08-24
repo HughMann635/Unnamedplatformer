@@ -128,7 +128,8 @@ int main()
 			blockonhead = false;
 			currentplayer -> grounded = false;
 			if (!inblackhole && currentplayer -> shape().getPosition().y < 730) currentplayer -> updatepos(deltatime, map);
-			if (currentplayer -> shape().getPosition().y > 780) restart = true;
+			if (currentplayer -> shape().getPosition().y >= 730) currentplayer -> shape().move(sf::Vector2f(0, currentplayer -> velocity.y*deltatime));
+			if (currentplayer -> shape().getPosition().y > 1000) restart = true;
 			map.updatemap(deltatime);
 			inblackhole = false;
 			map.checkCollisions(*currentplayer, deltatime);
