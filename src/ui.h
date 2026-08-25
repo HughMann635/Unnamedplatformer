@@ -27,10 +27,12 @@ public:
         starttxt.setString("SPACE TO PLAY, ESC FROM GAME TO QUIT");
         starttxt.setCharacterSize(35);
         starttxt.setFillColor(sf::Color(170, 100, 255));
-        starttxt.setOrigin(sf::Vector2f(starttxt.getLocalBounds().position.x + starttxt.getLocalBounds().size.x/2, starttxt.getLocalBounds().position.y + starttxt.getLocalBounds().size.y/2));
+
+        sf::FloatRect starttxtbounds = starttxt.getLocalBounds();
+        starttxt.setOrigin(sf::Vector2f(starttxtbounds.position.x + starttxtbounds.size.x/2, starttxtbounds.position.y + starttxtbounds.size.y/2));
         starttxt.setPosition(sf::Vector2f(width/2, 450));
 
-        startbtn.setSize(sf::Vector2f(starttxt.getLocalBounds().size.x*1.2, starttxt.getLocalBounds().size.y*2));
+        startbtn.setSize(sf::Vector2f(starttxtbounds.size.x*1.2, starttxtbounds.size.y*2));
         startbtn.setFillColor(sf::Color(100, 30, 155));
         startbtn.setOrigin(sf::Vector2f(startbtn.getLocalBounds().size.x/2, startbtn.getLocalBounds().size.y/2));
         startbtn.setPosition(sf::Vector2f(width/2, starttxt.getPosition().y));
