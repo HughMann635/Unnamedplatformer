@@ -11,7 +11,7 @@ public:
     sf::RectangleShape skyblock;
     sky() {
         skyblock = sf::RectangleShape(sf::Vector2f(width, height));
-        skyblock.setFillColor(sf::Color(0, 0, 30));
+        skyblock.setFillColor(sf::Color(0, 0, 35));
         skyblock.setPosition(sf::Vector2f(0, 0));
     }
     void makestars (int stars) {

@@ -44,7 +44,7 @@ public:
         starttxtshadow.setFillColor(sf::Color(0, 0, 0, 120));
         starttxtshadow.setPosition(starttxt.getPosition() + sf::Vector2f(4, 4));
         startbtnshadow = startbtn;
-        startbtnshadow.setFillColor(sf::Color(0, 0, 0, 255));
+        startbtnshadow.setFillColor(sf::Color(0, 0, 0, 235));
         startbtnshadow.setPosition(startbtn.getPosition() + sf::Vector2f(6, 6));
     }
 
@@ -169,10 +169,10 @@ public:
         exittxtshadow.setFillColor(sf::Color(0, 0, 0, 120));
         exittxtshadow.setPosition(exittxt.getPosition()+sf::Vector2f(4, 4));
         resumebtnshadow = resumebtn;
-        resumebtnshadow.setFillColor(sf::Color(0, 0, 0));
+        resumebtnshadow.setFillColor(sf::Color(0, 0, 0, 235));
         resumebtnshadow.setPosition(resumebtn.getPosition()+sf::Vector2f(6, 6));
         exitbtnshadow = exitbtn;
-        exitbtnshadow.setFillColor(sf::Color(0, 0, 0));
+        exitbtnshadow.setFillColor(sf::Color(0, 0, 0, 235));
         exitbtnshadow.setPosition(exitbtnshadow.getPosition()+sf::Vector2f(6, 6));
     }
 
