@@ -11,12 +11,14 @@ public:
     sf::Text title;
     sf::Text starttxt;
     sf::RectangleShape startbtn;
+    sf::Text titleshadow;
     sf::Text starttxtshadow;
     sf::RectangleShape startbtnshadow;
     
     mainmenu() :
         font("AldotheApache.ttf"),
         title(font),
+        titleshadow(font),
         starttxt(font),
         starttxtshadow(font)
     {
@@ -40,6 +42,9 @@ public:
         startbtn.setOrigin(sf::Vector2f(startbtn.getLocalBounds().size.x/2, startbtn.getLocalBounds().size.y/2));
         startbtn.setPosition(sf::Vector2f(width/2, starttxt.getPosition().y));
 
+        titleshadow = title;
+        titleshadow.setFillColor(sf::Color(0, 0, 0, 235));
+        titleshadow.setPosition(title.getPosition() + sf::Vector2f(6, 6));
         starttxtshadow = starttxt;
         starttxtshadow.setFillColor(sf::Color(0, 0, 0, 120));
         starttxtshadow.setPosition(starttxt.getPosition() + sf::Vector2f(4, 4));
@@ -72,6 +77,7 @@ public:
     }
 
     void draw (sf::RenderWindow& window) {
+        window.draw(titleshadow);
         window.draw(title);
         window.draw(startbtnshadow);
         window.draw(startbtn);
