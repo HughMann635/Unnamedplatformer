@@ -41,19 +41,24 @@ public:
     void play (sf::RenderWindow& window) {
         sf::Vector2i mouse_ = sf::Mouse::getPosition(window);
         sf::Vector2f mousepos = sf::Vector2f((float)mouse_.x, (float)mouse_.y);
-        if (starttxt.getGlobalBounds().contains(mousepos)) {
+        if (startbtn.getGlobalBounds().contains(mousepos)) {
             starttxt.setFillColor(sf::Color(255, 170, 30));
+            startbtn.setFillColor(sf::Color(185, 100, 30));
             if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) state = State::playing;
         }
-        else starttxt.setFillColor(sf::Color(170, 100, 255));
+        else { 
+            starttxt.setFillColor(sf::Color(170, 100, 255));
+            startbtn.setFillColor(sf::Color(100, 30, 155));
+        }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space)) state = State::playing;
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Enter)) std::cout <<
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Enter)) { std::cout <<
             "\nbutton origin: " << startbtn.getOrigin().x << ", " << startbtn.getOrigin().y <<
             "\ntext origin: " << starttxt.getOrigin().x << ", " << starttxt.getOrigin().y <<
             "\nbutton size: " << startbtn.getSize().x << ", " << startbtn.getSize().y <<
             "\ntext size: " << starttxt.getGlobalBounds().size.x << ", " << starttxt.getGlobalBounds().size.y <<
             "\nbutton pos: " << startbtn.getPosition().x << ", " << startbtn.getPosition().y <<
             "\ntext pos: " << starttxt.getPosition().x << ", " << starttxt.getPosition().y;
+        }
     }
 
     void draw (sf::RenderWindow& window) {
