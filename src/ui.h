@@ -134,27 +134,44 @@ public:
         exittxt.setString("ESCAPE TO EXIT");
         exittxt.setFillColor(sf::Color(145, 80, 210));
         exittxt.setCharacterSize(25);
-        exittxt.setPosition(sf::Vector2f((width-exittxt.getGlobalBounds().size.x)/2, 490));
+
+        sf::FloatRect exittxtbounds = exittxt.getLocalBounds();
+        exittxt.setOrigin(sf::Vector2f(exittxtbounds.position.x + exittxtbounds.size.x/2, exittxtbounds.position.y + exittxtbounds.size.y/2));
+        exittxt.setPosition(sf::Vector2f(width/2, 490));
+
+        exitbtn.setSize(sf::Vector2f(resumetxtbounds.size.x*1.2, resumetxtbounds.size.y*2));
+        exitbtn.setFillColor(sf::Color(75, 10, 140));
+        exitbtn.setOrigin(sf::Vector2f(exitbtn.getLocalBounds().position.x + exitbtn.getLocalBounds().size.x/2, exitbtn.getLocalBounds().position.y + exitbtn.getLocalBounds().size.y/2));
+        exitbtn.setPosition(sf::Vector2f(width/2, 490));    
     }
 
     void draw (sf::RenderWindow& window) {
         window.draw(paused);
         window.draw(resumebtn);
         window.draw(resumetxt);
+        window.draw(exitbtn);
         window.draw(exittxt);
     }
 
     void checkaction(sf::RenderWindow& window) {
         sf::Vector2i mouse_ = sf::Mouse::getPosition(window);
         sf::Vector2f mousepos = sf::Vector2f((float)mouse_.x, (float)mouse_.y);
-        if (resumetxt.getGlobalBounds().contains(mousepos)) {
+        if (resumebtn.getGlobalBounds().contains(mousepos)) {
             resumetxt.setFillColor(sf::Color(180, 200, 20));
+            resumebtn.setFillColor(sf::Color(110, 130, 20));
             if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) state = State::playing;
-        } else resumetxt.setFillColor(sf::Color(80, 210, 145));
-        if (exittxt.getGlobalBounds().contains(mousepos)) {
+        } else {
+            resumetxt.setFillColor(sf::Color(80, 210, 145));
+            resumebtn.setFillColor(sf::Color(10, 140, 75));
+        }
+        if (exitbtn.getGlobalBounds().contains(mousepos)) {
             exittxt.setFillColor(sf::Color(20, 120, 255));
+            exitbtn.setFillColor(sf::Color(20, 50, 185));
             if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) state = State::mainmenu;
-        } else exittxt.setFillColor(sf::Color(145, 80, 210));
+        } else {
+            exittxt.setFillColor(sf::Color(145, 80, 210));
+            exitbtn.setFillColor(sf::Color(75, 10, 140));
+        }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space)) state = State::playing;
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)) state = State::mainmenu; 
     }
