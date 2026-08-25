@@ -115,12 +115,18 @@ public:
     sf::Text exittxt;
     sf::RectangleShape resumebtn;
     sf::RectangleShape exitbtn;
+    sf::Text resumetxtshadow;
+    sf::Text exittxtshadow;
+    sf::RectangleShape resumebtnshadow;
+    sf::RectangleShape exitbtnshadow;
 
     pause() :
         font("AldotheApache.ttf"),
         paused(font),
         resumetxt(font),
-        exittxt(font)
+        exittxt(font),
+        resumetxtshadow(font),
+        exittxtshadow(font)
     {
         paused.setFont(font);
         paused.setString("PAUSED");
@@ -154,14 +160,31 @@ public:
         exitbtn.setSize(sf::Vector2f(resumetxtbounds.size.x*1.2, resumetxtbounds.size.y*2));
         exitbtn.setFillColor(sf::Color(75, 10, 140));
         exitbtn.setOrigin(sf::Vector2f(exitbtn.getLocalBounds().position.x + exitbtn.getLocalBounds().size.x/2, exitbtn.getLocalBounds().position.y + exitbtn.getLocalBounds().size.y/2));
-        exitbtn.setPosition(sf::Vector2f(width/2, 490));    
+        exitbtn.setPosition(sf::Vector2f(width/2, 490));   
+        
+        resumetxtshadow = resumetxt;
+        resumetxtshadow.setFillColor(sf::Color(0, 0, 0, 120));
+        resumetxtshadow.setPosition(resumetxt.getPosition()+sf::Vector2f(4, 4));
+        exittxtshadow = exittxt;
+        exittxtshadow.setFillColor(sf::Color(0, 0, 0, 120));
+        exittxtshadow.setPosition(exittxt.getPosition()+sf::Vector2f(4, 4));
+        resumebtnshadow = resumebtn;
+        resumebtnshadow.setFillColor(sf::Color(0, 0, 0));
+        resumebtnshadow.setPosition(resumebtn.getPosition()+sf::Vector2f(6, 6));
+        exitbtnshadow = exitbtn;
+        exitbtnshadow.setFillColor(sf::Color(0, 0, 0));
+        exitbtnshadow.setPosition(exitbtnshadow.getPosition()+sf::Vector2f(6, 6));
     }
 
     void draw (sf::RenderWindow& window) {
         window.draw(paused);
+        window.draw(resumebtnshadow);
         window.draw(resumebtn);
+        window.draw(resumetxtshadow);
         window.draw(resumetxt);
+        window.draw(exitbtnshadow);
         window.draw(exitbtn);
+        window.draw(exittxtshadow);
         window.draw(exittxt);
     }
 
