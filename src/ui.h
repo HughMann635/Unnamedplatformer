@@ -11,11 +11,14 @@ public:
     sf::Text title;
     sf::Text starttxt;
     sf::RectangleShape startbtn;
+    sf::Text starttxtshadow;
+    sf::RectangleShape startbtnshadow;
     
     mainmenu() :
         font("AldotheApache.ttf"),
         title(font),
-        starttxt(font)
+        starttxt(font),
+        starttxtshadow(font)
     {
         title.setFont(font);
         title.setString("WORLDS OF BLOCKMAN");
@@ -36,6 +39,13 @@ public:
         startbtn.setFillColor(sf::Color(100, 30, 155));
         startbtn.setOrigin(sf::Vector2f(startbtn.getLocalBounds().size.x/2, startbtn.getLocalBounds().size.y/2));
         startbtn.setPosition(sf::Vector2f(width/2, starttxt.getPosition().y));
+
+        starttxtshadow = starttxt;
+        starttxtshadow.setFillColor(sf::Color(0, 0, 0, 120));
+        starttxtshadow.setPosition(starttxt.getPosition() + sf::Vector2f(4, 4));
+        startbtnshadow = startbtn;
+        startbtnshadow.setFillColor(sf::Color(0, 0, 0, 255));
+        startbtnshadow.setPosition(startbtn.getPosition() + sf::Vector2f(6, 6));
     }
 
     void play (sf::RenderWindow& window) {
@@ -63,7 +73,9 @@ public:
 
     void draw (sf::RenderWindow& window) {
         window.draw(title);
+        window.draw(startbtnshadow);
         window.draw(startbtn);
+        window.draw(starttxtshadow);
         window.draw(starttxt);
     }
 };
