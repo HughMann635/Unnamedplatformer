@@ -101,6 +101,8 @@ public:
     sf::Text paused;
     sf::Text resumetxt;
     sf::Text exittxt;
+    sf::RectangleShape resumebtn;
+    sf::RectangleShape exitbtn;
 
     pause() :
         font("AldotheApache.ttf"),
@@ -118,7 +120,15 @@ public:
         resumetxt.setString("SPACE TO RESUME");
         resumetxt.setFillColor(sf::Color(80, 210, 145));
         resumetxt.setCharacterSize(25);
-        resumetxt.setPosition(sf::Vector2f((width-resumetxt.getGlobalBounds().size.x)/2, 440));
+
+        sf::FloatRect resumetxtbounds = resumetxt.getLocalBounds();
+        resumetxt.setOrigin(sf::Vector2f(resumetxtbounds.position.x + resumetxtbounds.size.x/2, resumetxtbounds.position.y + resumetxtbounds.size.y/2));
+        resumetxt.setPosition(sf::Vector2f(width/2, 440));
+
+        resumebtn.setSize(sf::Vector2f(resumetxtbounds.size.x*1.2, resumetxtbounds.size.y*2));
+        resumebtn.setFillColor(sf::Color(10, 140, 75));
+        resumebtn.setOrigin(sf::Vector2f(resumebtn.getLocalBounds().position.x + resumebtn.getLocalBounds().size.x/2, resumebtn.getLocalBounds().position.y + resumebtn.getLocalBounds().size.y/2));
+        resumebtn.setPosition(sf::Vector2f(width/2, 440));
 
         exittxt.setFont(font);
         exittxt.setString("ESCAPE TO EXIT");
@@ -129,6 +139,7 @@ public:
 
     void draw (sf::RenderWindow& window) {
         window.draw(paused);
+        window.draw(resumebtn);
         window.draw(resumetxt);
         window.draw(exittxt);
     }
