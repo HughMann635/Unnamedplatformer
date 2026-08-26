@@ -226,6 +226,7 @@ public:
     int page = 0;
     bool mouseheld = false;
     sf::Text levelnums[6];
+    sf::RectangleShape levelbtns[6];
 
     levelselect() :
         font("AldotheApache.ttf"),
@@ -248,8 +249,13 @@ public:
         goleft.setPosition(sf::Vector2f(100, height/2));
 
         for (int i = 0; i < 6; i++) {
-            levelnums[i].setCharacterSize(30);
+            levelnums[i].setCharacterSize(45);
             levelnums[i].setFillColor(sf::Color(255, 100, 240));
+            levelbtns[i].setSize(sf::Vector2f(50, 50));
+            levelbtns[i].setFillColor(sf::Color(255, 255, 255));
+            levelbtns[i].setOutlineColor(sf::Color(255, 100, 240));
+            levelbtns[i].setOutlineThickness(-2);
+            levelbtns[i].setOrigin(sf::Vector2f(levelbtns[i].getLocalBounds().position.x + levelbtns[i].getLocalBounds().size.x/2, levelbtns[i].getLocalBounds().position.y + levelbtns[i].getLocalBounds().size.y/2));
         }
     }
 
@@ -257,6 +263,7 @@ public:
         window.draw(goright);
         window.draw(goleft);
         for (int i = 0; i < 6; i++) {
+            window.draw(levelbtns[i]);
             window.draw(levelnums[i]);
         }
     }
@@ -291,7 +298,11 @@ public:
         for (int i = 0; i < 6; i++) {
             int levelnumber = page * 6 + i + 1;
             levelnums[i].setString(std::to_string(levelnumber));
-            levelnums[i].setPosition(sf::Vector2f(200, 70 * i + 180));
+            levelnums[i].setOrigin(sf::Vector2f(levelnums[i].getLocalBounds().position.x + levelnums[i].getLocalBounds().size.x/2, levelnums[i].getLocalBounds().position.y + levelnums[i].getLocalBounds().size.y/2));
+            if (i < 3) levelnums[i].setPosition(sf::Vector2f(400 * i + 240, 180));
+            else levelnums[i].setPosition(sf::Vector2f(400 * (i-3) + 240, 400));
+            if (i < 3) levelbtns[i].setPosition(sf::Vector2f(400 * i + 240, 180));
+            else levelbtns[i].setPosition(sf::Vector2f(400 * (i-3) + 240, 400));
         }
     }
 };

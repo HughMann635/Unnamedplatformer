@@ -256,8 +256,8 @@ int main()
 			sky.drawstars(window);
 			map.drawmap(window);
 			window.setView(window.getDefaultView());
-			lvlselect.draw(window);
 			lvlselect.select(window);
+			lvlselect.draw(window);
 		}
 
 		window.display();
