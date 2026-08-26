@@ -5,6 +5,20 @@
 #include "vars.h"
 #include "states.h"
 
+sf::Text txtshadow (int shade, int depth, sf::Text text) {
+    sf::Text shadow = text;
+    shadow.setFillColor(sf::Color(0, 0, 0, shade));
+    shadow.setPosition(text.getPosition()+sf::Vector2f(depth, depth));
+    return shadow;
+}
+
+sf::RectangleShape rectshadow (int shade, int depth, sf::RectangleShape shape) {
+    sf::RectangleShape shadow = shape;
+    shadow.setFillColor(sf::Color(0, 0, 0, shade));
+    shadow.setPosition(shape.getPosition()+sf::Vector2f(depth, depth));
+    return shadow;
+}
+
 class mainmenu {
 public:
     sf::Font font;
@@ -319,7 +333,7 @@ public:
                 mouseheld = true;
             } 
         }
-        
+
         for (int i = 0; i < 6; i++) {
             if (levelbtns[i].getGlobalBounds().contains(mousepos)) {
                 levelnums[i].setFillColor(sf::Color(170, 30, 80));
