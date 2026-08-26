@@ -217,3 +217,72 @@ public:
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)) state = State::mainmenu; 
     }
 };
+
+class levelselect {
+    sf::Font font;
+    sf::Text goright;
+    sf::Text goleft;
+    int page = 0;
+    sf::Text levelnums[6];
+
+    levelselect() :
+        font("AldotheApache.ttf"),
+        goright(font),
+        goleft(font),
+        levelnums{font, font, font, font, font, font}
+    {
+        goright.setString(">");
+        goright.setCharacterSize(25);
+        goright.setFillColor(sf::Color(170, 255, 10));
+        sf::FloatRect gorightbounds = goright.getLocalBounds();
+        goright.setOrigin(sf::Vector2f(gorightbounds.position.x + gorightbounds.size.x/2, gorightbounds.position.y + gorightbounds.size.y/2));
+        goright.setPosition(sf::Vector2f(100, height/2));
+
+        goleft.setString("<");
+        goleft.setCharacterSize(25);
+        goleft.setFillColor(sf::Color(170, 255, 10));
+        sf::FloatRect goleftbounds = goleft.getLocalBounds();
+        goleft.setOrigin(sf::Vector2f(goleftbounds.position.x + goleftbounds.size.x/2, goleftbounds.position.y + goleftbounds.size.y/2));
+        goleft.setPosition(sf::Vector2f(1180, height/2));
+
+        for (int i = 0; i < 6; i++) {
+            levelnums[i].setCharacterSize(30);
+            levelnums[i].setFillColor(sf::Color(255, 100, 240));
+        }
+    }
+
+    void draw (sf::RenderWindow& window) {
+        window.draw(goright);
+        window.draw(goleft);
+        for (int i = 0; i < 6; i++) {
+            window.draw(levelnums[i]);
+        }
+    }
+
+    void update(sf::RenderWindow& window) {
+        sf::Vector2i mouse_ = sf::Mouse::getPosition(window);
+        sf::Vector2f mousepos = sf::Vector2f((float)mouse_.x, (float)mouse_.y);
+        if (goright.getGlobalBounds().contains(mousepos)) {
+            if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) page += 1;
+        }
+        if (goleft.getGlobalBounds().contains(mousepos)) {
+            if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) page -= 1;
+        }
+
+        for (int i = 0; i < 6; i++) {
+            if (sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(static_cast<int>(sf::Keyboard::Key::Num1) + i))) {
+                levelnum = i;
+                setnum = page;
+                state = State::playing;
+            }
+        }
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)) state = State::mainmenu;
+
+        for (int i = 0; i < 6; i++) {
+            int levelnumber = page * 6 + i + 1;
+            levelnums[i].setString(std::to_string(levelnumber));
+            levelnums[i].setPosition(sf::Vector2f(200, 70 * i + 180));
+        }
+    }
+};
