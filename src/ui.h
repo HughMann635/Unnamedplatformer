@@ -219,6 +219,7 @@ public:
 };
 
 class levelselect {
+public:
     sf::Font font;
     sf::Text goright;
     sf::Text goleft;
