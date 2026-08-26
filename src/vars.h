@@ -10,6 +10,7 @@ const int camwidth = 960;
 const int camheight = 540;
 const int stars = 1000;
 inline bool esckeyheld = false;
+inline bool mouseheld = false;
 inline bool running = true;
 inline bool restart = false;
 inline bool newlevel = false;

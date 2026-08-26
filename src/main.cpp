@@ -263,5 +263,8 @@ int main()
 		window.display();
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)) esckeyheld = true;
 		else esckeyheld = false;
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) mouseheld = true;
+		else mouseheld = false;
+	
 	}
 }

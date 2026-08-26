@@ -232,7 +232,6 @@ public:
     sf::RectangleShape gorightbtn;
     sf::RectangleShape goleftbtn;
     int page = 0;
-    bool mouseheld = false;
     sf::Text levelnums[6];
     sf::Text numshadows[6];
     sf::RectangleShape levelbtns[6];
@@ -320,8 +319,7 @@ public:
                 mouseheld = true;
             } 
         }
-        if (!sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) mouseheld = false;
-
+        
         for (int i = 0; i < 6; i++) {
             if (levelbtns[i].getGlobalBounds().contains(mousepos)) {
                 levelnums[i].setFillColor(sf::Color(170, 30, 80));
