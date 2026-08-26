@@ -223,6 +223,8 @@ public:
     sf::Font font;
     sf::Text goright;
     sf::Text goleft;
+    sf::RectangleShape gorightbtn;
+    sf::RectangleShape goleftbtn;
     int page = 0;
     bool mouseheld = false;
     sf::Text levelnums[6];
@@ -238,18 +240,30 @@ public:
         numshadows{font, font, font, font, font, font}
     {
         goright.setString(">");
-        goright.setCharacterSize(25);
-        goright.setFillColor(sf::Color(170, 255, 10));
+        goright.setCharacterSize(30);
+        goright.setFillColor(sf::Color(140, 225, 10));
         sf::FloatRect gorightbounds = goright.getLocalBounds();
         goright.setOrigin(sf::Vector2f(gorightbounds.position.x + gorightbounds.size.x/2, gorightbounds.position.y + gorightbounds.size.y/2));
         goright.setPosition(sf::Vector2f(1180, height/2));
 
         goleft.setString("<");
-        goleft.setCharacterSize(25);
-        goleft.setFillColor(sf::Color(170, 255, 10));
+        goleft.setCharacterSize(30);
+        goleft.setFillColor(sf::Color(140, 225, 10));
         sf::FloatRect goleftbounds = goleft.getLocalBounds();
         goleft.setOrigin(sf::Vector2f(goleftbounds.position.x + goleftbounds.size.x/2, goleftbounds.position.y + goleftbounds.size.y/2));
         goleft.setPosition(sf::Vector2f(100, height/2));
+
+        gorightbtn.setSize(sf::Vector2f(40, 40));
+        gorightbtn.setFillColor(sf::Color(240, 255, 80));
+        sf::FloatRect rightbtnbounds = gorightbtn.getLocalBounds();
+        gorightbtn.setOrigin(sf::Vector2f(rightbtnbounds.position.x + rightbtnbounds.size.x/2, rightbtnbounds.position.y + rightbtnbounds.size.y/2));
+        gorightbtn.setPosition(goright.getPosition());
+
+        goleftbtn.setSize(sf::Vector2f(40, 40));
+        goleftbtn.setFillColor(sf::Color(240, 255, 80));
+        sf::FloatRect leftbtnbounds = goleftbtn.getLocalBounds();
+        goleftbtn.setOrigin(sf::Vector2f(leftbtnbounds.position.x + leftbtnbounds.size.x/2, leftbtnbounds.position.y + leftbtnbounds.size.y/2));
+        goleftbtn.setPosition(goleft.getPosition());
 
         for (int i = 0; i < 6; i++) {
             levelnums[i].setCharacterSize(45);
@@ -263,7 +277,9 @@ public:
     }
 
     void draw (sf::RenderWindow& window) {
+        window.draw(gorightbtn);
         window.draw(goright);
+        window.draw(goleftbtn);
         window.draw(goleft);
         for (int i = 0; i < 6; i++) {
             window.draw(btnshadows[i]);
