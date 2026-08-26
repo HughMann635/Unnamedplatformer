@@ -149,9 +149,9 @@ public:
     {
         paused.setFont(font);
         paused.setString("PAUSED");
-        paused.setFillColor(sf::Color(170, 170, 110));
-        paused.setCharacterSize(35);
-        paused.setPosition(sf::Vector2f((width-paused.getGlobalBounds().size.x)/2, 340));
+        paused.setFillColor(sf::Color(170, 170, 80));
+        paused.setCharacterSize(40);
+        paused.setPosition(sf::Vector2f((width-paused.getGlobalBounds().size.x)/2, 295));
 
         resumetxt.setFont(font);
         resumetxt.setString("SPACE TO RESUME");
@@ -160,12 +160,12 @@ public:
 
         sf::FloatRect resumetxtbounds = resumetxt.getLocalBounds();
         resumetxt.setOrigin(sf::Vector2f(resumetxtbounds.position.x + resumetxtbounds.size.x/2, resumetxtbounds.position.y + resumetxtbounds.size.y/2));
-        resumetxt.setPosition(sf::Vector2f(width/2, 440));
+        resumetxt.setPosition(sf::Vector2f(width/2, 395));
 
         resumebtn.setSize(sf::Vector2f(resumetxtbounds.size.x*1.2, resumetxtbounds.size.y*2));
         resumebtn.setFillColor(sf::Color(10, 140, 75));
         resumebtn.setOrigin(sf::Vector2f(resumebtn.getLocalBounds().position.x + resumebtn.getLocalBounds().size.x/2, resumebtn.getLocalBounds().position.y + resumebtn.getLocalBounds().size.y/2));
-        resumebtn.setPosition(sf::Vector2f(width/2, 440));
+        resumebtn.setPosition(sf::Vector2f(width/2, 395));
 
         exittxt.setFont(font);
         exittxt.setString("ESCAPE TO EXIT");
@@ -174,15 +174,15 @@ public:
 
         sf::FloatRect exittxtbounds = exittxt.getLocalBounds();
         exittxt.setOrigin(sf::Vector2f(exittxtbounds.position.x + exittxtbounds.size.x/2, exittxtbounds.position.y + exittxtbounds.size.y/2));
-        exittxt.setPosition(sf::Vector2f(width/2, 490));
+        exittxt.setPosition(sf::Vector2f(width/2, 445));
 
         exitbtn.setSize(sf::Vector2f(resumetxtbounds.size.x*1.2, resumetxtbounds.size.y*2));
         exitbtn.setFillColor(sf::Color(75, 10, 140));
         exitbtn.setOrigin(sf::Vector2f(exitbtn.getLocalBounds().position.x + exitbtn.getLocalBounds().size.x/2, exitbtn.getLocalBounds().position.y + exitbtn.getLocalBounds().size.y/2));
-        exitbtn.setPosition(sf::Vector2f(width/2, 490));   
+        exitbtn.setPosition(sf::Vector2f(width/2, 445));   
         
-        resumetxtshadow = textshadow(120, 4, resumetxt);
-        exittxtshadow = textshadow(120, 4, exittxt);
+        resumetxtshadow = textshadow(120, 3, resumetxt);
+        exittxtshadow = textshadow(120, 3, exittxt);
         resumebtnshadow = rectshadow(235, 6, resumebtn);
         exitbtnshadow = rectshadow(235, 6, exitbtn);
     }
