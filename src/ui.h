@@ -224,6 +224,7 @@ public:
     sf::Text goright;
     sf::Text goleft;
     int page = 0;
+    bool mouseheld = false;
     sf::Text levelnums[6];
 
     levelselect() :
@@ -237,14 +238,14 @@ public:
         goright.setFillColor(sf::Color(170, 255, 10));
         sf::FloatRect gorightbounds = goright.getLocalBounds();
         goright.setOrigin(sf::Vector2f(gorightbounds.position.x + gorightbounds.size.x/2, gorightbounds.position.y + gorightbounds.size.y/2));
-        goright.setPosition(sf::Vector2f(100, height/2));
+        goright.setPosition(sf::Vector2f(1180, height/2));
 
         goleft.setString("<");
         goleft.setCharacterSize(25);
         goleft.setFillColor(sf::Color(170, 255, 10));
         sf::FloatRect goleftbounds = goleft.getLocalBounds();
         goleft.setOrigin(sf::Vector2f(goleftbounds.position.x + goleftbounds.size.x/2, goleftbounds.position.y + goleftbounds.size.y/2));
-        goleft.setPosition(sf::Vector2f(1180, height/2));
+        goleft.setPosition(sf::Vector2f(100, height/2));
 
         for (int i = 0; i < 6; i++) {
             levelnums[i].setCharacterSize(30);
@@ -264,11 +265,18 @@ public:
         sf::Vector2i mouse_ = sf::Mouse::getPosition(window);
         sf::Vector2f mousepos = sf::Vector2f((float)mouse_.x, (float)mouse_.y);
         if (goright.getGlobalBounds().contains(mousepos)) {
-            if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) page += 1;
+            if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && !mouseheld && page < 4) {
+                page += 1;
+                mouseheld = true;
+            } 
         }
         if (goleft.getGlobalBounds().contains(mousepos)) {
-            if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) page -= 1;
+            if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && !mouseheld && page > 0) {
+                page -= 1;
+                mouseheld = true;
+            } 
         }
+        if (!sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) mouseheld = false;
 
         for (int i = 0; i < 6; i++) {
             if (sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(static_cast<int>(sf::Keyboard::Key::Num1) + i))) {
