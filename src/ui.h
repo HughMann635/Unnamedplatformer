@@ -25,16 +25,22 @@ public:
     sf::Text title;
     sf::Text starttxt;
     sf::RectangleShape startbtn;
+    sf::Text creditstxt;
+    sf::RectangleShape creditsbtn;
     sf::Text titleshadow;
     sf::Text starttxtshadow;
     sf::RectangleShape startbtnshadow;
+    sf::Text creditstxtshadow;
+    sf::RectangleShape creditsbtnshadow;
     
     mainmenu() :
         font("AldotheApache.ttf"),
         title(font),
         titleshadow(font),
         starttxt(font),
-        starttxtshadow(font)
+        starttxtshadow(font),
+        creditstxt(font),
+        creditstxtshadow(font)
     {
         title.setFont(font);
         title.setString("WORLDS OF BLOCKMAN");
@@ -43,7 +49,7 @@ public:
         title.setPosition(sf::Vector2f((width-title.getGlobalBounds().size.x)/2, 100));
 
         starttxt.setFont(font);
-        starttxt.setString("SPACE TO PLAY, ESC FROM GAME TO QUIT");
+        starttxt.setString("PLAY");
         starttxt.setCharacterSize(35);
         starttxt.setFillColor(sf::Color(170, 100, 255));
 
@@ -51,14 +57,29 @@ public:
         starttxt.setOrigin(sf::Vector2f(starttxtbounds.position.x + starttxtbounds.size.x/2, starttxtbounds.position.y + starttxtbounds.size.y/2));
         starttxt.setPosition(sf::Vector2f(width/2, 450));
 
-        startbtn.setSize(sf::Vector2f(starttxtbounds.size.x*1.2, starttxtbounds.size.y*2));
+        startbtn.setSize(sf::Vector2f(starttxtbounds.size.x*2, starttxtbounds.size.y*2.5));
         startbtn.setFillColor(sf::Color(100, 30, 155));
         startbtn.setOrigin(sf::Vector2f(startbtn.getLocalBounds().size.x/2, startbtn.getLocalBounds().size.y/2));
         startbtn.setPosition(sf::Vector2f(width/2, starttxt.getPosition().y));
 
+        creditstxt.setFont(font);
+        creditstxt.setString("CREDITS");
+        creditstxt.setCharacterSize(25);
+        creditstxt.setFillColor(sf::Color(255, 20, 50));
+
+        sf::FloatRect creditstxtbounds = creditstxt.getLocalBounds();
+        creditstxt.setOrigin(sf::Vector2f(creditstxtbounds.position.x + creditstxtbounds.size.x/2, creditstxtbounds.position.y + creditstxtbounds.size.y/2));
+        creditstxt.setPosition(sf::Vector2f(width/2, 550));
+
+        creditsbtn.setSize(sf::Vector2f(creditstxtbounds.size.x*1.2, creditstxtbounds.size.y*2.5));
+        creditsbtn.setFillColor(sf::Color(185, 0, 0));
+        creditsbtn.setOrigin(sf::Vector2f(creditsbtn.getLocalBounds().size.x/2, creditsbtn.getLocalBounds().size.y/2));
+        creditsbtn.setPosition(sf::Vector2f(width/2, 550));
+
         titleshadow = textshadow(235, 6, title);
         starttxtshadow = textshadow(120, 4, starttxt);
         startbtnshadow = rectshadow(235, 6, startbtn);
+        
     }
 
     void play (sf::RenderWindow& window) {
@@ -91,6 +112,8 @@ public:
         window.draw(startbtn);
         window.draw(starttxtshadow);
         window.draw(starttxt);
+        window.draw(creditsbtn);
+        window.draw(creditstxt);
     }
 };
 

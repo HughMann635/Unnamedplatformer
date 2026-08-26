@@ -265,6 +265,5 @@ int main()
 		else esckeyheld = false;
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) mouseheld = true;
 		else mouseheld = false;
-	
 	}
 }
