@@ -260,7 +260,7 @@ public:
         }
     }
 
-    void update(sf::RenderWindow& window) {
+    void select(sf::RenderWindow& window) {
         sf::Vector2i mouse_ = sf::Mouse::getPosition(window);
         sf::Vector2f mousepos = sf::Vector2f((float)mouse_.x, (float)mouse_.y);
         if (goright.getGlobalBounds().contains(mousepos)) {

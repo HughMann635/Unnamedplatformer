@@ -23,6 +23,7 @@ int main()
 	mainmenu menu;
 	playing gameui;
 	pause pausemenu;
+	levelselect lvlselect; 
 	sf::Vector2f lastframe_pos;
 	sf::Vector2f lastframe_vel;
 	sf::Clock timer;
@@ -250,6 +251,13 @@ int main()
 			pausemenu.draw(window); 
 			window.setView(view);
 			if (!esckeyheld) pausemenu.checkaction(window);
+		} else if (state == State::levelselect) {
+			sky.drawsky(window);
+			sky.drawstars(window);
+			map.drawmap(window);
+			window.setView(window.getDefaultView());
+			lvlselect.draw(window);
+			lvlselect.select(window);
 		}
 
 		window.display();
