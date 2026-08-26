@@ -72,14 +72,15 @@ public:
         creditstxt.setPosition(sf::Vector2f(width/2, 550));
 
         creditsbtn.setSize(sf::Vector2f(creditstxtbounds.size.x*1.2, creditstxtbounds.size.y*2.5));
-        creditsbtn.setFillColor(sf::Color(185, 0, 0));
+        creditsbtn.setFillColor(sf::Color(115, 0, 0));
         creditsbtn.setOrigin(sf::Vector2f(creditsbtn.getLocalBounds().size.x/2, creditsbtn.getLocalBounds().size.y/2));
         creditsbtn.setPosition(sf::Vector2f(width/2, 550));
 
         titleshadow = textshadow(235, 6, title);
-        starttxtshadow = textshadow(120, 4, starttxt);
+        starttxtshadow = textshadow(120, 3, starttxt);
         startbtnshadow = rectshadow(235, 6, startbtn);
-        
+        creditstxtshadow = textshadow(120, 3, creditstxt);
+        creditsbtnshadow = rectshadow(235, 6, creditsbtn);
     }
 
     void play (sf::RenderWindow& window) {
@@ -112,7 +113,9 @@ public:
         window.draw(startbtn);
         window.draw(starttxtshadow);
         window.draw(starttxt);
+        window.draw(creditsbtnshadow);
         window.draw(creditsbtn);
+        window.draw(creditstxtshadow);
         window.draw(creditstxt);
     }
 };
