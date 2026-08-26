@@ -90,6 +90,7 @@ class playing {
 public:
     sf::Font font;
     sf::Text level;
+    int levelshade = 225;
 
     playing() :
         font("AldotheApache.ttf"),
@@ -99,11 +100,15 @@ public:
         level.setString("Level "+(setnum*6+levelnum+1));
         level.setCharacterSize(35);
         level.setPosition(sf::Vector2f((width-level.getGlobalBounds().size.x)/2, 60));
-        level.setFillColor(sf::Color(255, 45, 200, 200));
+        level.setFillColor(sf::Color(255, 45, 200, levelshade));
     }
 
     void draw (sf::RenderWindow& window) {
         level.setString("Level "+std::to_string(setnum*6+levelnum+1));
+        sf::Vector2i mouse_ = sf::Mouse::getPosition(window);
+        if (mouse_.y >= 200 && levelshade > 0) levelshade -= 3;
+        else if (mouse_.y < 200 && levelshade < 225) levelshade += 3;
+        level.setFillColor(sf::Color(255, 45, 200, levelshade));
         level.setPosition(sf::Vector2f((width-level.getGlobalBounds().size.x)/2, 60));
         window.draw(level);
     }
