@@ -255,7 +255,7 @@ public:
             levelnums[i].setCharacterSize(45);
             levelnums[i].setFillColor(sf::Color(0, 100, 240));
             levelbtns[i].setSize(sf::Vector2f(70, 70));
-            levelbtns[i].setFillColor(sf::Color(200, 200, 255));
+            levelbtns[i].setFillColor(sf::Color(0, 150, 250));
             //levelbtns[i].setOutlineColor(sf::Color(0, 100, 240));
             //levelbtns[i].setOutlineThickness(-2);
             levelbtns[i].setOrigin(sf::Vector2f(levelbtns[i].getLocalBounds().position.x + levelbtns[i].getLocalBounds().size.x/2, levelbtns[i].getLocalBounds().position.y + levelbtns[i].getLocalBounds().size.y/2));
@@ -291,10 +291,17 @@ public:
         if (!sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) mouseheld = false;
 
         for (int i = 0; i < 6; i++) {
-            if (sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(static_cast<int>(sf::Keyboard::Key::Num1) + i))) {
-                levelnum = i;
-                setnum = page;
-                state = State::playing;
+            if (levelbtns[i].getGlobalBounds().contains(mousepos)) {
+                levelnums[i].setFillColor(sf::Color(170, 30, 80));
+                levelbtns[i].setFillColor(sf::Color(100, 0, 30));
+                if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
+                    levelnum = i;
+                    setnum = page;
+                    state = State::playing;
+                }
+            } else {
+                levelnums[i].setFillColor(sf::Color(0, 100, 240));
+                levelbtns[i].setFillColor(sf::Color(0, 150, 250));
             }
         }
 
@@ -310,7 +317,7 @@ public:
             else levelbtns[i].setPosition(sf::Vector2f(400 * (i-3) + 240, 400));
             numshadows[i] = levelnums[i];
             numshadows[i].setFillColor(sf::Color(0, 0, 0, 120));
-            numshadows[i].setPosition(levelnums[i].getPosition() + sf::Vector2f(2, 2));
+            numshadows[i].setPosition(levelnums[i].getPosition() + sf::Vector2f(3, 3));
             btnshadows[i] = levelbtns[i];
             btnshadows[i].setFillColor(sf::Color(0, 0, 0, 215));
             btnshadows[i].setPosition(levelbtns[i].getPosition() + sf::Vector2f(5, 5));
