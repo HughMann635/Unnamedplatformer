@@ -327,8 +327,8 @@ public:
         sf::Vector2i mouse_ = sf::Mouse::getPosition(window);
         sf::Vector2f mousepos = sf::Vector2f((float)mouse_.x, (float)mouse_.y);
         if (gorightbtn.getGlobalBounds().contains(mousepos)) {
-            gorightbtn.setFillColor(sf::Color(255, 200, 200));
-            goright.setFillColor(sf::Color(190, 100, 100));
+            gorightbtn.setFillColor(sf::Color(200, 80, 0));
+            goright.setFillColor(sf::Color(255, 120, 0));
             if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && !mouseheld && page < 4) {
                 page += 1;
                 mouseheld = true;
@@ -338,8 +338,8 @@ public:
             goright.setFillColor(sf::Color(140, 255, 10));
         }
         if (goleftbtn.getGlobalBounds().contains(mousepos)) {
-            goleftbtn.setFillColor(sf::Color(255, 200, 200));
-            goleft.setFillColor(sf::Color(190, 100, 100));
+            goleftbtn.setFillColor(sf::Color(200, 80, 0));
+            goleft.setFillColor(sf::Color(255, 120, 0));
             if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && !mouseheld && page > 0) {
                 page -= 1;
                 mouseheld = true;
@@ -350,7 +350,7 @@ public:
         }
 
         for (int i = 0; i < 6; i++) {
-            if (levelbtns[i].getGlobalBounds().contains(mousepos)) {
+            if (levelbtns[i].getGlobalBounds().contains(mousepos) && !mouseheld) {
                 levelnums[i].setFillColor(sf::Color(170, 30, 80));
                 levelbtns[i].setFillColor(sf::Color(100, 0, 30));
                 if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
