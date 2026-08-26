@@ -226,13 +226,16 @@ public:
     int page = 0;
     bool mouseheld = false;
     sf::Text levelnums[6];
+    sf::Text numshadows[6];
     sf::RectangleShape levelbtns[6];
+    sf::RectangleShape btnshadows[6];
 
     levelselect() :
         font("AldotheApache.ttf"),
         goright(font),
         goleft(font),
-        levelnums{font, font, font, font, font, font}
+        levelnums{font, font, font, font, font, font},
+        numshadows{font, font, font, font, font, font}
     {
         goright.setString(">");
         goright.setCharacterSize(25);
@@ -263,7 +266,9 @@ public:
         window.draw(goright);
         window.draw(goleft);
         for (int i = 0; i < 6; i++) {
+            window.draw(btnshadows[i]);
             window.draw(levelbtns[i]);
+            window.draw(numshadows[i]);
             window.draw(levelnums[i]);
         }
     }
@@ -303,6 +308,12 @@ public:
             else levelnums[i].setPosition(sf::Vector2f(400 * (i-3) + 240, 400));
             if (i < 3) levelbtns[i].setPosition(sf::Vector2f(400 * i + 240, 180));
             else levelbtns[i].setPosition(sf::Vector2f(400 * (i-3) + 240, 400));
+            numshadows[i] = levelnums[i];
+            numshadows[i].setFillColor(sf::Color(0, 0, 0, 120));
+            numshadows[i].setPosition(levelnums[i].getPosition() + sf::Vector2f(2, 2));
+            btnshadows[i] = levelbtns[i];
+            btnshadows[i].setFillColor(sf::Color(0, 0, 0, 215));
+            btnshadows[i].setPosition(levelbtns[i].getPosition() + sf::Vector2f(5, 5));
         }
     }
 };
