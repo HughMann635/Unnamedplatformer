@@ -267,7 +267,7 @@ public:
         goleftbtn.setOrigin(sf::Vector2f(leftbtnbounds.position.x + leftbtnbounds.size.x/2, leftbtnbounds.position.y + leftbtnbounds.size.y/2));
         goleftbtn.setPosition(goleft.getPosition());
 
-        set.setString("SET " + std::to_string(page+1));
+        set.setString("set " + std::to_string(page+1));
         set.setCharacterSize(45);
         set.setFillColor(sf::Color(120, 100, 190));
         sf::FloatRect setbounds = set.getLocalBounds();
@@ -286,6 +286,7 @@ public:
     }
 
     void draw (sf::RenderWindow& window) {
+        set.setString("set " + std::to_string(page+1));
         window.draw(set);
         window.draw(gorightbtn);
         window.draw(goright);
@@ -302,13 +303,13 @@ public:
     void select(sf::RenderWindow& window) {
         sf::Vector2i mouse_ = sf::Mouse::getPosition(window);
         sf::Vector2f mousepos = sf::Vector2f((float)mouse_.x, (float)mouse_.y);
-        if (goright.getGlobalBounds().contains(mousepos)) {
+        if (gorightbtn.getGlobalBounds().contains(mousepos)) {
             if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && !mouseheld && page < 4) {
                 page += 1;
                 mouseheld = true;
             } 
         }
-        if (goleft.getGlobalBounds().contains(mousepos)) {
+        if (goleftbtn.getGlobalBounds().contains(mousepos)) {
             if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && !mouseheld && page > 0) {
                 page -= 1;
                 mouseheld = true;
@@ -337,10 +338,10 @@ public:
             int levelnumber = page * 6 + i + 1;
             levelnums[i].setString(std::to_string(levelnumber));
             levelnums[i].setOrigin(sf::Vector2f(levelnums[i].getLocalBounds().position.x + levelnums[i].getLocalBounds().size.x/2, levelnums[i].getLocalBounds().position.y + levelnums[i].getLocalBounds().size.y/2));
-            if (i < 3) levelnums[i].setPosition(sf::Vector2f(400 * i + 240, 180));
-            else levelnums[i].setPosition(sf::Vector2f(400 * (i-3) + 240, 400));
-            if (i < 3) levelbtns[i].setPosition(sf::Vector2f(400 * i + 240, 180));
-            else levelbtns[i].setPosition(sf::Vector2f(400 * (i-3) + 240, 400));
+            if (i < 3) levelnums[i].setPosition(sf::Vector2f(400 * i + 240, 250));
+            else levelnums[i].setPosition(sf::Vector2f(400 * (i-3) + 240, 470));
+            if (i < 3) levelbtns[i].setPosition(sf::Vector2f(400 * i + 240, 250));
+            else levelbtns[i].setPosition(sf::Vector2f(400 * (i-3) + 240, 470));
             numshadows[i] = levelnums[i];
             numshadows[i].setFillColor(sf::Color(0, 0, 0, 120));
             numshadows[i].setPosition(levelnums[i].getPosition() + sf::Vector2f(3, 3));
