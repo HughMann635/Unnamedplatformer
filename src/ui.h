@@ -59,13 +59,13 @@ public:
         if (startbtn.getGlobalBounds().contains(mousepos)) {
             starttxt.setFillColor(sf::Color(255, 170, 30));
             startbtn.setFillColor(sf::Color(185, 100, 30));
-            if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) state = State::playing;
+            if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) state = State::levelselect;
         }
         else { 
             starttxt.setFillColor(sf::Color(170, 100, 255));
             startbtn.setFillColor(sf::Color(100, 30, 155));
         }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space)) state = State::playing;
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space)) state = State::levelselect;
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Enter)) { std::cout <<
             "\nbutton origin: " << startbtn.getOrigin().x << ", " << startbtn.getOrigin().y <<
             "\ntext origin: " << starttxt.getOrigin().x << ", " << starttxt.getOrigin().y <<
