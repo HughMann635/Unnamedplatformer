@@ -223,6 +223,7 @@ public:
     sf::Font font;
     sf::Text goright;
     sf::Text goleft;
+    sf::Text set;
     sf::RectangleShape gorightbtn;
     sf::RectangleShape goleftbtn;
     int page = 0;
@@ -236,6 +237,7 @@ public:
         font("AldotheApache.ttf"),
         goright(font),
         goleft(font),
+        set(font),
         levelnums{font, font, font, font, font, font},
         numshadows{font, font, font, font, font, font}
     {
@@ -265,6 +267,13 @@ public:
         goleftbtn.setOrigin(sf::Vector2f(leftbtnbounds.position.x + leftbtnbounds.size.x/2, leftbtnbounds.position.y + leftbtnbounds.size.y/2));
         goleftbtn.setPosition(goleft.getPosition());
 
+        set.setString("SET " + std::to_string(page+1));
+        set.setCharacterSize(45);
+        set.setFillColor(sf::Color(120, 100, 190));
+        sf::FloatRect setbounds = set.getLocalBounds();
+        set.setOrigin(sf::Vector2f(setbounds.position.x + setbounds.size.x/2, setbounds.position.y + setbounds.size.y/2));
+        set.setPosition(sf::Vector2f(width/2, 100));
+
         for (int i = 0; i < 6; i++) {
             levelnums[i].setCharacterSize(45);
             levelnums[i].setFillColor(sf::Color(0, 100, 240));
@@ -277,6 +286,7 @@ public:
     }
 
     void draw (sf::RenderWindow& window) {
+        window.draw(set);
         window.draw(gorightbtn);
         window.draw(goright);
         window.draw(goleftbtn);
