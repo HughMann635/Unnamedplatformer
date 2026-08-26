@@ -5,14 +5,14 @@
 #include "vars.h"
 #include "states.h"
 
-sf::Text txtshadow (int shade, int depth, sf::Text text) {
+inline sf::Text textshadow (int shade, int depth, sf::Text text) {
     sf::Text shadow = text;
     shadow.setFillColor(sf::Color(0, 0, 0, shade));
     shadow.setPosition(text.getPosition()+sf::Vector2f(depth, depth));
     return shadow;
 }
 
-sf::RectangleShape rectshadow (int shade, int depth, sf::RectangleShape shape) {
+inline sf::RectangleShape rectshadow (int shade, int depth, sf::RectangleShape shape) {
     sf::RectangleShape shadow = shape;
     shadow.setFillColor(sf::Color(0, 0, 0, shade));
     shadow.setPosition(shape.getPosition()+sf::Vector2f(depth, depth));
@@ -56,15 +56,9 @@ public:
         startbtn.setOrigin(sf::Vector2f(startbtn.getLocalBounds().size.x/2, startbtn.getLocalBounds().size.y/2));
         startbtn.setPosition(sf::Vector2f(width/2, starttxt.getPosition().y));
 
-        titleshadow = title;
-        titleshadow.setFillColor(sf::Color(0, 0, 0, 235));
-        titleshadow.setPosition(title.getPosition() + sf::Vector2f(6, 6));
-        starttxtshadow = starttxt;
-        starttxtshadow.setFillColor(sf::Color(0, 0, 0, 120));
-        starttxtshadow.setPosition(starttxt.getPosition() + sf::Vector2f(4, 4));
-        startbtnshadow = startbtn;
-        startbtnshadow.setFillColor(sf::Color(0, 0, 0, 235));
-        startbtnshadow.setPosition(startbtn.getPosition() + sf::Vector2f(6, 6));
+        titleshadow = textshadow(235, 6, title);
+        starttxtshadow = textshadow(120, 4, starttxt);
+        startbtnshadow = rectshadow(235, 6, startbtn);
     }
 
     void play (sf::RenderWindow& window) {
@@ -187,18 +181,10 @@ public:
         exitbtn.setOrigin(sf::Vector2f(exitbtn.getLocalBounds().position.x + exitbtn.getLocalBounds().size.x/2, exitbtn.getLocalBounds().position.y + exitbtn.getLocalBounds().size.y/2));
         exitbtn.setPosition(sf::Vector2f(width/2, 490));   
         
-        resumetxtshadow = resumetxt;
-        resumetxtshadow.setFillColor(sf::Color(0, 0, 0, 120));
-        resumetxtshadow.setPosition(resumetxt.getPosition()+sf::Vector2f(4, 4));
-        exittxtshadow = exittxt;
-        exittxtshadow.setFillColor(sf::Color(0, 0, 0, 120));
-        exittxtshadow.setPosition(exittxt.getPosition()+sf::Vector2f(4, 4));
-        resumebtnshadow = resumebtn;
-        resumebtnshadow.setFillColor(sf::Color(0, 0, 0, 235));
-        resumebtnshadow.setPosition(resumebtn.getPosition()+sf::Vector2f(6, 6));
-        exitbtnshadow = exitbtn;
-        exitbtnshadow.setFillColor(sf::Color(0, 0, 0, 235));
-        exitbtnshadow.setPosition(exitbtnshadow.getPosition()+sf::Vector2f(6, 6));
+        resumetxtshadow = textshadow(120, 4, resumetxt);
+        exittxtshadow = textshadow(120, 4, exittxt);
+        resumebtnshadow = rectshadow(235, 6, resumebtn);
+        exitbtnshadow = rectshadow(235, 6, exitbtn);
     }
 
     void draw (sf::RenderWindow& window) {
@@ -245,6 +231,11 @@ public:
     sf::Text set;
     sf::RectangleShape gorightbtn;
     sf::RectangleShape goleftbtn;
+    sf::Text gorightshadow;
+    sf::Text goleftshadow;
+    sf::Text setshadow;
+    sf::RectangleShape rightbtnshadow;
+    sf::RectangleShape leftbtnshadow;
     int page = 0;
     sf::Text levelnums[6];
     sf::Text numshadows[6];
@@ -254,8 +245,11 @@ public:
     levelselect() :
         font("AldotheApache.ttf"),
         goright(font),
+        gorightshadow(font),
         goleft(font),
+        goleftshadow(font),
         set(font),
+        setshadow(font),
         levelnums{font, font, font, font, font, font},
         numshadows{font, font, font, font, font, font}
     {
@@ -292,6 +286,12 @@ public:
         set.setOrigin(sf::Vector2f(setbounds.position.x + setbounds.size.x/2, setbounds.position.y + setbounds.size.y/2));
         set.setPosition(sf::Vector2f(width/2, 100));
 
+        gorightshadow = textshadow(120, 2, goright);
+        goleftshadow = textshadow(120, 2, goleft);
+        rightbtnshadow = rectshadow(235, 6, gorightbtn);
+        leftbtnshadow = rectshadow(235, 6, goleftbtn);
+        setshadow = textshadow(235, 6, set);
+
         for (int i = 0; i < 6; i++) {
             levelnums[i].setCharacterSize(45);
             levelnums[i].setFillColor(sf::Color(0, 100, 240));
@@ -305,10 +305,15 @@ public:
 
     void draw (sf::RenderWindow& window) {
         set.setString("set " + std::to_string(page+1));
+        window.draw(setshadow);
         window.draw(set);
+        window.draw(rightbtnshadow);
         window.draw(gorightbtn);
+        window.draw(gorightshadow);
         window.draw(goright);
+        window.draw(leftbtnshadow);
         window.draw(goleftbtn);
+        window.draw(goleftshadow);
         window.draw(goleft);
         for (int i = 0; i < 6; i++) {
             window.draw(btnshadows[i]);
@@ -322,16 +327,26 @@ public:
         sf::Vector2i mouse_ = sf::Mouse::getPosition(window);
         sf::Vector2f mousepos = sf::Vector2f((float)mouse_.x, (float)mouse_.y);
         if (gorightbtn.getGlobalBounds().contains(mousepos)) {
+            gorightbtn.setFillColor(sf::Color(255, 200, 200));
+            goright.setFillColor(sf::Color(190, 100, 100));
             if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && !mouseheld && page < 4) {
                 page += 1;
                 mouseheld = true;
             } 
+        } else {
+            gorightbtn.setFillColor(sf::Color(240, 255, 80));
+            goright.setFillColor(sf::Color(140, 255, 10));
         }
         if (goleftbtn.getGlobalBounds().contains(mousepos)) {
+            goleftbtn.setFillColor(sf::Color(255, 200, 200));
+            goleft.setFillColor(sf::Color(190, 100, 100));
             if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && !mouseheld && page > 0) {
                 page -= 1;
                 mouseheld = true;
             } 
+        } else {
+            goleftbtn.setFillColor(sf::Color(240, 255, 80));
+            goleft.setFillColor(sf::Color(140, 255, 10));
         }
 
         for (int i = 0; i < 6; i++) {
@@ -359,12 +374,8 @@ public:
             else levelnums[i].setPosition(sf::Vector2f(400 * (i-3) + 240, 470));
             if (i < 3) levelbtns[i].setPosition(sf::Vector2f(400 * i + 240, 250));
             else levelbtns[i].setPosition(sf::Vector2f(400 * (i-3) + 240, 470));
-            numshadows[i] = levelnums[i];
-            numshadows[i].setFillColor(sf::Color(0, 0, 0, 120));
-            numshadows[i].setPosition(levelnums[i].getPosition() + sf::Vector2f(3, 3));
-            btnshadows[i] = levelbtns[i];
-            btnshadows[i].setFillColor(sf::Color(0, 0, 0, 215));
-            btnshadows[i].setPosition(levelbtns[i].getPosition() + sf::Vector2f(5, 5));
+            numshadows[i] = textshadow(120, 3, levelnums[i]);
+            btnshadows[i] = rectshadow(215, 5, levelbtns[i]);
         }
     }
 };
