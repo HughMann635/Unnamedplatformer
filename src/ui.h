@@ -250,11 +250,11 @@ public:
 
         for (int i = 0; i < 6; i++) {
             levelnums[i].setCharacterSize(45);
-            levelnums[i].setFillColor(sf::Color(255, 100, 240));
-            levelbtns[i].setSize(sf::Vector2f(50, 50));
-            levelbtns[i].setFillColor(sf::Color(255, 255, 255));
-            levelbtns[i].setOutlineColor(sf::Color(255, 100, 240));
-            levelbtns[i].setOutlineThickness(-2);
+            levelnums[i].setFillColor(sf::Color(0, 100, 240));
+            levelbtns[i].setSize(sf::Vector2f(70, 70));
+            levelbtns[i].setFillColor(sf::Color(200, 200, 255));
+            //levelbtns[i].setOutlineColor(sf::Color(0, 100, 240));
+            //levelbtns[i].setOutlineThickness(-2);
             levelbtns[i].setOrigin(sf::Vector2f(levelbtns[i].getLocalBounds().position.x + levelbtns[i].getLocalBounds().size.x/2, levelbtns[i].getLocalBounds().position.y + levelbtns[i].getLocalBounds().size.y/2));
         }
     }
