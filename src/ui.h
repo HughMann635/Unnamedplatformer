@@ -27,11 +27,19 @@ public:
     sf::RectangleShape startbtn;
     sf::Text creditstxt;
     sf::RectangleShape creditsbtn;
+    sf::Text settingstxt;
+    sf::RectangleShape settingsbtn;
+    sf::Text handbooktxt;
+    sf::RectangleShape handbookbtn;
     sf::Text titleshadow;
     sf::Text starttxtshadow;
     sf::RectangleShape startbtnshadow;
     sf::Text creditstxtshadow;
     sf::RectangleShape creditsbtnshadow;
+    sf::Text settingstxtshadow;
+    sf::RectangleShape settingsbtnshadow;
+    sf::Text handbooktxtshadow;
+    sf::RectangleShape handbookbtnshadow;
     
     mainmenu() :
         font("AldotheApache.ttf"),
@@ -40,7 +48,11 @@ public:
         starttxt(font),
         starttxtshadow(font),
         creditstxt(font),
-        creditstxtshadow(font)
+        creditstxtshadow(font),
+        settingstxt(font),
+        settingstxtshadow(font),
+        handbooktxt(font),
+        handbooktxtshadow(font)
     {
         title.setFont(font);
         title.setString("WORLDS OF BLOCKMAN");
