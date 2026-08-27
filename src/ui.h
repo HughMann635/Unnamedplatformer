@@ -133,15 +133,23 @@ public:
         if (startbtn.getGlobalBounds().contains(mousepos)) {
             starttxt.setFillColor(sf::Color(255, 170, 30));
             startbtn.setFillColor(sf::Color(185, 100, 30));
+            starttxt.setPosition(sf::Vector2f(640, 453));
+            startbtn.setPosition(sf::Vector2f(640, 453));
+            starttxtshadow.setPosition(sf::Vector2f(643, 456));
+            startbtnshadow.setPosition(sf::Vector2f(643, 456));
             if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) state = State::levelselect;
         }
         else { 
             starttxt.setFillColor(sf::Color(170, 100, 255));
             startbtn.setFillColor(sf::Color(100, 30, 155));
+            starttxt.setPosition(sf::Vector2f(640, 450));
+            startbtn.setPosition(sf::Vector2f(640, 450));
+            starttxtshadow.setPosition(sf::Vector2f(643, 453));
+            startbtnshadow.setPosition(sf::Vector2f(646, 456));
         }
 
         if (creditsbtn.getGlobalBounds().contains(mousepos)) {
-            creditstxt.setFillColor(sf::Color(135, 0, 0));
+            creditstxt.setFillColor(sf::Color(100, 0, 0));
             creditsbtn.setFillColor(sf::Color(180, 180, 180));
             creditstxt.setPosition(sf::Vector2f(490, 553));
             creditsbtn.setPosition(sf::Vector2f(490, 553));
@@ -159,23 +167,39 @@ public:
         }
 
         if (handbookbtn.getGlobalBounds().contains(mousepos)) {
-            handbooktxt.setFillColor(sf::Color(255, 170, 30));
-            handbookbtn.setFillColor(sf::Color(185, 100, 30));
+            handbooktxt.setFillColor(sf::Color(0, 0, 100));
+            handbookbtn.setFillColor(sf::Color(180, 180, 180));
+            handbooktxt.setPosition(sf::Vector2f(640, 553));
+            handbookbtn.setPosition(sf::Vector2f(640, 553));
+            handbooktxtshadow.setPosition(sf::Vector2f(643, 556));
+            handbookbtnshadow.setPosition(sf::Vector2f(643, 556));
             if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) state = State::handbook;
         }
         else { 
             handbooktxt.setFillColor(sf::Color(20, 50, 255));
             handbookbtn.setFillColor(sf::Color(0, 0, 115));
+            handbooktxt.setPosition(sf::Vector2f(640, 550));
+            handbookbtn.setPosition(sf::Vector2f(640, 550));
+            handbooktxtshadow.setPosition(sf::Vector2f(643, 553));
+            handbookbtnshadow.setPosition(sf::Vector2f(646, 556));
         }
 
         if (settingsbtn.getGlobalBounds().contains(mousepos)) {
-            settingstxt.setFillColor(sf::Color(255, 170, 30));
-            settingsbtn.setFillColor(sf::Color(185, 100, 30));
+            settingstxt.setFillColor(sf::Color(0, 70, 0));
+            settingsbtn.setFillColor(sf::Color(180, 180, 180));
+            settingstxt.setPosition(sf::Vector2f(790, 553));
+            settingsbtn.setPosition(sf::Vector2f(790, 553));
+            settingstxtshadow.setPosition(sf::Vector2f(793, 556));
+            settingsbtnshadow.setPosition(sf::Vector2f(793, 556));
             if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) state = State::settings;
         }
         else { 
             settingstxt.setFillColor(sf::Color(20, 255, 50));
             settingsbtn.setFillColor(sf::Color(0, 115, 0));
+            settingstxt.setPosition(sf::Vector2f(790, 550));
+            settingsbtn.setPosition(sf::Vector2f(790, 550));
+            settingstxtshadow.setPosition(sf::Vector2f(793, 553));
+            settingsbtnshadow.setPosition(sf::Vector2f(796, 556));
         }
     }
 
