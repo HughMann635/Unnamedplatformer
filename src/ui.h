@@ -383,6 +383,7 @@ public:
 
     void draw (sf::RenderWindow& window) {
         set.setString("set " + std::to_string(page+1));
+        setshadow.setString("set " + std::to_string(page+1));
         window.draw(setshadow);
         window.draw(set);
         window.draw(rightbtnshadow);
