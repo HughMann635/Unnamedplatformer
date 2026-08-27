@@ -10,7 +10,10 @@ enum class State {
     mainmenu,
     playing,
     pause,
-    levelselect
+    levelselect,
+    credits,
+    handbook,
+    settings
 };
 
 inline State state = State::mainmenu;

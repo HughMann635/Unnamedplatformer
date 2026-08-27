@@ -139,14 +139,35 @@ public:
             starttxt.setFillColor(sf::Color(170, 100, 255));
             startbtn.setFillColor(sf::Color(100, 30, 155));
         }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space)) state = State::levelselect;
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Enter)) { std::cout <<
-            "\nbutton origin: " << startbtn.getOrigin().x << ", " << startbtn.getOrigin().y <<
-            "\ntext origin: " << starttxt.getOrigin().x << ", " << starttxt.getOrigin().y <<
-            "\nbutton size: " << startbtn.getSize().x << ", " << startbtn.getSize().y <<
-            "\ntext size: " << starttxt.getGlobalBounds().size.x << ", " << starttxt.getGlobalBounds().size.y <<
-            "\nbutton pos: " << startbtn.getPosition().x << ", " << startbtn.getPosition().y <<
-            "\ntext pos: " << starttxt.getPosition().x << ", " << starttxt.getPosition().y;
+
+        if (creditsbtn.getGlobalBounds().contains(mousepos)) {
+            creditstxt.setFillColor(sf::Color(255, 170, 30));
+            creditsbtn.setFillColor(sf::Color(185, 100, 30));
+            if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) state = State::credits;
+        }
+        else { 
+            creditstxt.setFillColor(sf::Color(255, 20, 50));
+            creditsbtn.setFillColor(sf::Color(115, 0, 0));
+        }
+
+        if (handbookbtn.getGlobalBounds().contains(mousepos)) {
+            handbooktxt.setFillColor(sf::Color(255, 170, 30));
+            handbookbtn.setFillColor(sf::Color(185, 100, 30));
+            if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) state = State::handbook;
+        }
+        else { 
+            handbooktxt.setFillColor(sf::Color(20, 50, 255));
+            handbookbtn.setFillColor(sf::Color(0, 0, 115));
+        }
+
+        if (settingsbtn.getGlobalBounds().contains(mousepos)) {
+            settingstxt.setFillColor(sf::Color(255, 170, 30));
+            settingsbtn.setFillColor(sf::Color(185, 100, 30));
+            if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) state = State::settings;
+        }
+        else { 
+            settingstxt.setFillColor(sf::Color(20, 255, 50));
+            settingsbtn.setFillColor(sf::Color(0, 115, 0));
         }
     }
 

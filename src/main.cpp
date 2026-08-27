@@ -258,6 +258,12 @@ int main()
 			window.setView(window.getDefaultView());
 			lvlselect.select(window);
 			lvlselect.draw(window);
+		} else if (state == State::credits) {
+
+		} else if (state == State::handbook) {
+
+		} else if (state == State::settings) {
+
 		}
 
 		window.display();
