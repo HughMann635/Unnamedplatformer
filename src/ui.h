@@ -78,44 +78,23 @@ public:
         startbtn.setOrigin(sf::Vector2f(startbtn.getLocalBounds().size.x/2, startbtn.getLocalBounds().size.y/2));
         startbtn.setPosition(sf::Vector2f(width/2, 450));
 
-        creditstxt.setFont(font);
-        creditstxt.setString("CREDITS");
-        creditstxt.setCharacterSize(25);
-        creditstxt.setFillColor(sf::Color(255, 20, 50));
+        creditstxt = maketext(25, sf::Color(255, 20, 50), "CREDITS", font, sf::Vector2f(490, 550));
 
-        sf::FloatRect creditstxtbounds = creditstxt.getLocalBounds();
-        creditstxt.setOrigin(sf::Vector2f(creditstxtbounds.position.x + creditstxtbounds.size.x/2, creditstxtbounds.position.y + creditstxtbounds.size.y/2));
-        creditstxt.setPosition(sf::Vector2f(width/2-150, 550));
-
-        creditsbtn.setSize(sf::Vector2f(creditstxtbounds.size.x*1.5, creditstxtbounds.size.y*2.5));
+        creditsbtn.setSize(sf::Vector2f(creditstxt.getLocalBounds().size.x*1.5, creditstxt.getLocalBounds().size.y*2.5));
         creditsbtn.setFillColor(sf::Color(115, 0, 0));
         creditsbtn.setOrigin(sf::Vector2f(creditsbtn.getLocalBounds().size.x/2, creditsbtn.getLocalBounds().size.y/2));
         creditsbtn.setPosition(sf::Vector2f(width/2-150, 550));
 
-        settingstxt.setFont(font);
-        settingstxt.setString("SETTINGS");
-        settingstxt.setCharacterSize(25);
-        settingstxt.setFillColor(sf::Color(20, 255, 50));
+        settingstxt = maketext(25, sf::Color(20, 255, 50), "CREDITS", font, sf::Vector2f(790, 550));
 
-        sf::FloatRect settingstxtbounds = settingstxt.getLocalBounds();
-        settingstxt.setOrigin(sf::Vector2f(settingstxtbounds.position.x + settingstxtbounds.size.x/2, settingstxtbounds.position.y + settingstxtbounds.size.y/2));
-        settingstxt.setPosition(sf::Vector2f(width/2+150, 550));
-
-        settingsbtn.setSize(sf::Vector2f(creditstxtbounds.size.x*1.5, creditstxtbounds.size.y*2.5));
+        settingsbtn.setSize(sf::Vector2f(creditstxt.getLocalBounds().size.x*1.5, creditstxt.getLocalBounds().size.y*2.5));
         settingsbtn.setFillColor(sf::Color(0, 115, 0));
         settingsbtn.setOrigin(sf::Vector2f(creditsbtn.getLocalBounds().size.x/2, creditsbtn.getLocalBounds().size.y/2));
         settingsbtn.setPosition(sf::Vector2f(width/2+150, 550));
 
-        handbooktxt.setFont(font);
-        handbooktxt.setString("HANDBOOK");
-        handbooktxt.setCharacterSize(25);
-        handbooktxt.setFillColor(sf::Color(20, 50, 255));
+        handbooktxt = maketext(25, sf::Color(20, 50, 255), "HANDBOOK", font, sf::Vector2f(640, 550));
 
-        sf::FloatRect handbooktxtbounds = handbooktxt.getLocalBounds();
-        handbooktxt.setOrigin(sf::Vector2f(handbooktxtbounds.position.x + handbooktxtbounds.size.x/2, handbooktxtbounds.position.y + handbooktxtbounds.size.y/2));
-        handbooktxt.setPosition(sf::Vector2f(width/2, 550));
-
-        handbookbtn.setSize(sf::Vector2f(creditstxtbounds.size.x*1.5, creditstxtbounds.size.y*2.5));
+        handbookbtn.setSize(sf::Vector2f(creditstxt.getLocalBounds().size.x*1.5, creditstxt.getLocalBounds().size.y*2.5));
         handbookbtn.setFillColor(sf::Color(0, 0, 115));
         handbookbtn.setOrigin(sf::Vector2f(creditsbtn.getLocalBounds().size.x/2, creditsbtn.getLocalBounds().size.y/2));
         handbookbtn.setPosition(sf::Vector2f(width/2, 550));
