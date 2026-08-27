@@ -19,6 +19,17 @@ inline sf::RectangleShape rectshadow (int shade, int depth, sf::RectangleShape s
     return shadow;
 }
 
+inline sf::Text maketext (int size, sf::Color color, const std::string& string, sf::Font& font, sf::Vector2f position) {
+    sf::Text text(font);
+    text.setCharacterSize(size);
+    text.setFillColor(color);
+    text.setString(string);
+    sf::FloatRect textbounds = text.getLocalBounds();
+    text.setOrigin(sf::Vector2f(textbounds.position.x + textbounds.size.x/2, textbounds.position.y + textbounds.size.y/2));
+    text.setPosition(position);
+    return text;
+}
+
 class mainmenu {
 public:
     sf::Font font;
@@ -55,24 +66,17 @@ public:
         handbooktxtshadow(font)
     {
         title.setFont(font);
-        title.setString("WORLDS OF BLOCKMAN");
         title.setCharacterSize(55);
         title.setFillColor(sf::Color(170, 100, 255));
+        title.setString("WORLDS OF BLOCKMAN");
         title.setPosition(sf::Vector2f((width-title.getGlobalBounds().size.x)/2, 100));
 
-        starttxt.setFont(font);
-        starttxt.setString("PLAY");
-        starttxt.setCharacterSize(35);
-        starttxt.setFillColor(sf::Color(170, 100, 255));
+        starttxt = maketext(35, sf::Color(170, 100, 255), "PLAY", font, sf::Vector2f(width/2, 450));
 
-        sf::FloatRect starttxtbounds = starttxt.getLocalBounds();
-        starttxt.setOrigin(sf::Vector2f(starttxtbounds.position.x + starttxtbounds.size.x/2, starttxtbounds.position.y + starttxtbounds.size.y/2));
-        starttxt.setPosition(sf::Vector2f(width/2, 450));
-
-        startbtn.setSize(sf::Vector2f(starttxtbounds.size.x*2, starttxtbounds.size.y*2.5));
+        startbtn.setSize(sf::Vector2f(starttxt.getLocalBounds().size.x*2, starttxt.getLocalBounds().size.y*2.5));
         startbtn.setFillColor(sf::Color(100, 30, 155));
         startbtn.setOrigin(sf::Vector2f(startbtn.getLocalBounds().size.x/2, startbtn.getLocalBounds().size.y/2));
-        startbtn.setPosition(sf::Vector2f(width/2, starttxt.getPosition().y));
+        startbtn.setPosition(sf::Vector2f(width/2, 450));
 
         creditstxt.setFont(font);
         creditstxt.setString("CREDITS");
