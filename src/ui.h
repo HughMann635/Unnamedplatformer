@@ -81,18 +81,50 @@ public:
 
         sf::FloatRect creditstxtbounds = creditstxt.getLocalBounds();
         creditstxt.setOrigin(sf::Vector2f(creditstxtbounds.position.x + creditstxtbounds.size.x/2, creditstxtbounds.position.y + creditstxtbounds.size.y/2));
-        creditstxt.setPosition(sf::Vector2f(width/2, 550));
+        creditstxt.setPosition(sf::Vector2f(width/2-150, 550));
 
-        creditsbtn.setSize(sf::Vector2f(creditstxtbounds.size.x*1.2, creditstxtbounds.size.y*2.5));
+        creditsbtn.setSize(sf::Vector2f(creditstxtbounds.size.x*1.5, creditstxtbounds.size.y*2.5));
         creditsbtn.setFillColor(sf::Color(115, 0, 0));
         creditsbtn.setOrigin(sf::Vector2f(creditsbtn.getLocalBounds().size.x/2, creditsbtn.getLocalBounds().size.y/2));
-        creditsbtn.setPosition(sf::Vector2f(width/2, 550));
+        creditsbtn.setPosition(sf::Vector2f(width/2-150, 550));
+
+        settingstxt.setFont(font);
+        settingstxt.setString("SETTINGS");
+        settingstxt.setCharacterSize(25);
+        settingstxt.setFillColor(sf::Color(20, 255, 50));
+
+        sf::FloatRect settingstxtbounds = settingstxt.getLocalBounds();
+        settingstxt.setOrigin(sf::Vector2f(settingstxtbounds.position.x + settingstxtbounds.size.x/2, settingstxtbounds.position.y + settingstxtbounds.size.y/2));
+        settingstxt.setPosition(sf::Vector2f(width/2+150, 550));
+
+        settingsbtn.setSize(sf::Vector2f(creditstxtbounds.size.x*1.5, creditstxtbounds.size.y*2.5));
+        settingsbtn.setFillColor(sf::Color(0, 115, 0));
+        settingsbtn.setOrigin(sf::Vector2f(creditsbtn.getLocalBounds().size.x/2, creditsbtn.getLocalBounds().size.y/2));
+        settingsbtn.setPosition(sf::Vector2f(width/2+150, 550));
+
+        handbooktxt.setFont(font);
+        handbooktxt.setString("HANDBOOK");
+        handbooktxt.setCharacterSize(25);
+        handbooktxt.setFillColor(sf::Color(20, 50, 255));
+
+        sf::FloatRect handbooktxtbounds = handbooktxt.getLocalBounds();
+        handbooktxt.setOrigin(sf::Vector2f(handbooktxtbounds.position.x + handbooktxtbounds.size.x/2, handbooktxtbounds.position.y + handbooktxtbounds.size.y/2));
+        handbooktxt.setPosition(sf::Vector2f(width/2, 550));
+
+        handbookbtn.setSize(sf::Vector2f(creditstxtbounds.size.x*1.5, creditstxtbounds.size.y*2.5));
+        handbookbtn.setFillColor(sf::Color(0, 0, 115));
+        handbookbtn.setOrigin(sf::Vector2f(creditsbtn.getLocalBounds().size.x/2, creditsbtn.getLocalBounds().size.y/2));
+        handbookbtn.setPosition(sf::Vector2f(width/2, 550));
 
         titleshadow = textshadow(235, 6, title);
         starttxtshadow = textshadow(120, 3, starttxt);
         startbtnshadow = rectshadow(235, 6, startbtn);
         creditstxtshadow = textshadow(120, 3, creditstxt);
         creditsbtnshadow = rectshadow(235, 6, creditsbtn);
+        settingstxtshadow = textshadow(120, 3, settingstxt);
+        settingsbtnshadow = rectshadow(235, 6, settingsbtn);
+        handbooktxtshadow = textshadow(120, 3, handbooktxt);
+        handbookbtnshadow = rectshadow(235, 6, handbookbtn);
     }
 
     void play (sf::RenderWindow& window) {
@@ -129,6 +161,14 @@ public:
         window.draw(creditsbtn);
         window.draw(creditstxtshadow);
         window.draw(creditstxt);
+        window.draw(settingsbtnshadow);
+        window.draw(settingsbtn);
+        window.draw(settingstxtshadow);
+        window.draw(settingstxt);
+        window.draw(handbookbtnshadow);
+        window.draw(handbookbtn);
+        window.draw(handbooktxtshadow);
+        window.draw(handbooktxt);
     }
 };
 
