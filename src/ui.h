@@ -141,13 +141,21 @@ public:
         }
 
         if (creditsbtn.getGlobalBounds().contains(mousepos)) {
-            creditstxt.setFillColor(sf::Color(255, 170, 30));
-            creditsbtn.setFillColor(sf::Color(185, 100, 30));
+            creditstxt.setFillColor(sf::Color(135, 0, 0));
+            creditsbtn.setFillColor(sf::Color(180, 180, 180));
+            creditstxt.setPosition(sf::Vector2f(490, 553));
+            creditsbtn.setPosition(sf::Vector2f(490, 553));
+            creditstxtshadow.setPosition(sf::Vector2f(493, 556));
+            creditsbtnshadow.setPosition(sf::Vector2f(493, 556));
             if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) state = State::credits;
         }
         else { 
             creditstxt.setFillColor(sf::Color(255, 20, 50));
             creditsbtn.setFillColor(sf::Color(115, 0, 0));
+            creditstxt.setPosition(sf::Vector2f(490, 550));
+            creditsbtn.setPosition(sf::Vector2f(490, 550));
+            creditstxtshadow.setPosition(sf::Vector2f(493, 553));
+            creditsbtnshadow.setPosition(sf::Vector2f(496, 556));
         }
 
         if (handbookbtn.getGlobalBounds().contains(mousepos)) {
