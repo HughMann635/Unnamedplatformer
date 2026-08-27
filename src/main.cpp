@@ -24,6 +24,9 @@ int main()
 	playing gameui;
 	pause pausemenu;
 	levelselect lvlselect; 
+	settings settings;
+	credits credits;
+	handbook handbook;
 	sf::Vector2f lastframe_pos;
 	sf::Vector2f lastframe_vel;
 	sf::Clock timer;
@@ -214,7 +217,7 @@ int main()
 			
 		} else if (state == State::mainmenu) {
 			gamestart = false;
-			if (!menuenter) {
+			if (!menuenter || restart) {
 				map.statictilelist.clear();
 				map.dynamictilelist.clear();
 				map.envtilelist.clear();
@@ -224,6 +227,7 @@ int main()
 				currentplayer -> drawscreen(window);
 				menuenter = true;
 			}
+			restart = false;
 			sky.drawsky(window);
 			sky.drawstars(window);
 			swapped = false;
@@ -259,11 +263,21 @@ int main()
 			lvlselect.select(window);
 			lvlselect.draw(window);
 		} else if (state == State::credits) {
-
+			sky.drawsky(window);
+			sky.drawstars(window);
+			map.drawmap(window);
+			window.setView(window.getDefaultView());
 		} else if (state == State::handbook) {
-
+			sky.drawsky(window);
+			sky.drawstars(window);
+			map.drawmap(window);
+			window.setView(window.getDefaultView());
 		} else if (state == State::settings) {
-
+			sky.drawsky(window);
+			sky.drawstars(window);
+			map.drawmap(window);
+			window.setView(window.getDefaultView());
+			settings.draw(window);
 		}
 
 		window.display();

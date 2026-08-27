@@ -479,3 +479,39 @@ public:
         }
     }
 };
+
+class settings {
+public:
+    sf::Font font;
+    sf::Text settingstxt;
+    sf::Text settingstxtshadow;
+
+    settings () :
+        font("AldotheApache.ttf"),
+        settingstxt(font),
+        settingstxtshadow(font)
+    {
+        settingstxt.setString("SETTINGS");
+        settingstxt.setCharacterSize(45);
+        settingstxt.setFillColor(sf::Color(170, 255, 80));
+
+        sf::FloatRect settingstxtbounds = settingstxt.getLocalBounds();
+        settingstxt.setOrigin(sf::Vector2f(settingstxtbounds.position.x + settingstxtbounds.size.x/2, settingstxtbounds.position.y + settingstxtbounds.size.y/2));
+        settingstxt.setPosition(sf::Vector2f(width/2, 190));
+
+        settingstxtshadow = textshadow(235, 6, settingstxt);
+    }
+
+    void draw (sf::RenderWindow& window) {
+        window.draw(settingstxtshadow);
+        window.draw(settingstxt);
+    }
+};
+
+class credits {
+    
+};
+
+class handbook {
+
+};
