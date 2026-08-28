@@ -228,6 +228,7 @@ class pause {
 public:
     sf::Font font;
     sf::Text paused;
+    sf::Text pausedshadow;
     sf::Text resumetxt;
     sf::Text exittxt;
     sf::RectangleShape resumebtn;
@@ -240,32 +241,28 @@ public:
     pause() :
         font("AldotheApache.ttf"),
         paused(font),
+        pausedshadow(font),
         resumetxt(font),
         exittxt(font),
         resumetxtshadow(font),
         exittxtshadow(font)
     {
         paused = maketext(40, sf::Color(170, 170, 80), "PAUSED", font, sf::Vector2f(width/2, 295));
+        pausedshadow = textshadow(235, 6, paused);
+
         resumetxt = maketext(25, sf::Color(80, 210, 145), "SPACE TO RESUME", font, sf::Vector2f(width/2, 395));
-        exittxt = maketext(25, sf::Color(145, 80, 210), "ESCAPE TO EXIT", font, sf::Vector2f(width/2, 445));
-
-        resumebtn.setSize(sf::Vector2f(resumetxt.getLocalBounds().size.x*1.2, resumetxt.getLocalBounds().size.y*2));
-        resumebtn.setFillColor(sf::Color(10, 140, 75));
-        resumebtn.setOrigin(sf::Vector2f(resumebtn.getLocalBounds().position.x + resumebtn.getLocalBounds().size.x/2, resumebtn.getLocalBounds().position.y + resumebtn.getLocalBounds().size.y/2));
-        resumebtn.setPosition(sf::Vector2f(width/2, 395));
-
-        exitbtn.setSize(sf::Vector2f(resumetxt.getLocalBounds().size.x*1.2, resumetxt.getLocalBounds().size.y*2));
-        exitbtn.setFillColor(sf::Color(75, 10, 140));
-        exitbtn.setOrigin(sf::Vector2f(exitbtn.getLocalBounds().position.x + exitbtn.getLocalBounds().size.x/2, exitbtn.getLocalBounds().position.y + exitbtn.getLocalBounds().size.y/2));
-        exitbtn.setPosition(sf::Vector2f(width/2, 445));   
-        
+        resumebtn = makebtn(sf::Vector2f(resumetxt.getLocalBounds().size.x*1.2, resumetxt.getLocalBounds().size.y*2), sf::Color(10, 140, 75), sf::Vector2f(width/2, 395));
         resumetxtshadow = textshadow(120, 3, resumetxt);
-        exittxtshadow = textshadow(120, 3, exittxt);
         resumebtnshadow = rectshadow(235, 6, resumebtn);
+
+        exittxt = maketext(25, sf::Color(145, 80, 210), "ESCAPE TO EXIT", font, sf::Vector2f(width/2, 445));
+        exitbtn = makebtn(sf::Vector2f(resumetxt.getLocalBounds().size.x*1.2, resumetxt.getLocalBounds().size.y*2), sf::Color(75, 10, 140), sf::Vector2f(width/2, 445));
+        exittxtshadow = textshadow(120, 3, exittxt);
         exitbtnshadow = rectshadow(235, 6, exitbtn);
     }
 
     void draw (sf::RenderWindow& window) {
+        window.draw(pausedshadow);
         window.draw(paused);
         window.draw(resumebtnshadow);
         window.draw(resumebtn);
@@ -332,36 +329,17 @@ public:
         numshadows{font, font, font, font, font, font}
     {
         goright = maketext(30, sf::Color(140, 225, 10), ">", font, sf::Vector2f(1180, height/2));
-    
+        gorightbtn = makebtn(sf::Vector2f(40, 40), sf::Color(240, 255, 80), goright.getPosition());
+        gorightshadow = textshadow(120, 2, goright);
+        rightbtnshadow = rectshadow(235, 6, gorightbtn);
+        
         goleft = maketext(30, sf::Color(140, 225, 10), "<", font, sf::Vector2f(100, height/2));
-
-        gorightbtn.setSize(sf::Vector2f(40, 40));
-        gorightbtn.setFillColor(sf::Color(240, 255, 80));
-        sf::FloatRect rightbtnbounds = gorightbtn.getLocalBounds();
-        gorightbtn.setOrigin(sf::Vector2f(rightbtnbounds.position.x + rightbtnbounds.size.x/2, rightbtnbounds.position.y + rightbtnbounds.size.y/2));
-        gorightbtn.setPosition(goright.getPosition());
-
-        goleftbtn.setSize(sf::Vector2f(40, 40));
-        goleftbtn.setFillColor(sf::Color(240, 255, 80));
-        sf::FloatRect leftbtnbounds = goleftbtn.getLocalBounds();
-        goleftbtn.setOrigin(sf::Vector2f(leftbtnbounds.position.x + leftbtnbounds.size.x/2, leftbtnbounds.position.y + leftbtnbounds.size.y/2));
-        goleftbtn.setPosition(goleft.getPosition());
+        goleftbtn = makebtn(sf::Vector2f(40, 40), sf::Color(240, 255, 80), goleft.getPosition());
+        goleftshadow = textshadow(120, 2, goleft);
+        leftbtnshadow = rectshadow(235, 6, goleftbtn);
 
         set = maketext(45, sf::Color(120, 100, 190), "set" + std::to_string(page+1), font, sf::Vector2f(width/2, 100));
-
-        gorightshadow = textshadow(120, 2, goright);
-        goleftshadow = textshadow(120, 2, goleft);
-        rightbtnshadow = rectshadow(235, 6, gorightbtn);
-        leftbtnshadow = rectshadow(235, 6, goleftbtn);
         setshadow = textshadow(235, 6, set);
-
-        for (int i = 0; i < 6; i++) {
-            levelnums[i].setCharacterSize(45);
-            levelnums[i].setFillColor(sf::Color(0, 100, 240));
-            levelbtns[i].setSize(sf::Vector2f(70, 70));
-            levelbtns[i].setFillColor(sf::Color(0, 150, 250));
-            levelbtns[i].setOrigin(sf::Vector2f(levelbtns[i].getLocalBounds().position.x + levelbtns[i].getLocalBounds().size.x/2, levelbtns[i].getLocalBounds().position.y + levelbtns[i].getLocalBounds().size.y/2));
-        }
     }
 
     void draw (sf::RenderWindow& window) {
@@ -393,10 +371,7 @@ public:
             else numpos = sf::Vector2f(400 * (i-3) + 240, 470);
 
             levelnums[i] = maketext(45, sf::Color(0, 100, 240), std::to_string(levelnumber), font, numpos);
-
-            if (i < 3) levelbtns[i].setPosition(sf::Vector2f(400 * i + 240, 250));
-            else levelbtns[i].setPosition(sf::Vector2f(400 * (i-3) + 240, 470));
-
+            levelbtns[i] = makebtn(sf::Vector2f(70, 70), sf::Color(0, 150, 250), numpos);
             numshadows[i] = textshadow(120, 3, levelnums[i]);
             btnshadows[i] = rectshadow(215, 5, levelbtns[i]);
         }
