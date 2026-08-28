@@ -39,7 +39,7 @@ inline sf::RectangleShape makebtn (sf::Vector2f size, sf::Color color, sf::Vecto
     return button;
 }
 
-inline void btnpress (sf::RenderWindow& window, sf::Text& txt, sf::RectangleShape& btn, sf::Text& txtshade, sf::RectangleShape& btnshade, sf::Vector2f pos, sf::Color txtcolor, sf::Color btncolor, sf::Color txthover, sf::Color btnhover, const State& state_) {
+inline void btnpress (sf::RenderWindow& window, sf::Text& txt, sf::RectangleShape& btn, sf::Text& txtshade, sf::RectangleShape& btnshade, sf::Vector2f pos, sf::Color txtcolor, sf::Color btncolor, sf::Color txthover, sf::Color btnhover, State state_) {
     sf::Vector2f mousepos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
     if (btn.getGlobalBounds().contains(mousepos)) {
         txt.setFillColor(txthover);
@@ -119,63 +119,10 @@ public:
     }
 
     void play (sf::RenderWindow& window) {
-        sf::Vector2i mouse_ = sf::Mouse::getPosition(window);
-        sf::Vector2f mousepos = sf::Vector2f((float)mouse_.x, (float)mouse_.y);
         btnpress(window, starttxt, startbtn, starttxtshadow, startbtnshadow, sf::Vector2f(640, 450), sf::Color(170, 100, 255), sf::Color(100, 30, 155), sf::Color(255, 170, 30), sf::Color(185, 100, 30), State::levelselect);
-
-        if (creditsbtn.getGlobalBounds().contains(mousepos)) {
-            creditstxt.setFillColor(sf::Color(100, 0, 0));
-            creditsbtn.setFillColor(sf::Color(180, 180, 180));
-            creditstxt.setPosition(sf::Vector2f(490, 553));
-            creditsbtn.setPosition(sf::Vector2f(490, 553));
-            creditstxtshadow.setPosition(sf::Vector2f(493, 556));
-            creditsbtnshadow.setPosition(sf::Vector2f(493, 556));
-            if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) state = State::credits;
-        }
-        else { 
-            creditstxt.setFillColor(sf::Color(255, 20, 50));
-            creditsbtn.setFillColor(sf::Color(115, 0, 0));
-            creditstxt.setPosition(sf::Vector2f(490, 550));
-            creditsbtn.setPosition(sf::Vector2f(490, 550));
-            creditstxtshadow.setPosition(sf::Vector2f(493, 553));
-            creditsbtnshadow.setPosition(sf::Vector2f(496, 556));
-        }
-
-        if (handbookbtn.getGlobalBounds().contains(mousepos)) {
-            handbooktxt.setFillColor(sf::Color(0, 0, 100));
-            handbookbtn.setFillColor(sf::Color(180, 180, 180));
-            handbooktxt.setPosition(sf::Vector2f(640, 553));
-            handbookbtn.setPosition(sf::Vector2f(640, 553));
-            handbooktxtshadow.setPosition(sf::Vector2f(643, 556));
-            handbookbtnshadow.setPosition(sf::Vector2f(643, 556));
-            if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) state = State::handbook;
-        }
-        else { 
-            handbooktxt.setFillColor(sf::Color(20, 50, 255));
-            handbookbtn.setFillColor(sf::Color(0, 0, 115));
-            handbooktxt.setPosition(sf::Vector2f(640, 550));
-            handbookbtn.setPosition(sf::Vector2f(640, 550));
-            handbooktxtshadow.setPosition(sf::Vector2f(643, 553));
-            handbookbtnshadow.setPosition(sf::Vector2f(646, 556));
-        }
-
-        if (settingsbtn.getGlobalBounds().contains(mousepos)) {
-            settingstxt.setFillColor(sf::Color(0, 70, 0));
-            settingsbtn.setFillColor(sf::Color(180, 180, 180));
-            settingstxt.setPosition(sf::Vector2f(790, 553));
-            settingsbtn.setPosition(sf::Vector2f(790, 553));
-            settingstxtshadow.setPosition(sf::Vector2f(793, 556));
-            settingsbtnshadow.setPosition(sf::Vector2f(793, 556));
-            if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) state = State::settings;
-        }
-        else { 
-            settingstxt.setFillColor(sf::Color(20, 255, 50));
-            settingsbtn.setFillColor(sf::Color(0, 115, 0));
-            settingstxt.setPosition(sf::Vector2f(790, 550));
-            settingsbtn.setPosition(sf::Vector2f(790, 550));
-            settingstxtshadow.setPosition(sf::Vector2f(793, 553));
-            settingsbtnshadow.setPosition(sf::Vector2f(796, 556));
-        }
+        btnpress(window, creditstxt, creditsbtn, creditstxtshadow, creditsbtnshadow, sf::Vector2f(490, 550), sf::Color(255, 20, 50), sf::Color(115, 0, 0), sf::Color(100, 0, 0), sf::Color(180, 180, 180), State::credits);
+        btnpress(window, handbooktxt, handbookbtn, handbooktxtshadow, handbookbtnshadow, sf::Vector2f(640, 550), sf::Color(20, 50, 255), sf::Color(0, 0, 115), sf::Color(0, 0, 100), sf::Color(180, 180, 180), State::handbook);
+        btnpress(window, settingstxt, settingsbtn, settingstxtshadow, settingsbtnshadow, sf::Vector2f(790, 550), sf::Color(20, 255, 50), sf::Color(0, 115, 0), sf::Color(0, 70, 0), sf::Color(180, 180, 180), State::settings);
     }
 
     void draw (sf::RenderWindow& window) {
