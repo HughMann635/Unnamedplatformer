@@ -30,7 +30,7 @@ inline sf::Text maketext (int size, sf::Color color, const std::string& string, 
     return text;
 }
 
-inline sf::RectangleShape makebtn (sf::Vector2f size, sf::Color color, sf::Text btntext, sf::Vector2f position) {
+inline sf::RectangleShape makebtn (sf::Vector2f size, sf::Color color, sf::Vector2f position) {
     sf::RectangleShape button;
     button.setSize(size);
     button.setFillColor(color);
@@ -75,47 +75,26 @@ public:
         handbooktxt(font),
         handbooktxtshadow(font)
     {
-        title.setFont(font);
-        title.setCharacterSize(55);
-        title.setFillColor(sf::Color(170, 100, 255));
-        title.setString("WORLDS OF BLOCKMAN");
-        title.setPosition(sf::Vector2f((width-title.getGlobalBounds().size.x)/2, 100));
+        title = maketext(55, sf::Color(170, 100, 255), "WORLDS OF BLOCKMAN", font, sf::Vector2f(width/2, 100));
+        titleshadow = textshadow(235, 6, title);
 
         starttxt = maketext(35, sf::Color(170, 100, 255), "PLAY", font, sf::Vector2f(width/2, 450));
-
-        startbtn.setSize(sf::Vector2f(starttxt.getLocalBounds().size.x*2, starttxt.getLocalBounds().size.y*2.5));
-        startbtn.setFillColor(sf::Color(100, 30, 155));
-        startbtn.setOrigin(sf::Vector2f(startbtn.getLocalBounds().size.x/2, startbtn.getLocalBounds().size.y/2));
-        startbtn.setPosition(sf::Vector2f(width/2, 450));
-
-        creditstxt = maketext(25, sf::Color(255, 20, 50), "CREDITS", font, sf::Vector2f(490, 550));
-
-        creditsbtn.setSize(sf::Vector2f(creditstxt.getLocalBounds().size.x*1.5, creditstxt.getLocalBounds().size.y*2.5));
-        creditsbtn.setFillColor(sf::Color(115, 0, 0));
-        creditsbtn.setOrigin(sf::Vector2f(creditsbtn.getLocalBounds().size.x/2, creditsbtn.getLocalBounds().size.y/2));
-        creditsbtn.setPosition(sf::Vector2f(width/2-150, 550));
-
-        settingstxt = maketext(25, sf::Color(20, 255, 50), "CREDITS", font, sf::Vector2f(790, 550));
-
-        settingsbtn.setSize(sf::Vector2f(creditstxt.getLocalBounds().size.x*1.5, creditstxt.getLocalBounds().size.y*2.5));
-        settingsbtn.setFillColor(sf::Color(0, 115, 0));
-        settingsbtn.setOrigin(sf::Vector2f(creditsbtn.getLocalBounds().size.x/2, creditsbtn.getLocalBounds().size.y/2));
-        settingsbtn.setPosition(sf::Vector2f(width/2+150, 550));
-
-        handbooktxt = maketext(25, sf::Color(20, 50, 255), "HANDBOOK", font, sf::Vector2f(640, 550));
-
-        handbookbtn.setSize(sf::Vector2f(creditstxt.getLocalBounds().size.x*1.5, creditstxt.getLocalBounds().size.y*2.5));
-        handbookbtn.setFillColor(sf::Color(0, 0, 115));
-        handbookbtn.setOrigin(sf::Vector2f(creditsbtn.getLocalBounds().size.x/2, creditsbtn.getLocalBounds().size.y/2));
-        handbookbtn.setPosition(sf::Vector2f(width/2, 550));
-
-        titleshadow = textshadow(235, 6, title);
+        startbtn = makebtn(sf::Vector2f(starttxt.getLocalBounds().size.x*2, starttxt.getLocalBounds().size.y*2.5), sf::Color(100, 30, 155), sf::Vector2f(width/2, 450));
         starttxtshadow = textshadow(120, 3, starttxt);
         startbtnshadow = rectshadow(235, 6, startbtn);
+
+        creditstxt = maketext(25, sf::Color(255, 20, 50), "CREDITS", font, sf::Vector2f(490, 550));
+        creditsbtn = makebtn(sf::Vector2f(creditstxt.getLocalBounds().size.x*1.5, creditstxt.getLocalBounds().size.y*2.5), sf::Color(115, 0, 0), sf::Vector2f(490, 550));
         creditstxtshadow = textshadow(120, 3, creditstxt);
         creditsbtnshadow = rectshadow(235, 6, creditsbtn);
+
+        settingstxt = maketext(25, sf::Color(20, 255, 50), "SETTINGS", font, sf::Vector2f(790, 550));
+        settingsbtn = makebtn(sf::Vector2f(creditstxt.getLocalBounds().size.x*1.5, creditstxt.getLocalBounds().size.y*2.5), sf::Color(0, 115, 0), sf::Vector2f(790, 550));
         settingstxtshadow = textshadow(120, 3, settingstxt);
         settingsbtnshadow = rectshadow(235, 6, settingsbtn);
+
+        handbooktxt = maketext(25, sf::Color(20, 50, 255), "HANDBOOK", font, sf::Vector2f(640, 550));
+        handbookbtn = makebtn(sf::Vector2f(creditstxt.getLocalBounds().size.x*1.5, creditstxt.getLocalBounds().size.y*2.5), sf::Color(0, 0, 115), sf::Vector2f(640, 550));
         handbooktxtshadow = textshadow(120, 3, handbooktxt);
         handbookbtnshadow = rectshadow(235, 6, handbookbtn);
     }
