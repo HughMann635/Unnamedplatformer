@@ -40,6 +40,8 @@ inline sf::RectangleShape makebtn (sf::Vector2f size, sf::Color color, sf::Vecto
 
 }
 
+
+
 class mainmenu {
 public:
     sf::Font font;
@@ -340,11 +342,11 @@ public:
 
         set = maketext(45, sf::Color(120, 100, 190), "set" + std::to_string(page+1), font, sf::Vector2f(width/2, 100));
         setshadow = textshadow(235, 6, set);
+
+        update();
     }
 
     void draw (sf::RenderWindow& window) {
-        set.setString("set " + std::to_string(page+1));
-        setshadow.setString("set " + std::to_string(page+1));
         window.draw(setshadow);
         window.draw(set);
         window.draw(rightbtnshadow);
@@ -363,7 +365,9 @@ public:
         }
     }
 
-    void select(sf::RenderWindow& window) {
+    void update() {
+        set.setString("set " + std::to_string(page+1));
+        setshadow.setString("set " + std::to_string(page+1));
         for (int i = 0; i < 6; i++) {
             int levelnumber = page * 6 + i + 1;
             sf::Vector2f numpos;
@@ -375,7 +379,9 @@ public:
             numshadows[i] = textshadow(120, 3, levelnums[i]);
             btnshadows[i] = rectshadow(215, 5, levelbtns[i]);
         }
-        
+    }
+
+    void select(sf::RenderWindow& window) {
         sf::Vector2i mouse_ = sf::Mouse::getPosition(window);
         sf::Vector2f mousepos = sf::Vector2f((float)mouse_.x, (float)mouse_.y);
         if (gorightbtn.getGlobalBounds().contains(mousepos)) {
@@ -384,6 +390,7 @@ public:
             if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && !mouseheld && page < 4) {
                 page += 1;
                 mouseheld = true;
+                update();
             } 
         } else {
             gorightbtn.setFillColor(sf::Color(240, 255, 80));
@@ -395,6 +402,7 @@ public:
             if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && !mouseheld && page > 0) {
                 page -= 1;
                 mouseheld = true;
+                update();
             } 
         } else {
             goleftbtn.setFillColor(sf::Color(240, 255, 80));
