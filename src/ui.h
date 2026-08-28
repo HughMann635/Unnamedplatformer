@@ -218,11 +218,7 @@ public:
         font("AldotheApache.ttf"),
         level(font)
     {
-        level.setFont(font);
-        level.setString("Level "+(setnum*6+levelnum+1));
-        level.setCharacterSize(35);
-        level.setPosition(sf::Vector2f((width-level.getGlobalBounds().size.x)/2, 60));
-        level.setFillColor(sf::Color(255, 45, 200, levelshade));
+        level = maketext(35, sf::Color(255, 45, 200, levelshade), "Level "+std::to_string(setnum*6+levelnum+1), font, sf::Vector2f(width/2, 60));
     }
 
     void draw (sf::RenderWindow& window) {
@@ -231,7 +227,6 @@ public:
         if (mouse_.y >= 200 && levelshade > 0) levelshade -= 3;
         else if (mouse_.y < 200 && levelshade < 225) levelshade += 3;
         level.setFillColor(sf::Color(255, 45, 200, levelshade));
-        level.setPosition(sf::Vector2f((width-level.getGlobalBounds().size.x)/2, 60));
         window.draw(level);
     }
 
@@ -261,36 +256,16 @@ public:
         resumetxtshadow(font),
         exittxtshadow(font)
     {
-        paused.setFont(font);
-        paused.setString("PAUSED");
-        paused.setFillColor(sf::Color(170, 170, 80));
-        paused.setCharacterSize(40);
-        paused.setPosition(sf::Vector2f((width-paused.getGlobalBounds().size.x)/2, 295));
+        paused = maketext(40, sf::Color(170, 170, 80), "PAUSED", font, sf::Vector2f(width/2, 295));
+        resumetxt = maketext(25, sf::Color(80, 210, 145), "SPACE TO RESUME", font, sf::Vector2f(width/2, 395));
+        exittxt = maketext(25, sf::Color(145, 80, 210), "ESCAPE TO EXIT", font, sf::Vector2f(width/2, 445));
 
-        resumetxt.setFont(font);
-        resumetxt.setString("SPACE TO RESUME");
-        resumetxt.setFillColor(sf::Color(80, 210, 145));
-        resumetxt.setCharacterSize(25);
-
-        sf::FloatRect resumetxtbounds = resumetxt.getLocalBounds();
-        resumetxt.setOrigin(sf::Vector2f(resumetxtbounds.position.x + resumetxtbounds.size.x/2, resumetxtbounds.position.y + resumetxtbounds.size.y/2));
-        resumetxt.setPosition(sf::Vector2f(width/2, 395));
-
-        resumebtn.setSize(sf::Vector2f(resumetxtbounds.size.x*1.2, resumetxtbounds.size.y*2));
+        resumebtn.setSize(sf::Vector2f(resumetxt.getLocalBounds().size.x*1.2, resumetxt.getLocalBounds().size.y*2));
         resumebtn.setFillColor(sf::Color(10, 140, 75));
         resumebtn.setOrigin(sf::Vector2f(resumebtn.getLocalBounds().position.x + resumebtn.getLocalBounds().size.x/2, resumebtn.getLocalBounds().position.y + resumebtn.getLocalBounds().size.y/2));
         resumebtn.setPosition(sf::Vector2f(width/2, 395));
 
-        exittxt.setFont(font);
-        exittxt.setString("ESCAPE TO EXIT");
-        exittxt.setFillColor(sf::Color(145, 80, 210));
-        exittxt.setCharacterSize(25);
-
-        sf::FloatRect exittxtbounds = exittxt.getLocalBounds();
-        exittxt.setOrigin(sf::Vector2f(exittxtbounds.position.x + exittxtbounds.size.x/2, exittxtbounds.position.y + exittxtbounds.size.y/2));
-        exittxt.setPosition(sf::Vector2f(width/2, 445));
-
-        exitbtn.setSize(sf::Vector2f(resumetxtbounds.size.x*1.2, resumetxtbounds.size.y*2));
+        exitbtn.setSize(sf::Vector2f(resumetxt.getLocalBounds().size.x*1.2, resumetxt.getLocalBounds().size.y*2));
         exitbtn.setFillColor(sf::Color(75, 10, 140));
         exitbtn.setOrigin(sf::Vector2f(exitbtn.getLocalBounds().position.x + exitbtn.getLocalBounds().size.x/2, exitbtn.getLocalBounds().position.y + exitbtn.getLocalBounds().size.y/2));
         exitbtn.setPosition(sf::Vector2f(width/2, 445));   
@@ -367,19 +342,9 @@ public:
         levelnums{font, font, font, font, font, font},
         numshadows{font, font, font, font, font, font}
     {
-        goright.setString(">");
-        goright.setCharacterSize(30);
-        goright.setFillColor(sf::Color(140, 225, 10));
-        sf::FloatRect gorightbounds = goright.getLocalBounds();
-        goright.setOrigin(sf::Vector2f(gorightbounds.position.x + gorightbounds.size.x/2, gorightbounds.position.y + gorightbounds.size.y/2));
-        goright.setPosition(sf::Vector2f(1180, height/2));
-
-        goleft.setString("<");
-        goleft.setCharacterSize(30);
-        goleft.setFillColor(sf::Color(140, 225, 10));
-        sf::FloatRect goleftbounds = goleft.getLocalBounds();
-        goleft.setOrigin(sf::Vector2f(goleftbounds.position.x + goleftbounds.size.x/2, goleftbounds.position.y + goleftbounds.size.y/2));
-        goleft.setPosition(sf::Vector2f(100, height/2));
+        goright = maketext(30, sf::Color(140, 225, 10), ">", font, sf::Vector2f(1180, height/2));
+    
+        goleft = maketext(30, sf::Color(140, 225, 10), "<", font, sf::Vector2f(100, height/2));
 
         gorightbtn.setSize(sf::Vector2f(40, 40));
         gorightbtn.setFillColor(sf::Color(240, 255, 80));
@@ -393,12 +358,7 @@ public:
         goleftbtn.setOrigin(sf::Vector2f(leftbtnbounds.position.x + leftbtnbounds.size.x/2, leftbtnbounds.position.y + leftbtnbounds.size.y/2));
         goleftbtn.setPosition(goleft.getPosition());
 
-        set.setString("set " + std::to_string(page+1));
-        set.setCharacterSize(45);
-        set.setFillColor(sf::Color(120, 100, 190));
-        sf::FloatRect setbounds = set.getLocalBounds();
-        set.setOrigin(sf::Vector2f(setbounds.position.x + setbounds.size.x/2, setbounds.position.y + setbounds.size.y/2));
-        set.setPosition(sf::Vector2f(width/2, 100));
+        set = maketext(45, sf::Color(120, 100, 190), "set" + std::to_string(page+1), font, sf::Vector2f(width/2, 100));
 
         gorightshadow = textshadow(120, 2, goright);
         goleftshadow = textshadow(120, 2, goleft);
@@ -411,8 +371,6 @@ public:
             levelnums[i].setFillColor(sf::Color(0, 100, 240));
             levelbtns[i].setSize(sf::Vector2f(70, 70));
             levelbtns[i].setFillColor(sf::Color(0, 150, 250));
-            //levelbtns[i].setOutlineColor(sf::Color(0, 100, 240));
-            //levelbtns[i].setOutlineThickness(-2);
             levelbtns[i].setOrigin(sf::Vector2f(levelbtns[i].getLocalBounds().position.x + levelbtns[i].getLocalBounds().size.x/2, levelbtns[i].getLocalBounds().position.y + levelbtns[i].getLocalBounds().size.y/2));
         }
     }
@@ -439,6 +397,21 @@ public:
     }
 
     void select(sf::RenderWindow& window) {
+        for (int i = 0; i < 6; i++) {
+            int levelnumber = page * 6 + i + 1;
+            sf::Vector2f numpos;
+            if (i < 3) numpos = sf::Vector2f(400 * i + 240, 250);
+            else numpos = sf::Vector2f(400 * (i-3) + 240, 470);
+
+            levelnums[i] = maketext(45, sf::Color(0, 100, 240), std::to_string(levelnumber), font, numpos);
+
+            if (i < 3) levelbtns[i].setPosition(sf::Vector2f(400 * i + 240, 250));
+            else levelbtns[i].setPosition(sf::Vector2f(400 * (i-3) + 240, 470));
+
+            numshadows[i] = textshadow(120, 3, levelnums[i]);
+            btnshadows[i] = rectshadow(215, 5, levelbtns[i]);
+        }
+        
         sf::Vector2i mouse_ = sf::Mouse::getPosition(window);
         sf::Vector2f mousepos = sf::Vector2f((float)mouse_.x, (float)mouse_.y);
         if (gorightbtn.getGlobalBounds().contains(mousepos)) {
@@ -480,18 +453,6 @@ public:
         }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)) state = State::mainmenu;
-
-        for (int i = 0; i < 6; i++) {
-            int levelnumber = page * 6 + i + 1;
-            levelnums[i].setString(std::to_string(levelnumber));
-            levelnums[i].setOrigin(sf::Vector2f(levelnums[i].getLocalBounds().position.x + levelnums[i].getLocalBounds().size.x/2, levelnums[i].getLocalBounds().position.y + levelnums[i].getLocalBounds().size.y/2));
-            if (i < 3) levelnums[i].setPosition(sf::Vector2f(400 * i + 240, 250));
-            else levelnums[i].setPosition(sf::Vector2f(400 * (i-3) + 240, 470));
-            if (i < 3) levelbtns[i].setPosition(sf::Vector2f(400 * i + 240, 250));
-            else levelbtns[i].setPosition(sf::Vector2f(400 * (i-3) + 240, 470));
-            numshadows[i] = textshadow(120, 3, levelnums[i]);
-            btnshadows[i] = rectshadow(215, 5, levelbtns[i]);
-        }
     }
 };
 
@@ -506,14 +467,7 @@ public:
         settingstxt(font),
         settingstxtshadow(font)
     {
-        settingstxt.setString("SETTINGS");
-        settingstxt.setCharacterSize(45);
-        settingstxt.setFillColor(sf::Color(170, 255, 80));
-
-        sf::FloatRect settingstxtbounds = settingstxt.getLocalBounds();
-        settingstxt.setOrigin(sf::Vector2f(settingstxtbounds.position.x + settingstxtbounds.size.x/2, settingstxtbounds.position.y + settingstxtbounds.size.y/2));
-        settingstxt.setPosition(sf::Vector2f(width/2, 190));
-
+        settingstxt = maketext(45, sf::Color(170, 255, 80), "SETTINGS", font, sf::Vector2f(width/2, 190));
         settingstxtshadow = textshadow(235, 6, settingstxt);
     }
 
