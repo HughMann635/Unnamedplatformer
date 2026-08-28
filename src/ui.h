@@ -37,10 +37,27 @@ inline sf::RectangleShape makebtn (sf::Vector2f size, sf::Color color, sf::Vecto
     button.setOrigin(sf::Vector2f(button.getLocalBounds().size.x/2, button.getLocalBounds().size.y/2));
     button.setPosition(position);
     return button;
-
 }
 
-
+inline void btnpress (sf::RenderWindow& window, sf::Text& txt, sf::RectangleShape& btn, sf::Text& txtshade, sf::RectangleShape& btnshade, sf::Vector2f pos, sf::Color txtcolor, sf::Color btncolor, sf::Color txthover, sf::Color btnhover, const State& state_) {
+    sf::Vector2f mousepos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
+    if (btn.getGlobalBounds().contains(mousepos)) {
+        txt.setFillColor(txthover);
+        btn.setFillColor(btnhover);
+        txt.setPosition(pos+sf::Vector2f(0, 3));
+        btn.setPosition(pos+sf::Vector2f(0, 3));
+        txtshade.setPosition(pos+sf::Vector2f(3, 6));
+        btnshade.setPosition(pos+sf::Vector2f(3, 6));
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) state = state_;
+    } else {
+        txt.setFillColor(txtcolor);
+        btn.setFillColor(btncolor);
+        txt.setPosition(pos);
+        btn.setPosition(pos);
+        txtshade.setPosition(pos+sf::Vector2f(3, 3));
+        btnshade.setPosition(pos+sf::Vector2f(6, 6));
+    }
+}
 
 class mainmenu {
 public:
@@ -104,23 +121,7 @@ public:
     void play (sf::RenderWindow& window) {
         sf::Vector2i mouse_ = sf::Mouse::getPosition(window);
         sf::Vector2f mousepos = sf::Vector2f((float)mouse_.x, (float)mouse_.y);
-        if (startbtn.getGlobalBounds().contains(mousepos)) {
-            starttxt.setFillColor(sf::Color(255, 170, 30));
-            startbtn.setFillColor(sf::Color(185, 100, 30));
-            starttxt.setPosition(sf::Vector2f(640, 453));
-            startbtn.setPosition(sf::Vector2f(640, 453));
-            starttxtshadow.setPosition(sf::Vector2f(643, 456));
-            startbtnshadow.setPosition(sf::Vector2f(643, 456));
-            if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) state = State::levelselect;
-        }
-        else { 
-            starttxt.setFillColor(sf::Color(170, 100, 255));
-            startbtn.setFillColor(sf::Color(100, 30, 155));
-            starttxt.setPosition(sf::Vector2f(640, 450));
-            startbtn.setPosition(sf::Vector2f(640, 450));
-            starttxtshadow.setPosition(sf::Vector2f(643, 453));
-            startbtnshadow.setPosition(sf::Vector2f(646, 456));
-        }
+        btnpress(window, starttxt, startbtn, starttxtshadow, startbtnshadow, sf::Vector2f(640, 450), sf::Color(170, 100, 255), sf::Color(100, 30, 155), sf::Color(255, 170, 30), sf::Color(185, 100, 30), State::levelselect);
 
         if (creditsbtn.getGlobalBounds().contains(mousepos)) {
             creditstxt.setFillColor(sf::Color(100, 0, 0));
