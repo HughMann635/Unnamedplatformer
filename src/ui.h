@@ -235,7 +235,7 @@ public:
 
     void checkaction(sf::RenderWindow& window) {
         if (btnpress(window, resumetxt, resumebtn, resumetxtshadow, resumebtnshadow, sf::Vector2f(width/2, 395), sf::Color(80, 210, 145), sf::Color(10, 145, 75), sf::Color(180, 200, 20), sf::Color(110, 130, 20))) {
-            state = State::levelselect;
+            state = State::playing;
         }
         if (btnpress(window, exittxt, exitbtn, exittxtshadow, exitbtnshadow, sf::Vector2f(width/2, 445), sf::Color(145, 80, 210), sf::Color(75, 10, 140), sf::Color(20, 120, 255), sf::Color(20, 50, 185))) {
             state = State::mainmenu;
