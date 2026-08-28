@@ -30,6 +30,16 @@ inline sf::Text maketext (int size, sf::Color color, const std::string& string, 
     return text;
 }
 
+inline sf::RectangleShape makebtn (sf::Vector2f size, sf::Color color, sf::Text btntext, sf::Vector2f position) {
+    sf::RectangleShape button;
+    button.setSize(size);
+    button.setFillColor(color);
+    button.setOrigin(sf::Vector2f(button.getLocalBounds().size.x/2, button.getLocalBounds().size.y/2));
+    button.setPosition(position);
+    return button;
+
+}
+
 class mainmenu {
 public:
     sf::Font font;
