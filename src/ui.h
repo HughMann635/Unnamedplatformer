@@ -40,7 +40,7 @@ inline sf::RectangleShape makebtn (sf::Vector2f size, sf::Color color, sf::Vecto
 }
 
 inline void btnpress (sf::RenderWindow& window, sf::Text& txt, sf::RectangleShape& btn, sf::Text& txtshade, sf::RectangleShape& btnshade, sf::Vector2f pos, sf::Color txtcolor, sf::Color btncolor, sf::Color txthover, sf::Color btnhover, State state_) {
-    sf::Vector2f mousepos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
+    sf::Vector2f mousepos = window.mapPixelToCoords(sf::Mouse::getPosition(window), window.getDefaultView());
     if (btn.getGlobalBounds().contains(mousepos)) {
         txt.setFillColor(txthover);
         btn.setFillColor(btnhover);
@@ -225,24 +225,8 @@ public:
     }
 
     void checkaction(sf::RenderWindow& window) {
-        sf::Vector2i mouse_ = sf::Mouse::getPosition(window);
-        sf::Vector2f mousepos = sf::Vector2f((float)mouse_.x, (float)mouse_.y);
-        if (resumebtn.getGlobalBounds().contains(mousepos)) {
-            resumetxt.setFillColor(sf::Color(180, 200, 20));
-            resumebtn.setFillColor(sf::Color(110, 130, 20));
-            if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) state = State::playing;
-        } else {
-            resumetxt.setFillColor(sf::Color(80, 210, 145));
-            resumebtn.setFillColor(sf::Color(10, 140, 75));
-        }
-        if (exitbtn.getGlobalBounds().contains(mousepos)) {
-            exittxt.setFillColor(sf::Color(20, 120, 255));
-            exitbtn.setFillColor(sf::Color(20, 50, 185));
-            if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) state = State::mainmenu;
-        } else {
-            exittxt.setFillColor(sf::Color(145, 80, 210));
-            exitbtn.setFillColor(sf::Color(75, 10, 140));
-        }
+        btnpress(window, resumetxt, resumebtn, resumetxtshadow, resumebtnshadow, sf::Vector2f(width/2, 395), sf::Color(80, 210, 145), sf::Color(10, 145, 75), sf::Color(180, 200, 20), sf::Color(110, 130, 20), State::playing);
+        btnpress(window, exittxt, exitbtn, exittxtshadow, exitbtnshadow, sf::Vector2f(width/2, 445), sf::Color(145, 80, 210), sf::Color(75, 10, 140), sf::Color(20, 120, 255), sf::Color(20, 50, 185), State::mainmenu);
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space)) state = State::playing;
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)) state = State::mainmenu; 
     }
