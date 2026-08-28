@@ -267,17 +267,22 @@ int main()
 			sky.drawstars(window);
 			map.drawmap(window);
 			window.setView(window.getDefaultView());
+			credits.draw(window);
+			credits.update();
 		} else if (state == State::handbook) {
 			sky.drawsky(window);
 			sky.drawstars(window);
 			map.drawmap(window);
 			window.setView(window.getDefaultView());
+			handbook.draw(window);
+			handbook.update();
 		} else if (state == State::settings) {
 			sky.drawsky(window);
 			sky.drawstars(window);
 			map.drawmap(window);
 			window.setView(window.getDefaultView());
 			settings.draw(window);
+			settings.update();
 		}
 
 		window.display();

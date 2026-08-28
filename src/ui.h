@@ -375,12 +375,58 @@ public:
         window.draw(settingstxtshadow);
         window.draw(settingstxt);
     }
+
+    void update () {
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)) state = State::mainmenu;
+    }
 };
 
 class credits {
-    
+public:
+    sf::Font font;
+    sf::Text creditstxt;
+    sf::Text creditstxtshadow;
+
+    credits () :
+        font("AldotheApache.ttf"),
+        creditstxt(font),
+        creditstxtshadow(font)
+    {
+        creditstxt = maketext(45, sf::Color(255, 80, 170), "CREDITS", font, sf::Vector2f(width/2, 190));
+        creditstxtshadow = textshadow(235, 6, creditstxt);
+    }
+
+    void draw (sf::RenderWindow& window) {
+        window.draw(creditstxtshadow);
+        window.draw(creditstxt);
+    }
+
+    void update () {
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)) state = State::mainmenu;
+    }
 };
 
 class handbook {
+public:
+    sf::Font font;
+    sf::Text handbooktxt;
+    sf::Text handbooktxtshadow;
 
+    handbook () :
+        font("AldotheApache.ttf"),
+        handbooktxt(font),
+        handbooktxtshadow(font)
+    {
+        handbooktxt = maketext(45, sf::Color(80, 170, 255), "HANDBOOK", font, sf::Vector2f(width/2, 190));
+        handbooktxtshadow = textshadow(235, 6, handbooktxt);
+    }
+
+    void draw (sf::RenderWindow& window) {
+        window.draw(handbooktxtshadow);
+        window.draw(handbooktxt);
+    }
+
+    void update () {
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)) state = State::mainmenu;
+    }
 };
