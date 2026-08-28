@@ -5,21 +5,21 @@
 #include "vars.h"
 #include "states.h"
 
-inline sf::Text textshadow (int shade, int depth, sf::Text text) {
+sf::Text textshadow (int shade, int depth, sf::Text text) {
     sf::Text shadow = text;
     shadow.setFillColor(sf::Color(0, 0, 0, shade));
     shadow.setPosition(text.getPosition()+sf::Vector2f(depth, depth));
     return shadow;
 }
 
-inline sf::RectangleShape rectshadow (int shade, int depth, sf::RectangleShape shape) {
+sf::RectangleShape rectshadow (int shade, int depth, sf::RectangleShape shape) {
     sf::RectangleShape shadow = shape;
     shadow.setFillColor(sf::Color(0, 0, 0, shade));
     shadow.setPosition(shape.getPosition()+sf::Vector2f(depth, depth));
     return shadow;
 }
 
-inline sf::Text maketext (int size, sf::Color color, const std::string& string, sf::Font& font, sf::Vector2f position) {
+sf::Text maketext (int size, sf::Color color, const std::string& string, sf::Font& font, sf::Vector2f position) {
     sf::Text text(font);
     text.setCharacterSize(size);
     text.setFillColor(color);
@@ -30,7 +30,7 @@ inline sf::Text maketext (int size, sf::Color color, const std::string& string, 
     return text;
 }
 
-inline sf::RectangleShape makebtn (sf::Vector2f size, sf::Color color, sf::Vector2f position) {
+sf::RectangleShape makebtn (sf::Vector2f size, sf::Color color, sf::Vector2f position) {
     sf::RectangleShape button;
     button.setSize(size);
     button.setFillColor(color);
@@ -39,7 +39,7 @@ inline sf::RectangleShape makebtn (sf::Vector2f size, sf::Color color, sf::Vecto
     return button;
 }
 
-inline void btnpress (sf::RenderWindow& window, sf::Text& txt, sf::RectangleShape& btn, sf::Text& txtshade, sf::RectangleShape& btnshade, sf::Vector2f pos, sf::Color txtcolor, sf::Color btncolor, sf::Color txthover, sf::Color btnhover, State state_) {
+bool btnpress (sf::RenderWindow& window, sf::Text& txt, sf::RectangleShape& btn, sf::Text& txtshade, sf::RectangleShape& btnshade, sf::Vector2f pos, sf::Color txtcolor, sf::Color btncolor, sf::Color txthover, sf::Color btnhover) {
     sf::Vector2f mousepos = window.mapPixelToCoords(sf::Mouse::getPosition(window), window.getDefaultView());
     if (btn.getGlobalBounds().contains(mousepos)) {
         txt.setFillColor(txthover);
@@ -48,7 +48,7 @@ inline void btnpress (sf::RenderWindow& window, sf::Text& txt, sf::RectangleShap
         btn.setPosition(pos+sf::Vector2f(0, 3));
         txtshade.setPosition(pos+sf::Vector2f(3, 6));
         btnshade.setPosition(pos+sf::Vector2f(3, 6));
-        if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) state = state_;
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) return true;
     } else {
         txt.setFillColor(txtcolor);
         btn.setFillColor(btncolor);
@@ -56,6 +56,7 @@ inline void btnpress (sf::RenderWindow& window, sf::Text& txt, sf::RectangleShap
         btn.setPosition(pos);
         txtshade.setPosition(pos+sf::Vector2f(3, 3));
         btnshade.setPosition(pos+sf::Vector2f(6, 6));
+        return false;
     }
 }
 
@@ -119,10 +120,18 @@ public:
     }
 
     void play (sf::RenderWindow& window) {
-        btnpress(window, starttxt, startbtn, starttxtshadow, startbtnshadow, sf::Vector2f(640, 450), sf::Color(170, 100, 255), sf::Color(100, 30, 155), sf::Color(255, 170, 30), sf::Color(185, 100, 30), State::levelselect);
-        btnpress(window, creditstxt, creditsbtn, creditstxtshadow, creditsbtnshadow, sf::Vector2f(490, 550), sf::Color(255, 20, 50), sf::Color(115, 0, 0), sf::Color(100, 0, 0), sf::Color(180, 180, 180), State::credits);
-        btnpress(window, handbooktxt, handbookbtn, handbooktxtshadow, handbookbtnshadow, sf::Vector2f(640, 550), sf::Color(20, 50, 255), sf::Color(0, 0, 115), sf::Color(0, 0, 100), sf::Color(180, 180, 180), State::handbook);
-        btnpress(window, settingstxt, settingsbtn, settingstxtshadow, settingsbtnshadow, sf::Vector2f(790, 550), sf::Color(20, 255, 50), sf::Color(0, 115, 0), sf::Color(0, 70, 0), sf::Color(180, 180, 180), State::settings);
+        if (btnpress(window, starttxt, startbtn, starttxtshadow, startbtnshadow, sf::Vector2f(640, 450), sf::Color(170, 100, 255), sf::Color(100, 30, 155), sf::Color(255, 170, 30), sf::Color(185, 100, 30))) {
+            state = State::levelselect;
+        }
+        if (btnpress(window, creditstxt, creditsbtn, creditstxtshadow, creditsbtnshadow, sf::Vector2f(490, 550), sf::Color(255, 20, 50), sf::Color(115, 0, 0), sf::Color(100, 0, 0), sf::Color(180, 180, 180))) {
+            state = State::credits;
+        }
+        if (btnpress(window, handbooktxt, handbookbtn, handbooktxtshadow, handbookbtnshadow, sf::Vector2f(640, 550), sf::Color(20, 50, 255), sf::Color(0, 0, 115), sf::Color(0, 0, 100), sf::Color(180, 180, 180))) {
+            state = State::handbook;
+        }
+        if (btnpress(window, settingstxt, settingsbtn, settingstxtshadow, settingsbtnshadow, sf::Vector2f(790, 550), sf::Color(20, 255, 50), sf::Color(0, 115, 0), sf::Color(0, 70, 0), sf::Color(180, 180, 180))) {
+            state = State::settings;
+        }
     }
 
     void draw (sf::RenderWindow& window) {
@@ -225,8 +234,12 @@ public:
     }
 
     void checkaction(sf::RenderWindow& window) {
-        btnpress(window, resumetxt, resumebtn, resumetxtshadow, resumebtnshadow, sf::Vector2f(width/2, 395), sf::Color(80, 210, 145), sf::Color(10, 145, 75), sf::Color(180, 200, 20), sf::Color(110, 130, 20), State::playing);
-        btnpress(window, exittxt, exitbtn, exittxtshadow, exitbtnshadow, sf::Vector2f(width/2, 445), sf::Color(145, 80, 210), sf::Color(75, 10, 140), sf::Color(20, 120, 255), sf::Color(20, 50, 185), State::mainmenu);
+        if (btnpress(window, resumetxt, resumebtn, resumetxtshadow, resumebtnshadow, sf::Vector2f(width/2, 395), sf::Color(80, 210, 145), sf::Color(10, 145, 75), sf::Color(180, 200, 20), sf::Color(110, 130, 20))) {
+            state = State::levelselect;
+        }
+        if (btnpress(window, exittxt, exitbtn, exittxtshadow, exitbtnshadow, sf::Vector2f(width/2, 445), sf::Color(145, 80, 210), sf::Color(75, 10, 140), sf::Color(20, 120, 255), sf::Color(20, 50, 185))) {
+            state = State::mainmenu;
+        }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space)) state = State::playing;
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)) state = State::mainmenu; 
     }
@@ -316,43 +329,26 @@ public:
     void select(sf::RenderWindow& window) {
         sf::Vector2i mouse_ = sf::Mouse::getPosition(window);
         sf::Vector2f mousepos = sf::Vector2f((float)mouse_.x, (float)mouse_.y);
-        if (gorightbtn.getGlobalBounds().contains(mousepos)) {
-            gorightbtn.setFillColor(sf::Color(200, 80, 0));
-            goright.setFillColor(sf::Color(255, 120, 0));
-            if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && !mouseheld && page < 4) {
-                page += 1;
-                mouseheld = true;
-                update();
-            } 
-        } else {
-            gorightbtn.setFillColor(sf::Color(240, 255, 80));
-            goright.setFillColor(sf::Color(140, 255, 10));
+        
+        if (btnpress(window, goright, gorightbtn, gorightshadow, rightbtnshadow, sf::Vector2f(1180, height/2), sf::Color(140, 255, 10), sf::Color(240, 255, 80), sf::Color(255, 120, 0), sf::Color(200, 80, 0)) && page < 4 && !mouseheld) {
+            page += 1;
+            mouseheld = true;
+            update();
         }
-        if (goleftbtn.getGlobalBounds().contains(mousepos)) {
-            goleftbtn.setFillColor(sf::Color(200, 80, 0));
-            goleft.setFillColor(sf::Color(255, 120, 0));
-            if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && !mouseheld && page > 0) {
-                page -= 1;
-                mouseheld = true;
-                update();
-            } 
-        } else {
-            goleftbtn.setFillColor(sf::Color(240, 255, 80));
-            goleft.setFillColor(sf::Color(140, 255, 10));
+        if (btnpress(window, goleft, goleftbtn, goleftshadow, leftbtnshadow, sf::Vector2f(100, height/2), sf::Color(140, 255, 10), sf::Color(240, 255, 80), sf::Color(255, 120, 0), sf::Color(200, 80, 0)) && page > 0 && !mouseheld) {
+            page -= 1;
+            mouseheld = true;
+            update();
         }
 
         for (int i = 0; i < 6; i++) {
-            if (levelbtns[i].getGlobalBounds().contains(mousepos) && !mouseheld) {
-                levelnums[i].setFillColor(sf::Color(170, 30, 80));
-                levelbtns[i].setFillColor(sf::Color(100, 0, 30));
-                if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
-                    levelnum = i;
-                    setnum = page;
-                    state = State::playing;
-                }
-            } else {
-                levelnums[i].setFillColor(sf::Color(0, 100, 240));
-                levelbtns[i].setFillColor(sf::Color(0, 150, 250));
+            sf::Vector2f numpos;
+            if (i < 3) numpos = sf::Vector2f(400 * i + 240, 250);
+            else numpos = sf::Vector2f(400 * (i-3) + 240, 470);
+            if (btnpress(window, levelnums[i], levelbtns[i], numshadows[i], btnshadows[i], numpos, sf::Color(0, 100, 240), sf::Color(0, 150, 250), sf::Color(170, 30, 80), sf::Color(100, 0, 30)) && !mouseheld) {
+                levelnum = i;
+                setnum = page;
+                state = State::playing;
             }
         }
 
