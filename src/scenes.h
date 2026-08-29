@@ -16,9 +16,14 @@ public:
         skyblock.setPosition(sf::Vector2f(0, 0));
 
         auto horizonland = std::make_unique<sf::RectangleShape>(sf::Vector2f(width, height*0.3));
-        horizonland -> setPosition(sf::Vector2f(0, height*0.7));
+        horizonland -> setPosition(sf::Vector2f(0, height*0.6));
         horizonland -> setFillColor(sf::Color(35, 15, 15));
         bkgdelements.push_back(std::move(horizonland));
+
+        auto horizonline = std::make_unique<sf::RectangleShape>(sf::Vector2f(width, 60));
+        horizonline -> setPosition(sf::Vector2f(0, height*0.9));
+        horizonline -> setFillColor(sf::Color(0, 0, 0));
+        bkgdelements.push_back(std::move(horizonline));
 
         auto mountain = std::make_unique<sf::ConvexShape>();
         mountain -> setPointCount(3);
@@ -27,6 +32,12 @@ public:
         mountain -> setPoint(2, sf::Vector2f(452, height*0.7));
         mountain -> setFillColor(sf::Color(150, 150, 20));
         bkgdelements.push_back(std::move(mountain));
+
+        auto moon = std::make_unique<sf::CircleShape>();
+        moon -> setRadius(40);
+        moon -> setFillColor(sf::Color(180, 180, 180));
+        moon -> setPosition(sf::Vector2f(120, 120));
+        bkgdelements.push_back(std::move(moon));
     }
     void makestars (int stars) {
         for (int i = 0; i < stars; i++) {
