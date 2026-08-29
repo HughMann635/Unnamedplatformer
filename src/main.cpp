@@ -230,6 +230,7 @@ int main()
 			restart = false;
 			sky.drawsky(window);
 			sky.drawstars(window);
+			sky.drawbkgd(window);
 			swapped = false;
 			if (currentplayer -> grounded) jumpcount = 2;
 			currentplayer -> jump(deltatime);
