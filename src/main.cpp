@@ -47,6 +47,9 @@ int main()
 
 		window.clear();
 
+		sky.drawsky(window);
+		sky.drawstars(window);
+		sky.drawbkgd(window);
 		if (state == State::playing) {
 			menuenter = false;
 			if (!gamestart) {
@@ -176,10 +179,8 @@ int main()
 				currentplayer -> velocity = lastframe_vel;
 			}
 			
-			window.clear();
 			window.setView(view);
-			sky.drawsky(window);
-			sky.drawstars(window);
+			
 			currentplayer -> drawscreen(window);
 			map.drawmap(window);
 			window.draw(envsprite);
@@ -228,9 +229,6 @@ int main()
 				menuenter = true;
 			}
 			restart = false;
-			sky.drawsky(window);
-			sky.drawstars(window);
-			sky.drawbkgd(window);
 			swapped = false;
 			if (currentplayer -> grounded) jumpcount = 2;
 			currentplayer -> jump(deltatime);
@@ -245,8 +243,6 @@ int main()
 			menu.draw(window);
 			if (!esckeyheld) menu.play(window);
 		} else if (state == State::pause) {
-			sky.drawsky(window);
-			sky.drawstars(window);
 			map.drawmap(window);
 			currentplayer -> drawscreen(window);
 			window.setView(window.getDefaultView());
@@ -257,29 +253,25 @@ int main()
 			window.setView(view);
 			if (!esckeyheld) pausemenu.checkaction(window);
 		} else if (state == State::levelselect) {
-			sky.drawsky(window);
-			sky.drawstars(window);
+			
 			map.drawmap(window);
 			window.setView(window.getDefaultView());
 			lvlselect.select(window);
 			lvlselect.draw(window);
 		} else if (state == State::credits) {
-			sky.drawsky(window);
-			sky.drawstars(window);
+			
 			map.drawmap(window);
 			window.setView(window.getDefaultView());
 			credits.draw(window);
 			credits.update();
 		} else if (state == State::handbook) {
-			sky.drawsky(window);
-			sky.drawstars(window);
+			
 			map.drawmap(window);
 			window.setView(window.getDefaultView());
 			handbook.draw(window);
 			handbook.update();
 		} else if (state == State::settings) {
-			sky.drawsky(window);
-			sky.drawstars(window);
+			
 			map.drawmap(window);
 			window.setView(window.getDefaultView());
 			settings.draw(window);
