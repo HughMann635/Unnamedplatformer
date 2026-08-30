@@ -51,6 +51,9 @@ int main()
 		sky.drawstars(window);
 		sky.drawbkgd(window);
 		if (state == State::playing) {
+			window.setView(window.getDefaultView());
+			if (menu.navback(window)) state = State::pause;
+			window.setView(view);
 			menuenter = false;
 			if (!gamestart) {
 				map.statictilelist.clear();
@@ -70,7 +73,6 @@ int main()
 				envsprite.setTexture((env.getTexture()));
 				gamestart = true;
 			}
-			
 			if (restart == true) {
 				map.statictilelist.clear();
 				map.dynamictilelist.clear();
@@ -244,6 +246,7 @@ int main()
 			if (!esckeyheld) menu.play(window);
 		} else if (state == State::pause) {
 			map.drawmap(window);
+			map.drawenv(window);
 			currentplayer -> drawscreen(window);
 			window.setView(window.getDefaultView());
 			sf::RectangleShape pauseblur(sf::Vector2f(width, height));
@@ -253,25 +256,25 @@ int main()
 			window.setView(view);
 			if (!esckeyheld) pausemenu.checkaction(window);
 		} else if (state == State::levelselect) {
-			
+			if (menu.navback(window)) state = State::mainmenu;
 			map.drawmap(window);
 			window.setView(window.getDefaultView());
 			lvlselect.select(window);
 			lvlselect.draw(window);
 		} else if (state == State::credits) {
-			
+			if (menu.navback(window)) state = State::mainmenu;
 			map.drawmap(window);
 			window.setView(window.getDefaultView());
 			credits.draw(window);
 			credits.update();
 		} else if (state == State::handbook) {
-			
+			if (menu.navback(window)) state = State::mainmenu;
 			map.drawmap(window);
 			window.setView(window.getDefaultView());
 			handbook.draw(window);
 			handbook.update();
 		} else if (state == State::settings) {
-			
+			if (menu.navback(window)) state = State::mainmenu;
 			map.drawmap(window);
 			window.setView(window.getDefaultView());
 			settings.draw(window);
