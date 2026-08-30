@@ -4,40 +4,34 @@
 #include <cstdlib> 
 #include "tilemap.h"
 
+struct parallaxlayer {
+    float scroll;
+    std::unique_ptr<sf::Shape> element;
+    sf::Vector2f pos;
+};
+
 class sky {
 public:
     std::vector<sf::CircleShape> starlist;
     sf::CircleShape star;
     sf::RectangleShape skyblock;
-    std::vector<std::unique_ptr<sf::Shape>> bkgdelements;
+    std::vector<parallaxlayer> bkgdelements;
     sky() {
         skyblock = sf::RectangleShape(sf::Vector2f(width, height));
         skyblock.setFillColor(sf::Color(0, 0, 35));
         skyblock.setPosition(sf::Vector2f(0, 0));
 
         auto horizonland = std::make_unique<sf::RectangleShape>(sf::Vector2f(width, height*0.3));
-        horizonland -> setPosition(sf::Vector2f(0, height*0.6));
-        horizonland -> setFillColor(sf::Color(35, 15, 15));
-        bkgdelements.push_back(std::move(horizonland));
-
-        auto horizonline = std::make_unique<sf::RectangleShape>(sf::Vector2f(width, 60));
-        horizonline -> setPosition(sf::Vector2f(0, height*0.9));
-        horizonline -> setFillColor(sf::Color(0, 0, 0));
-        bkgdelements.push_back(std::move(horizonline));
-
-        auto mountain = std::make_unique<sf::ConvexShape>();
-        mountain -> setPointCount(3);
-        mountain -> setPoint(0, sf::Vector2f(20, height*0.7));
-        mountain -> setPoint(1, sf::Vector2f(236, height*0.4));
-        mountain -> setPoint(2, sf::Vector2f(452, height*0.7));
-        mountain -> setFillColor(sf::Color(150, 150, 20));
-        bkgdelements.push_back(std::move(mountain));
+        horizonland -> setOrigin(sf::Vector2f(horizonland->getGlobalBounds().size.x/2, horizonland->getGlobalBounds().size.y/2));
+        horizonland -> setPosition(sf::Vector2f(width/2, height*0.95));
+        horizonland -> setFillColor(sf::Color(185, 145, 145));
+        bkgdelements.push_back({0, std::move(horizonland), sf::Vector2f(width/2, height*0.95)});
 
         auto moon = std::make_unique<sf::CircleShape>();
         moon -> setRadius(40);
         moon -> setFillColor(sf::Color(180, 180, 180));
         moon -> setPosition(sf::Vector2f(120, 120));
-        bkgdelements.push_back(std::move(moon));
+        bkgdelements.push_back({0.3, std::move(moon), sf::Vector2f(120, 120)});
     }
     void makestars (int stars) {
         for (int i = 0; i < stars; i++) {
@@ -54,17 +48,21 @@ public:
             starlist.push_back(star);
         };
     }
-    void drawstars (sf::RenderWindow& window) {
+    void drawstars (sf::RenderWindow& window, sf::Vector2f center) {
+        sf::Transform transvector;
         for (int i = 0; i < std::size(starlist); i++) {
+            transvector.translate(center*0.1f);
             window.draw(starlist[i]);
         }
     }
     void drawsky (sf::RenderWindow& window) {
         window.draw(skyblock);
     }
-    void drawbkgd (sf::RenderWindow& window) {
+    void drawbkgd (sf::RenderWindow& window, sf::Vector2f center) {
         for (auto& pos: bkgdelements) {
-            window.draw(*pos);
-        }    
+            sf::Transform transvector; 
+            transvector.translate(center*pos.scroll);
+            window.draw(*pos.element, transvector);
+        }
     }
 };
