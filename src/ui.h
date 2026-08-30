@@ -58,6 +58,7 @@ bool btnpress (sf::RenderWindow& window, sf::Text& txt, sf::RectangleShape& btn,
         btnshade.setPosition(pos+sf::Vector2f(6, 6));
         return false;
     }
+    return false;
 }
 
 class mainmenu {
@@ -202,8 +203,8 @@ public:
             backbtn.setPosition(sf::Vector2f(100, 100));
             backiconshadow.setPosition(sf::Vector2f(103, 103));
             backbtnshadow.setPosition(sf::Vector2f(106, 106));
-            return false;
         }
+        return false;
     }
 };
 
