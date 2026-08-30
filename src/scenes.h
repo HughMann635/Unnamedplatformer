@@ -49,10 +49,10 @@ public:
         };
     }
     void drawstars (sf::RenderWindow& window, sf::Vector2f center) {
-        sf::Transform transvector;
         for (int i = 0; i < std::size(starlist); i++) {
-            transvector.translate(center*0.1f);
-            window.draw(starlist[i]);
+            sf::Transform transvector;
+            transvector.translate(-center*0.1f);
+            window.draw(starlist[i], transvector);
         }
     }
     void drawsky (sf::RenderWindow& window) {
