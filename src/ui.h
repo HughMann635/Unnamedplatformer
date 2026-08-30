@@ -81,6 +81,10 @@ public:
     sf::RectangleShape settingsbtnshadow;
     sf::Text handbooktxtshadow;
     sf::RectangleShape handbookbtnshadow;
+    sf::ConvexShape backicon;
+    sf::ConvexShape backiconshadow;
+    sf::RectangleShape backbtn;
+    sf::RectangleShape backbtnshadow;
     
     mainmenu() :
         font("AldotheApache.ttf"),
@@ -113,10 +117,32 @@ public:
         settingstxtshadow = textshadow(120, 3, settingstxt);
         settingsbtnshadow = rectshadow(235, 6, settingsbtn);
 
-        handbooktxt = maketext(25, sf::Color(20, 50, 255), "HANDBOOK", font, sf::Vector2f(640, 550));
+        handbooktxt = maketext(25, sf::Color(20, 50, 255), "X", font, sf::Vector2f(640, 550));
         handbookbtn = makebtn(sf::Vector2f(creditstxt.getLocalBounds().size.x*1.5, creditstxt.getLocalBounds().size.y*2.5), sf::Color(0, 0, 115), sf::Vector2f(640, 550));
         handbooktxtshadow = textshadow(120, 3, handbooktxt);
         handbookbtnshadow = rectshadow(235, 6, handbookbtn);
+
+        backicon.setPointCount(12);
+        backicon.setPoint(0, sf::Vector2f(0, 0));
+        backicon.setPoint(1, sf::Vector2f(4, -4));
+        backicon.setPoint(2, sf::Vector2f(12, 4));
+        backicon.setPoint(3, sf::Vector2f(20, -4));
+        backicon.setPoint(4, sf::Vector2f(24, 0));
+        backicon.setPoint(5, sf::Vector2f(16, 8));
+        backicon.setPoint(6, sf::Vector2f(24, 16));
+        backicon.setPoint(7, sf::Vector2f(20, 20));
+        backicon.setPoint(8, sf::Vector2f(12, 12));
+        backicon.setPoint(9, sf::Vector2f(4, 20));
+        backicon.setPoint(10, sf::Vector2f(0, 16));
+        backicon.setPoint(11, sf::Vector2f(8, 8));
+        backicon.setFillColor(sf::Color(20, 20, 20));
+        backicon.setOrigin(sf::Vector2f(12, 8));
+        backicon.setPosition(sf::Vector2f(80, 80));
+        backbtn = makebtn(sf::Vector2f(40, 40), sf::Color(200, 20, 20), backicon.getPosition());
+        backiconshadow = backicon;
+        backiconshadow.setFillColor(sf::Color(0, 0, 0, 75));
+        backiconshadow.setPosition(backicon.getPosition()+sf::Vector2f(2, 2));
+        backbtnshadow = rectshadow(235, 4, backbtn);
     }
 
     void play (sf::RenderWindow& window) {
@@ -153,6 +179,31 @@ public:
         window.draw(handbookbtn);
         window.draw(handbooktxtshadow);
         window.draw(handbooktxt);
+    }
+
+    bool navback(sf::RenderWindow& window) {
+        window.draw(backbtnshadow);
+        window.draw(backbtn);
+        window.draw(backiconshadow);
+        window.draw(backicon);
+        sf::Vector2f mousepos = window.mapPixelToCoords(sf::Mouse::getPosition(window), window.getDefaultView());
+        if (backbtn.getGlobalBounds().contains(mousepos)) {
+            backicon.setFillColor(sf::Color(255, 0, 0));
+            backbtn.setFillColor(sf::Color(200, 200, 200));
+            backicon.setPosition(sf::Vector2f(100, 103));
+            backbtn.setPosition(sf::Vector2f(100, 103));
+            backiconshadow.setPosition(sf::Vector2f(103, 106));
+            backbtnshadow.setPosition(sf::Vector2f(103, 106));
+            if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) return true;
+        } else {
+            backicon.setFillColor(sf::Color(20, 20, 20));
+            backbtn.setFillColor(sf::Color(200, 20, 20));
+            backicon.setPosition(sf::Vector2f(100, 100));
+            backbtn.setPosition(sf::Vector2f(100, 100));
+            backiconshadow.setPosition(sf::Vector2f(103, 103));
+            backbtnshadow.setPosition(sf::Vector2f(106, 106));
+            return false;
+        }
     }
 };
 
