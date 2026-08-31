@@ -39,8 +39,6 @@ int main()
 	view.setSize(sf::Vector2f(camwidth, camheight));
 	view.setCenter(sf::Vector2f(currentplayer -> shape().getPosition().x, currentplayer -> shape().getPosition().y));
 
-	sky.makestars(stars);
-
 	while (window.isOpen()) {
 		float deltatime = timer.restart().asSeconds();
 		

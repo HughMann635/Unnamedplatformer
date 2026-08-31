@@ -84,6 +84,7 @@ public:
         skyblock = sf::RectangleShape(sf::Vector2f(width, height));
         skyblock.setFillColor(sf::Color(0, 0, 35));
         skyblock.setPosition(sf::Vector2f(0, 0));
+        makestars(stars);
     }
 
     void makestars (int stars) {
@@ -118,8 +119,8 @@ public:
         sf::Transform midparallax;
         sf::Transform nearparallax;
         farparallax.translate(sf::Vector2f(-center.x*0.06, -center.y*0.02));
-        midparallax.translate(sf::Vector2f(-center.x*0.15, center.y*0.04));
-        nearparallax.translate(sf::Vector2f(-center.x*0.24, center.y*0.06));
+        midparallax.translate(sf::Vector2f(-center.x*0.15, -center.y*0.04));
+        nearparallax.translate(sf::Vector2f(-center.x*0.24, -center.y*0.06));
 
         for (auto& pos: starlist) {
             window.draw(pos.star, farparallax);
