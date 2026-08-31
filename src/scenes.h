@@ -4,6 +4,31 @@
 #include <cstdlib> 
 #include "tilemap.h"
 
+
+//PLANNING!!!
+
+/*
+- STARS - flashing
+- COMETS - prodecurally generated?
+- FLOATING ROCKS - they just drift
+- PLANETS - static, ez
+- A BLACK HOLE? - static, ez
+- MOON - static, ez
+---- volcano and horizonland, MAYBE.
+
+STRUCTS FOR 5 GUARANTEEDS + ONE MOON
+STARS: position, circleshape, brightness
+COMETS: trail, pos, shape, cd
+BLACK HOLES: pos | Maybe 1 or 2 on the screen.
+FLOATING ROCKS: speed, shape,
+PLANETS: color, circleshape, size, pos
+
+UPDATE FUNCTION to update pos, brightness...of shapes
+DRAW to draw everything, will do away w/ stars and whatnot.
+
+*/
+
+
 struct parallaxlayer {
     float scrollx;
     float scrolly;
@@ -71,7 +96,7 @@ public:
     }
     void drawbkgd (sf::RenderWindow& window, sf::Vector2f center) {
         for (auto& pos: bkgdelements) {
-            sf::Transform transvector; 
+            sf::Transform transvector;
             transvector.translate(sf::Vector2f(-center.x*pos.scrollx, -center.x*pos.scrolly));
             window.draw(*pos.element, transvector);
         }
