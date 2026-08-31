@@ -47,6 +47,7 @@ int main()
 
 		window.clear();
 
+		window.setView(window.getDefaultView());
 		sky.drawsky(window);
 		sky.drawstars(window, view.getCenter());
 		sky.drawbkgd(window, view.getCenter());
@@ -245,6 +246,7 @@ int main()
 			menu.draw(window);
 			if (!esckeyheld) menu.play(window);
 		} else if (state == State::pause) {
+			window.setView(view);
 			map.drawmap(window);
 			map.drawenv(window);
 			currentplayer -> drawscreen(window);
