@@ -48,9 +48,9 @@ int main()
 		window.clear();
 
 		window.setView(window.getDefaultView());
-		sky.drawsky(window);
-		sky.drawstars(window, view.getCenter());
-		sky.drawbkgd(window, view.getCenter());
+		sky.drawsky(window, view.getCenter());
+		sky.updatesky(deltatime);
+		//sky.drawbkgd(window, view.getCenter());
 		if (state == State::playing) {
 			window.setView(window.getDefaultView());
 			if (menu.navback(window)) state = State::pause;

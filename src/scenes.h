@@ -36,69 +36,92 @@ struct parallaxlayer {
     sf::Vector2f pos;
 };
 
+struct star {
+    sf::Vector2f pos;
+    sf::CircleShape star;
+    int brightness;
+    int speed;
+    int phase;
+};
+
+struct comet {
+    sf::Vector2f pos;
+    sf::Vector2f vel;
+    std::vector<sf::Vector2f> trail;
+    bool cometinsky = false;
+    int cd = 20;
+    sf::Clock comet_cooldown;
+};
+
+struct blackhole_bkgd {
+    sf::Vector2f pos;
+    sf::CircleShape bh;
+};
+
+struct planet {
+    sf::Color color;
+    sf::CircleShape planet;
+};
+
+struct rock {
+    sf::ConvexShape rock;
+    sf::Vector2f pos;
+    sf::Vector2f drift;
+    int rotation;
+};
+
 class sky {
 public:
-    std::vector<sf::CircleShape> starlist;
-    sf::CircleShape star;
+    std::vector<star> starlist;
+    std::vector<rock> rocklist;
+    std::vector<planet> planetlist;
+    std::vector<blackhole_bkgd> blackholelist;
+    std::vector<comet> cometlist;
+    sf::Clock bkgd_clock;
     sf::RectangleShape skyblock;
-    std::vector<parallaxlayer> bkgdelements;
-    sky() {
+
+    sky::sky() {
         skyblock = sf::RectangleShape(sf::Vector2f(width, height));
         skyblock.setFillColor(sf::Color(0, 0, 35));
         skyblock.setPosition(sf::Vector2f(0, 0));
-
-        auto horizonland = std::make_unique<sf::RectangleShape>(sf::Vector2f(width, height*0.3));
-        horizonland -> setOrigin(sf::Vector2f(horizonland->getGlobalBounds().size.x/2, horizonland->getGlobalBounds().size.y/2));
-        horizonland -> setPosition(sf::Vector2f(width/2, height*0.95));
-        horizonland -> setFillColor(sf::Color(185, 145, 145));
-        //bkgdelements.push_back({0, std::move(horizonland), sf::Vector2f(width/2, height*0.95)});
-
-        auto moon = std::make_unique<sf::CircleShape>();
-        moon -> setRadius(40);
-        moon -> setFillColor(sf::Color(180, 180, 180));
-        moon -> setPosition(sf::Vector2f(120, 120));
-        bkgdelements.push_back({0.06, 0.01, std::move(moon), sf::Vector2f(120, 120)});
-
-        auto spacerock = std::make_unique<sf::ConvexShape>();
-        spacerock -> setPointCount(4);
-        spacerock -> setPoint(0, sf::Vector2f(0, 0));
-        spacerock -> setPoint(1, sf::Vector2f(30, 10));
-        spacerock -> setPoint(2, sf::Vector2f(20, 29));
-        spacerock -> setPoint(3, sf::Vector2f(10, 20));
-        spacerock -> setFillColor(sf::Color(20, 20, 20));
-        spacerock -> setPosition(sf::Vector2f(440, 40));
-        bkgdelements.push_back({0.1, 0.02, std::move(spacerock), sf::Vector2f(440, 40)});
     }
+
     void makestars (int stars) {
         for (int i = 0; i < stars; i++) {
-            float star_radius = std::rand() % 3;
-            star = sf::CircleShape(star_radius);
-
-            float starx = std::rand() % width*1.2;
-            float stary = std::rand() % height*1.2;
-            star.setPosition(sf::Vector2f(starx, stary));
-            
-            int starbrightness = 134 + std::rand() % 122;
-            star.setFillColor(sf::Color(starbrightness, starbrightness, starbrightness));
-
+            star star;
+            float radius = 1.f + (std::rand() % 2);
+            star.star.setRadius(radius);
+            star.star.setPosition(sf::Vector2f((std::rand() % width)*1.2, (std::rand() % height)*1.2));
+            star.brightness = 140 + (std::rand() % 115);
+            star.star.setFillColor(sf::Color(star.brightness, star.brightness, star.brightness));
+            star.phase = std::rand() % 500 / 100.f;
+            star.speed = (1 + std::rand() % 100) / 100.f;
             starlist.push_back(star);
         };
     }
-    void drawstars (sf::RenderWindow& window, sf::Vector2f center) {
-        for (int i = 0; i < std::size(starlist); i++) {
-            sf::Transform transvector;
-            transvector.translate(sf::Vector2f(-center.x*0.07f, -center.y*0.03f));
-            window.draw(starlist[i], transvector);
+
+    void updatesky (float deltatime) {
+        float time = bkgd_clock.getElapsedTime().asSeconds();
+        for (auto& pos: starlist) {
+            int alpha = 140 + 80 * std::sin(time * pos.speed * pos.phase);
+            sf::Color color = pos.star.getFillColor();            
+            if (alpha > 255) alpha = 255;
+            if (alpha < 0) alpha = 0;
+            color.a = alpha;
         }
     }
-    void drawsky (sf::RenderWindow& window) {
+
+    void drawsky (sf::RenderWindow& window, sf::Vector2f center) {
         window.draw(skyblock);
-    }
-    void drawbkgd (sf::RenderWindow& window, sf::Vector2f center) {
-        for (auto& pos: bkgdelements) {
-            sf::Transform transvector;
-            transvector.translate(sf::Vector2f(-center.x*pos.scrollx, -center.x*pos.scrolly));
-            window.draw(*pos.element, transvector);
+        sf::Transform farparallax;
+        sf::Transform midparallax;
+        sf::Transform nearparallax;
+        farparallax.translate(sf::Vector2f(-center.x*0.06, -center.y*0.02));
+        midparallax.translate(sf::Vector2f(-center.x*0.15, center.y*0.04));
+        nearparallax.translate(sf::Vector2f(-center.x*0.24, center.y*0.06));
+
+        for (auto& pos: starlist) {
+            window.draw(pos.star, farparallax);
         }
     }
 };
