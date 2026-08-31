@@ -108,6 +108,7 @@ public:
             if (alpha > 255) alpha = 255;
             if (alpha < 0) alpha = 0;
             color.a = alpha;
+            pos.star.setFillColor(color);
         }
     }
 
