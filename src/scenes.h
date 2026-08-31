@@ -92,7 +92,7 @@ public:
             float radius = 1.f + (std::rand() % 2);
             star.star.setRadius(radius);
             star.star.setPosition(sf::Vector2f((std::rand() % width)*1.2, (std::rand() % height)*1.2));
-            star.brightness = 140 + (std::rand() % 115);
+            star.brightness = 215 + (std::rand() % 40);
             star.star.setFillColor(sf::Color(star.brightness, star.brightness, star.brightness));
             star.phase = std::rand() % 500 / 100.f;
             star.speed = (1 + std::rand() % 100) / 100.f;
@@ -103,7 +103,7 @@ public:
     void updatesky (float deltatime) {
         float time = bkgd_clock.getElapsedTime().asSeconds();
         for (auto& pos: starlist) {
-            int alpha = 140 + 80 * std::sin(time * pos.speed * pos.phase);
+            int alpha = 170 + 85 * std::sin(time * pos.speed * pos.phase);
             sf::Color color = pos.star.getFillColor();            
             if (alpha > 255) alpha = 255;
             if (alpha < 0) alpha = 0;
