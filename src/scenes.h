@@ -61,6 +61,8 @@ struct blackhole_bkgd {
 struct planet {
     sf::Color color;
     sf::CircleShape planet;
+    sf::CircleShape ring;
+    bool has_ring;
 };
 
 struct rock {
@@ -112,15 +114,12 @@ public:
         };
     }
 
-    void makecomet () {
-
-    }
-
     void makeplanets (int planets) {
         for (int i = 0; i < planets; i++) {
             planet planet;
             float radius = 5.f + (std::rand() % 20);
             planet.planet.setRadius(radius);
+            planet.planet.setOrigin(sf::Vector2f(radius, radius));
             planet.planet.setPosition(sf::Vector2f((std::rand() % width) * 1.1 + 20, (std::rand() % 520) + 20));
             if (starlist.size() > 0) {
                 for (auto& pos: planetlist) {
@@ -133,8 +132,24 @@ public:
                 }
             }
             planet.planet.setFillColor(sf::Color(std::rand() % 50 + 95, std::rand() % 50 + 95, std::rand() % 50 + 95));
+            
+            planet.ring.setRadius(radius*1.4);
+            planet.ring.setFillColor(sf::Color::Transparent);
+            planet.ring.setOutlineColor(sf::Color(100, 50, 0));
+            planet.ring.setOutlineThickness(2.f);
+            planet.ring.setOrigin(sf::Vector2f(radius*1.4, radius*1.4));
+            planet.ring.setPosition(planet.planet.getPosition());
+            planet.ring.setScale(sf::Vector2f(1, 0.3));
+            planet.ring.setRotation(sf::degrees(20));
+            if (std::rand() % 5 > 2) planet.has_ring = true;
+            else planet.has_ring = false;
+
             planetlist.push_back(planet);
         }
+    }
+    
+    void makecomet () {
+
     }
 
     void makerocks () {
@@ -173,6 +188,7 @@ public:
             sf::Transform planetparallax;
             planetparallax.translate(sf::Vector2f(-center.x*(pos.planet.getRadius()/150), -center.y*(pos.planet.getRadius()/750)));
             window.draw(pos.planet, planetparallax);
+            if (pos.has_ring) window.draw(pos.ring, planetparallax);
         }
     }
 };
