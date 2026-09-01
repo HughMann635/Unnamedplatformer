@@ -85,6 +85,7 @@ public:
         skyblock.setFillColor(sf::Color(0, 0, 35));
         skyblock.setPosition(sf::Vector2f(0, 0));
         makestars(stars);
+        makeplanets(30);
     }
 
     void makestars (int stars) {
@@ -147,6 +148,9 @@ public:
 
         for (auto& pos: starlist) {
             window.draw(pos.star, farparallax);
+        }
+        for (auto& pos: planetlist) {
+            window.draw(pos.planet, midparallax);
         }
     }
 };
