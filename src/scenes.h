@@ -85,7 +85,7 @@ public:
         skyblock.setFillColor(sf::Color(0, 0, 35));
         skyblock.setPosition(sf::Vector2f(0, 0));
         makestars(stars);
-        makeplanets(30);
+        makeplanets(planets);
     }
 
     void makestars (int stars) {
@@ -119,16 +119,16 @@ public:
     void makeplanets (int planets) {
         for (int i = 0; i < planets; i++) {
             planet planet;
-            float radius = 10.f + (std::rand() % 25);
+            float radius = 5.f + (std::rand() % 20);
             planet.planet.setRadius(radius);
-            planet.planet.setPosition(sf::Vector2f((std::rand() % width) * 1.2, (std::rand() % 520) + 20));
+            planet.planet.setPosition(sf::Vector2f((std::rand() % width) * 1.1 + 20, (std::rand() % 520) + 20));
             if (starlist.size() > 2) {
                 for (auto& pos: planetlist) {
                     while (pos.planet.getGlobalBounds().findIntersection(planet.planet.getGlobalBounds())) {
                         if (!pos.planet.getGlobalBounds().findIntersection(planet.planet.getGlobalBounds())) {
                             break;
                         }
-                        planet.planet.setPosition(sf::Vector2f((std::rand() % width) * 1.2, (std::rand() % 520) + 20));
+                        planet.planet.setPosition(sf::Vector2f((std::rand() % width) * 1.1 + 20, (std::rand() % 520) + 20));
                     }
                 }
             }
@@ -154,7 +154,7 @@ public:
             if (alpha < 0) alpha = 0;
             color.a = alpha;
             pos.star.setFillColor(color);
-        }
+        }   
     }
 
     void drawsky (sf::RenderWindow& window, sf::Vector2f center) {
@@ -170,7 +170,9 @@ public:
             window.draw(pos.star, farparallax);
         }
         for (auto& pos: planetlist) {
-            window.draw(pos.planet, midparallax);
+            sf::Transform planetparallax;
+            planetparallax.translate(sf::Vector2f(-center.x*(pos.planet.getRadius()/150), -center.y*(pos.planet.getRadius()/750)));
+            window.draw(pos.planet, planetparallax);
         }
     }
 };

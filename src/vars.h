@@ -9,6 +9,7 @@ inline std::string title = "Worlds of Blockman";
 const int camwidth = 960;
 const int camheight = 540;
 const int stars = 700;
+const int planets = 25;
 inline bool esckeyheld = false;
 inline bool mouseheld = false;
 inline bool running = true;
