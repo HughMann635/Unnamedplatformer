@@ -101,6 +101,29 @@ public:
         };
     }
 
+    void makecomet () {
+
+    }
+
+    void makeplanets (int planets) {
+        for (int i = 0; i < planets; i++) {
+            planet planet;
+            float radius = 10.f + (std::rand() % 25);
+            planet.planet.setRadius(radius);
+            planet.planet.setPosition(sf::Vector2f((std::rand() % width) * 1.2, (std::rand() % height) * 1.2));
+            planet.planet.setFillColor(sf::Color(std::rand() % 80 + 80, std::rand() % 80 + 80, std::rand() % 80 + 80));
+            planetlist.push_back(planet);
+        }
+    }
+
+    void makerocks () {
+
+    }
+
+    void makeblackholes () {
+
+    }
+
     void updatesky (float deltatime) {
         float time = bkgd_clock.getElapsedTime().asSeconds();
         for (auto& pos: starlist) {
