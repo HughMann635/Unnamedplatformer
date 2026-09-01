@@ -93,7 +93,17 @@ public:
             star star;
             float radius = 1.f + (std::rand() % 2);
             star.star.setRadius(radius);
-            star.star.setPosition(sf::Vector2f((std::rand() % width)*1.2, (std::rand() % height)*1.2));
+            star.star.setPosition(sf::Vector2f((std::rand() % width)*1.2, (std::rand() % 520)*1.2));
+            if (starlist.size() > 3) {
+                for (auto& pos: starlist) {
+                    while (pos.star.getGlobalBounds().findIntersection(star.star.getGlobalBounds())) {
+                        if (!pos.star.getGlobalBounds().findIntersection(star.star.getGlobalBounds())) {
+                            break;
+                        }
+                        star.star.setPosition(sf::Vector2f((std::rand() % width)*1.2, (std::rand() % 520)*1.2));
+                    }
+                }
+            } 
             star.brightness = 215 + (std::rand() % 40);
             star.star.setFillColor(sf::Color(star.brightness, star.brightness, star.brightness));
             star.phase = std::rand() % 500 / 100.f;
