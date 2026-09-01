@@ -93,7 +93,7 @@ public:
             star star;
             float radius = 1.f + (std::rand() % 2);
             star.star.setRadius(radius);
-            star.star.setPosition(sf::Vector2f((std::rand() % width)*1.2, (std::rand() % 520)*1.2));
+            star.star.setPosition(sf::Vector2f((std::rand() % width)*1.2, (std::rand() % height)*1.2));
             if (starlist.size() > 3) {
                 for (auto& pos: starlist) {
                     while (pos.star.getGlobalBounds().findIntersection(star.star.getGlobalBounds())) {
@@ -121,7 +121,17 @@ public:
             planet planet;
             float radius = 10.f + (std::rand() % 25);
             planet.planet.setRadius(radius);
-            planet.planet.setPosition(sf::Vector2f((std::rand() % width) * 1.2, (std::rand() % height) * 1.2));
+            planet.planet.setPosition(sf::Vector2f((std::rand() % width) * 1.2, (std::rand() % 520) + 20));
+            if (starlist.size() > 2) {
+                for (auto& pos: planetlist) {
+                    while (pos.planet.getGlobalBounds().findIntersection(planet.planet.getGlobalBounds())) {
+                        if (!pos.planet.getGlobalBounds().findIntersection(planet.planet.getGlobalBounds())) {
+                            break;
+                        }
+                        planet.planet.setPosition(sf::Vector2f((std::rand() % width) * 1.2, (std::rand() % 520) + 20));
+                    }
+                }
+            }
             planet.planet.setFillColor(sf::Color(std::rand() % 80 + 80, std::rand() % 80 + 80, std::rand() % 80 + 80));
             planetlist.push_back(planet);
         }
