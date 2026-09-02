@@ -46,7 +46,7 @@ struct star {
 
 struct comet {
     sf::Vector2f pos;
-    sf::Vector2f vel;
+    sf::Vector2f velocity;
     std::vector<sf::Vector2f> trail;
     bool cometinsky = false;
     int cd = 20;
@@ -184,14 +184,22 @@ public:
                 crater.setFillColor(sf::Color(planet.planet.getFillColor().r * 0.7, planet.planet.getFillColor().g * 0.7, planet.planet.getFillColor().b * 0.7));
                 planet.details.push_back(crater);
             }
-
             planetlist.push_back(planet);
         }
         std::sort(planetlist.begin(), planetlist.end(), [](const planet& a, const planet& b) { return a.planet.getRadius() < b.planet.getRadius(); });
     }
     
     void makecomet () {
+        cometlist.clear();
+        int comets = 3;
 
+        for (int i = 0; i < comets; i++) {
+            comet comet;
+            comet.cd = 5 + std::rand() % 15;
+            comet.cometinsky = false;
+            comet.comet_cooldown.restart();
+            cometlist.push_back(comet);
+        }
     }
 
     void makerocks () {
@@ -212,6 +220,30 @@ public:
             color.a = alpha;
             pos.star.setFillColor(color);
         }   
+        for (auto& pos: cometlist) {
+            if (!pos.cometinsky) {
+                if (pos.comet_cooldown.getElapsedTime().asSeconds() >= pos.cd) {
+                    pos.cometinsky = true;
+                    float startypos = std::rand() % 500;
+                    pos.pos = sf::Vector2f(-30, startypos);
+                    float speed = 320 + std::rand() % 300;
+                    float angle = -20 + std::rand() % 40;
+
+                    pos.velocity = sf::Vector2f(std::cos(angle)*speed, std::sin(angle)*speed);
+                    pos.trail.clear();
+                }
+            } else {
+                pos.pos += pos.velocity * deltatime;
+                pos.trail.push_back(pos.pos);
+                if (pos.trail.size() > 25) {
+                    pos.trail.erase(pos.trail.begin());
+                }
+                if (pos.pos.x > width + 70 || pos.pos.x < -70 || pos.pos.y > height + 100 || pos.pos.y < -100) {
+                    pos.cometinsky = false;
+                    pos.comet_cooldown.restart();
+                }
+            }
+        }
     }
 
     void drawsky (sf::RenderWindow& window, sf::Vector2f center) {
@@ -244,6 +276,25 @@ public:
                 window.draw(pos.details[i], detailparallax);
             }
             window.draw(pos.ring_front, ringparallax);
+        }
+        for (auto& pos: cometlist) {
+            if (!pos.cometinsky || pos.trail.size() < 2) continue;
+
+            sf::VertexArray tail(sf::PrimitiveType::LineStrip);
+            for (int i = 0; i < pos.trail.size(); i++) {
+                float alphalevel = i / pos.trail.size();
+                float trailalpha = alphalevel * 230;
+                sf::Color trailcolor (sf::Color(180, 230, 255, trailalpha));
+                tail.append(sf::Vertex{pos.trail[i], trailcolor});
+            }
+            window.draw(tail);
+
+            sf::CircleShape head;
+            head.setRadius(4);
+            head.setOrigin(sf::Vector2f(4, 4));
+            head.setPosition(pos.pos);
+            head.setFillColor(sf::Color(255, 255, 240));
+            window.draw(head);
         }
     }
 };
