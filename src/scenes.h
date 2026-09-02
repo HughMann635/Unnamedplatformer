@@ -135,13 +135,13 @@ public:
             
             planet.ring.setRadius(radius*1.4);
             planet.ring.setFillColor(sf::Color::Transparent);
-            planet.ring.setOutlineColor(sf::Color(100, 50, 0));
+            planet.ring.setOutlineColor(sf::Color(80, 50, 0));
             planet.ring.setOutlineThickness(2.f);
             planet.ring.setOrigin(sf::Vector2f(radius*1.4, radius*1.4));
             planet.ring.setPosition(planet.planet.getPosition());
-            planet.ring.setScale(sf::Vector2f(1, 0.3));
+            planet.ring.setScale(sf::Vector2f(1, 0.1));
             planet.ring.setRotation(sf::degrees(20));
-            if (std::rand() % 5 > 2) planet.has_ring = true;
+            if (std::rand() % 5 > 3) planet.has_ring = true;
             else planet.has_ring = false;
 
             planetlist.push_back(planet);
