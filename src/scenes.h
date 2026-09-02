@@ -155,15 +155,14 @@ public:
                 }
             }
             planet.planet.setFillColor(sf::Color(std::rand() % 50 + 95, std::rand() % 50 + 95, std::rand() % 50 + 95));
-            
             if (std::rand() % 5 > 1) {
                 planet.ring_back = makeplanetrings(radius*1.4, std::rand() % 1 + 2, 180, 360, sf::Color(170, 100, 80));
                 planet.ring_front = makeplanetrings(radius*1.4, std::rand() % 1 + 2, 0, 180, sf::Color(170, 100, 80));
                 planet.ring_angle = std::rand() % 40 - 20;
             }
-
             planetlist.push_back(planet);
         }
+        std::sort(planetlist.begin(), planetlist.end(), [](const planet& a, const planet& b) { return a.planet.getRadius() < b.planet.getRadius(); });
     }
     
     void makecomet () {
