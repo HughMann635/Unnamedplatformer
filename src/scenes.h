@@ -65,6 +65,7 @@ struct planet {
     sf::VertexArray ring_front;
     float ring_angle;
     bool has_ring;
+    std::vector<sf::CircleShape> details;
 };
 
 struct rock {
@@ -98,8 +99,8 @@ public:
         float innerradius = radius - (thickness / 2);
         float outerradius = radius + (thickness / 2);
 
-        float startradians = startangle * (3.141592658792 / 180);
-        float endradians = endangle * (3.141592658792 / 180);
+        float startradians = startangle * (3.14159265358979 / 180);
+        float endradians = endangle * (3.14159265358979 / 180);
         float dists = (endradians - startradians) / 25;
 
         for (int i = 0; i < 27; i++) {
@@ -155,11 +156,35 @@ public:
                 }
             }
             planet.planet.setFillColor(sf::Color(std::rand() % 50 + 95, std::rand() % 50 + 95, std::rand() % 50 + 95));
+            
             if (std::rand() % 5 > 1) {
                 planet.ring_back = makeplanetrings(radius*1.4, std::rand() % 1 + 2, 180, 360, sf::Color(170, 100, 80));
                 planet.ring_front = makeplanetrings(radius*1.4, std::rand() % 1 + 2, 0, 180, sf::Color(170, 100, 80));
                 planet.ring_angle = std::rand() % 40 - 20;
             }
+
+            for (int i = 0; i < std::rand() % 4 + 2; i++) {
+                sf::CircleShape crater;
+                crater.setRadius(planet.planet.getRadius()/(5 + std::rand() % 5));
+                crater.setOrigin(sf::Vector2f(crater.getRadius(), crater.getRadius()));
+                float crateroffset = std::rand() % static_cast<int>(radius * 0.7);
+                float crateroffsetangle = std::rand() % 360 * (3.14159265358979/180);
+                crater.setPosition(sf::Vector2f(std::cos(crateroffsetangle)*crateroffset, std::sin(crateroffsetangle)*crateroffset));
+                if (planet.details.size() > 0) {
+                    for (auto& pos: planet.details) {
+                        while (pos.getGlobalBounds().findIntersection(crater.getGlobalBounds())) {
+                            if (!pos.getGlobalBounds().findIntersection(crater.getGlobalBounds())) break;
+                            crateroffset = std::rand() % static_cast<int>(radius * 0.7);
+                            crateroffsetangle = std::rand() % 360 * (3.14159265358979/180);
+                            crater.setPosition(sf::Vector2f(std::cos(crateroffsetangle)*crateroffset, std::sin(crateroffsetangle)*crateroffset));
+                        }
+                    }
+                }
+                crater.setPosition(sf::Vector2f(std::cos(crateroffsetangle)*crateroffset, std::sin(crateroffsetangle)*crateroffset));
+                crater.setFillColor(sf::Color(planet.planet.getFillColor().r * 0.7, planet.planet.getFillColor().g * 0.7, planet.planet.getFillColor().b * 0.7));
+                planet.details.push_back(crater);
+            }
+
             planetlist.push_back(planet);
         }
         std::sort(planetlist.begin(), planetlist.end(), [](const planet& a, const planet& b) { return a.planet.getRadius() < b.planet.getRadius(); });
@@ -210,8 +235,14 @@ public:
             ringparallax.rotate(sf::degrees(pos.ring_angle));
             ringparallax.scale(sf::Vector2f(1, 0.3));
 
+            sf::Transform detailparallax = planetparallax;
+            detailparallax.translate(pos.planet.getPosition());
+
             window.draw(pos.ring_back, ringparallax);
             window.draw(pos.planet, planetparallax);
+            for (int i = 0; i < pos.details.size(); i++) {
+                window.draw(pos.details[i], detailparallax);
+            }
             window.draw(pos.ring_front, ringparallax);
         }
     }
