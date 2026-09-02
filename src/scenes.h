@@ -91,6 +91,7 @@ public:
         skyblock.setPosition(sf::Vector2f(0, 0));
         makestars(stars);
         makeplanets(planets);
+        makecomet();
     }
 
     sf::VertexArray makeplanetrings(float radius, float thickness, float startangle, float endangle, sf::Color color) {
@@ -227,7 +228,7 @@ public:
                     float startypos = std::rand() % 500;
                     pos.pos = sf::Vector2f(-30, startypos);
                     float speed = 320 + std::rand() % 300;
-                    float angle = -20 + std::rand() % 40;
+                    float angle = (-20 + std::rand() % 40) * (3.14159265358979/180);
 
                     pos.velocity = sf::Vector2f(std::cos(angle)*speed, std::sin(angle)*speed);
                     pos.trail.clear();
@@ -282,19 +283,19 @@ public:
 
             sf::VertexArray tail(sf::PrimitiveType::LineStrip);
             for (int i = 0; i < pos.trail.size(); i++) {
-                float alphalevel = i / pos.trail.size();
+                float alphalevel = static_cast<float>(i) / static_cast<float>(pos.trail.size());
                 float trailalpha = alphalevel * 230;
                 sf::Color trailcolor (sf::Color(180, 230, 255, trailalpha));
                 tail.append(sf::Vertex{pos.trail[i], trailcolor});
             }
-            window.draw(tail);
+            window.draw(tail, midparallax);
 
             sf::CircleShape head;
             head.setRadius(4);
             head.setOrigin(sf::Vector2f(4, 4));
             head.setPosition(pos.pos);
             head.setFillColor(sf::Color(255, 255, 240));
-            window.draw(head);
+            window.draw(head, midparallax);
         }
     }
 };
