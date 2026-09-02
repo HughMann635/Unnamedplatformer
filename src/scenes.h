@@ -61,7 +61,9 @@ struct blackhole_bkgd {
 struct planet {
     sf::Color color;
     sf::CircleShape planet;
-    sf::CircleShape ring;
+    sf::VertexArray ring_back;
+    sf::VertexArray ring_front;
+    float ring_angle;
     bool has_ring;
 };
 
@@ -88,6 +90,27 @@ public:
         skyblock.setPosition(sf::Vector2f(0, 0));
         makestars(stars);
         makeplanets(planets);
+    }
+
+    sf::VertexArray makeplanetrings(float radius, float thickness, float startangle, float endangle, sf::Color color) {
+        sf::VertexArray ring_arc(sf::PrimitiveType::TriangleStrip);
+
+        float innerradius = radius - (thickness / 2);
+        float outerradius = radius + (thickness / 2);
+
+        float startradians = startangle * (3.141592658792 / 180);
+        float endradians = endangle * (3.141592658792 / 180);
+        float dists = (endradians - startradians) / 25;
+
+        for (int i = 0; i < 27; i++) {
+            float angle = startradians + (i * dists);
+            float cos = std::cos(angle);
+            float sin = std::sin(angle);
+
+            ring_arc.append(sf::Vertex{sf::Vector2f(outerradius*cos, outerradius*sin), color});
+            ring_arc.append(sf::Vertex{sf::Vector2f(innerradius*cos, innerradius*sin), color});
+        }
+        return ring_arc;
     }
 
     void makestars (int stars) {
@@ -133,16 +156,11 @@ public:
             }
             planet.planet.setFillColor(sf::Color(std::rand() % 50 + 95, std::rand() % 50 + 95, std::rand() % 50 + 95));
             
-            planet.ring.setRadius(radius*1.4);
-            planet.ring.setFillColor(sf::Color::Transparent);
-            planet.ring.setOutlineColor(sf::Color(80, 50, 0));
-            planet.ring.setOutlineThickness(2.f);
-            planet.ring.setOrigin(sf::Vector2f(radius*1.4, radius*1.4));
-            planet.ring.setPosition(planet.planet.getPosition());
-            planet.ring.setScale(sf::Vector2f(1, 0.1));
-            planet.ring.setRotation(sf::degrees(20));
-            if (std::rand() % 5 > 3) planet.has_ring = true;
-            else planet.has_ring = false;
+            if (std::rand() % 5 > 2) {
+                planet.ring_back = makeplanetrings(radius*1.4, 3, 180, 360, sf::Color(170, 100, 80));
+                planet.ring_front = makeplanetrings(radius*1.4, 3, 0, 180, sf::Color(170, 100, 80));
+                planet.ring_angle = std::rand() % 60 - 30;
+            }
 
             planetlist.push_back(planet);
         }
@@ -187,8 +205,15 @@ public:
         for (auto& pos: planetlist) {
             sf::Transform planetparallax;
             planetparallax.translate(sf::Vector2f(-center.x*(pos.planet.getRadius()/150), -center.y*(pos.planet.getRadius()/750)));
+
+            sf::Transform ringparallax = planetparallax;
+            ringparallax.translate(pos.planet.getPosition());
+            ringparallax.rotate(sf::degrees(pos.ring_angle));
+            ringparallax.scale(sf::Vector2f(1, 0.3));
+
+            window.draw(pos.ring_back, ringparallax);
             window.draw(pos.planet, planetparallax);
-            if (pos.has_ring) window.draw(pos.ring, planetparallax);
+            window.draw(pos.ring_front, ringparallax);
         }
     }
 };
