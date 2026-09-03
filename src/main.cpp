@@ -247,8 +247,8 @@ int main()
 		} else if (state == State::pause) {
 			window.setView(view);
 			map.drawmap(window);
-			map.drawenv(window);
 			currentplayer -> drawscreen(window);
+			map.drawenv(window);
 			window.setView(window.getDefaultView());
 			sf::RectangleShape pauseblur(sf::Vector2f(width, height));
 			pauseblur.setFillColor(sf::Color(0, 0, 0, 135));
