@@ -208,20 +208,20 @@ public:
         for (int i = 0; i < 8; i++) {
             rock rock;
             rock.rock.setPointCount(5+std::rand() % 4);
-            float radius = 8 + std::rand() % 13;
+            float radius = 5 + std::rand() % 12;
             for (int i = 0; i < rock.rock.getPointCount(); i++) {
                 float angle = i * 6.2831853 / rock.rock.getPointCount();
-                float variance = radius * (60 + std::rand() % 80) / 100;
+                float variance = radius * (60 + std::rand() % 80) / 100.f;
                 rock.rock.setPoint(i, sf::Vector2f(std::cos(angle)*variance, std::sin(angle)*variance));
             }
             int rockshade = 60 + std::rand() % 40;
             rock.rock.setFillColor(sf::Color(rockshade, rockshade, rockshade));
             rock.rock.setOutlineColor(sf::Color(rockshade/2, rockshade/2, rockshade/2));
             rock.rock.setOutlineThickness(-1);
-            rock.pos = sf::Vector2f(std::rand() % height, std::rand() % width);
+            rock.pos = sf::Vector2f(std::rand() % width, std::rand() % height);
             rock.rock.setPosition(rock.pos);
             rock.drift = sf::Vector2f(-30 + std::rand() % 60, -10 + std::rand() % 20);
-            rock.rotation = -5 + std::rand() % 10;
+            do { rock.rotation = -3 + std::rand() % 6; } while (rock.rotation == 0);
             rocklist.push_back(rock);
         }
     }
