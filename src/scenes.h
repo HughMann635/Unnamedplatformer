@@ -154,7 +154,7 @@ public:
                         if (!pos.planet.getGlobalBounds().findIntersection(planet.planet.getGlobalBounds())) {
                             break;
                         }
-                        planet.planet.setPosition(sf::Vector2f((std::rand() % width) * 1.1 + 20, (std::rand() % 520) + 20));
+                        planet.planet.setPosition(sf::Vector2f(std::rand() % width + 20, (std::rand() % 520) + 20));
                     }
                 }
             }
@@ -219,7 +219,7 @@ public:
             rock.rock.setFillColor(sf::Color(rockshade, rockshade, rockshade));
             rock.rock.setOutlineColor(sf::Color(rockshade/2, rockshade/2, rockshade/2));
             rock.rock.setOutlineThickness(-1);
-            rock.pos = sf::Vector2f(std::rand() % width, std::rand() % height);
+            rock.pos = sf::Vector2f(20 + std::rand() % 1240, 20 + std::rand() % 680);
             rock.rock.setPosition(rock.pos);
             rock.drift = sf::Vector2f(-30 + std::rand() % 60, -10 + std::rand() % 20);
             do { rock.rotation = -3 + std::rand() % 6; } while (rock.rotation == 0);
@@ -230,7 +230,7 @@ public:
     void makeblackholes (int blackholes) {
         for (int i = 0; i < blackholes; i++) {
             blackhole_bkgd bh;
-            bh.bh.setRadius(std::rand() % 4 + 3);
+            bh.bh.setRadius(std::rand() % 3 + 2);
             bh.bh.setFillColor(sf::Color::Black);
             bh.bh.setOrigin(sf::Vector2f(bh.bh.getRadius(), bh.bh.getRadius()));
             bh.pos = sf::Vector2f(50 + std::rand() % 1180, 50 + std::rand() % 620);
@@ -296,6 +296,9 @@ public:
         midparallax.translate(sf::Vector2f(-center.x*0.15, -center.y*0.04));
         nearparallax.translate(sf::Vector2f(-center.x*0.24, -center.y*0.06));
 
+        for (auto& pos: blackholelist) {
+            window.draw(pos.bh, farparallax);
+        }
         for (auto& pos: starlist) {
             window.draw(pos.star, farparallax);
         }
@@ -339,9 +342,6 @@ public:
         }
         for (auto& pos: rocklist) {
             window.draw(pos.rock, nearparallax);
-        }
-        for (auto& pos: blackholelist) {
-            window.draw(pos.bh, farparallax);
         }
     }
 };
