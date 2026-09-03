@@ -28,14 +28,6 @@ DRAW to draw everything, will do away w/ stars and whatnot.
 
 */
 
-
-struct parallaxlayer {
-    float scrollx;
-    float scrolly;
-    std::unique_ptr<sf::Shape> element;
-    sf::Vector2f pos;
-};
-
 struct star {
     sf::Vector2f pos;
     sf::CircleShape star;
@@ -56,6 +48,7 @@ struct comet {
 struct blackhole_bkgd {
     sf::Vector2f pos;
     sf::CircleShape bh;
+    sf::CircleShape ring;
 };
 
 struct planet {
@@ -93,7 +86,7 @@ public:
         makeplanets(planets);
         makecomet();
         makerocks(6);
-        makeblackholes(5);
+        makeblackholes(2);
     }
 
     sf::VertexArray makeplanetrings(float radius, float thickness, float startangle, float endangle, sf::Color color) {
@@ -230,11 +223,17 @@ public:
     void makeblackholes (int blackholes) {
         for (int i = 0; i < blackholes; i++) {
             blackhole_bkgd bh;
-            bh.bh.setRadius(std::rand() % 3 + 2);
+            bh.bh.setRadius(std::rand() % 5 + 4);
             bh.bh.setFillColor(sf::Color::Black);
             bh.bh.setOrigin(sf::Vector2f(bh.bh.getRadius(), bh.bh.getRadius()));
             bh.pos = sf::Vector2f(50 + std::rand() % 1180, 50 + std::rand() % 620);
             bh.bh.setPosition(bh.pos);
+            bh.ring.setRadius(bh.bh.getRadius() * 2);
+            bh.ring.setFillColor(sf::Color::Transparent);
+            bh.ring.setOutlineColor(sf::Color(240, 170, 0));
+            bh.ring.setOutlineThickness(1);
+            bh.ring.setOrigin(sf::Vector2f(bh.ring.getRadius(), bh.ring.getRadius()));
+            bh.ring.setPosition(bh.bh.getPosition());
             blackholelist.push_back(bh);
         }
     }
@@ -298,6 +297,7 @@ public:
 
         for (auto& pos: blackholelist) {
             window.draw(pos.bh, farparallax);
+            window.draw(pos.ring, farparallax);
         }
         for (auto& pos: starlist) {
             window.draw(pos.star, farparallax);
