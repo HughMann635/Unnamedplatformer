@@ -72,7 +72,7 @@ struct rock {
     sf::ConvexShape rock;
     sf::Vector2f pos;
     sf::Vector2f drift;
-    int rotation;
+    float rotation;
 };
 
 class sky {
@@ -92,6 +92,7 @@ public:
         makestars(stars);
         makeplanets(planets);
         makecomet();
+        makerocks();
     }
 
     sf::VertexArray makeplanetrings(float radius, float thickness, float startangle, float endangle, sf::Color color) {
@@ -204,7 +205,25 @@ public:
     }
 
     void makerocks () {
-
+        for (int i = 0; i < 8; i++) {
+            rock rock;
+            rock.rock.setPointCount(5+std::rand() % 4);
+            float radius = 8 + std::rand() % 13;
+            for (int i = 0; i < rock.rock.getPointCount(); i++) {
+                float angle = i * 6.2831853 / rock.rock.getPointCount();
+                float variance = radius * (60 + std::rand() % 80) / 100;
+                rock.rock.setPoint(i, sf::Vector2f(std::cos(radius)*variance, std::sin(radius)*variance));
+            }
+            int rockshade = 60 + std::rand() % 40;
+            rock.rock.setFillColor(sf::Color(rockshade, rockshade, rockshade));
+            rock.rock.setOutlineColor(sf::Color(rockshade/2, rockshade/2, rockshade/2));
+            rock.rock.setOutlineThickness(-1);
+            rock.pos = sf::Vector2f(std::rand() % height, std::rand() % width);
+            rock.rock.setPosition(rock.pos);
+            rock.drift = sf::Vector2f(-30 + std::rand() % 60, -10 + std::rand() % 20);
+            rock.rotation = -30 + std::rand() % 60;
+            rocklist.push_back(rock);
+        }
     }
 
     void makeblackholes () {
@@ -247,6 +266,14 @@ public:
                     pos.comet_cooldown.restart();
                 }
             }
+        }
+        for (auto& pos: rocklist) {
+            pos.pos += pos.drift * deltatime;
+            pos.rock.rotate(sf::degrees(pos.rotation));
+            if (pos.pos.x < -70) pos.pos.x = width + 70;
+            if (pos.pos.x > width + 70) pos.pos.x = -70;
+            if (pos.pos.y < -70) pos.pos.y = height + 70;
+            if (pos.pos.y > height + 70) pos.pos.y = -70;
         }
     }
 
@@ -299,6 +326,9 @@ public:
             head.setPosition(pos.pos);
             head.setFillColor(sf::Color(255, 255, 240));
             window.draw(head, midparallax);
+        }
+        for (auto& pos: rocklist) {
+            window.draw(pos.rock, nearparallax);
         }
     }
 };
