@@ -75,6 +75,7 @@ public:
     std::vector<planet> planetlist;
     std::vector<blackhole_bkgd> blackholelist;
     std::vector<comet> cometlist;
+    planet moon;
     sf::Clock bkgd_clock;
     sf::RectangleShape skyblock;
 
@@ -87,6 +88,7 @@ public:
         makecomet();
         makerocks(6);
         makeblackholes(2);
+        makemoon();
     }
 
     sf::VertexArray makeplanetrings(float radius, float thickness, float startangle, float endangle, sf::Color color) {
@@ -238,6 +240,26 @@ public:
         }
     }
 
+    void makemoon () {
+        moon.planet.setRadius(30);
+        moon.planet.setFillColor(sf::Color(200, 200, 205));
+        moon.planet.setOutlineColor(sf::Color(230, 230, 235, 190));
+        moon.planet.setOutlineThickness(3);
+        moon.planet.setOrigin(sf::Vector2f(25, 25));
+        moon.planet.setPosition(sf::Vector2f(100, 100));
+        //TODO WORK ON CRATERS!!!
+        /*for (int i = 0; i < std::rand() % 4 + 3; i++) {
+            sf::CircleShape crater;
+            crater.setRadius(moon.planet.getRadius()/(std::rand() % 5 + 4));
+            float crateroffset = std::rand() % static_cast<int>(moon.planet.getRadius() * 0.7);
+            float craterangle = std::rand() % 360 * (3.14159265358979 / 180);
+            bool overlapping = true;
+            do {
+                
+            } while (overlapping);
+        }*/
+    }
+
     void updatesky (float deltatime) {
         float time = bkgd_clock.getElapsedTime().asSeconds();
         for (auto& pos: starlist) {
@@ -343,5 +365,6 @@ public:
         for (auto& pos: rocklist) {
             window.draw(pos.rock, nearparallax);
         }
+        window.draw(moon.planet, midparallax);
     }
 };
