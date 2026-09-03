@@ -212,7 +212,7 @@ public:
             for (int i = 0; i < rock.rock.getPointCount(); i++) {
                 float angle = i * 6.2831853 / rock.rock.getPointCount();
                 float variance = radius * (60 + std::rand() % 80) / 100;
-                rock.rock.setPoint(i, sf::Vector2f(std::cos(radius)*variance, std::sin(radius)*variance));
+                rock.rock.setPoint(i, sf::Vector2f(std::cos(angle)*variance, std::sin(angle)*variance));
             }
             int rockshade = 60 + std::rand() % 40;
             rock.rock.setFillColor(sf::Color(rockshade, rockshade, rockshade));
@@ -221,7 +221,7 @@ public:
             rock.pos = sf::Vector2f(std::rand() % height, std::rand() % width);
             rock.rock.setPosition(rock.pos);
             rock.drift = sf::Vector2f(-30 + std::rand() % 60, -10 + std::rand() % 20);
-            rock.rotation = -30 + std::rand() % 60;
+            rock.rotation = -5 + std::rand() % 10;
             rocklist.push_back(rock);
         }
     }
@@ -269,7 +269,8 @@ public:
         }
         for (auto& pos: rocklist) {
             pos.pos += pos.drift * deltatime;
-            pos.rock.rotate(sf::degrees(pos.rotation));
+            pos.rock.setPosition(pos.pos);
+            pos.rock.rotate(sf::radians(pos.rotation*deltatime));
             if (pos.pos.x < -70) pos.pos.x = width + 70;
             if (pos.pos.x > width + 70) pos.pos.x = -70;
             if (pos.pos.y < -70) pos.pos.y = height + 70;
