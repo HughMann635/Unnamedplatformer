@@ -225,12 +225,15 @@ public:
             if (!pos.cometinsky) {
                 if (pos.comet_cooldown.getElapsedTime().asSeconds() >= pos.cd) {
                     pos.cometinsky = true;
-                    float startypos = std::rand() % 500;
+                    float startypos = 50 + std::rand() % 450;
                     pos.pos = sf::Vector2f(-30, startypos);
                     float speed = 320 + std::rand() % 300;
                     float angle = (-20 + std::rand() % 40) * (3.14159265358979/180);
-
-                    pos.velocity = sf::Vector2f(std::cos(angle)*speed, std::sin(angle)*speed);
+                    pos.velocity = (sf::Vector2f(std::cos(angle)*speed, std::sin(angle)*speed));
+                    if (std::rand() % 1000 >= 500) {
+                        pos.pos = sf::Vector2f(width+30, startypos);
+                        pos.velocity = (sf::Vector2f(-std::cos(angle)*speed, std::sin(angle)*speed));
+                    }
                     pos.trail.clear();
                 }
             } else {
@@ -239,7 +242,7 @@ public:
                 if (pos.trail.size() > 25) {
                     pos.trail.erase(pos.trail.begin());
                 }
-                if (pos.pos.x > width + 70 || pos.pos.x < -70 || pos.pos.y > height + 100 || pos.pos.y < -100) {
+                if (pos.pos.x > width + 200 || pos.pos.x < -70 || pos.pos.y > height + 100 || pos.pos.y < -100) {
                     pos.cometinsky = false;
                     pos.comet_cooldown.restart();
                 }
