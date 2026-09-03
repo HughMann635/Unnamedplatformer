@@ -92,7 +92,8 @@ public:
         makestars(stars);
         makeplanets(planets);
         makecomet();
-        makerocks();
+        makerocks(6);
+        makeblackholes(5);
     }
 
     sf::VertexArray makeplanetrings(float radius, float thickness, float startangle, float endangle, sf::Color color) {
@@ -204,8 +205,8 @@ public:
         }
     }
 
-    void makerocks () {
-        for (int i = 0; i < 8; i++) {
+    void makerocks (int rocks) {
+        for (int i = 0; i < rocks; i++) {
             rock rock;
             rock.rock.setPointCount(5+std::rand() % 4);
             float radius = 5 + std::rand() % 12;
@@ -226,8 +227,16 @@ public:
         }
     }
 
-    void makeblackholes () {
-
+    void makeblackholes (int blackholes) {
+        for (int i = 0; i < blackholes; i++) {
+            blackhole_bkgd bh;
+            bh.bh.setRadius(std::rand() % 4 + 3);
+            bh.bh.setFillColor(sf::Color::Black);
+            bh.bh.setOrigin(sf::Vector2f(bh.bh.getRadius(), bh.bh.getRadius()));
+            bh.pos = sf::Vector2f(50 + std::rand() % 1180, 50 + std::rand() % 620);
+            bh.bh.setPosition(bh.pos);
+            blackholelist.push_back(bh);
+        }
     }
 
     void updatesky (float deltatime) {
@@ -330,6 +339,9 @@ public:
         }
         for (auto& pos: rocklist) {
             window.draw(pos.rock, nearparallax);
+        }
+        for (auto& pos: blackholelist) {
+            window.draw(pos.bh, farparallax);
         }
     }
 };
