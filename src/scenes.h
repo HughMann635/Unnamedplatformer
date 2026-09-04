@@ -247,17 +247,30 @@ public:
         moon.planet.setOutlineThickness(3);
         moon.planet.setOrigin(sf::Vector2f(25, 25));
         moon.planet.setPosition(sf::Vector2f(100, 100));
-        //TODO WORK ON CRATERS!!!
-        /*for (int i = 0; i < std::rand() % 4 + 3; i++) {
+        for (int i = 0; i < std::rand() % 4 + 3; i++) {
             sf::CircleShape crater;
             crater.setRadius(moon.planet.getRadius()/(std::rand() % 5 + 4));
             float crateroffset = std::rand() % static_cast<int>(moon.planet.getRadius() * 0.7);
             float craterangle = std::rand() % 360 * (3.14159265358979 / 180);
-            bool overlapping = true;
+            crater.setPosition(sf::Vector2f(std::cos(craterangle)*crateroffset, std::sin(craterangle)*crateroffset));
+            bool overlapping = false;
             do {
-                
+                overlapping = false;
+                if (moon.details.size() > 0) {
+                    for (auto& pos: moon.details) {
+                        crateroffset = std::rand() % static_cast<int>(moon.planet.getRadius() * 0.7);
+                        craterangle = std::rand() % 360 * (3.14159265358979 / 180);
+                        crater.setPosition(sf::Vector2f(std::cos(craterangle)*crateroffset, std::sin(craterangle)*crateroffset));
+                        if (pos.getGlobalBounds().findIntersection(crater.getGlobalBounds())) {
+                            overlapping = true;
+                            break;
+                        }
+                    }
+                }   
             } while (overlapping);
-        }*/
+            crater.setFillColor(sf::Color(160, 160, 170));
+            moon.details.push_back(crater);
+        }
     }
 
     void updatesky (float deltatime) {
@@ -366,5 +379,10 @@ public:
             window.draw(pos.rock, nearparallax);
         }
         window.draw(moon.planet, midparallax);
+        sf::Transform craterparallax = midparallax;
+        craterparallax.translate(moon.planet.getPosition());
+        for (auto& pos: moon.details) {
+            window.draw(pos, craterparallax);
+        }
     }
 };
