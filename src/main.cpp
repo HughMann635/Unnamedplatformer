@@ -49,7 +49,6 @@ int main()
 		window.setView(window.getDefaultView());
 		sky.drawsky(window, view.getCenter());
 		sky.updatesky(deltatime);
-		//sky.drawbkgd(window, view.getCenter());
 		if (state == State::playing) {
 			window.setView(window.getDefaultView());
 			if (menu.navback(window)) state = State::pause;
@@ -128,11 +127,6 @@ int main()
 			if (setnum >= 2) octagonlocked = false;
 			if (setnum >= 3) trianglelocked = false;
 			if (setnum >= 4) hexagonlocked = false;
-
-			//TO DO: FIND WAY TO MAKE LVL 17 MORE EFFICIENT
-			//RIGHT NOW IT DRAWS 1K+ TILES WHICH IS VERY INEFFICIENT
-			//possible solution: split drawmap into drawmap for dynamics and drawenv for statics
-			//and add render caching for static tiles
 	
 			swapped = false;
 			if (currentplayer -> grounded) jumpcount = 2;
@@ -191,7 +185,6 @@ int main()
 			window.setView(view);
 			if (!esckeyheld) gameui.checkexit();
 
-			//CAM SETTINGS
 			if (currentplayer -> shape().getPosition().x < camwidth/2.f) {
 				if (currentplayer -> shape().getPosition().y < camheight/2.f) {
 					view.setCenter(sf::Vector2f(camwidth/2.f, camheight/2.f));
