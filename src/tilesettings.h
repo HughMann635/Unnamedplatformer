@@ -747,6 +747,9 @@ public:
         for (auto& pos: dynamictilelist) {
             pos.tile -> movetile(deltatime);
         }
+        for (auto& pos: statictilelist) {
+            if (dynamic_cast<blackhole*>(pos.tile.get())) pos.tile -> movetile(deltatime);
+        }
     }
 
     void drawmap (sf::RenderWindow& window) {

@@ -101,7 +101,6 @@ public:
 };
 
 //Black circle with particles orbiting it 
-//NOTE TO SELF when inputting the position, make sure to add 2.5 to each coordinate
 class blackhole : public tileTypes {
 public:
     sf::CircleShape blackholeblock;
@@ -145,9 +144,22 @@ public:
         }
     }
     
+    void movetile (float deltatime) override {
+        sf::Vector2f center = sf::Vector2f(blackholeblock.getPosition() + sf::Vector2f(6, 6));
+        for (int i = 0; i < bhparticles.size(); i++) {
+            auto& pos = bhparticles[i];
+            pos.angle += pos.speed_ang * deltatime;
+            pos.dist -= pos.speed_rad * deltatime;
+            if (pos.dist <= blackholeblock.getRadius()) {
+                pos.dist = blackholeblock.getRadius() * (100 + std::rand() % 800) / 100;
+            }
+            particle_drawer[i].position = sf::Vector2f(center.x + std::cos(pos.angle) * pos.dist, center.y + std::sin(pos.angle) * pos.dist);
+        }
+    }
+
     void draw (sf::RenderTarget& window) override {
         window.draw(blackholeblock);
-        window.draw(photonring);    
+        window.draw(photonring);  
         window.draw(particle_drawer);
     }
 
