@@ -118,7 +118,7 @@ public:
         settingstxtshadow = textshadow(120, 3, settingstxt);
         settingsbtnshadow = rectshadow(235, 6, settingsbtn);
 
-        handbooktxt = maketext(25, sf::Color(20, 50, 255), "X", font, sf::Vector2f(640, 550));
+        handbooktxt = maketext(25, sf::Color(20, 50, 255), "HANDBOOK", font, sf::Vector2f(640, 550));
         handbookbtn = makebtn(sf::Vector2f(creditstxt.getLocalBounds().size.x*1.5, creditstxt.getLocalBounds().size.y*2.5), sf::Color(0, 0, 115), sf::Vector2f(640, 550));
         handbooktxtshadow = textshadow(120, 3, handbooktxt);
         handbookbtnshadow = rectshadow(235, 6, handbookbtn);
@@ -463,19 +463,34 @@ public:
     sf::Font font;
     sf::Text handbooktxt;
     sf::Text handbooktxtshadow;
+    sf::Text shapestxt;
+    sf::Text shapestxtshadow;
+    sf::RectangleShape shapesbtn;
+    sf::RectangleShape shapesbtnshadow;
 
     handbook () :
         font("AldotheApache.ttf"),
         handbooktxt(font),
-        handbooktxtshadow(font)
+        handbooktxtshadow(font),
+        shapestxt(font),
+        shapestxtshadow(font)
     {
         handbooktxt = maketext(45, sf::Color(80, 170, 255), "HANDBOOK", font, sf::Vector2f(width/2, 190));
         handbooktxtshadow = textshadow(235, 6, handbooktxt);
+
+        shapestxt = maketext(35, sf::Color(180, 90, 50), "SHAPES", font, sf::Vector2f(width/2, 290));
+        shapestxtshadow = textshadow(120, 3, shapestxt);
+        shapesbtn = makebtn(sf::Vector2f(180, 54), sf::Color(230, 140, 100), shapestxt.getPosition());
+        shapesbtnshadow = rectshadow(235, 6, shapesbtn);
     }
 
     void draw (sf::RenderWindow& window) {
         window.draw(handbooktxtshadow);
         window.draw(handbooktxt);
+        window.draw(shapesbtnshadow);
+        window.draw(shapesbtn);
+        window.draw(shapestxtshadow);
+        window.draw(shapestxt);
     }
 
     void update () {
