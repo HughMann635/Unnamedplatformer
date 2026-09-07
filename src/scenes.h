@@ -161,9 +161,6 @@ public:
                 for (auto& pos: planetlist) {
                     while (pos.planet.getGlobalBounds().findIntersection(planet.planet.getGlobalBounds())) {
                         planet.planet.setPosition(sf::Vector2f(std::rand() % width + 20, (std::rand() % 520) + 20));
-                        if (!pos.planet.getGlobalBounds().findIntersection(planet.planet.getGlobalBounds())) {
-                            break;
-                        }
                     }
                 }
             }
@@ -242,18 +239,41 @@ public:
     void makeblackholes (int blackholes) {
         for (int i = 0; i < blackholes; i++) {
             blackhole_bkgd bh;
-            bh.bh.setRadius(std::rand() % 5 + 4);
+            bh.bh.setRadius(std::rand() % 3 + 3);
             bh.bh.setFillColor(sf::Color::Black);
             bh.bh.setOrigin(sf::Vector2f(bh.bh.getRadius(), bh.bh.getRadius()));
-            bh.pos = sf::Vector2f(50 + std::rand() % 1180, 50 + std::rand() % 620);
-            bh.bh.setPosition(bh.pos);
 
             bh.ring.setRadius(bh.bh.getRadius() * 4.4);
             bh.ring.setFillColor(sf::Color::Transparent);
             bh.ring.setOutlineColor(sf::Color(240, 170, 0));
             bh.ring.setOutlineThickness(1);
             bh.ring.setOrigin(sf::Vector2f(bh.ring.getRadius(), bh.ring.getRadius()));
-            bh.ring.setPosition(bh.bh.getPosition());
+
+            bh.pos = sf::Vector2f(100 + std::rand() % 1080, 50 + std::rand() % 320);
+            bh.bh.setPosition(bh.pos);
+            bh.ring.setPosition(bh.pos);
+
+            if (blackholelist.size() > 0) {
+                for (auto& pos: blackholelist) {
+                    while (pos.bh.getGlobalBounds().findIntersection(bh.bh.getGlobalBounds())) {
+                        bh.pos = sf::Vector2f(100 + std::rand() % 1080, 50 + std::rand() % 320);
+                        bh.bh.setPosition(bh.pos);
+                        bh.ring.setPosition(bh.pos);
+                    }
+                }
+                for (auto& pos: planetlist) {
+                    while (pos.planet.getGlobalBounds().findIntersection(bh.bh.getGlobalBounds())) {
+                        bh.pos = sf::Vector2f(100 + std::rand() % 1080, 50 + std::rand() % 320);
+                        bh.bh.setPosition(bh.pos);
+                        bh.ring.setPosition(bh.pos);
+                    }
+                }
+                while (moon.planet.getGlobalBounds().findIntersection(bh.bh.getGlobalBounds())) {
+                    bh.pos = sf::Vector2f(100 + std::rand() % 1080, 50 + std::rand() % 320);
+                    bh.bh.setPosition(bh.pos);
+                    bh.ring.setPosition(bh.pos);
+                }
+            }
 
             for (int i = 0; i < 80; i++) {
                 bhparticle particle;
