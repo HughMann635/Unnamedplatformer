@@ -467,30 +467,61 @@ public:
     sf::Text shapestxtshadow;
     sf::RectangleShape shapesbtn;
     sf::RectangleShape shapesbtnshadow;
+    sf::Text envtxt;
+    sf::Text envtxtshadow;
+    sf::RectangleShape envbtn;
+    sf::RectangleShape envbtnshadow;
+    sf::Text objectstxt;
+    sf::Text objectstxtshadow;
+    sf::RectangleShape objectsbtn;
+    sf::RectangleShape objectsbtnshadow;
 
     handbook () :
         font("AldotheApache.ttf"),
         handbooktxt(font),
         handbooktxtshadow(font),
         shapestxt(font),
-        shapestxtshadow(font)
+        shapestxtshadow(font),
+        envtxt(font),
+        envtxtshadow(font),
+        objectstxt(font),
+        objectstxtshadow(font)
     {
         handbooktxt = maketext(45, sf::Color(80, 170, 255), "HANDBOOK", font, sf::Vector2f(width/2, 190));
         handbooktxtshadow = textshadow(235, 6, handbooktxt);
 
         shapestxt = maketext(35, sf::Color(180, 90, 50), "SHAPES", font, sf::Vector2f(width/2, 290));
         shapestxtshadow = textshadow(120, 3, shapestxt);
-        shapesbtn = makebtn(sf::Vector2f(180, 54), sf::Color(230, 140, 100), shapestxt.getPosition());
+        shapesbtn = makebtn(sf::Vector2f(220, 54), sf::Color(230, 140, 100), shapestxt.getPosition());
         shapesbtnshadow = rectshadow(235, 6, shapesbtn);
+
+        envtxt = maketext(35, sf::Color(50, 180, 80), "ENVIRONMENTS", font, sf::Vector2f(width/2-220, 290));
+        envtxtshadow = textshadow(120, 3, envtxt);
+        envbtn = makebtn(sf::Vector2f(220, 54), sf::Color(100, 230, 130), envtxt.getPosition());
+        envbtnshadow = rectshadow(235, 6, envbtn);
+
+        objectstxt = maketext(35, sf::Color(90, 50, 180), "OBJECTS", font, sf::Vector2f(width/2+220, 290));
+        objectstxtshadow = textshadow(120, 3, objectstxt);
+        objectsbtn = makebtn(sf::Vector2f(220, 54), sf::Color(140, 100, 230), objectstxt.getPosition());
+        objectsbtnshadow = rectshadow(235, 6, objectsbtn);
     }
 
     void draw (sf::RenderWindow& window) {
         window.draw(handbooktxtshadow);
         window.draw(handbooktxt);
         window.draw(shapesbtnshadow);
+        window.draw(envbtnshadow);
+        window.draw(objectsbtnshadow);
+
         window.draw(shapesbtn);
         window.draw(shapestxtshadow);
         window.draw(shapestxt);
+        window.draw(envbtn);
+        window.draw(envtxtshadow);
+        window.draw(envtxt);
+        window.draw(objectsbtn);
+        window.draw(objectstxtshadow);
+        window.draw(objectstxt);
     }
 
     void update () {
