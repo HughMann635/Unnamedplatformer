@@ -114,17 +114,17 @@ public:
     };
     std::vector<bhparticle> bhparticles;
     sf::VertexArray particle_drawer {sf::PrimitiveType::Points};
-    blackhole(sf::Vector2f position) {
-        blackholeblock.setRadius(6);
+    blackhole(sf::Vector2f position, int sizemulti) {
+        blackholeblock.setRadius(6*sizemulti);
         blackholeblock.setFillColor(sf::Color::Black);
         blackholeblock.setPosition(position+sf::Vector2f(14, 14));
-        photonring.setRadius(60);
+        photonring.setRadius(60*sizemulti);
         photonring.setFillColor(sf::Color::Transparent);
         photonring.setOutlineColor(sf::Color(240, 170, 0));
         photonring.setOutlineThickness(-1);
         photonring.setPosition(position-sf::Vector2f(40, 40));
-        sf::Vector2f center = sf::Vector2f(blackholeblock.getPosition() + sf::Vector2f(6, 6));
-        for (int i = 0; i < 220; i++) {
+        sf::Vector2f center = sf::Vector2f(blackholeblock.getPosition() + sf::Vector2f(6*sizemulti, 6*sizemulti));
+        for (int i = 0; i < 220*sizemulti; i++) {
             bhparticle particle;
             particle.angle = (std::rand() % 360) / (3.14159265358979 / 180);
             particle.dist = blackholeblock.getRadius() * (std::rand() % 800 + 100) / 100;
