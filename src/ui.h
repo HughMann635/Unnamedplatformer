@@ -476,6 +476,8 @@ public:
     sf::RectangleShape objectsbtn;
     sf::RectangleShape objectsbtnshadow;
 
+    int menunum = 0; //0 = env, 1 = shapes, 2 = obs
+
     handbook () :
         font("AldotheApache.ttf"),
         handbooktxt(font),
@@ -490,19 +492,19 @@ public:
         handbooktxt = maketext(45, sf::Color(80, 170, 255), "HANDBOOK", font, sf::Vector2f(width/2, 190));
         handbooktxtshadow = textshadow(235, 6, handbooktxt);
 
-        shapestxt = maketext(35, sf::Color(180, 90, 50), "SHAPES", font, sf::Vector2f(width/2, 290));
+        shapestxt = maketext(35, sf::Color(180, 90, 50), "SHAPES", font, sf::Vector2f(width/2, 90));
         shapestxtshadow = textshadow(120, 3, shapestxt);
-        shapesbtn = makebtn(sf::Vector2f(220, 54), sf::Color(230, 140, 100), shapestxt.getPosition());
+        shapesbtn = makebtn(sf::Vector2f(240, 54), sf::Color(230, 140, 100), shapestxt.getPosition());
         shapesbtnshadow = rectshadow(235, 6, shapesbtn);
 
-        envtxt = maketext(35, sf::Color(50, 180, 80), "ENVIRONMENTS", font, sf::Vector2f(width/2-220, 290));
+        envtxt = maketext(35, sf::Color(50, 180, 80), "ENVIRONMENTS", font, sf::Vector2f(width/2-240, 90));
         envtxtshadow = textshadow(120, 3, envtxt);
-        envbtn = makebtn(sf::Vector2f(220, 54), sf::Color(100, 230, 130), envtxt.getPosition());
+        envbtn = makebtn(sf::Vector2f(240, 54), sf::Color(100, 230, 130), envtxt.getPosition());
         envbtnshadow = rectshadow(235, 6, envbtn);
 
-        objectstxt = maketext(35, sf::Color(90, 50, 180), "OBJECTS", font, sf::Vector2f(width/2+220, 290));
+        objectstxt = maketext(35, sf::Color(90, 50, 180), "OBJECTS", font, sf::Vector2f(width/2+240, 90));
         objectstxtshadow = textshadow(120, 3, objectstxt);
-        objectsbtn = makebtn(sf::Vector2f(220, 54), sf::Color(140, 100, 230), objectstxt.getPosition());
+        objectsbtn = makebtn(sf::Vector2f(240, 54), sf::Color(140, 100, 230), objectstxt.getPosition());
         objectsbtnshadow = rectshadow(235, 6, objectsbtn);
     }
 
@@ -524,7 +526,10 @@ public:
         window.draw(objectstxt);
     }
 
-    void update () {
+    void update (sf::RenderWindow& window) {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)) state = State::mainmenu;
+        if (btnpress(window, shapestxt, shapesbtn, shapestxtshadow, shapesbtnshadow, sf::Vector2f(width/2, 90), sf::Color(180, 90, 50), sf::Color(230, 140, 100), sf::Color(100, 100, 100), sf::Color(200, 100, 100))) menunum = 1; 
+        if (btnpress(window, envtxt, envbtn, envtxtshadow, envbtnshadow, sf::Vector2f(width/2-240, 90), sf::Color(50, 180, 80), sf::Color(100, 230, 130), sf::Color(100, 100, 100), sf::Color(100, 200, 100))) menunum = 0;
+        if (btnpress(window, objectstxt, objectsbtn, objectstxtshadow, objectsbtnshadow, sf::Vector2f(width/2+240, 90), sf::Color(90, 50, 180), sf::Color(140, 100, 230), sf::Color(100, 100, 100), sf::Color(100, 100, 200))) menunum = 2;
     }
 };
