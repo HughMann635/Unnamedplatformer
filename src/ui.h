@@ -576,10 +576,13 @@ public:
         }
     }
 
-    void update (sf::RenderWindow& window) {
+    void update (sf::RenderWindow& window, float deltatime) {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)) state = State::mainmenu;
         if (btnpress(window, shapestxt, shapesbtn, shapestxtshadow, shapesbtnshadow, sf::Vector2f(width/2, 90), sf::Color(180, 90, 50), sf::Color(230, 140, 100), sf::Color(100, 100, 100), sf::Color(200, 100, 100))) menunum = 1; 
         if (btnpress(window, envtxt, envbtn, envtxtshadow, envbtnshadow, sf::Vector2f(width/2-240, 90), sf::Color(50, 180, 80), sf::Color(100, 230, 130), sf::Color(100, 100, 100), sf::Color(100, 200, 100))) menunum = 0;
         if (btnpress(window, objectstxt, objectsbtn, objectstxtshadow, objectsbtnshadow, sf::Vector2f(width/2+240, 90), sf::Color(90, 50, 180), sf::Color(140, 100, 230), sf::Color(100, 100, 100), sf::Color(100, 100, 200))) menunum = 2;
+        for (auto& pos: objecttiles) {
+            pos->movetile(deltatime);
+        }
     }
 };

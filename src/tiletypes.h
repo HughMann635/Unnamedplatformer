@@ -127,7 +127,7 @@ public:
         photonring.setOrigin(sf::Vector2f(60*sizemulti, 60*sizemulti));
         photonring.setPosition(blackholeblock.getPosition());
         sf::Vector2f center = sf::Vector2f(blackholeblock.getPosition() + sf::Vector2f(6*sizemulti, 6*sizemulti));
-        for (int i = 0; i < 220*sizemulti; i++) {
+        for (int i = 0; i < 180*(sizemulti*sizemulti+0.2); i++) {
             bhparticle particle;
             particle.angle = (std::rand() % 360) / (3.14159265358979 / 180);
             particle.dist = blackholeblock.getRadius() * (std::rand() % 800 + 100) / 100;
@@ -157,7 +157,8 @@ public:
             if (pos.dist <= blackholeblock.getRadius()) {
                 pos.dist = blackholeblock.getRadius() * (100 + std::rand() % 800) / 100;
             }
-            particle_drawer[i].position = sf::Vector2f(center.x + std::cos(pos.angle) * pos.dist - 6*pos.sizemulti, center.y + std::sin(pos.angle) * pos.dist - 6*pos.sizemulti);
+            float multiplier = pos.sizemulti == 1 ? 1 : 1;
+            particle_drawer[i].position = sf::Vector2f(center.x + std::cos(pos.angle) * pos.dist - 6.f*multiplier, center.y + std::sin(pos.angle) * pos.dist - 6.f*multiplier);
         }
     }
 
