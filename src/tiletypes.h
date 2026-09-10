@@ -110,19 +110,22 @@ public:
         float speed_ang;
         float dist;
         float angle;
+        float sizemulti;
         sf::Color color;
     };
     std::vector<bhparticle> bhparticles;
     sf::VertexArray particle_drawer {sf::PrimitiveType::Points};
-    blackhole(sf::Vector2f position, int sizemulti) {
+    blackhole(sf::Vector2f position, float sizemulti) {
         blackholeblock.setRadius(6*sizemulti);
         blackholeblock.setFillColor(sf::Color::Black);
+        blackholeblock.setOrigin(sf::Vector2f(6*sizemulti, 6*sizemulti));
         blackholeblock.setPosition(position+sf::Vector2f(14, 14));
         photonring.setRadius(60*sizemulti);
         photonring.setFillColor(sf::Color::Transparent);
         photonring.setOutlineColor(sf::Color(240, 170, 0));
         photonring.setOutlineThickness(-1);
-        photonring.setPosition(position-sf::Vector2f(40, 40));
+        photonring.setOrigin(sf::Vector2f(60*sizemulti, 60*sizemulti));
+        photonring.setPosition(blackholeblock.getPosition());
         sf::Vector2f center = sf::Vector2f(blackholeblock.getPosition() + sf::Vector2f(6*sizemulti, 6*sizemulti));
         for (int i = 0; i < 220*sizemulti; i++) {
             bhparticle particle;
@@ -139,6 +142,7 @@ public:
                 particle.color = sf::Color(255, 80, 20);
                 default: break;
             }
+            particle.sizemulti = sizemulti;
             particle_drawer.append(sf::Vertex{sf::Vector2f(center.x + std::cos(particle.angle) * particle.dist, center.y + std::sin(particle.angle) * particle.dist), particle.color});
             bhparticles.push_back(particle);
         }
@@ -153,7 +157,7 @@ public:
             if (pos.dist <= blackholeblock.getRadius()) {
                 pos.dist = blackholeblock.getRadius() * (100 + std::rand() % 800) / 100;
             }
-            particle_drawer[i].position = sf::Vector2f(center.x + std::cos(pos.angle) * pos.dist, center.y + std::sin(pos.angle) * pos.dist);
+            particle_drawer[i].position = sf::Vector2f(center.x + std::cos(pos.angle) * pos.dist - 6*pos.sizemulti, center.y + std::sin(pos.angle) * pos.dist - 6*pos.sizemulti);
         }
     }
 
