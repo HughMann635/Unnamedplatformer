@@ -582,7 +582,7 @@ public:
         if (btnpress(window, envtxt, envbtn, envtxtshadow, envbtnshadow, sf::Vector2f(width/2-240, 90), sf::Color(50, 180, 80), sf::Color(100, 230, 130), sf::Color(100, 100, 100), sf::Color(100, 200, 100))) menunum = 0;
         if (btnpress(window, objectstxt, objectsbtn, objectstxtshadow, objectsbtnshadow, sf::Vector2f(width/2+240, 90), sf::Color(90, 50, 180), sf::Color(140, 100, 230), sf::Color(100, 100, 100), sf::Color(100, 100, 200))) menunum = 2;
         for (auto& pos: objecttiles) {
-            pos->movetile(deltatime);
+            if (!dynamic_cast<block*>(pos.get())) pos->movetile(deltatime);
         }
     }
 };
