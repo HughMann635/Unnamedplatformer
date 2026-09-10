@@ -516,13 +516,11 @@ public:
 
         menubox = makebtn(sf::Vector2f(700, 300), sf::Color(100, 90, 90), sf::Vector2f(width/2, height/2+40));
         menuboxshadow = rectshadow(235, 10, menubox);
-        //ENVIRONMENTS: ground, lava, water, zerog
-        //OBJECTS: block, spike, doublespike, button, door, spring, black hole
 
-        envtiles.push_back(std::make_unique<ground_>(sf::Vector2f(100, 100)));
-        envtiles.push_back(std::make_unique<water>(sf::Vector2f(100, 200)));
-        envtiles.push_back(std::make_unique<lava>(sf::Vector2f(100, 300)));
-        envtiles.push_back(std::make_unique<zero_g>(sf::Vector2f(100, 400)));
+        envtiles.push_back(std::make_unique<ground_>(sf::Vector2f(400, 300)));
+        envtiles.push_back(std::make_unique<water>(sf::Vector2f(560, 300)));
+        envtiles.push_back(std::make_unique<lava>(sf::Vector2f(720, 300)));
+        envtiles.push_back(std::make_unique<zero_g>(sf::Vector2f(880, 300)));
 
         shapetiles.push_back(std::make_unique<square>());
         shapetiles.push_back(std::make_unique<circle>());
@@ -530,13 +528,13 @@ public:
         shapetiles.push_back(std::make_unique<triangle>());
         shapetiles.push_back(std::make_unique<hexagon>());
 
-        objecttiles.push_back(std::make_unique<spike>(sf::Vector2f(100, 100), 0));
-        objecttiles.push_back(std::make_unique<doublespike>(sf::Vector2f(100, 150), 0));
-        objecttiles.push_back(std::make_unique<door>(sf::Vector2f(100, 200)));
-        objecttiles.push_back(std::make_unique<button>(sf::Vector2f(100, 250)));
-        objecttiles.push_back(std::make_unique<spring>(sf::Vector2f(100, 300)));
-        objecttiles.push_back(std::make_unique<block>(sf::Vector2f(100, 350)));
-        objecttiles.push_back(std::make_unique<blackhole>(sf::Vector2f(100, 400), 0.4));
+        objecttiles.push_back(std::make_unique<spike>(sf::Vector2f(340, 300), 0));
+        objecttiles.push_back(std::make_unique<doublespike>(sf::Vector2f(460, 300), 0));
+        objecttiles.push_back(std::make_unique<door>(sf::Vector2f(570, 300)));
+        objecttiles.push_back(std::make_unique<button>(sf::Vector2f(590, 300)));
+        objecttiles.push_back(std::make_unique<spring>(sf::Vector2f(700, 300)));
+        objecttiles.push_back(std::make_unique<block>(sf::Vector2f(820, 300)));
+        objecttiles.push_back(std::make_unique<blackhole>(sf::Vector2f(920, 300), 0.4));
     }
 
     void draw (sf::RenderWindow& window) {
@@ -565,7 +563,7 @@ public:
         } else if (menunum == 1) {
             for (int i = 0; i < 5; i++) {
                 auto& pos = shapetiles[i];
-                pos->shape().setPosition(sf::Vector2f(200 + i * 30, 100 + (i % 2) * 100));
+                pos->shape().setPosition(sf::Vector2f(360 + i * 140, 300));
                 pos->drawscreen(window);
             }
         } else if (menunum == 2) {
