@@ -600,16 +600,16 @@ public:
         }
         if (menunum == 1) {
             for (int i = 0; i < shapetiles.size(); i++) {
-                auto& pos = envtiles[i];
+                auto& pos = shapetiles[i];
                 sf::Vector2f mousepos = sf::Vector2f(window.mapPixelToCoords(sf::Mouse::getPosition(window)));
-                if (pos->collide().getGlobalBounds().contains(mousepos) && sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
+                if (pos->shape().getGlobalBounds().contains(mousepos) && sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
                     std::cout << i;
                 }
             }
         }
         if (menunum == 2) {
             for (int i = 0; i < objecttiles.size(); i++) {
-                auto& pos = envtiles[i];
+                auto& pos = objecttiles[i];
                 sf::Vector2f mousepos = sf::Vector2f(window.mapPixelToCoords(sf::Mouse::getPosition(window)));
                 if (pos->collide().getGlobalBounds().contains(mousepos) && sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
                      std::cout << i;
