@@ -606,20 +606,28 @@ public:
                 if (pos->collide().getGlobalBounds().contains(mousepos) && sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
                     switch (i) {
                         case 0:
-                        tilename.setString("GROUND");
-                        tiledesc.setString("Basic ground tile...you can walk off it, jump on it, run into it, etc.\nNot much else really.");
+                        tilename = maketext(35, sf::Color(255, 40, 60), "GROUND", font, sf::Vector2f(640, 370));
+                        tiledesc = maketext(25, sf::Color(255, 40, 60), "Basic ground tile...you can walk off it, jump on it, run into it, etc.\nNot much else really.", font, sf::Vector2f(640, 450));
+                        tilenameshadow = textshadow(120, 3, tilename);
+                        tiledescshadow = textshadow(120, 3, tiledesc);
                         break;
                         case 1:
-                        tilename.setString("WATER");
-                        tiledesc.setString("In water, gravity is reduced and you can continuously jump to swim upwards. You can also swim downwards in water. Affects pushable blocks.");
+                        tilename = maketext(35, sf::Color(255, 40, 60), "WATER", font, sf::Vector2f(640, 370));
+                        tiledesc = maketext(25, sf::Color(255, 40, 60), "In water, gravity is reduced and you can continuously \njump to swim upwards. You can also swim downwards in water. \nAffects pushable blocks.", font, sf::Vector2f(640, 450));
+                        tilenameshadow = textshadow(120, 3, tilename);
+                        tiledescshadow = textshadow(120, 3, tiledesc);
                         break;
                         case 2:
-                        tilename.setString("LAVA");
-                        tiledesc.setString("Lava kills you instantly, be careful! Pushable blocks are heatproof though, so it doesn't affect them.");
+                        tilename = maketext(35, sf::Color(255, 40, 60), "LAVA", font, sf::Vector2f(640, 370));
+                        tiledesc = maketext(25, sf::Color(255, 40, 60), "Lava kills you instantly, be careful!\nPushable blocks are heatproof though, so it doesn't affect them.", font, sf::Vector2f(640, 450));
+                        tilenameshadow = textshadow(120, 3, tilename);
+                        tiledescshadow = textshadow(120, 3, tiledesc);
                         break;
                         case 3:
-                        tilename.setString("ZERO GRAVITY");
-                        tiledesc.setString("It's a strange zone where gravity doesn't apply. You can float and push blocks freely through this zone...although the scientific accuracy is questionable...");
+                        tilename = maketext(35, sf::Color(255, 40, 60), "ZERO GRAVITY", font, sf::Vector2f(640, 370));
+                        tiledesc = maketext(25, sf::Color(255, 40, 60), "It's a strange zone where gravity doesn't apply.\nYou can float and push blocks freely through this zone...\nalthough the scientific accuracy is questionable...", font, sf::Vector2f(640, 450));
+                        tilenameshadow = textshadow(120, 3, tilename);
+                        tiledescshadow = textshadow(120, 3, tiledesc);
                         break;
                     }
                 }
