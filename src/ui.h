@@ -677,7 +677,48 @@ public:
                 auto& pos = objecttiles[i];
                 sf::Vector2f mousepos = sf::Vector2f(window.mapPixelToCoords(sf::Mouse::getPosition(window)));
                 if (pos->collide().getGlobalBounds().contains(mousepos) && sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
-                     std::cout << i;
+                    switch (i) {
+                        case 0:
+                        tilename = maketext(35, sf::Color(255, 40, 60), "SPIKE", font, sf::Vector2f(640, 370));
+                        tiledesc = maketext(25, sf::Color(255, 40, 60), "Come on...what does it look like it does?", font, sf::Vector2f(640, 450));
+                        tilenameshadow = textshadow(120, 3, tilename);
+                        tiledescshadow = textshadow(120, 3, tiledesc);
+                        break;
+                        case 1:
+                        tilename = maketext(35, sf::Color(255, 40, 60), "DOUBLE SPIKE", font, sf::Vector2f(640, 370));
+                        tiledesc = maketext(25, sf::Color(255, 40, 60), "Bit less punishing than a normal spike, since it's a bit shorter.", font, sf::Vector2f(640, 450));
+                        tilenameshadow = textshadow(120, 3, tilename);
+                        tiledescshadow = textshadow(120, 3, tiledesc);
+                        break;
+                        case 2:
+                        tilename = maketext(35, sf::Color(255, 40, 60), "BUTTON AND DOOR", font, sf::Vector2f(640, 370));
+                        tiledesc = maketext(20, sf::Color(255, 40, 60), "For every button on the map, there's a door, and vice versa.\nIf the player or a block is positioned on the button, its corresponding door will open.\nDoors will never close while a player or block is within its bounds.", font, sf::Vector2f(640, 450));
+                        tilenameshadow = textshadow(120, 3, tilename);
+                        tiledescshadow = textshadow(120, 3, tiledesc);
+                        break;
+                        case 3:
+                        tilename = maketext(35, sf::Color(255, 40, 60), "BUTTON AND DOOR", font, sf::Vector2f(640, 370));
+                        tiledesc = maketext(20, sf::Color(255, 40, 60), "For every button on the map, there's a door, and vice versa.\nIf the player or a block is positioned on the button, its corresponding door will open.\nDoors will never close while a player or block is within its bounds.", font, sf::Vector2f(640, 450));
+                        tilenameshadow = textshadow(120, 3, tilename);
+                        tiledescshadow = textshadow(120, 3, tiledesc);
+                        break;
+                        case 4:
+                        tilename = maketext(35, sf::Color(255, 40, 60), "SPRING", font, sf::Vector2f(640, 370));
+                        tiledesc = maketext(25, sf::Color(255, 40, 60), "Gives you a huge vertical boost, but not blocks.", font, sf::Vector2f(640, 450));
+                        tilenameshadow = textshadow(120, 3, tilename);
+                        tiledescshadow = textshadow(120, 3, tiledesc);
+                        case 5:
+                        tilename = maketext(35, sf::Color(255, 40, 60), "PUSHABLE BLOCK", font, sf::Vector2f(640, 370));
+                        tiledesc = maketext(25, sf::Color(255, 40, 60), "These are blocks you can move around to reach farther and push buttons!\nKeep in mind: you cannot push two stacked blocks in the direction they're stacked, and gravity applies to them just as it does to you.", font, sf::Vector2f(640, 450));
+                        tilenameshadow = textshadow(120, 3, tilename);
+                        tiledescshadow = textshadow(120, 3, tiledesc);
+                        break;
+                        case 6:
+                        tilename = maketext(35, sf::Color(255, 40, 60), "BLACK HOLE", font, sf::Vector2f(640, 370));
+                        tiledesc = maketext(25, sf::Color(255, 40, 60), "Entering the photon ring makes you lose control of your shape; entering the event horizon kills you.\nHowever: you can jump out if you have the hexagon's double jump readied, or sometimes outspeed its pull entirely.", font, sf::Vector2f(640, 450));
+                        tilenameshadow = textshadow(120, 3, tilename);
+                        tiledescshadow = textshadow(120, 3, tiledesc);
+                    }
                 }
             }
         }
