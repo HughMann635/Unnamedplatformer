@@ -265,8 +265,8 @@ int main()
 			if (menu.navback(window)) state = State::mainmenu;
 			map.drawmap(window);
 			window.setView(window.getDefaultView());
-			handbook.draw(window);
 			handbook.update(window, deltatime);
+			handbook.draw(window);
 		} else if (state == State::settings) {
 			if (menu.navback(window)) state = State::mainmenu;
 			map.drawmap(window);

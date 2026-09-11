@@ -482,6 +482,8 @@ public:
     std::vector<std::unique_ptr<tileTypes>> envtiles;
     std::vector<std::unique_ptr<player>> shapetiles; 
     std::vector<std::unique_ptr<tileTypes>> objecttiles;
+    sf::Text tilename;
+    sf::Text tiledesc;
 
     int menunum = 0; //0 = env, 1 = shapes, 2 = obs
 
@@ -494,7 +496,9 @@ public:
         envtxt(font),
         envtxtshadow(font),
         objectstxt(font),
-        objectstxtshadow(font)
+        objectstxtshadow(font),
+        tilename(font),
+        tiledesc(font)
     {
         handbooktxt = maketext(45, sf::Color(80, 170, 255), "HANDBOOK", font, sf::Vector2f(width/2, 190));
         handbooktxtshadow = textshadow(235, 6, handbooktxt);
@@ -535,6 +539,10 @@ public:
         objecttiles.push_back(std::make_unique<spring>(sf::Vector2f(700, 300)));
         objecttiles.push_back(std::make_unique<block>(sf::Vector2f(820, 300)));
         objecttiles.push_back(std::make_unique<blackhole>(sf::Vector2f(920, 300), 0.4));
+
+        tilename = maketext(25, sf::Color(255, 40, 60), "SELECT A TILE", font, sf::Vector2f(640, 400));
+        tiledesc = maketext(25, sf::Color(255, 40, 60), "AND ITS DESCRIPTION WILL APPEAR HERE", font, sf::Vector2f(640, 450));
+        
     }
 
     void draw (sf::RenderWindow& window) {
@@ -573,7 +581,6 @@ public:
             }
         }
     }
-
     void update (sf::RenderWindow& window, float deltatime) {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)) state = State::mainmenu;
         if (btnpress(window, shapestxt, shapesbtn, shapestxtshadow, shapesbtnshadow, sf::Vector2f(width/2, 90), sf::Color(180, 90, 50), sf::Color(230, 140, 100), sf::Color(100, 100, 100), sf::Color(200, 100, 100))) menunum = 1; 
@@ -581,6 +588,33 @@ public:
         if (btnpress(window, objectstxt, objectsbtn, objectstxtshadow, objectsbtnshadow, sf::Vector2f(width/2+240, 90), sf::Color(90, 50, 180), sf::Color(140, 100, 230), sf::Color(100, 100, 100), sf::Color(100, 100, 200))) menunum = 2;
         for (auto& pos: objecttiles) {
             if (!dynamic_cast<block*>(pos.get())) pos->movetile(deltatime);
+        }
+        if (menunum == 0) {
+            for (int i = 0; i < envtiles.size(); i++) {
+                auto& pos = envtiles[i];
+                sf::Vector2f mousepos = sf::Vector2f(window.mapPixelToCoords(sf::Mouse::getPosition(window)));
+                if (pos->collide().getGlobalBounds().contains(mousepos) && sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
+                    std::cout << i;
+                }
+            }
+        }
+        if (menunum == 1) {
+            for (int i = 0; i < shapetiles.size(); i++) {
+                auto& pos = envtiles[i];
+                sf::Vector2f mousepos = sf::Vector2f(window.mapPixelToCoords(sf::Mouse::getPosition(window)));
+                if (pos->collide().getGlobalBounds().contains(mousepos) && sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
+                    std::cout << i;
+                }
+            }
+        }
+        if (menunum == 2) {
+            for (int i = 0; i < objecttiles.size(); i++) {
+                auto& pos = envtiles[i];
+                sf::Vector2f mousepos = sf::Vector2f(window.mapPixelToCoords(sf::Mouse::getPosition(window)));
+                if (pos->collide().getGlobalBounds().contains(mousepos) && sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
+                     std::cout << i;
+                }
+            }
         }
     }
 };
