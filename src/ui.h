@@ -484,6 +484,8 @@ public:
     std::vector<std::unique_ptr<tileTypes>> objecttiles;
     sf::Text tilename;
     sf::Text tiledesc;
+    sf::Text tilenameshadow;
+    sf::Text tiledescshadow;
 
     int menunum = 0; //0 = env, 1 = shapes, 2 = obs
 
@@ -498,7 +500,9 @@ public:
         objectstxt(font),
         objectstxtshadow(font),
         tilename(font),
-        tiledesc(font)
+        tiledesc(font),
+        tilenameshadow(font),
+        tiledescshadow(font)
     {
         handbooktxt = maketext(45, sf::Color(80, 170, 255), "HANDBOOK", font, sf::Vector2f(width/2, 190));
         handbooktxtshadow = textshadow(235, 6, handbooktxt);
@@ -540,9 +544,10 @@ public:
         objecttiles.push_back(std::make_unique<block>(sf::Vector2f(820, 300)));
         objecttiles.push_back(std::make_unique<blackhole>(sf::Vector2f(920, 300), 0.4));
 
-        tilename = maketext(25, sf::Color(255, 40, 60), "SELECT A TILE", font, sf::Vector2f(640, 400));
+        tilename = maketext(35, sf::Color(255, 40, 60), "SELECT A TILE", font, sf::Vector2f(640, 370));
         tiledesc = maketext(25, sf::Color(255, 40, 60), "AND ITS DESCRIPTION WILL APPEAR HERE", font, sf::Vector2f(640, 450));
-        
+        tilenameshadow = textshadow(120, 3, tilename);
+        tiledescshadow = textshadow(120, 3, tiledesc);
     }
 
     void draw (sf::RenderWindow& window) {
@@ -564,6 +569,11 @@ public:
 
         window.draw(menuboxshadow);
         window.draw(menubox);
+        window.draw(tiledescshadow);
+        window.draw(tiledesc);
+        window.draw(tilenameshadow);
+        window.draw(tilename);
+        
         if (menunum == 0) {
             for (auto& pos: envtiles) {
                 pos->draw(window);
@@ -594,7 +604,24 @@ public:
                 auto& pos = envtiles[i];
                 sf::Vector2f mousepos = sf::Vector2f(window.mapPixelToCoords(sf::Mouse::getPosition(window)));
                 if (pos->collide().getGlobalBounds().contains(mousepos) && sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
-                    std::cout << i;
+                    switch (i) {
+                        case 0:
+                        tilename.setString("GROUND");
+                        tiledesc.setString("Basic ground tile...you can walk off it, jump on it, run into it, etc.\nNot much else really.");
+                        break;
+                        case 1:
+                        tilename.setString("WATER");
+                        tiledesc.setString("In water, gravity is reduced and you can continuously jump to swim upwards. You can also swim downwards in water. Affects pushable blocks.");
+                        break;
+                        case 2:
+                        tilename.setString("LAVA");
+                        tiledesc.setString("Lava kills you instantly, be careful! Pushable blocks are heatproof though, so it doesn't affect them.");
+                        break;
+                        case 3:
+                        tilename.setString("ZERO GRAVITY");
+                        tiledesc.setString("It's a strange zone where gravity doesn't apply. You can float and push blocks freely through this zone...although the scientific accuracy is questionable...");
+                        break;
+                    }
                 }
             }
         }
