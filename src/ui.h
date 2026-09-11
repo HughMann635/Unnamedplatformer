@@ -638,7 +638,37 @@ public:
                 auto& pos = shapetiles[i];
                 sf::Vector2f mousepos = sf::Vector2f(window.mapPixelToCoords(sf::Mouse::getPosition(window)));
                 if (pos->shape().getGlobalBounds().contains(mousepos) && sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
-                    std::cout << i;
+                    switch (i) {
+                        case 0:
+                        tilename = maketext(35, sf::Color(255, 40, 60), "SQUARE", font, sf::Vector2f(640, 370));
+                        tiledesc = maketext(25, sf::Color(255, 40, 60), "The square is the starting shape! It doesn't have any flashy features, but it's the only shape that can push blocks around.", font, sf::Vector2f(640, 450));
+                        tilenameshadow = textshadow(120, 3, tilename);
+                        tiledescshadow = textshadow(120, 3, tiledesc);
+                        break;
+                        case 1:
+                        tilename = maketext(35, sf::Color(255, 40, 60), "CIRCLE", font, sf::Vector2f(640, 370));
+                        tiledesc = maketext(25, sf::Color(255, 40, 60), "The circle can accelerate rapidly when moving around, making it good for crossing long gaps and such.\nIts shape also allows it to roll underneath obstacles through 1-tile pathways.", font, sf::Vector2f(640, 450));
+                        tilenameshadow = textshadow(120, 3, tilename);
+                        tiledescshadow = textshadow(120, 3, tiledesc);
+                        break;
+                        case 2:
+                        tilename = maketext(35, sf::Color(255, 40, 60), "OCTAGON", font, sf::Vector2f(640, 370));
+                        tiledesc = maketext(15, sf::Color(255, 40, 60), "The octagon can wall jump! There are three types of walljumps.\nHold left shift when wall jumping to jump fast but without much height.\nHold right shift while wall jumping to jump high with less horizontal reach.\nIf not holding either shift, you just perform a normal wall jump.", font, sf::Vector2f(640, 450));
+                        tilenameshadow = textshadow(120, 3, tilename);
+                        tiledescshadow = textshadow(120, 3, tiledesc);
+                        break;
+                        case 3:
+                        tilename = maketext(35, sf::Color(255, 40, 60), "TRIANGLE", font, sf::Vector2f(640, 370));
+                        tiledesc = maketext(25, sf::Color(255, 40, 60), "The triangle can teleport exactly 2.5 tiles ahead of itself. Useful for crossing barriers and chaining it with other shapes to do combos!", font, sf::Vector2f(640, 450));
+                        tilenameshadow = textshadow(120, 3, tilename);
+                        tiledescshadow = textshadow(120, 3, tiledesc);
+                        break;
+                        case 4:
+                        tilename = maketext(35, sf::Color(255, 40, 60), "HEXAGON", font, sf::Vector2f(640, 370));
+                        tiledesc = maketext(25, sf::Color(255, 40, 60), "The hexagon can double jump. To maximize its utility, practice comboing it with other shapes to gain massive distance!", font, sf::Vector2f(640, 450));
+                        tilenameshadow = textshadow(120, 3, tilename);
+                        tiledescshadow = textshadow(120, 3, tiledesc);
+                    }
                 }
             }
         }
