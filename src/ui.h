@@ -707,6 +707,7 @@ public:
                         tiledesc = maketext(25, sf::Color(255, 40, 60), "Gives you a huge vertical boost, but not blocks.", font, sf::Vector2f(640, 450));
                         tilenameshadow = textshadow(120, 3, tilename);
                         tiledescshadow = textshadow(120, 3, tiledesc);
+                        break;
                         case 5:
                         tilename = maketext(35, sf::Color(255, 40, 60), "PUSHABLE BLOCK", font, sf::Vector2f(640, 370));
                         tiledesc = maketext(25, sf::Color(255, 40, 60), "These are blocks you can move around to reach farther and push buttons!\nKeep in mind: you cannot push two stacked blocks in the direction they're stacked, and gravity applies to them just as it does to you.", font, sf::Vector2f(640, 450));
