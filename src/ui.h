@@ -440,19 +440,38 @@ public:
     sf::Font font;
     sf::Text creditstxt;
     sf::Text creditstxtshadow;
+    sf::RectangleShape creditsbox;
+    sf::RectangleShape creditsboxshadow;
+    sf::Text creditscontent;
+    sf::Text creditsshadow;
 
     credits () :
         font("AldotheApache.ttf"),
         creditstxt(font),
-        creditstxtshadow(font)
+        creditstxtshadow(font),
+        creditscontent(font),
+        creditsshadow(font)
     {
         creditstxt = maketext(45, sf::Color(255, 80, 170), "CREDITS", font, sf::Vector2f(width/2, 190));
         creditstxtshadow = textshadow(235, 6, creditstxt);
+        creditsbox = makebtn(sf::Vector2f(800, 280), sf::Color(245, 215, 150, 230), sf::Vector2f(width/2, height/2+50));
+        creditsboxshadow = rectshadow(235, 10, creditsbox);
+        
+        creditscontent = maketext(30, sf::Color(20, 20, 20),
+        "This game was designed and coded by Zahran G.\n\n"
+        "AI Use: Minimal AI was used solely for debugging core physics\nand collision algorithms. Art, sound effects, game design, etc.\nare fully human.\n\n"
+        "Click the CREDITS title for a surprise! :)"
+        , font, sf::Vector2f(0, 0));
+        creditscontent.setOrigin(sf::Vector2f(creditscontent.getLocalBounds().position.x, creditscontent.getLocalBounds().position.y));
+        creditscontent.setPosition(sf::Vector2f(270, 300));
     }
 
     void draw (sf::RenderWindow& window) {
         window.draw(creditstxtshadow);
         window.draw(creditstxt);
+        window.draw(creditsboxshadow);
+        window.draw(creditsbox);
+        window.draw(creditscontent);
     }
 
     void update () {
