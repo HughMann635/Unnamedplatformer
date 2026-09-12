@@ -593,21 +593,21 @@ public:
     }
     void update (sf::RenderWindow& window, float deltatime) {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)) state = State::mainmenu;
-        if (btnpress(window, shapestxt, shapesbtn, shapestxtshadow, shapesbtnshadow, sf::Vector2f(width/2, 90), sf::Color(180, 90, 50), sf::Color(230, 140, 100), sf::Color(100, 100, 100), sf::Color(200, 100, 100))) { 
+        if (btnpress(window, shapestxt, shapesbtn, shapestxtshadow, shapesbtnshadow, sf::Vector2f(width/2, 90), sf::Color(180, 90, 50), sf::Color(230, 140, 100), sf::Color(100, 100, 100), sf::Color(200, 100, 100)) && menunum != 1) { 
             menunum = 1; 
             tilename = maketext(35, sf::Color(255, 40, 60), "SELECT A TILE", font, sf::Vector2f(640, 370));
             tiledesc = maketext(25, sf::Color(255, 40, 60), "AND ITS DESCRIPTION WILL APPEAR HERE", font, sf::Vector2f(640, 450));
             tilenameshadow = textshadow(120, 3, tilename);
             tiledescshadow = textshadow(120, 3, tiledesc);
         }
-        if (btnpress(window, envtxt, envbtn, envtxtshadow, envbtnshadow, sf::Vector2f(width/2-240, 90), sf::Color(50, 180, 80), sf::Color(100, 230, 130), sf::Color(100, 100, 100), sf::Color(100, 200, 100))) { 
+        if (btnpress(window, envtxt, envbtn, envtxtshadow, envbtnshadow, sf::Vector2f(width/2-240, 90), sf::Color(50, 180, 80), sf::Color(100, 230, 130), sf::Color(100, 100, 100), sf::Color(100, 200, 100)) && menunum != 0) { 
             menunum = 0;
             tilename = maketext(35, sf::Color(255, 40, 60), "SELECT A TILE", font, sf::Vector2f(640, 370));
             tiledesc = maketext(25, sf::Color(255, 40, 60), "AND ITS DESCRIPTION WILL APPEAR HERE", font, sf::Vector2f(640, 450));
             tilenameshadow = textshadow(120, 3, tilename);
             tiledescshadow = textshadow(120, 3, tiledesc);
         }
-        if (btnpress(window, objectstxt, objectsbtn, objectstxtshadow, objectsbtnshadow, sf::Vector2f(width/2+240, 90), sf::Color(90, 50, 180), sf::Color(140, 100, 230), sf::Color(100, 100, 100), sf::Color(100, 100, 200))) { 
+        if (btnpress(window, objectstxt, objectsbtn, objectstxtshadow, objectsbtnshadow, sf::Vector2f(width/2+240, 90), sf::Color(90, 50, 180), sf::Color(140, 100, 230), sf::Color(100, 100, 100), sf::Color(100, 100, 200)) && menunum != 2) { 
             menunum = 2;
             tilename = maketext(35, sf::Color(255, 40, 60), "SELECT A TILE", font, sf::Vector2f(640, 370));
             tiledesc = maketext(25, sf::Color(255, 40, 60), "AND ITS DESCRIPTION WILL APPEAR HERE", font, sf::Vector2f(640, 450));
@@ -624,26 +624,26 @@ public:
                 if (pos->collide().getGlobalBounds().contains(mousepos) && sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
                     switch (i) {
                         case 0:
-                        tilename = maketext(35, sf::Color(255, 40, 60), "GROUND", font, sf::Vector2f(640, 370));
-                        tiledesc = maketext(25, sf::Color(255, 40, 60), "Basic ground tile...you can walk off it, jump on it, run into it, etc.\nNot much else really.", font, sf::Vector2f(640, 450));
+                        tilename = maketext(35, sf::Color(255, 200, 200), "GROUND", font, sf::Vector2f(640, 370));
+                        tiledesc = maketext(25, sf::Color(255, 200, 200), "Basic ground tile...you can walk off it, jump on it, run into it, etc.\nNot much else really.", font, sf::Vector2f(640, 450));
                         tilenameshadow = textshadow(120, 3, tilename);
                         tiledescshadow = textshadow(120, 3, tiledesc);
                         break;
                         case 1:
-                        tilename = maketext(35, sf::Color(255, 40, 60), "WATER", font, sf::Vector2f(640, 370));
-                        tiledesc = maketext(25, sf::Color(255, 40, 60), "In water, gravity is reduced and you can continuously \njump to swim upwards. You can also swim downwards in water. \nAffects pushable blocks.", font, sf::Vector2f(640, 450));
+                        tilename = maketext(35, sf::Color(40, 160, 255), "WATER", font, sf::Vector2f(640, 370));
+                        tiledesc = maketext(25, sf::Color(40, 160, 255), "In water, gravity is reduced and you can continuously \njump to swim upwards. You can also swim downwards in water. \nAffects pushable blocks.", font, sf::Vector2f(640, 450));
                         tilenameshadow = textshadow(120, 3, tilename);
                         tiledescshadow = textshadow(120, 3, tiledesc);
                         break;
                         case 2:
-                        tilename = maketext(35, sf::Color(255, 40, 60), "LAVA", font, sf::Vector2f(640, 370));
-                        tiledesc = maketext(25, sf::Color(255, 40, 60), "Lava kills you instantly, be careful!\nPushable blocks are heatproof though, so it doesn't affect them.", font, sf::Vector2f(640, 450));
+                        tilename = maketext(35, sf::Color(255, 150, 20), "LAVA", font, sf::Vector2f(640, 370));
+                        tiledesc = maketext(25, sf::Color(255, 150, 20), "Lava kills you instantly, be careful!\nPushable blocks are heatproof though, so it doesn't affect them.", font, sf::Vector2f(640, 450));
                         tilenameshadow = textshadow(120, 3, tilename);
                         tiledescshadow = textshadow(120, 3, tiledesc);
                         break;
                         case 3:
-                        tilename = maketext(35, sf::Color(255, 40, 60), "ZERO GRAVITY", font, sf::Vector2f(640, 370));
-                        tiledesc = maketext(25, sf::Color(255, 40, 60), "It's a strange zone where gravity doesn't apply.\nYou can float and push blocks freely through this zone...\nalthough the scientific accuracy is questionable...", font, sf::Vector2f(640, 450));
+                        tilename = maketext(35, sf::Color(230, 230, 230), "ZERO GRAVITY", font, sf::Vector2f(640, 370));
+                        tiledesc = maketext(25, sf::Color(230, 230, 230), "It's a strange zone where gravity doesn't apply.\nYou can float and push blocks freely through this zone...\nalthough the scientific accuracy is questionable...", font, sf::Vector2f(640, 450));
                         tilenameshadow = textshadow(120, 3, tilename);
                         tiledescshadow = textshadow(120, 3, tiledesc);
                         break;
@@ -658,32 +658,32 @@ public:
                 if (pos->shape().getGlobalBounds().contains(mousepos) && sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
                     switch (i) {
                         case 0:
-                        tilename = maketext(35, sf::Color(255, 40, 60), "SQUARE", font, sf::Vector2f(640, 370));
-                        tiledesc = maketext(25, sf::Color(255, 40, 60), "The square is the starting shape! It doesn't have any flashy features, but it's the only shape that can push blocks around.", font, sf::Vector2f(640, 450));
+                        tilename = maketext(35, sf::Color(255, 30, 0), "SQUARE", font, sf::Vector2f(640, 370));
+                        tiledesc = maketext(25, sf::Color(255, 30, 0), "The square is the starting shape! It doesn't have any flashy features, but it's the only shape that can push blocks around.", font, sf::Vector2f(640, 450));
                         tilenameshadow = textshadow(120, 3, tilename);
                         tiledescshadow = textshadow(120, 3, tiledesc);
                         break;
                         case 1:
-                        tilename = maketext(35, sf::Color(255, 40, 60), "CIRCLE", font, sf::Vector2f(640, 370));
-                        tiledesc = maketext(25, sf::Color(255, 40, 60), "The circle can accelerate rapidly when moving around, making it good for crossing long gaps and such.\nIts shape also allows it to roll underneath obstacles through 1-tile pathways.", font, sf::Vector2f(640, 450));
+                        tilename = maketext(35, sf::Color(0, 145, 255), "CIRCLE", font, sf::Vector2f(640, 370));
+                        tiledesc = maketext(25, sf::Color(0, 145, 255), "The circle can accelerate rapidly when moving around, making it good for crossing long gaps and such.\nIts shape also allows it to roll underneath obstacles through 1-tile pathways.", font, sf::Vector2f(640, 450));
                         tilenameshadow = textshadow(120, 3, tilename);
                         tiledescshadow = textshadow(120, 3, tiledesc);
                         break;
                         case 2:
-                        tilename = maketext(35, sf::Color(255, 40, 60), "OCTAGON", font, sf::Vector2f(640, 370));
-                        tiledesc = maketext(15, sf::Color(255, 40, 60), "The octagon can wall jump! There are three types of walljumps.\nHold left shift when wall jumping to jump fast but without much height.\nHold right shift while wall jumping to jump high with less horizontal reach.\nIf not holding either shift, you just perform a normal wall jump.", font, sf::Vector2f(640, 450));
+                        tilename = maketext(35, sf::Color(160, 100, 200), "OCTAGON", font, sf::Vector2f(640, 370));
+                        tiledesc = maketext(15, sf::Color(160, 100, 200), "The octagon can wall jump! There are three types of walljumps.\nHold left shift when wall jumping to jump fast but without much height.\nHold right shift while wall jumping to jump high with less horizontal reach.\nIf not holding either shift, you just perform a normal wall jump.", font, sf::Vector2f(640, 450));
                         tilenameshadow = textshadow(120, 3, tilename);
                         tiledescshadow = textshadow(120, 3, tiledesc);
                         break;
                         case 3:
-                        tilename = maketext(35, sf::Color(255, 40, 60), "TRIANGLE", font, sf::Vector2f(640, 370));
-                        tiledesc = maketext(25, sf::Color(255, 40, 60), "The triangle can teleport exactly 2.5 tiles ahead of itself. Useful for crossing barriers and chaining it with other shapes to do combos!", font, sf::Vector2f(640, 450));
+                        tilename = maketext(35, sf::Color(0, 255, 0), "TRIANGLE", font, sf::Vector2f(640, 370));
+                        tiledesc = maketext(25, sf::Color(0, 255, 0), "The triangle can teleport exactly 2.5 tiles ahead of itself. Useful for crossing barriers and chaining it with other shapes to do combos!", font, sf::Vector2f(640, 450));
                         tilenameshadow = textshadow(120, 3, tilename);
                         tiledescshadow = textshadow(120, 3, tiledesc);
                         break;
                         case 4:
-                        tilename = maketext(35, sf::Color(255, 40, 60), "HEXAGON", font, sf::Vector2f(640, 370));
-                        tiledesc = maketext(25, sf::Color(255, 40, 60), "The hexagon can double jump. To maximize its utility, practice comboing it with other shapes to gain massive distance!", font, sf::Vector2f(640, 450));
+                        tilename = maketext(35, sf::Color(255, 210, 0), "HEXAGON", font, sf::Vector2f(640, 370));
+                        tiledesc = maketext(25, sf::Color(255, 210, 0), "The hexagon can double jump. To maximize its utility, practice comboing it with other shapes to gain massive distance!", font, sf::Vector2f(640, 450));
                         tilenameshadow = textshadow(120, 3, tilename);
                         tiledescshadow = textshadow(120, 3, tiledesc);
                     }
@@ -697,46 +697,50 @@ public:
                 if (pos->collide().getGlobalBounds().contains(mousepos) && sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
                     switch (i) {
                         case 0:
-                        tilename = maketext(35, sf::Color(255, 40, 60), "SPIKE", font, sf::Vector2f(640, 370));
-                        tiledesc = maketext(25, sf::Color(255, 40, 60), "Come on...what does it look like it does?", font, sf::Vector2f(640, 450));
+                        tilename = maketext(35, sf::Color(255, 0, 0), "SPIKE", font, sf::Vector2f(640, 370));
+                        tiledesc = maketext(25, sf::Color(255, 0, 0), "Come on...what does it look like it does?", font, sf::Vector2f(640, 450));
                         tilenameshadow = textshadow(120, 3, tilename);
                         tiledescshadow = textshadow(120, 3, tiledesc);
                         break;
                         case 1:
-                        tilename = maketext(35, sf::Color(255, 40, 60), "DOUBLE SPIKE", font, sf::Vector2f(640, 370));
-                        tiledesc = maketext(25, sf::Color(255, 40, 60), "Bit less punishing than a normal spike, since it's a bit shorter.", font, sf::Vector2f(640, 450));
+                        tilename = maketext(35, sf::Color(255, 0, 0), "DOUBLE SPIKE", font, sf::Vector2f(640, 370));
+                        tiledesc = maketext(25, sf::Color(255, 0, 0), "Bit less punishing than a normal spike, since it's a bit shorter.", font, sf::Vector2f(640, 450));
                         tilenameshadow = textshadow(120, 3, tilename);
                         tiledescshadow = textshadow(120, 3, tiledesc);
                         break;
                         case 2:
-                        tilename = maketext(35, sf::Color(255, 40, 60), "BUTTON AND DOOR", font, sf::Vector2f(640, 370));
-                        tiledesc = maketext(20, sf::Color(255, 40, 60), "For every button on the map, there's a door, and vice versa.\nIf the player or a block is positioned on the button, its corresponding door will open.\nDoors will never close while a player or block is within its bounds.", font, sf::Vector2f(640, 450));
+                        tilename = maketext(35, sf::Color(60, 60, 70), "BUTTON AND DOOR", font, sf::Vector2f(640, 370));
+                        tiledesc = maketext(20, sf::Color(60, 60, 70), "For every button on the map, there's a door, and vice versa.\nIf the player or a block is positioned on the button, its corresponding door will open.\nDoors will never close while a player or block is within its bounds.", font, sf::Vector2f(640, 450));
                         tilenameshadow = textshadow(120, 3, tilename);
                         tiledescshadow = textshadow(120, 3, tiledesc);
                         break;
                         case 3:
-                        tilename = maketext(35, sf::Color(255, 40, 60), "BUTTON AND DOOR", font, sf::Vector2f(640, 370));
-                        tiledesc = maketext(20, sf::Color(255, 40, 60), "For every button on the map, there's a door, and vice versa.\nIf the player or a block is positioned on the button, its corresponding door will open.\nDoors will never close while a player or block is within its bounds.", font, sf::Vector2f(640, 450));
+                        tilename = maketext(35, sf::Color(60, 60, 70), "BUTTON AND DOOR", font, sf::Vector2f(640, 370));
+                        tiledesc = maketext(20, sf::Color(60, 60, 70), "For every button on the map, there's a door, and vice versa.\nIf the player or a block is positioned on the button, its corresponding door will open.\nDoors will never close while a player or block is within its bounds.", font, sf::Vector2f(640, 450));
                         tilenameshadow = textshadow(120, 3, tilename);
                         tiledescshadow = textshadow(120, 3, tiledesc);
                         break;
                         case 4:
-                        tilename = maketext(35, sf::Color(255, 40, 60), "SPRING", font, sf::Vector2f(640, 370));
-                        tiledesc = maketext(25, sf::Color(255, 40, 60), "Gives you a huge vertical boost, but not blocks.", font, sf::Vector2f(640, 450));
+                        tilename = maketext(35, sf::Color(200, 255, 255), "SPRING", font, sf::Vector2f(640, 370));
+                        tiledesc = maketext(25, sf::Color(200, 255, 255), "Gives you a huge vertical boost, but not blocks.", font, sf::Vector2f(640, 450));
                         tilenameshadow = textshadow(120, 3, tilename);
                         tiledescshadow = textshadow(120, 3, tiledesc);
                         break;
                         case 5:
-                        tilename = maketext(35, sf::Color(255, 40, 60), "PUSHABLE BLOCK", font, sf::Vector2f(640, 370));
-                        tiledesc = maketext(25, sf::Color(255, 40, 60), "These are blocks you can move around to reach farther and push buttons!\nKeep in mind: you cannot push two stacked blocks in the direction they're stacked, and gravity applies to them just as it does to you.", font, sf::Vector2f(640, 450));
+                        tilename = maketext(35, sf::Color(100, 100, 100), "PUSHABLE BLOCK", font, sf::Vector2f(640, 370));
+                        tiledesc = maketext(25, sf::Color(100, 100, 100), "These are blocks you can move around to reach farther and push buttons!\nKeep in mind: you cannot push two stacked blocks in the direction they're stacked, and gravity applies to them just as it does to you.", font, sf::Vector2f(640, 450));
                         tilenameshadow = textshadow(120, 3, tilename);
                         tiledescshadow = textshadow(120, 3, tiledesc);
                         break;
                         case 6:
-                        tilename = maketext(35, sf::Color(255, 40, 60), "BLACK HOLE", font, sf::Vector2f(640, 370));
-                        tiledesc = maketext(25, sf::Color(255, 40, 60), "Entering the photon ring makes you lose control of your shape; entering the event horizon kills you.\nHowever: you can jump out if you have the hexagon's double jump readied, or sometimes outspeed its pull entirely.", font, sf::Vector2f(640, 450));
+                        tilename = maketext(35, sf::Color::Black, "BLACK HOLE", font, sf::Vector2f(640, 370));
+                        tiledesc = maketext(25, sf::Color::Black, "Entering the photon ring makes you lose control of your shape; entering the event horizon kills you.\nHowever: you can jump out if you have the hexagon's double jump readied, or sometimes outspeed its pull entirely.", font, sf::Vector2f(640, 450));
+                        tilename.setOutlineColor(sf::Color(240, 170, 0));
+                        tiledesc.setOutlineColor(sf::Color(240, 170, 0));
                         tilenameshadow = textshadow(120, 3, tilename);
                         tiledescshadow = textshadow(120, 3, tiledesc);
+                        tilename.setOutlineThickness(-1);
+                        tiledesc.setOutlineThickness(-1);
                     }
                 }
             }
