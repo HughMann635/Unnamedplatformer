@@ -62,6 +62,7 @@ int main()
 				currentplayer -> shape().setPosition(map.spawn);
 				currentplayer -> shape().setRotation(sf::degrees(0));
 				currentplayer -> rotation = 0;
+				currentplayer -> velocity = sf::Vector2f(0, 0); 
 				currentplayer -> freefallingtip = false;
 				tipping_right = false;
 				tipping_left = false;
