@@ -18,6 +18,7 @@ inline bool newlevel = false;
 inline bool swapped = false;
 inline bool gamestart = false;
 inline bool menuenter = false;
+inline bool handbookenter = false;
 
 //Player and physics settings
 const float playerdim = 20.f; //Also the dimensions of every tile in the game 

@@ -213,6 +213,7 @@ int main()
 			}
 			
 		} else if (state == State::mainmenu) {
+			handbookenter = false;
 			gamestart = false;
 			if (!menuenter || restart) {
 				map.statictilelist.clear();
@@ -264,6 +265,13 @@ int main()
 			credits.update();
 		} else if (state == State::handbook) {
 			if (menu.navback(window)) state = State::mainmenu;
+			if (!handbookenter) {
+				handbook.tilename = maketext(35, sf::Color(255, 40, 60), "SELECT A TILE", handbook.font, sf::Vector2f(640, 370));
+            	handbook.tiledesc = maketext(25, sf::Color(255, 40, 60), "AND ITS DESCRIPTION WILL APPEAR HERE", handbook.font, sf::Vector2f(640, 450));
+            	handbook.tilenameshadow = textshadow(120, 3, handbook.tilename);
+            	handbook.tiledescshadow = textshadow(120, 3, handbook.tiledesc);
+				handbookenter = true;
+			}
 			map.drawmap(window);
 			window.setView(window.getDefaultView());
 			handbook.update(window, deltatime);
