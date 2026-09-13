@@ -99,7 +99,7 @@ sf::Shape& square::shape() {
 }
 
 void square::jump (float deltatime) {
-    if (sf::Keyboard::isKeyPressed ( sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::W)) {
+    if (keypressed(Action::jump)) {
         if (grounded && !swimming && !zerogactive) {
             velocity.y = blockonhead ? 0 : -jumpforce;
             grounded = false;
@@ -107,11 +107,11 @@ void square::jump (float deltatime) {
         }
     }
     if (swimming) {
-        if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Down) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::S)) {
+        if (keypressed(Action::down)) {
             if (velocity.y <= 350.f) velocity.y += 30.f;;
             grounded = false;
         }
-        if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::W)) {
+        if (keypressed(Action::jump)) {
             velocity.y = -125.f;
             grounded = false;
         }
@@ -119,12 +119,12 @@ void square::jump (float deltatime) {
 }
 
 void square::updatepos (float deltatime, tilemap& map) {
-    if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Right) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::D)) {
+    if (keypressed(Action::right)) {
         if (velocity.x > movespeed && grounded) velocity.x -= circleaccel*0.7;
         else if (velocity.x > movespeed && !grounded) velocity.x -= 0;
         else velocity.x = movespeed;
         rotating = true;
-    } else if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Left) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::A)) {
+    } else if (keypressed(Action::left)) {
         if (velocity.x < -movespeed && grounded) velocity.x += circleaccel*0.7;
         else if (velocity.x < -movespeed && !grounded) velocity.x -= 0;
         else velocity.x = -movespeed;
@@ -133,18 +133,18 @@ void square::updatepos (float deltatime, tilemap& map) {
         zerogactive || swimming || inblackhole ? velocity.x *= 0.71 : velocity.x *= 0.f; 
     }
     if (zerogactive) {
-        if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Down) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::S)) {
+        if (keypressed(Action::down)) {
             velocity.y = 115.f;
         }
-        else if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::W)) {
+        else if (keypressed(Action::jump)) {
             velocity.y = -115.f;
         }
         else {
             velocity.y *= 0.71;
         }
-        if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Right) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::D)) {
+        if (keypressed(Action::right)) {
             velocity.x = 115.f;
-        } else if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Left) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::A)) {
+        } else if (keypressed(Action::left)) {
             velocity.x = -115.f;
         }
     } 
@@ -197,7 +197,7 @@ sf::Shape& circle::shape()  {
 }
 
 void circle::jump (float deltatime)  {
-    if (sf::Keyboard::isKeyPressed ( sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::W)) {
+    if (keypressed(Action::jump)) {
         if (grounded && !swimming && !zerogactive) {
             velocity.y -= blockonhead ? 0 : jumpforce;
             grounded = false;
@@ -205,11 +205,11 @@ void circle::jump (float deltatime)  {
         }
     }
     if (swimming) {
-        if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Down) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::S)) {
+        if (keypressed(Action::down)) {
             if (velocity.y <= 350.f) velocity.y += 30.f;;
             grounded = false;
         }
-        if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::W)) {
+        if (keypressed(Action::jump)) {
             velocity.y = -125.f;
             grounded = false;
         }
@@ -217,11 +217,11 @@ void circle::jump (float deltatime)  {
 }
 
 void circle::updatepos (float deltatime, tilemap& map)  {
-    if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Right) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::D)) {
+    if (keypressed(Action::right)) {
         if (velocity.x <= circlemax && !zerogactive) velocity.x += circleaccel;
         else if (zerogactive) velocity.x = movespeed;
         rotating = true;
-    } else if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Left) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::A)) {
+    } else if (keypressed(Action::left)) {
         if (velocity.x >= -circlemax && !zerogactive) velocity.x += -circleaccel;
         else if (zerogactive) velocity.x = -movespeed;
         rotating = true;
@@ -233,18 +233,18 @@ void circle::updatepos (float deltatime, tilemap& map)  {
         else velocity.x = 0;
     }
     if (zerogactive) {
-        if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Down) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::S)) {
+        if (keypressed(Action::down)) {
             velocity.y = 125.f;
         }
-        else if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::W)) {
+        else if (keypressed(Action::jump)) {
             velocity.y = -125.f;
         }
         else {
             velocity.y *= 0.71;
         }
-        if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Right) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::D)) {
+        if (keypressed(Action::right)) {
             velocity.x = 115.f;
-        } else if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Left) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::A)) {
+        } else if (keypressed(Action::left)) {
             velocity.x = -115.f;
         }
     } 
@@ -300,7 +300,7 @@ sf::Shape& triangle::shape()  {
 }
 
 void triangle::jump (float deltatime)  {
-    if (sf::Keyboard::isKeyPressed ( sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::W)) {
+    if (keypressed(Action::jump)) {
         if (grounded && !swimming && !zerogactive) {
             velocity.y -= blockonhead ? 0 : jumpforce;
             grounded = false;
@@ -308,11 +308,11 @@ void triangle::jump (float deltatime)  {
         }
     }
     if (swimming) {
-        if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Down) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::S)) {
+        if (keypressed(Action::down)) {
             if (velocity.y <= 350.f) velocity.y += 30.f;;
             grounded = false;
         }
-        if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::W)) {
+        if (keypressed(Action::jump)) {
             velocity.y = -125.f;
             grounded = false;
         }
@@ -320,12 +320,12 @@ void triangle::jump (float deltatime)  {
 }
 
 void triangle::updatepos (float deltatime, tilemap& map)  {
-    if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Right) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::D)) {
+    if (keypressed(Action::right)) {
         if (velocity.x > movespeed && grounded) velocity.x -= circleaccel*0.7;
         else if (velocity.x > movespeed && !grounded) velocity.x -= 0;
         else velocity.x = movespeed;
         rotating = true;
-    } else if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Left) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::A)) {
+    } else if (keypressed(Action::left)) {
         if (velocity.x < -movespeed && grounded) velocity.x += circleaccel*0.7;
         else if (velocity.x < -movespeed && !grounded) velocity.x -= 0;
         else velocity.x = -movespeed;
@@ -338,29 +338,29 @@ void triangle::updatepos (float deltatime, tilemap& map)  {
         triangleshade += 2;
     }
     if ((tp_timer.getElapsedTime().asSeconds() >= 3.f || !tped) && triangleshade == 255) {
-        if ((sf::Keyboard::isKeyPressed (sf::Keyboard::Key::LShift) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::RShift))) {
-            if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Right) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::D)) {
+        if (keypressed(Action::special1) || keypressed (Action::special2)) {
+            if (keypressed(Action::right)) {
                 if (!map.predictCollision(shape(), sf::Vector2f(50, 0))) {
                     playershape.setPosition(sf::Vector2f(playershape.getPosition().x + 50, playershape.getPosition().y));
                     velocity = sf::Vector2f(0, 0);
                     tp_timer.restart();
                     tped = true;
                 }
-            } else if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Left) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::A)) {
+            } else if (keypressed(Action::left)) {
                 if (!map.predictCollision(shape(), sf::Vector2f(-50, 0))) {
                     playershape.setPosition(sf::Vector2f(playershape.getPosition().x - 50, playershape.getPosition().y));
                     velocity = sf::Vector2f(0, 0);
                     tp_timer.restart();
                     tped = true;
                 }
-            } else if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::W)) {
+            } else if (keypressed(Action::jump)) {
                 if (!map.predictCollision(shape(), sf::Vector2f(0, -50))) {                        
                     playershape.setPosition(sf::Vector2f(playershape.getPosition().x, playershape.getPosition().y - 50));
                     velocity = sf::Vector2f(0, 0);
                     tp_timer.restart();
                     tped = true;
                 }
-            } else if (((sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Down) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::S))) && shape().getPosition().y < (height-40)) {
+            } else if (((keypressed(Action::down))) && shape().getPosition().y < (height-40)) {
                 if (!map.predictCollision(shape(), sf::Vector2f(0, 50))) {
                     playershape.setPosition(sf::Vector2f(playershape.getPosition().x, playershape.getPosition().y + 50));
                     velocity = sf::Vector2f(0, 0);
@@ -375,18 +375,18 @@ void triangle::updatepos (float deltatime, tilemap& map)  {
     }
 
     if (zerogactive) {
-        if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Down) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::S)) {
+        if (keypressed(Action::down)) {
             velocity.y = 125.f;
         }
-        else if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::W)) {
+        else if (keypressed(Action::jump)) {
             velocity.y = -125.f;
         }
         else {
             velocity.y *= 0.71;
         }
-        if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Right) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::D)) {
+        if (keypressed(Action::right)) {
             velocity.x = 115.f;
-        } else if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Left) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::A)) {
+        } else if (keypressed(Action::left)) {
             velocity.x = -115.f;
         }
     } 
@@ -438,7 +438,7 @@ sf::Shape& hexagon::shape() {
 }
 
 void hexagon::jump (float deltatime) {
-    if (sf::Keyboard::isKeyPressed ( sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::W)) {
+    if (keypressed(Action::jump)) {
         if (jumpcount > 0 && !swimming && !zerogactive && jump_timer.getElapsedTime().asMilliseconds() > 200) {
             if (!blockonhead) velocity.y = -jumpforce;
             jumpcount -= 1;
@@ -446,11 +446,11 @@ void hexagon::jump (float deltatime) {
         }
     }
     if (swimming) {
-        if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Down) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::S)) {
+        if (keypressed(Action::down)) {
             if (velocity.y <= 350.f) velocity.y += 30.f;;
             grounded = false;
         }
-        if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::W)) {
+        if (keypressed(Action::jump)) {
             velocity.y = -125.f;
             grounded = false;
         }
@@ -458,12 +458,12 @@ void hexagon::jump (float deltatime) {
 }
 
 void hexagon::updatepos (float deltatime, tilemap& map) {
-    if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Right) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::D)) {
+    if (keypressed(Action::right)) {
         if (velocity.x > movespeed && grounded) velocity.x -= circleaccel*0.7;
         else if (velocity.x > movespeed && !grounded) velocity.x -= 0;
         else velocity.x = movespeed;
         rotating = true;
-    } else if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Left) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::A)) {
+    } else if (keypressed(Action::left)) {
         if (velocity.x < -movespeed && grounded) velocity.x += circleaccel*0.7;
         else if (velocity.x < -movespeed && !grounded) velocity.x -= 0;
         else velocity.x = -movespeed;
@@ -473,18 +473,18 @@ void hexagon::updatepos (float deltatime, tilemap& map) {
     }
 
     if (zerogactive) {
-        if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Down) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::S)) {
+        if (keypressed(Action::down)) {
             velocity.y = 125.f;
         }
-        else if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::W)) {
+        else if (keypressed(Action::jump)) {
             velocity.y = -125.f;
         }
         else {
             velocity.y *= 0.71;
         }
-        if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Right) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::D)) {
+        if (keypressed(Action::right)) {
             velocity.x = 115.f;
-        } else if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Left) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::A)) {
+        } else if (keypressed(Action::left)) {
             velocity.x = -115.f;
         }
     } 
@@ -544,7 +544,7 @@ sf::Shape& octagon::shape() {
 }
 
 void octagon::jump (float deltatime) {
-    if (sf::Keyboard::isKeyPressed ( sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::W)) {
+    if (keypressed(Action::jump)) {
         if (grounded && !swimming && !zerogactive) {
             if (!blockonhead) velocity.y = -jumpforce;
             grounded = false;
@@ -553,10 +553,10 @@ void octagon::jump (float deltatime) {
         }
         else if (!grounded && !swimming && !zerogactive && wallhuggingright && !jumpkeyheld) {
             walljumped = false;
-            if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::LShift)) {
+            if (keypressed(Action::special1)) {
                 velocity.y = -0.92 * jumpforce;
                 velocity.x = -1.1 * jumpforce;
-            } else if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::RShift)) {
+            } else if (keypressed(Action::special2)) {
                 velocity.y = -1.28* jumpforce;
                 velocity.x = -0.36 * jumpforce;
             } else {
@@ -566,10 +566,10 @@ void octagon::jump (float deltatime) {
             walljumped = true;
         } else if (!grounded && !swimming && !zerogactive && wallhuggingleft && !jumpkeyheld) {
             walljumped = false;
-            if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::LShift)) {
+            if (keypressed(Action::special1)) {
                 velocity.y = -0.92 * jumpforce;
                 velocity.x = 1.1 * jumpforce;
-            } else if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::RShift)) {
+            } else if (keypressed(Action::special2)) {
                 velocity.y = -1.28 * jumpforce;
                 velocity.x = 0.36 * jumpforce;
             } else {
@@ -586,28 +586,28 @@ void octagon::jump (float deltatime) {
         }
     }
     if (swimming) {
-        if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Down) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::S)) {
+        if (keypressed(Action::down)) {
             if (velocity.y <= 350.f) velocity.y += 30.f;;
             grounded = false;
         }
-        if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::W)) {
+        if (keypressed(Action::jump)) {
             velocity.y = -125.f;
             grounded = false;
         }
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) jumpkeyheld = true;
+    if (keypressed(Action::jump)) jumpkeyheld = true;
     else jumpkeyheld = false;
 }
 
 void octagon::updatepos (float deltatime, tilemap& map) {
     if (walljumpcancel) walljumped = false;
     if (!walljumped) {
-        if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Right) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::D)) {
+        if (keypressed(Action::right)) {
             if (velocity.x > movespeed && grounded) velocity.x -= circleaccel*0.7;
             else if (velocity.x > movespeed && !grounded) velocity.x -= 0;
             else velocity.x = movespeed;
             rotating = true;
-        } else if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Left) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::A)) {
+        } else if (keypressed(Action::left)) {
             if (velocity.x < -movespeed && grounded) velocity.x += circleaccel*0.7;
             else if (velocity.x < -movespeed && !grounded) velocity.x -= 0;
             else velocity.x = -movespeed;
@@ -617,24 +617,24 @@ void octagon::updatepos (float deltatime, tilemap& map) {
         }
     }
 
-    if ((sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down)) && !grounded) {
+    if (keypressed(Action::down) && !grounded) {
         if (walljumped) walljumped = false;
         else velocity.x = 0;
     }
 
     if (zerogactive) {
-        if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Down) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::S)) {
+        if (keypressed(Action::down)) {
             velocity.y = 125.f;
         }
-        else if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::W)) {
+        else if (keypressed(Action::jump)) {
             velocity.y = -125.f;
         }
         else {
             velocity.y *= 0.71;
         }
-        if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Right) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::D)) {
+        if (keypressed(Action::right)) {
             velocity.x = 115.f;
-        } else if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Left) || sf::Keyboard::isKeyPressed (sf::Keyboard::Key::A)) {
+        } else if (keypressed(Action::left)) {
             velocity.x = -115.f;
         }
     } 

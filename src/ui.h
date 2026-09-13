@@ -233,7 +233,7 @@ public:
     }
 
     void checkexit () {
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)) state = State::pause;
+        if (keypressed(Action::goback)) state = State::pause;
     }
 };
 
@@ -295,7 +295,7 @@ public:
             state = State::mainmenu;
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space)) state = State::playing;
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)) state = State::mainmenu; 
+        if (keypressed(Action::goback)) state = State::mainmenu; 
     }
 };
 
@@ -406,7 +406,7 @@ public:
             }
         }
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)) state = State::mainmenu;
+        if (keypressed(Action::goback)) state = State::mainmenu;
     }
 };
 
@@ -499,7 +499,7 @@ public:
     }
 
     void update (sf::RenderWindow& window) {
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)) state = State::mainmenu;
+        if (keypressed(Action::goback)) state = State::mainmenu;
         if (btnpress(window, volumeup, volumeupbtn, volumeupshadow, volumeupbtnshadow, sf::Vector2f(760, 290), sf::Color(255, 200, 80), sf::Color(210, 255, 210), sf::Color(40, 100, 100), sf::Color(90, 70, 150)) && !mouseheld && volumelevel < 20) { 
             volumelevel += 1; 
             volumenumtxt = maketext(25, sf::Color(140, 255, 200), std::to_string(volumelevel), font, sf::Vector2f(width/2+80, 290));
@@ -553,7 +553,7 @@ public:
     }
 
     void update () {
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)) state = State::mainmenu;
+        if (keypressed(Action::goback)) state = State::mainmenu;
     }
 };
 
@@ -689,7 +689,7 @@ public:
         }
     }
     void update (sf::RenderWindow& window, float deltatime) {
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)) state = State::mainmenu;
+        if (keypressed(Action::goback)) state = State::mainmenu;
         if (btnpress(window, shapestxt, shapesbtn, shapestxtshadow, shapesbtnshadow, sf::Vector2f(width/2, 90), sf::Color(180, 90, 50), sf::Color(230, 140, 100), sf::Color(100, 100, 100), sf::Color(200, 100, 100)) && menunum != 1) { 
             menunum = 1; 
             tilename = maketext(35, sf::Color(255, 40, 60), "SELECT A TILE", font, sf::Vector2f(640, 370));

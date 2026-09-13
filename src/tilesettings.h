@@ -438,7 +438,7 @@ public:
             float blockright = blockbounds.position.x + blockbounds.size.x;
             if (satCollide(playervertices, blockvertices) && square_) {
                 if ((playercentery > blocktop && playercentery < blockbottom) && square_) {
-                    if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) && Object.shape().getPosition().x < blockbounds.position.x) {
+                    if (keypressed(Action::right) && Object.shape().getPosition().x < blockbounds.position.x) {
                         sf::FloatRect obstaclecheck = sf::FloatRect(sf::Vector2f(blockright+0.01, blocktop + 0.5), sf::Vector2f(0.05, blockbounds.size.y-1));
                         obstacleright = false;
                         for (auto& rest: statictilelist) {
@@ -464,7 +464,7 @@ public:
                             Object.velocity.x = pushspeed;
                             Object.grounded = false;
                         }
-                    } else if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) && Object.shape().getPosition().x > blockbounds.position.x) {
+                    } else if (keypressed(Action::left) && Object.shape().getPosition().x > blockbounds.position.x) {
                         sf::FloatRect obstaclecheck = sf::FloatRect(sf::Vector2f(blockleft-0.06, blocktop + 0.5), sf::Vector2f(0.05, blockbounds.size.y - 1));
                         obstacleleft = false;
                         for (auto& rest: statictilelist) {
@@ -494,7 +494,7 @@ public:
                 }
 
                 if ((playercenterx > blockleft && playercenterx < blockright) && square_) {
-                    if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) && Object.shape().getPosition().y < blockbounds.position.y) {
+                    if (keypressed(Action::down) && Object.shape().getPosition().y < blockbounds.position.y) {
                         sf::FloatRect obstaclecheck = sf::FloatRect(sf::Vector2f(blockleft + 0.5, blockbottom + 0.5), sf::Vector2f(blockbounds.size.x - 1, 0.5));
                         obstaclebelow = false;
                         for (auto& rest: statictilelist) {
@@ -523,7 +523,7 @@ public:
                         else {
                             if (Object.velocity.y < 0) Object.velocity.y = 0;
                         }
-                    } else if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) && Object.shape().getPosition().y > blockbounds.position.y && zerogactive) {
+                    } else if (keypressed(Action::jump) && Object.shape().getPosition().y > blockbounds.position.y && zerogactive) {
                         sf::FloatRect obstaclecheck = sf::FloatRect(sf::Vector2f(blockleft + 0.5, blocktop - 0.05), sf::Vector2f(blockbounds.size.x - 1, 0.05));
                         obstacletop = false;
                         for (auto& rest: statictilelist) {
