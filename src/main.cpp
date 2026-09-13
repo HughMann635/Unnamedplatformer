@@ -145,28 +145,28 @@ int main()
 			lastframe_pos = sf::Vector2f(currentplayer -> shape().getPosition());
 			lastframe_vel = sf::Vector2f(currentplayer -> velocity);
 	
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::R)) restart = true;
-	
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num1) && !dynamic_cast<square*>(currentplayer.get())) { 
+			if (keypressed(Action::restart)) restart = true;
+
+			if (keypressed(Action::switch1) && !dynamic_cast<square*>(currentplayer.get())) { 
 				currentplayer = std::make_unique<square>(); 
 				swapped = true; 
 				nearestedge = 90.f; 
 			}
-			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num2) && !dynamic_cast<circle*>(currentplayer.get()) && !circlelocked) { 
+			else if (keypressed(Action::switch2) && !dynamic_cast<circle*>(currentplayer.get()) && !circlelocked) { 
 				currentplayer = std::make_unique<circle>(); 
 				swapped = true; 
 			}
-			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num3) && !dynamic_cast<octagon*>(currentplayer.get()) && !octagonlocked) { 
+			else if (keypressed(Action::switch3) && !dynamic_cast<octagon*>(currentplayer.get()) && !octagonlocked) { 
 				currentplayer = std::make_unique<octagon>(); 
 				swapped = true; 
 				nearestedge = 45.f; 
 			}
-			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num4) && !dynamic_cast<triangle*>(currentplayer.get()) && !trianglelocked) { 
+			else if (keypressed(Action::switch4) && !dynamic_cast<triangle*>(currentplayer.get()) && !trianglelocked) { 
 				currentplayer = std::make_unique<triangle>(); 
 				swapped = true; 
 				nearestedge = 120.f; 
 			}
-			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num5) && !dynamic_cast<hexagon*>(currentplayer.get()) && !hexagonlocked) { 
+			else if (keypressed(Action::switch5) && !dynamic_cast<hexagon*>(currentplayer.get()) && !hexagonlocked) { 
 				currentplayer = std::make_unique<hexagon>(); 
 				swapped = true; 
 				nearestedge = 60.f; 
@@ -286,7 +286,7 @@ int main()
 		}
 
 		window.display();
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)) esckeyheld = true;
+		if (keypressed(Action::goback)) esckeyheld = true;
 		else esckeyheld = false;
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) mouseheld = true;
 		else mouseheld = false;
