@@ -415,6 +415,7 @@ public:
     sf::Font font;
     sf::Text settingstxt;
     sf::Text settingstxtshadow;
+
     sf::Text volumetxt;
     sf::Text volumenumtxt;
     sf::Text volumeup;
@@ -428,6 +429,15 @@ public:
     sf::RectangleShape volumeupbtnshadow;
     sf::RectangleShape volumedownbtnshadow;
 
+    sf::Text controlstxt;
+    sf::Text controlstxtshadow;
+    sf::Text keyname;
+    sf::Text keynameshadow;
+    sf::RectangleShape keybtn;
+    sf::RectangleShape keybtnshadow;
+    sf::Text controltype;
+    sf::Text controltypeshadow;
+
     settings () :
         font("AldotheApache.ttf"),
         settingstxt(font),
@@ -439,7 +449,13 @@ public:
         volumeup(font),
         volumeupshadow(font),
         volumedown(font),
-        volumedownshadow(font)
+        volumedownshadow(font),
+        controlstxt(font),
+        controlstxtshadow(font),
+        keyname(font),
+        keynameshadow(font),
+        controltype(font),
+        controltypeshadow(font)
     {
         settingstxt = maketext(45, sf::Color(170, 255, 80), "SETTINGS", font, sf::Vector2f(width/2, 190));
         settingstxtshadow = textshadow(235, 6, settingstxt);
@@ -457,6 +473,9 @@ public:
         volumedownbtn = makebtn(sf::Vector2f(30, 30), sf::Color(210, 255, 210), sf::Vector2f(width/2+40, 290));
         volumeupbtnshadow = rectshadow(235, 6, volumeupbtn);
         volumedownbtnshadow = rectshadow(235, 6, volumedownbtn);
+
+        controlstxt = maketext(35, sf::Color(200, 140, 255), "CONTROLS", font, sf::Vector2f(width/2, 390));
+        controlstxtshadow = textshadow(235, 6, controlstxt);
     }
 
     void draw (sf::RenderWindow& window) {
@@ -474,6 +493,9 @@ public:
         window.draw(volumenumtxt);
         window.draw(volumeup),
         window.draw(volumedown);
+
+        window.draw(controlstxtshadow);
+        window.draw(controlstxt);
     }
 
     void update (sf::RenderWindow& window) {
