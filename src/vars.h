@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/System.hpp>
+#include <map>
 #include <string>
 
 //Window settings
@@ -31,6 +32,42 @@ inline bool blockonhead = false;
 inline bool tipping_right = false; 
 inline bool tipping_left = false;
 inline sf::Vector2f edge = sf::Vector2f(0, 0);
+
+enum class Action {
+    right,
+    left,
+    jump,
+    down,
+    restart,
+    goback,
+    special1,
+    special2,
+    switch1,
+    switch2,
+    switch3,
+    switch4,
+    switch5
+};
+
+inline std::map<Action, sf::Keyboard::Key> keybinds = {
+    {Action::right, sf::Keyboard::Key::Right},
+    {Action::left, sf::Keyboard::Key::Left},
+    {Action::jump, sf::Keyboard::Key::Up},
+    {Action::down, sf::Keyboard::Key::Down},
+    {Action::restart, sf::Keyboard::Key::R},
+    {Action::goback, sf::Keyboard::Key::Escape},
+    {Action::special1, sf::Keyboard::Key::LShift},
+    {Action::special2, sf::Keyboard::Key::RShift},
+    {Action::switch1, sf::Keyboard::Key::Num1},
+    {Action::switch2, sf::Keyboard::Key::Num2},
+    {Action::switch3, sf::Keyboard::Key::Num3},
+    {Action::switch4, sf::Keyboard::Key::Num4},
+    {Action::switch5, sf::Keyboard::Key::Num5},
+};
+
+inline bool keypressed (Action action) {
+    if (sf::Keyboard::isKeyPressed(keybinds[action])) return true;
+}
 
 inline bool swimming = false;
 inline bool zerogactive = false;
