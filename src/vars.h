@@ -10,6 +10,7 @@ const int camwidth = 960;
 const int camheight = 540;
 const int stars = 700;
 const int planets = 25;
+inline int volumelevel = 10; //0-20 
 inline bool esckeyheld = false;
 inline bool mouseheld = false;
 inline bool running = true;
@@ -34,7 +35,6 @@ inline sf::Vector2f edge = sf::Vector2f(0, 0);
 inline bool swimming = false;
 inline bool zerogactive = false;
 inline bool inblackhole = false; 
-
 inline float circleaccel = 8.f;
 inline float circlemax = 500.f;
 inline float pushspeed = 115.f;

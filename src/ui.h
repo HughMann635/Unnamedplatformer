@@ -415,19 +415,55 @@ public:
     sf::Font font;
     sf::Text settingstxt;
     sf::Text settingstxtshadow;
+    sf::Text volumetxt;
+    sf::Text volumenumtxt;
+    sf::Text volumeup;
+    sf::Text volumedown;
+    sf::Text volumetxtshadow;
+    sf::Text volumenumshadow;
+    sf::Text volumeupshadow;
+    sf::Text volumedownshadow;
+    sf::RectangleShape volumeupbtn;
+    sf::RectangleShape volumedownbtn;
 
     settings () :
         font("AldotheApache.ttf"),
         settingstxt(font),
-        settingstxtshadow(font)
+        settingstxtshadow(font),
+        volumetxt(font),
+        volumetxtshadow(font),
+        volumenumtxt(font),
+        volumenumshadow(font),
+        volumeup(font),
+        volumeupshadow(font),
+        volumedown(font),
+        volumedownshadow(font)
     {
         settingstxt = maketext(45, sf::Color(170, 255, 80), "SETTINGS", font, sf::Vector2f(width/2, 190));
         settingstxtshadow = textshadow(235, 6, settingstxt);
+
+        volumetxt = maketext(25, sf::Color(140, 255, 200), "VOLUME", font, sf::Vector2f(width/2-80, 290));
+        volumenumtxt = maketext(25, sf::Color(140, 255, 200), std::to_string(volumelevel), font, sf::Vector2f(width/2+80, 290));
+        volumeup = maketext(25, sf::Color(255, 200, 80), "+", font, sf::Vector2f(width/2+120, 290));
+        volumedown = maketext(25, sf::Color(255, 200, 80), "--", font, sf::Vector2f(width/2+40, 290));
+        volumetxtshadow = textshadow(235, 4, volumetxt);
+        volumenumshadow = textshadow(235, 4, volumenumtxt);
+        volumeupshadow = textshadow(120, 3, volumeup);
+        volumedownshadow = textshadow(120, 3, volumedown);
+
     }
 
     void draw (sf::RenderWindow& window) {
         window.draw(settingstxtshadow);
         window.draw(settingstxt);
+        window.draw(volumetxtshadow);
+        window.draw(volumenumshadow);
+        window.draw(volumeupshadow);
+        window.draw(volumedownshadow);
+        window.draw(volumetxt);
+        window.draw(volumenumtxt);
+        window.draw(volumeup),
+        window.draw(volumedown);
     }
 
     void update () {
