@@ -425,6 +425,8 @@ public:
     sf::Text volumedownshadow;
     sf::RectangleShape volumeupbtn;
     sf::RectangleShape volumedownbtn;
+    sf::RectangleShape volumeupbtnshadow;
+    sf::RectangleShape volumedownbtnshadow;
 
     settings () :
         font("AldotheApache.ttf"),
@@ -448,14 +450,22 @@ public:
         volumedown = maketext(25, sf::Color(255, 200, 80), "--", font, sf::Vector2f(width/2+40, 290));
         volumetxtshadow = textshadow(235, 4, volumetxt);
         volumenumshadow = textshadow(235, 4, volumenumtxt);
-        volumeupshadow = textshadow(120, 3, volumeup);
-        volumedownshadow = textshadow(120, 3, volumedown);
+        volumeupshadow = textshadow(120, 2, volumeup);
+        volumedownshadow = textshadow(120, 2, volumedown);
 
+        volumeupbtn = makebtn(sf::Vector2f(30, 30), sf::Color(210, 255, 210), sf::Vector2f(width/2+120, 290));
+        volumedownbtn = makebtn(sf::Vector2f(30, 30), sf::Color(210, 255, 210), sf::Vector2f(width/2+40, 290));
+        volumeupbtnshadow = rectshadow(235, 6, volumeupbtn);
+        volumedownbtnshadow = rectshadow(235, 6, volumedownbtn);
     }
 
     void draw (sf::RenderWindow& window) {
         window.draw(settingstxtshadow);
         window.draw(settingstxt);
+        window.draw(volumedownbtnshadow);
+        window.draw(volumeupbtnshadow);
+        window.draw(volumeupbtn);
+        window.draw(volumedownbtn);
         window.draw(volumetxtshadow);
         window.draw(volumenumshadow);
         window.draw(volumeupshadow);
@@ -466,8 +476,18 @@ public:
         window.draw(volumedown);
     }
 
-    void update () {
+    void update (sf::RenderWindow& window) {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)) state = State::mainmenu;
+        if (btnpress(window, volumeup, volumeupbtn, volumeupshadow, volumeupbtnshadow, sf::Vector2f(760, 290), sf::Color(255, 200, 80), sf::Color(210, 255, 210), sf::Color(100, 100, 100), sf::Color(80, 80, 80)) && !mouseheld && volumelevel < 20) { 
+            volumelevel += 1; 
+            volumenumtxt = maketext(25, sf::Color(140, 255, 200), std::to_string(volumelevel), font, sf::Vector2f(width/2+80, 290));
+            volumenumshadow = textshadow(235, 4, volumenumtxt);
+        }
+        if (btnpress(window, volumedown, volumedownbtn, volumedownshadow, volumedownbtnshadow, sf::Vector2f(680, 290), sf::Color(255, 200, 80), sf::Color(210, 255, 210), sf::Color(100, 100, 100), sf::Color(80, 80, 80)) && !mouseheld && volumelevel > 0) { 
+            volumelevel -= 1;
+            volumenumtxt = maketext(25, sf::Color(140, 255, 200), std::to_string(volumelevel), font, sf::Vector2f(width/2+80, 290)); 
+            volumenumshadow = textshadow(235, 4, volumenumtxt);
+        }
     }
 };
 

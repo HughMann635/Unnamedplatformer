@@ -281,7 +281,7 @@ int main()
 			map.drawmap(window);
 			window.setView(window.getDefaultView());
 			settings.draw(window);
-			settings.update();
+			settings.update(window);
 		}
 
 		window.display();
