@@ -67,6 +67,7 @@ inline std::map<Action, sf::Keyboard::Key> keybinds = {
 
 inline bool keypressed (Action action) {
     if (sf::Keyboard::isKeyPressed(keybinds[action])) return true;
+    else return false;
 }
 
 inline bool swimming = false;

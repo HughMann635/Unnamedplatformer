@@ -438,6 +438,43 @@ public:
     sf::Text controltype;
     sf::Text controltypeshadow;
 
+    Action actions[13] = {
+        Action::right,
+        Action::left,
+        Action::jump,
+        Action::down,
+        Action::restart,
+        Action::goback,
+        Action::special1,
+        Action::special2,
+        Action::switch1,
+        Action::switch2,
+        Action::switch3,
+        Action::switch4,
+        Action::switch5
+    };
+    std::string actiontxt[13] = {
+        "Right",
+        "Left",
+        "Jump",
+        "Down",
+        "Restart",
+        "Go Back/Quit",
+        "Special Key 1",
+        "Special Key 2",
+        "Switch to Square",
+        "Switch to Circle",
+        "Switch to Octagon",
+        "Switch to Triangle",
+        "Action::switch5"
+    };
+    sf::Text actiontxtlabels[13];
+    sf::Text keytxt[13];
+    sf::RectangleShape keybtns[13];
+
+    int selected = -1;
+    bool waiting = false;
+
     settings () :
         font("AldotheApache.ttf"),
         settingstxt(font),
@@ -455,7 +492,9 @@ public:
         keyname(font),
         keynameshadow(font),
         controltype(font),
-        controltypeshadow(font)
+        controltypeshadow(font),
+        actiontxtlabels{font, font, font, font, font, font, font, font, font, font, font, font, font},
+        keytxt{font, font, font, font, font, font, font, font, font, font, font, font, font}
     {
         settingstxt = maketext(45, sf::Color(170, 255, 80), "SETTINGS", font, sf::Vector2f(width/2, 190));
         settingstxtshadow = textshadow(235, 6, settingstxt);
@@ -476,6 +515,13 @@ public:
 
         controlstxt = maketext(35, sf::Color(200, 140, 255), "CONTROLS", font, sf::Vector2f(width/2, 390));
         controlstxtshadow = textshadow(235, 6, controlstxt);
+
+        for (int i = 0; i < 13; i++) {
+            actiontxtlabels[i] = maketext(20, sf::Color(200, 200, 80), actiontxt[i], font, sf::Vector2f(310 + 55 * i, 480 + (i % 2) * 20));
+            
+            //PLACEHOLDER!!! TO UPDATE
+            keytxt[i] = maketext(20, sf::Color(200, 200, 80), actiontxt[i], font, sf::Vector2f(310 + 55 * i, 520 + (i % 2) * 20));
+        }
     }
 
     void draw (sf::RenderWindow& window) {
