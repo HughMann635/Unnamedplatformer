@@ -282,7 +282,7 @@ int main()
 			map.drawmap(window);
 			window.setView(window.getDefaultView());
 			settings.draw(window);
-			settings.update(window);
+			while (const std::optional event = window.pollEvent()) settings.update(window, *event);
 		}
 
 		window.display();
