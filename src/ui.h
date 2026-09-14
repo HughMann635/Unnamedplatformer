@@ -542,6 +542,11 @@ public:
 
         window.draw(controlstxtshadow);
         window.draw(controlstxt);
+
+        for (int i = 0; i < 13; i++) {
+            window.draw(actiontxtlabels[i]);
+            window.draw(keytxt[i]);
+        }
     }
 
     void update (sf::RenderWindow& window, const sf::Event& event) {
@@ -559,6 +564,7 @@ public:
         if (waiting) {
             if (const auto* keypress = event.getIf<sf::Event::KeyPressed>()) {
                 keybinds[actions[selected]] = keypress->code;
+                keytxt[selected] = maketext(20, sf::Color(200, 200, 80), std::to_string(static_cast<int>(keypress->code)), font, keytxt[selected].getPosition());
                 waiting = false;
                 selected = -1;
             }
