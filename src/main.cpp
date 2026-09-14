@@ -40,6 +40,14 @@ int main()
 	view.setSize(sf::Vector2f(camwidth, camheight));
 	view.setCenter(sf::Vector2f(currentplayer -> shape().getPosition().x, currentplayer -> shape().getPosition().y));
 
+
+	//BUGS
+	//cant close window while in settings menu
+	//keybinds dont even work
+	//text isn't correct
+	//still have to add buttons and visual polish
+
+
 	while (window.isOpen()) {
 		float deltatime = timer.restart().asSeconds();
 		

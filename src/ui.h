@@ -462,11 +462,11 @@ public:
         "Go Back/Quit",
         "Special Key 1",
         "Special Key 2",
-        "Switch to Square",
-        "Switch to Circle",
-        "Switch to Octagon",
-        "Switch to Triangle",
-        "Action::switch5"
+        "Switch 1",
+        "Switch 2",
+        "Switch 3",
+        "Switch 4",
+        "Switch 5"
     };
     sf::Text actiontxtlabels[13];
     sf::Text keytxt[13];
@@ -517,10 +517,10 @@ public:
         controlstxtshadow = textshadow(235, 6, controlstxt);
 
         for (int i = 0; i < 13; i++) {
-            actiontxtlabels[i] = maketext(20, sf::Color(200, 200, 80), actiontxt[i], font, sf::Vector2f(310 + 55 * i, 480 + (i % 2) * 20));
+            actiontxtlabels[i] = maketext(20, sf::Color(200, 200, 80), actiontxt[i], font, sf::Vector2f(160 + 80 * i, 420 + (i % 2) * 80));
             
-            //PLACEHOLDER!!! TO UPDATE
-            keytxt[i] = maketext(20, sf::Color(200, 200, 80), actiontxt[i], font, sf::Vector2f(310 + 55 * i, 520 + (i % 2) * 20));
+            keytxt[i] = maketext(20, sf::Color(200, 200, 80), actiontxt[i], font, sf::Vector2f(160 + 80 * i, 440 + (i % 2) * 80));
+            
         }
     }
 
@@ -564,14 +564,14 @@ public:
         if (waiting) {
             if (const auto* keypress = event.getIf<sf::Event::KeyPressed>()) {
                 keybinds[actions[selected]] = keypress->code;
-                keytxt[selected] = maketext(20, sf::Color(200, 200, 80), std::to_string(static_cast<int>(keypress->code)), font, keytxt[selected].getPosition());
+                keytxt[selected] = maketext(20, sf::Color(200, 200, 80), sf::Keyboard::getDescription(sf::Keyboard::delocalize(keypress->code)), font, keytxt[selected].getPosition());
                 waiting = false;
                 selected = -1;
             }
         }
         else if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
             sf::Vector2f mousepos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
-            for (int i = 0; i < 11; i++) {
+            for (int i = 0; i < 13; i++) {
                 if (keytxt[i].getGlobalBounds().contains(mousepos)) {
                     selected = i;
                     waiting = true;
