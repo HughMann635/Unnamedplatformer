@@ -431,10 +431,6 @@ public:
 
     sf::Text controlstxt;
     sf::Text controlstxtshadow;
-    sf::Text keyname;
-    sf::Text keynameshadow;
-    sf::RectangleShape keybtn;
-    sf::RectangleShape keybtnshadow;
     sf::Text controltype;
     sf::Text controltypeshadow;
 
@@ -469,8 +465,11 @@ public:
         "Switch 5"
     };
     sf::Text actiontxtlabels[13];
+    sf::Text actiontxtshadows[13];
     sf::Text keytxt[13];
     sf::RectangleShape keybtns[13];
+    sf::Text keytxtshadows[13];
+    sf::RectangleShape keybtnshadows[13];
 
     int selected = -1;
     bool waiting = false;
@@ -489,12 +488,12 @@ public:
         volumedownshadow(font),
         controlstxt(font),
         controlstxtshadow(font),
-        keyname(font),
-        keynameshadow(font),
         controltype(font),
         controltypeshadow(font),
         actiontxtlabels{font, font, font, font, font, font, font, font, font, font, font, font, font},
-        keytxt{font, font, font, font, font, font, font, font, font, font, font, font, font}
+        actiontxtshadows{font, font, font, font, font, font, font, font, font, font, font, font, font},
+        keytxt{font, font, font, font, font, font, font, font, font, font, font, font, font},
+        keytxtshadows{font, font, font, font, font, font, font, font, font, font, font, font, font}
     {
         settingstxt = maketext(45, sf::Color(170, 255, 80), "SETTINGS", font, sf::Vector2f(width/2, 190));
         settingstxtshadow = textshadow(235, 6, settingstxt);
@@ -513,14 +512,16 @@ public:
         volumeupbtnshadow = rectshadow(235, 6, volumeupbtn);
         volumedownbtnshadow = rectshadow(235, 6, volumedownbtn);
 
-        controlstxt = maketext(35, sf::Color(200, 140, 255), "CONTROLS", font, sf::Vector2f(width/2, 390));
+        controlstxt = maketext(35, sf::Color(200, 140, 255), "CONTROLS", font, sf::Vector2f(width/2, 370));
         controlstxtshadow = textshadow(235, 6, controlstxt);
 
         for (int i = 0; i < 13; i++) {
-            actiontxtlabels[i] = maketext(20, sf::Color(200, 200, 80), actiontxt[i], font, sf::Vector2f(160 + 80 * i, 420 + (i % 2) * 80));
-            
-            keytxt[i] = maketext(20, sf::Color(200, 200, 80), actiontxt[i], font, sf::Vector2f(160 + 80 * i, 440 + (i % 2) * 80));
-            
+            actiontxtlabels[i] = maketext(20, sf::Color(200, 200, 80), actiontxt[i], font, sf::Vector2f(160 + 80 * i, 430 + (i % 2) * 90));
+            actiontxtshadows[i] = textshadow(235, 6, actiontxtlabels[i]);
+            keytxt[i] = maketext(20, sf::Color(200, 200, 80), actiontxt[i], font, sf::Vector2f(160 + 80 * i, 460 + (i % 2) * 90));
+            keytxtshadows[i] = textshadow(120, 3, keytxt[i]);
+            keybtns[i] = makebtn(sf::Vector2f(120, 30), sf::Color(255, 200, 200), keytxt[i].getPosition());
+            keybtnshadows[i] = rectshadow(235, 6, keybtns[i]);
         }
     }
 
@@ -544,7 +545,11 @@ public:
         window.draw(controlstxt);
 
         for (int i = 0; i < 13; i++) {
+            window.draw(actiontxtshadows[i]);
+            window.draw(keybtnshadows[i]);
+            window.draw(keytxtshadows[i]);
             window.draw(actiontxtlabels[i]);
+            window.draw(keybtns[i]);
             window.draw(keytxt[i]);
         }
     }
