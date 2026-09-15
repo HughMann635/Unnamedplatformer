@@ -558,7 +558,7 @@ public:
         }
     }
 
-    void update (sf::RenderWindow& window, const sf::Event& event) {
+    void update (sf::RenderWindow& window) {
         if (btnpress(false, window, volumeup, volumeupbtn, volumeupshadow, volumeupbtnshadow, sf::Vector2f(760, 290), sf::Color(255, 200, 80), sf::Color(210, 255, 210), sf::Color(40, 100, 100), sf::Color(90, 70, 150)) && !mouseheld && volumelevel < 20) { 
             volumelevel += 1; 
             volumenumtxt = maketext(25, sf::Color(140, 255, 200), std::to_string(volumelevel), font, sf::Vector2f(width/2+80, 290));
@@ -569,6 +569,9 @@ public:
             volumenumtxt = maketext(25, sf::Color(140, 255, 200), std::to_string(volumelevel), font, sf::Vector2f(width/2+80, 290)); 
             volumenumshadow = textshadow(235, 4, volumenumtxt);
         }
+        if (keypressed(Action::goback) && !esckeyheld) state = State::mainmenu;
+    }
+    void keybind (sf::RenderWindow& window, const sf::Event& event) {
         if (waiting) {
             if (const auto* keypress = event.getIf<sf::Event::KeyPressed>()) {
                 keybinds[actions[selected]] = keypress->code;
@@ -598,7 +601,6 @@ public:
                 keytxtshadows[i] = textshadow(120, 3, keytxt[i]);
             }
         }
-        if (keypressed(Action::goback) && !esckeyheld) state = State::mainmenu;
     }
 };
 

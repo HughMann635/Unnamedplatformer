@@ -293,7 +293,8 @@ int main()
 			map.drawmap(window);
 			window.setView(window.getDefaultView());
 			settings.draw(window);
-			while (const std::optional keychecker = window.pollEvent()) settings.update(window, *keychecker);
+			settings.update(window);
+			while (const std::optional keychecker = window.pollEvent()) settings.keybind(window, *keychecker);
 		}
 
 		window.display();
