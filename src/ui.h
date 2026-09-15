@@ -518,7 +518,7 @@ public:
         for (int i = 0; i < 13; i++) {
             actiontxtlabels[i] = maketext(20, sf::Color(200, 200, 80), actiontxt[i], font, sf::Vector2f(160 + 80 * i, 430 + (i % 2) * 90));
             actiontxtshadows[i] = textshadow(235, 6, actiontxtlabels[i]);
-            keytxt[i] = maketext(20, sf::Color(200, 200, 80), actiontxt[i], font, sf::Vector2f(160 + 80 * i, 460 + (i % 2) * 90));
+            keytxt[i] = maketext(20, sf::Color(200, 200, 80), sf::Keyboard::getDescription(sf::Keyboard::delocalize(keybinds[actions[i]])), font, sf::Vector2f(160 + 80 * i, 460 + (i % 2) * 90));
             keytxtshadows[i] = textshadow(120, 3, keytxt[i]);
             keybtns[i] = makebtn(sf::Vector2f(120, 30), sf::Color(255, 200, 200), keytxt[i].getPosition());
             keybtnshadows[i] = rectshadow(235, 6, keybtns[i]);
