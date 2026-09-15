@@ -307,8 +307,8 @@ int main()
 		window.display();
 		if (keypressed(Action::goback)) esckeyheld = true;
 		else esckeyheld = false;
-		sf::Listener::setGlobalVolume(100);
-		sound.setVolume(100);
+		sf::Listener::setGlobalVolume(200);
+		sound.setVolume(200);
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) { 
 			if (!mouseheld) sound.play();
 			mouseheld = true; 
