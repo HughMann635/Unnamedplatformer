@@ -290,7 +290,7 @@ int main()
 			map.drawmap(window);
 			window.setView(window.getDefaultView());
 			settings.draw(window);
-			while (const std::optional event = window.pollEvent()) settings.update(window, *event);
+			while (const std::optional keychecker = window.pollEvent()) settings.update(window, *keychecker);
 		}
 
 		window.display();
