@@ -35,6 +35,11 @@ int main()
 	sf::RenderTexture env (sf::Vector2u(width, height));
 	sf::Sprite envsprite (env.getTexture());
 	sf::Clock background_lapse;
+	sf::SoundBuffer buffer;
+	if (!buffer.loadFromFile("clicksound1.wav")) {
+		std::cout << "Couldn't load file";
+	}
+	sf::Sound sound (buffer); 
 
 	sf::View view;
 	view.setSize(sf::Vector2f(camwidth, camheight));
