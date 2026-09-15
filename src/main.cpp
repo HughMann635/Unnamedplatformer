@@ -59,7 +59,9 @@ int main()
 	while (window.isOpen()) {
 		float deltatime = timer.restart().asSeconds();
 		
-		while ( const std::optional event = window.pollEvent() ) if ( event->is<sf::Event::Closed>() || running == false) window.close();
+		while ( const std::optional event = window.pollEvent() ) {
+			if ( event->is<sf::Event::Closed>() || running == false) { window.close(); }
+		}
 
 		window.clear();
 
@@ -305,7 +307,12 @@ int main()
 		window.display();
 		if (keypressed(Action::goback)) esckeyheld = true;
 		else esckeyheld = false;
-		if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) mouseheld = true;
+		sf::Listener::setGlobalVolume(100);
+		sound.setVolume(100);
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) { 
+			if (!mouseheld) sound.play();
+			mouseheld = true; 
+		}
 		else mouseheld = false;
 	}
 }
