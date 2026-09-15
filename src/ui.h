@@ -547,9 +547,9 @@ public:
         for (int i = 0; i < 13; i++) {
             window.draw(actiontxtshadows[i]);
             window.draw(keybtnshadows[i]);
-            window.draw(keytxtshadows[i]);
             window.draw(actiontxtlabels[i]);
             window.draw(keybtns[i]);
+            window.draw(keytxtshadows[i]);
             window.draw(keytxt[i]);
         }
     }
@@ -574,10 +574,11 @@ public:
                 if (keypressed(Action::goback)) esckeyheld = true;
             }
         }
-        else if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
-            sf::Vector2f mousepos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
-            for (int i = 0; i < 13; i++) {
-                if (keytxt[i].getGlobalBounds().contains(mousepos)) {
+        for (int i = 0; i < 13; i++) {
+            btnpress(window, keytxt[i], keybtns[i], keytxtshadows[i], keybtnshadows[i], sf::Vector2f(160 + 80 * i, 460 + (i % 2) * 90), sf::Color(200, 200, 80), sf::Color(255, 200, 200), sf::Color(180, 70, 250), sf::Color(130, 20, 200));
+            if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
+                sf::Vector2f mousepos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
+                if (btnpress(window, keytxt[i], keybtns[i], keytxtshadows[i], keybtnshadows[i], sf::Vector2f(160 + 80 * i, 460 + (i % 2) * 90), sf::Color(200, 200, 80), sf::Color(255, 200, 200), sf::Color(180, 70, 250), sf::Color(130, 20, 200))) {
                     selected = i;
                     waiting = true;
                     break;
