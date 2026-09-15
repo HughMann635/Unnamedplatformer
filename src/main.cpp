@@ -39,7 +39,9 @@ int main()
 	if (!buffer.loadFromFile("clicksound1.wav")) {
 		std::cout << "Couldn't load file";
 	}
-	sf::Sound sound (buffer); 
+	sf::Sound clicksound (buffer); 
+	sf::Listener::setGlobalVolume(volumelevel*15);
+	clicksound.setVolume(sf::Listener::getGlobalVolume());
 
 	sf::View view;
 	view.setSize(sf::Vector2f(camwidth, camheight));
@@ -70,7 +72,7 @@ int main()
 		sky.updatesky(deltatime);
 		if (state == State::playing) {
 			window.setView(window.getDefaultView());
-			if (menu.navback(window)) state = State::pause;
+			if (menu.navback(window, clicksound)) state = State::pause;
 			window.setView(view);
 			menuenter = false;
 			if (!gamestart) {
@@ -257,7 +259,7 @@ int main()
 			currentplayer -> drawscreen(window);
 			window.setView(window.getDefaultView());
 			menu.draw(window);
-			if (!esckeyheld) menu.play(window);
+			if (!esckeyheld) menu.play(window, clicksound);
 		} else if (state == State::pause) {
 			window.setView(view);
 			map.drawmap(window);
@@ -269,21 +271,21 @@ int main()
 			window.draw(pauseblur);
 			pausemenu.draw(window); 
 			window.setView(view);
-			if (!esckeyheld) pausemenu.checkaction(window);
+			if (!esckeyheld) pausemenu.checkaction(window, clicksound);
 		} else if (state == State::levelselect) {
-			if (menu.navback(window)) state = State::mainmenu;
+			if (menu.navback(window, clicksound)) state = State::mainmenu;
 			map.drawmap(window);
 			window.setView(window.getDefaultView());
-			lvlselect.select(window);
+			lvlselect.select(window, clicksound);
 			lvlselect.draw(window);
 		} else if (state == State::credits) {
-			if (menu.navback(window)) state = State::mainmenu;
+			if (menu.navback(window, clicksound)) state = State::mainmenu;
 			map.drawmap(window);
 			window.setView(window.getDefaultView());
 			credits.draw(window);
 			credits.update();
 		} else if (state == State::handbook) {
-			if (menu.navback(window)) state = State::mainmenu;
+			if (menu.navback(window, clicksound)) state = State::mainmenu;
 			if (!handbookenter) {
 				handbook.tilename = maketext(35, sf::Color(255, 40, 60), "SELECT A TILE", handbook.font, sf::Vector2f(640, 370));
             	handbook.tiledesc = maketext(25, sf::Color(255, 40, 60), "AND ITS DESCRIPTION WILL APPEAR HERE", handbook.font, sf::Vector2f(640, 450));
@@ -293,24 +295,22 @@ int main()
 			}
 			map.drawmap(window);
 			window.setView(window.getDefaultView());
-			handbook.update(window, deltatime);
+			handbook.update(window, deltatime, clicksound);
 			handbook.draw(window);
 		} else if (state == State::settings) {
-			if (menu.navback(window)) state = State::mainmenu;
+			if (menu.navback(window, clicksound)) state = State::mainmenu;
 			map.drawmap(window);
 			window.setView(window.getDefaultView());
 			settings.draw(window);
-			settings.update(window);
-			while (const std::optional keychecker = window.pollEvent()) settings.keybind(window, *keychecker);
+			settings.update(window, clicksound);
+			while (const std::optional keychecker = window.pollEvent()) settings.keybind(window, *keychecker, clicksound);
 		}
 
 		window.display();
 		if (keypressed(Action::goback)) esckeyheld = true;
 		else esckeyheld = false;
-		sf::Listener::setGlobalVolume(200);
-		sound.setVolume(200);
+		sf::Listener::setGlobalVolume(volumelevel*15);
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) { 
-			if (!mouseheld) sound.play();
 			mouseheld = true; 
 		}
 		else mouseheld = false;
