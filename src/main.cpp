@@ -41,11 +41,14 @@ int main()
 	view.setCenter(sf::Vector2f(currentplayer -> shape().getPosition().x, currentplayer -> shape().getPosition().y));
 
 
-	//BUGS
+	//BUGS!!!!!
+
+
 	//cant close window while in settings menu
-	//keybinds dont even work
-	//text isn't correct
-	//still have to add buttons and visual polish
+	//keybinds dont really work
+	//input is a bit janky
+	//you can have multiple inputs for one key
+	// -> might keep in? who would do that, it's not even gamebreaking
 
 
 	while (window.isOpen()) {
