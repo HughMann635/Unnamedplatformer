@@ -14,11 +14,11 @@ FetchContent_MakeAvailable(SFML)
 
 add_executable(main src/main.cpp src/players.cpp)
 target_compile_features(main PRIVATE cxx_std_17)
-target_link_libraries(main PRIVATE SFML::Graphics)
+target_link_libraries(main PRIVATE SFML::Graphics SFML::Audio)
 
 set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT main)
 
-file(COPY ${CMAKE_SOURCE_DIR}/src/assets/AldotheApache.ttf
+file(COPY ${CMAKE_SOURCE_DIR}/src/assets/
      DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
 
 if(NOT EXISTS "${CMAKE_SOURCE_DIR}/src/assets/AldotheApache.ttf")
