@@ -72,7 +72,6 @@ int main()
 		sky.updatesky(deltatime);
 		if (state == State::playing) {
 			window.setView(window.getDefaultView());
-			if (menu.navback(window, clicksound)) state = State::pause;
 			window.setView(view);
 			menuenter = false;
 			if (!gamestart) {
@@ -205,7 +204,7 @@ int main()
 			window.setView(window.getDefaultView());
 			gameui.draw(window);
 			window.setView(view);
-			if (!esckeyheld) gameui.checkexit();
+			if (!esckeyheld) gameui.checkexit(window, clicksound);
 
 			if (currentplayer -> shape().getPosition().x < camwidth/2.f) {
 				if (currentplayer -> shape().getPosition().y < camheight/2.f) {

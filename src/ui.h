@@ -222,13 +222,23 @@ class playing {
 public:
     sf::Font font;
     sf::Text level;
+    sf::Text pausetxt;
+    sf::Text pausetxtshadow;
+    sf::RectangleShape pausebtn; 
+    sf::RectangleShape pausebtnshadow;
     int levelshade = 225;
 
     playing() :
         font("AldotheApache.ttf"),
-        level(font)
+        level(font),
+        pausetxt(font),
+        pausetxtshadow(font)
     {
         level = maketext(35, sf::Color(255, 45, 200, levelshade), "Level "+std::to_string(setnum*6+levelnum+1), font, sf::Vector2f(width/2, 60));
+        pausetxt = maketext(30, sf::Color(150, 112, 0, levelshade), "PAUSE", font, sf::Vector2f(120, 80));
+        pausetxtshadow = textshadow(120, 3, pausetxt);
+        pausebtn = makebtn(sf::Vector2f(100, 50), sf::Color(180, 180, 0, levelshade), pausetxt.getPosition());
+        pausebtnshadow = rectshadow(235, 6, pausebtn);
     }
 
     void draw (sf::RenderWindow& window) {
@@ -237,11 +247,20 @@ public:
         if (mouse_.y >= 200 && levelshade > 0) levelshade -= 3;
         else if (mouse_.y < 200 && levelshade < 225) levelshade += 3;
         level.setFillColor(sf::Color(255, 45, 200, levelshade));
+        pausetxt.setFillColor(sf::Color(150, 112, 0, levelshade));
+        pausebtn.setFillColor(sf::Color(180, 180, 0, levelshade));
+        pausetxtshadow.setFillColor(sf::Color(0, 0, 0, 120.f/225.f*levelshade));
+        pausebtnshadow.setFillColor(sf::Color(0, 0, 0, (235/225)*levelshade));
         window.draw(level);
+        window.draw(pausebtnshadow);
+        window.draw(pausebtn);
+        window.draw(pausetxtshadow);
+        window.draw(pausetxt);
     }
 
-    void checkexit () {
+    void checkexit (sf::RenderWindow& window, sf::Sound& clicksound) {
         if (keypressed(Action::goback)) state = State::pause;
+        if (btnpress(clicksound, false, window, pausetxt, pausebtn, pausetxtshadow, pausebtnshadow, sf::Vector2f(120, 80), sf::Color(150, 112, 0), sf::Color(180, 180, 0), sf::Color(200, 200, 200), sf::Color(100, 100, 100))) state = State::pause;
     }
 };
 
