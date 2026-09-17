@@ -344,6 +344,7 @@ public:
     sf::Text numshadows[6];
     sf::RectangleShape levelbtns[6];
     sf::RectangleShape btnshadows[6];
+    sf::CircleShape coinicons[6];
 
     levelselect() :
         font("AldotheApache.ttf"),
@@ -368,7 +369,15 @@ public:
 
         set = maketext(45, sf::Color(120, 100, 190), "set" + std::to_string(page+1), font, sf::Vector2f(width/2, 100));
         setshadow = textshadow(235, 6, set);
-
+        
+        for (int i = 0; i < 6; i++) {
+            coinicons[i].setRadius(5);
+            coinicons[i].setFillColor(sf::Color(255, 255, 80));
+            coinicons[i].setOrigin(sf::Vector2f(5, 5));
+            if (i < 3) coinicons[i].setPosition(sf::Vector2f(266 + i * 400, 276));
+            else coinicons[i].setPosition(sf::Vector2f(266 + (i - 3) * 400, 496));
+        } 
+        
         update();
     }
 
@@ -388,6 +397,7 @@ public:
             window.draw(levelbtns[i]);
             window.draw(numshadows[i]);
             window.draw(levelnums[i]);
+            if (coins[setnum*6+i] == 1) window.draw(coinicons[i]);
         }
     }
 
