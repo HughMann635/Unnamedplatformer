@@ -763,6 +763,7 @@ public:
         }
         for (auto& pos: statictilelist) {
             if (dynamic_cast<blackhole*>(pos.tile.get())) pos.tile -> movetile(deltatime);
+            if (dynamic_cast<coin*>(pos.tile.get())) pos.tile -> movetile(deltatime);
         }
     }
 

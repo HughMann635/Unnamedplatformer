@@ -415,20 +415,29 @@ class coin : public tileTypes {
 public:
     sf::CircleShape coinblock;
     bool collected = false;
+    int coinshade = 255;
     coin (sf::Vector2f position) {
         coinblock.setRadius(8);
         coinblock.setPosition(position+sf::Vector2f(2, 2));
-        coinblock.setFillColor(sf::Color(255, 210, 0));
-        coinblock.setOutlineColor(sf::Color(180, 150, 0));
+        coinblock.setFillColor(sf::Color(255, 210, 0, coinshade));
+        coinblock.setOutlineColor(sf::Color(180, 150, 0, coinshade));
         coinblock.setOutlineThickness(-1.5);
     }
 
     void draw (sf::RenderTarget& window) override {
-        if (!collected) window.draw(coinblock);
+        window.draw(coinblock);
     }
 
     sf::Shape& collide() override {
         return coinblock;
+    }
+
+    void movetile (float deltatime) override {
+        if (collected) {
+            if (coinshade > 2) coinshade -= 3;
+        }
+        coinblock.setFillColor(sf::Color(255, 210, 0, coinshade));
+        coinblock.setOutlineColor(sf::Color(180, 150, 0, coinshade));
     }
 };
 
