@@ -23,6 +23,7 @@ enum class tiletype {
     blackhole,
     button,
     door,
+    coin,
     //Environments
     lava,
     water,
@@ -156,6 +157,11 @@ public:
                         new_tile.type = tiletype::door;
                         new_tile.tile = std::make_unique<door>(sf::Vector2f(j*playerdim, i*playerdim), doorcount);
                         doorcount++;
+                        statictilelist.push_back(std::move(new_tile));
+                        break;
+                    case 'C':
+                        new_tile.type = tiletype::coin;
+                        new_tile.tile = std::make_unique<coin>(sf::Vector2f(j*playerdim, i*playerdim));
                         statictilelist.push_back(std::move(new_tile));
                         break;
                     default:

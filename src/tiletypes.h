@@ -411,6 +411,27 @@ public:
     }
 };
 
+class coin : public tileTypes {
+public:
+    sf::CircleShape coinblock;
+    bool collected;
+    coin (sf::Vector2f position) {
+        coinblock.setRadius(9);
+        coinblock.setPosition(position);
+        coinblock.setFillColor(sf::Color(255, 210, 0));
+        coinblock.setOutlineColor(sf::Color(180, 140, 0));
+        coinblock.setOutlineThickness(-1);
+    }
+
+    void draw (sf::RenderTarget& window) override {
+        window.draw(coinblock);
+    }
+
+    sf::Shape& collide() override {
+        return coinblock;
+    }
+};
+
 class finish : public tileTypes {
 public:
     sf::ConvexShape finishblock;
