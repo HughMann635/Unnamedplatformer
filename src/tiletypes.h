@@ -435,6 +435,7 @@ public:
     void movetile (float deltatime) override {
         if (collected) {
             if (coinshade > 2) coinshade -= 3;
+            coinblock.setPosition(coinblock.getPosition() - sf::Vector2f(0, 2));
         }
         coinblock.setFillColor(sf::Color(255, 210, 0, coinshade));
         coinblock.setOutlineColor(sf::Color(180, 150, 0, coinshade));
