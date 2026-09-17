@@ -397,7 +397,7 @@ public:
             window.draw(levelbtns[i]);
             window.draw(numshadows[i]);
             window.draw(levelnums[i]);
-            if (coins[setnum*6+i] == 1) window.draw(coinicons[i]);
+            if (coins[page*6+i] == 1) window.draw(coinicons[i]);
         }
     }
 
