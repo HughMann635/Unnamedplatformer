@@ -647,6 +647,12 @@ public:
                         if (satCollide(getvertices(Object.shape()), blackholevertices)) restart = true;
                         break;
                     }
+                    case tiletype::coin: {
+                        coin* coin_ = dynamic_cast<coin*>(pos.tile.get());
+                        if (!coin_ || coin_->collected) continue;
+                        coin_ -> collected = true;
+                        break;   
+                    }
                     case tiletype::spring:
                     !zerogactive ? Object.velocity.y = -1000.f : Object.velocity.y = -3600.f;
                     walljumpcancel = true;
@@ -655,11 +661,12 @@ public:
                     case tiletype::button: {
                     button* button_ = dynamic_cast<button*>(pos.tile.get());
                     if (button_) button_ -> pressed = true;
-                    break; }
+                    break; 
+                    }
                     case tiletype::exit:
                     newlevel = true;
                     break;
-                    default: 
+                    default:
                     break;
                 }
             }
