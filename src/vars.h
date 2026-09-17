@@ -100,4 +100,4 @@ inline bool circlelocked = true;
 inline bool trianglelocked = true;
 inline bool octagonlocked = true;
 inline bool hexagonlocked = true;
-inline int coins = 0;
+inline int coins[30] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};

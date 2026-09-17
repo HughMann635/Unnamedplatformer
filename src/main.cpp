@@ -313,5 +313,12 @@ int main()
 			mouseheld = true; 
 		}
 		else mouseheld = false;
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Enter)) {
+			int k = 0;
+			for (int i = 0; i < 30; i++) {
+				k += coins[i];
+			}
+			std::cout << k;
+		};
 	}
 }

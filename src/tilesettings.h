@@ -649,9 +649,10 @@ public:
                     }
                     case tiletype::coin: {
                         coin* coin_ = dynamic_cast<coin*>(pos.tile.get());
-                        if (!coin_ || coin_->collected) continue;
+                        if (!coin_ || coin_ -> collected) continue;
                         coin_ -> collected = true;
-                        break;   
+                        coins[setnum*6+levelnum] = 1;
+                        break;
                     }
                     case tiletype::spring:
                     !zerogactive ? Object.velocity.y = -1000.f : Object.velocity.y = -3600.f;
