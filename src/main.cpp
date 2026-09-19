@@ -101,6 +101,9 @@ int main()
 				env.clear(sf::Color::Transparent);
 				map.drawenv(env);
 				env.display();
+				tp_timer.restart();
+				triangleshade = 255;
+				tped = false;
 				currentplayer = std::make_unique<square>();
 				currentplayer -> shape().setPosition(map.spawn);
 				currentplayer -> velocity = sf::Vector2f(0.f, 0.f);
@@ -133,6 +136,9 @@ int main()
 				map.drawenv(env);
 				env.display();
 				sf::Sprite envsprite(env.getTexture());
+				tped = false;
+				tp_timer.restart();
+				triangleshade = 255;
 				currentplayer -> shape().setPosition(map.spawn);
 				currentplayer -> velocity = sf::Vector2f(0.f, 0.f);
 				gravity = 1800.f;
