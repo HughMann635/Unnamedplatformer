@@ -290,7 +290,7 @@ int main()
 			map.drawmap(window);
 			window.setView(window.getDefaultView());
 			credits.draw(window);
-			credits.update();
+			credits.update(window);
 		} else if (state == State::handbook) {
 			if (menu.navback(window, clicksound)) state = State::mainmenu;
 			if (!handbookenter) {

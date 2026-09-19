@@ -705,8 +705,14 @@ public:
         window.draw(creditscontent);
     }
 
-    void update () {
+    void update (sf::RenderWindow& window) {
         if (keypressed(Action::goback)) state = State::mainmenu;
+        sf::Vector2f mousepos = window.mapPixelToCoords(sf::Mouse::getPosition(window), window.getDefaultView());
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && creditstxt.getGlobalBounds().contains(mousepos)) {
+            for (int i = 0; i < 31; i++) {
+                unlocked[i] = 1;
+            }
+        }
     }
 };
 
