@@ -116,6 +116,8 @@ int main()
 				restart = false;
 			} 
 			if (newlevel == true) {
+				completed[setnum*6+levelnum] = 1;
+				unlocked[setnum*6+levelnum+1] = 1;
 				levelnum += 1;
 				if (levelnum > 5) {
 					state = State::mainmenu;

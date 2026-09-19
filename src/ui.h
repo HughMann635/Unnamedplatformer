@@ -345,6 +345,8 @@ public:
     sf::RectangleShape levelbtns[6];
     sf::RectangleShape btnshadows[6];
     sf::CircleShape coinicons[6];
+    sf::Color leveltxtcolor[7];
+    sf::Color levelbtncolor[7];
 
     levelselect() :
         font("AldotheApache.ttf"),
@@ -393,11 +395,26 @@ public:
         window.draw(goleftshadow);
         window.draw(goleft);
         for (int i = 0; i < 6; i++) {
+            int levelnumber = page * 6 + i;
+            if (completed[levelnumber] == 1) { 
+                leveltxtcolor[i] = sf::Color(0, 220, 80); 
+                levelbtncolor[i] = sf::Color(0, 230, 130);
+            }
+            else if (unlocked[levelnumber] == 1) {
+                leveltxtcolor[i] = sf::Color(0, 100, 240); 
+                levelbtncolor[i] = sf::Color(0, 150, 250);
+            }
+            else { 
+                leveltxtcolor[i] = sf::Color(100, 100, 100); 
+                levelbtncolor[i] = sf::Color(130, 130, 130);
+            }
             window.draw(btnshadows[i]);
             window.draw(levelbtns[i]);
             window.draw(numshadows[i]);
             window.draw(levelnums[i]);
             if (coins[page*6+i] == 1) window.draw(coinicons[i]);
+            levelnums[i].setFillColor(leveltxtcolor[i]);
+            levelbtns[i].setFillColor(levelbtncolor[i]);
         }
     }
 
@@ -409,7 +426,14 @@ public:
             sf::Vector2f numpos;
             if (i < 3) numpos = sf::Vector2f(400 * i + 240, 250);
             else numpos = sf::Vector2f(400 * (i-3) + 240, 470);
-
+            if (completed[levelnumber-1] == 1) { 
+                leveltxtcolor[i] = sf::Color(0, 240, 100); 
+                levelbtncolor[i] = sf::Color(0, 250, 150);
+            }
+            else { 
+                leveltxtcolor[i] = sf::Color(100, 100, 100); 
+                levelbtncolor[i] = sf::Color(130, 130, 130);
+            }
             levelnums[i] = maketext(45, sf::Color(0, 100, 240), std::to_string(levelnumber), font, numpos);
             levelbtns[i] = makebtn(sf::Vector2f(70, 70), sf::Color(0, 150, 250), numpos);
             numshadows[i] = textshadow(120, 3, levelnums[i]);
@@ -431,15 +455,16 @@ public:
             mouseheld = true;
             update();
         }
-
         for (int i = 0; i < 6; i++) {
-            sf::Vector2f numpos;
-            if (i < 3) numpos = sf::Vector2f(400 * i + 240, 250);
-            else numpos = sf::Vector2f(400 * (i-3) + 240, 470);
-            if (btnpress(clicksound, false, window, levelnums[i], levelbtns[i], numshadows[i], btnshadows[i], numpos, sf::Color(0, 100, 240), sf::Color(0, 150, 250), sf::Color(170, 30, 80), sf::Color(100, 0, 30)) && !mouseheld) {
-                levelnum = i;
-                setnum = page;
-                state = State::playing;
+            if (completed[page * 6 + i] == 1 || unlocked[page * 6 + i] == 1) {
+                sf::Vector2f numpos;
+                if (i < 3) numpos = sf::Vector2f(400 * i + 240, 250);
+                else numpos = sf::Vector2f(400 * (i-3) + 240, 470);
+                if (btnpress(clicksound, false, window, levelnums[i], levelbtns[i], numshadows[i], btnshadows[i], numpos, leveltxtcolor[i], levelbtncolor[i], sf::Color(170, 30, 80), sf::Color(100, 0, 30)) && !mouseheld) {
+                    levelnum = i;
+                    setnum = page;
+                    state = State::playing;
+                }
             }
         }
 
