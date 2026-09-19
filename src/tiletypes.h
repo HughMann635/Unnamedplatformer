@@ -416,9 +416,12 @@ public:
     sf::CircleShape coinblock;
     bool collected = false;
     int coinshade = 255;
+    sf::Vector2f baseposition;
+    float hover = 0.f;
     coin (sf::Vector2f position) {
-        coinblock.setRadius(8);
-        coinblock.setPosition(position+sf::Vector2f(2, 2));
+        coinblock.setRadius(7);
+        coinblock.setPosition(position+sf::Vector2f(3, 3));
+        baseposition = coinblock.getPosition();
         coinblock.setFillColor(sf::Color(255, 210, 0, coinshade));
         coinblock.setOutlineColor(sf::Color(180, 150, 0, coinshade));
         coinblock.setOutlineThickness(-1.5);
@@ -436,6 +439,9 @@ public:
         if (collected) {
             if (coinshade > 2) coinshade -= 3;
             coinblock.setPosition(coinblock.getPosition() - sf::Vector2f(0, 2));
+        } else {
+            hover += deltatime;
+            coinblock.setPosition(baseposition - sf::Vector2f(0, std::sin(hover*5)*2));
         }
         coinblock.setFillColor(sf::Color(255, 210, 0, coinshade));
         coinblock.setOutlineColor(sf::Color(180, 150, 0, coinshade));
