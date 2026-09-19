@@ -49,13 +49,17 @@ int main()
 
 
 	//BUGS!!!!!
-
-
 	//cant close window while in settings menu
-	//keybinds dont really work
-	//input is a bit janky
-	//you can have multiple inputs for one key
-	// -> might keep in? who would do that, it's not even gamebreaking
+	//rotation bugs
+	//levels 13, 17, 26, 4, 8, look into
+	//as well as other levels but these ones I can remember
+	
+
+	//TO ADD!!!!!
+	//speedrun timer
+	//death count
+	//updating handbook (notif icon, hidden objects)
+	//more sfx (death especially)
 
 
 	while (window.isOpen()) {
