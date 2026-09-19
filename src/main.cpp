@@ -93,29 +93,33 @@ int main()
 				envsprite.setTexture((env.getTexture()));
 				gamestart = true;
 			}
-			if (restart == true) {
-				map.statictilelist.clear();
-				map.dynamictilelist.clear();
-				map.envtilelist.clear();
-				map.loadmap(levels[setnum][levelnum], levels_env[setnum][levelnum]);
-				env.clear(sf::Color::Transparent);
-				map.drawenv(env);
-				env.display();
-				tp_timer.restart();
-				triangleshade = 255;
-				tped = false;
-				currentplayer = std::make_unique<square>();
-				currentplayer -> shape().setPosition(map.spawn);
-				currentplayer -> velocity = sf::Vector2f(0.f, 0.f);
-				currentplayer -> shape().setRotation(sf::degrees(0));
-				currentplayer -> rotation = 0;
-				currentplayer -> freefallingtip = false;
-				tipping_right = false;
-				tipping_left = false;
-				gravity = 1800.f;
-				restart = false;
+			if (restart) {
+				if (currentplayer -> shape().getFillColor().a > 0) {
+					currentplayer -> shape().setFillColor(sf::Color(currentplayer->shape().getFillColor().r, currentplayer->shape().getFillColor().g, currentplayer->shape().getFillColor().b, currentplayer->shape().getFillColor().a - (3)));
+				} else {
+					map.statictilelist.clear();
+					map.dynamictilelist.clear();
+					map.envtilelist.clear();
+					map.loadmap(levels[setnum][levelnum], levels_env[setnum][levelnum]);
+					env.clear(sf::Color::Transparent);
+					map.drawenv(env);
+					env.display();
+					tp_timer.restart();
+					triangleshade = 255;
+					tped = false;
+					currentplayer = std::make_unique<square>();
+					currentplayer -> shape().setPosition(map.spawn);
+					currentplayer -> velocity = sf::Vector2f(0.f, 0.f);
+					currentplayer -> shape().setRotation(sf::degrees(0));
+					currentplayer -> rotation = 0;
+					currentplayer -> freefallingtip = false;
+					tipping_right = false;
+					tipping_left = false;
+					gravity = 1800.f;
+					restart = false;
+				}
 			} 
-			if (newlevel == true) {
+			if (newlevel) {
 				completed[setnum*6+levelnum] = 1;
 				unlocked[setnum*6+levelnum+1] = 1;
 				levelnum += 1;
@@ -162,8 +166,9 @@ int main()
 			currentplayer -> jump(deltatime);
 			blockonhead = false;
 			currentplayer -> grounded = false;
-			if (!inblackhole && currentplayer -> shape().getPosition().y < 730) currentplayer -> updatepos(deltatime, map);
-			if (currentplayer -> shape().getPosition().y >= 730) currentplayer -> shape().move(sf::Vector2f(0, currentplayer -> velocity.y*deltatime));
+			if (!inblackhole && currentplayer -> shape().getPosition().y < 730 && !restart) currentplayer -> updatepos(deltatime, map);
+			if (restart) currentplayer -> shape().move(sf::Vector2f(currentplayer -> velocity.x*deltatime*0.05, currentplayer -> velocity.y*deltatime*0.05));
+			if (currentplayer -> shape().getPosition().y >= 730) currentplayer -> shape().move(sf::Vector2f(0, 3*deltatime));
 			if (currentplayer -> shape().getPosition().y > 1000) restart = true;
 			map.updatemap(deltatime);
 			inblackhole = false;
