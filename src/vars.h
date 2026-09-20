@@ -94,6 +94,7 @@ inline bool obstacletop = false;
 inline bool obstaclebelow = false;
 
 //Game settings
+inline bool switched = false;
 inline int levelnum = 0;
 inline int setnum = 0;
 inline bool circlelocked = true;

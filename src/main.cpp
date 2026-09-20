@@ -28,6 +28,7 @@ int main()
 	settings settings;
 	credits credits;
 	handbook handbook;
+	menuswitch menuswitch;
 	sf::Vector2f lastframe_pos;
 	sf::Vector2f lastframe_vel;
 	sf::Clock timer;
@@ -323,7 +324,7 @@ int main()
 				if (keychecker->is<sf::Event::Closed>()) window.close();
 			}
 		}
-
+		menuswitch.fade(window, switched, targetstate);
 		window.display();
 		if (keypressed(Action::goback)) esckeyheld = true;
 		else esckeyheld = false;

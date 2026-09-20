@@ -17,3 +17,4 @@ enum class State {
 };
 
 inline State state = State::mainmenu;
+inline State targetstate = State::mainmenu;

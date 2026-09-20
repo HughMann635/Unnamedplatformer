@@ -155,16 +155,20 @@ public:
 
     void play (sf::RenderWindow& window, sf::Sound& clicksound) {
         if (btnpress(clicksound, false, window, starttxt, startbtn, starttxtshadow, startbtnshadow, sf::Vector2f(640, 450), sf::Color(170, 100, 255), sf::Color(100, 30, 155), sf::Color(255, 170, 30), sf::Color(185, 100, 30))) {
-            state = State::levelselect;
+            switched = true;
+            targetstate = State::levelselect;
         }
         if (btnpress(clicksound, false, window, creditstxt, creditsbtn, creditstxtshadow, creditsbtnshadow, sf::Vector2f(490, 550), sf::Color(255, 20, 50), sf::Color(115, 0, 0), sf::Color(100, 0, 0), sf::Color(180, 180, 180))) {
-            state = State::credits;
+            switched = true;
+            targetstate = State::credits;
         }
         if (btnpress(clicksound, false, window, handbooktxt, handbookbtn, handbooktxtshadow, handbookbtnshadow, sf::Vector2f(640, 550), sf::Color(20, 50, 255), sf::Color(0, 0, 115), sf::Color(0, 0, 100), sf::Color(180, 180, 180))) {
-            state = State::handbook;
+            switched = true;
+            targetstate = State::handbook;
         }
         if (btnpress(clicksound, false, window, settingstxt, settingsbtn, settingstxtshadow, settingsbtnshadow, sf::Vector2f(790, 550), sf::Color(20, 255, 50), sf::Color(0, 115, 0), sf::Color(0, 70, 0), sf::Color(180, 180, 180))) {
-            state = State::settings;
+            switched = true;
+            targetstate = State::settings;
         }
     }
 
@@ -319,7 +323,8 @@ public:
             state = State::playing;
         }
         if (btnpress(clicksound, false, window, exittxt, exitbtn, exittxtshadow, exitbtnshadow, sf::Vector2f(width/2, 445), sf::Color(145, 80, 210), sf::Color(75, 10, 140), sf::Color(20, 120, 255), sf::Color(20, 50, 185))) {
-            state = State::mainmenu;
+            switched = true;
+            targetstate = State::mainmenu;
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space)) state = State::playing;
         if (keypressed(Action::goback)) state = State::mainmenu; 
@@ -463,7 +468,8 @@ public:
                 if (btnpress(clicksound, false, window, levelnums[i], levelbtns[i], numshadows[i], btnshadows[i], numpos, leveltxtcolor[i], levelbtncolor[i], sf::Color(170, 30, 80), sf::Color(100, 0, 30)) && !mouseheld) {
                     levelnum = i;
                     setnum = page;
-                    state = State::playing;
+                    switched = true;
+                    targetstate = State::playing;
                 }
             }
         }
@@ -993,6 +999,27 @@ public:
                     tilenameshadow.setOutlineThickness(0);
                     tiledescshadow.setOutlineThickness(0);
                 }
+            }
+        }
+    }
+};
+
+class menuswitch {
+public:
+    sf::RectangleShape fadescreen;
+    menuswitch() {
+        fadescreen.setSize(sf::Vector2f(width, height));
+        fadescreen.setPosition(sf::Vector2f(0, height));
+        fadescreen.setFillColor(sf::Color(0, 0, 0));
+    }
+    void fade (sf::RenderWindow& window, bool& switched, State targetstate) {
+        window.draw(fadescreen);
+        if (switched) {
+            fadescreen.setPosition(fadescreen.getPosition()+sf::Vector2f(0, -20));
+            if (fadescreen.getPosition().y == 0) state = targetstate;
+            if (fadescreen.getPosition().y == -720) { 
+                fadescreen.setPosition(sf::Vector2f(0, height));
+                switched = false;
             }
         }
     }
