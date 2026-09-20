@@ -319,7 +319,10 @@ int main()
 			window.setView(window.getDefaultView());
 			settings.draw(window);
 			settings.update(window, clicksound);
-			while (const std::optional keychecker = window.pollEvent()) settings.keybind(window, *keychecker, clicksound);
+			while (const std::optional keychecker = window.pollEvent()) { 
+				settings.keybind(window, *keychecker, clicksound);
+				if (keychecker->is<sf::Event::Closed>()) window.close();
+			}
 		}
 
 		window.display();
