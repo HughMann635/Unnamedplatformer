@@ -101,6 +101,7 @@ int main()
 				if (currentplayer -> shape().getFillColor().a > 0) {
 					currentplayer -> shape().setFillColor(sf::Color(currentplayer->shape().getFillColor().r, currentplayer->shape().getFillColor().g, currentplayer->shape().getFillColor().b, currentplayer->shape().getFillColor().a - (3)));
 				} else {
+					if (!restarted) deathcount += 1;
 					map.statictilelist.clear();
 					map.dynamictilelist.clear();
 					map.envtilelist.clear();
@@ -121,6 +122,7 @@ int main()
 					tipping_left = false;
 					gravity = 1800.f;
 					restart = false;
+					restarted = false;
 				}
 			} 
 			if (newlevel) {
@@ -181,7 +183,10 @@ int main()
 			lastframe_pos = sf::Vector2f(currentplayer -> shape().getPosition());
 			lastframe_vel = sf::Vector2f(currentplayer -> velocity);
 	
-			if (keypressed(Action::restart)) restart = true;
+			if (keypressed(Action::restart)) { 
+				restart = true;
+				restarted = true;
+			}
 
 			if (keypressed(Action::switch1) && !dynamic_cast<square*>(currentplayer.get()) && !restart) { 
 				currentplayer = std::make_unique<square>(); 
@@ -333,12 +338,6 @@ int main()
 			mouseheld = true; 
 		}
 		else mouseheld = false;
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Enter)) {
-			int k = 0;
-			for (int i = 0; i < 30; i++) {
-				k += coins[i];
-			}
-			std::cout << k;
-		};
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Enter)) std::cout << deathcount;
 	}
 }

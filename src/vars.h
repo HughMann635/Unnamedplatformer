@@ -12,6 +12,7 @@ const int camheight = 540;
 const int stars = 700;
 const int planets = 25;
 inline int volumelevel = 10; //0-20 
+inline int deathcount = 0;
 inline bool esckeyheld = false;
 inline bool mouseheld = false;
 inline bool running = true;
@@ -22,6 +23,7 @@ inline bool gamestart = false;
 inline bool menuenter = false;
 inline bool handbookenter = false;
 inline bool autohover = false;
+inline bool restarted = false;
 
 //Player and physics settings
 const float playerdim = 20.f; //Also the dimensions of every tile in the game 
