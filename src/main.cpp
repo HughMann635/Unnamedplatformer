@@ -49,7 +49,6 @@ int main()
 
 
 	//BUGS!!!!!
-	//cant close window while in settings menu
 	//rotation bugs
 	//levels 13, 17, 26, 4, 8, look into
 	//as well as other levels but these ones I can remember
@@ -177,32 +176,32 @@ int main()
 			map.updatemap(deltatime);
 			inblackhole = false;
 			map.checkCollisions(*currentplayer, deltatime);
-			currentplayer -> rotateobject(edge, map, currentplayer -> shape(), deltatime, movespeed, swimming, zerogactive, currentplayer -> grounded, nearestedge);
+			if (!restart) currentplayer -> rotateobject(edge, map, currentplayer -> shape(), deltatime, movespeed, swimming, zerogactive, currentplayer -> grounded, nearestedge);
 			lastframe_pos = sf::Vector2f(currentplayer -> shape().getPosition());
 			lastframe_vel = sf::Vector2f(currentplayer -> velocity);
 	
 			if (keypressed(Action::restart)) restart = true;
 
-			if (keypressed(Action::switch1) && !dynamic_cast<square*>(currentplayer.get())) { 
+			if (keypressed(Action::switch1) && !dynamic_cast<square*>(currentplayer.get()) && !restart) { 
 				currentplayer = std::make_unique<square>(); 
 				swapped = true; 
 				nearestedge = 90.f; 
 			}
-			else if (keypressed(Action::switch2) && !dynamic_cast<circle*>(currentplayer.get()) && !circlelocked) { 
+			else if (keypressed(Action::switch2) && !dynamic_cast<circle*>(currentplayer.get()) && !circlelocked && !restart) { 
 				currentplayer = std::make_unique<circle>(); 
 				swapped = true; 
 			}
-			else if (keypressed(Action::switch3) && !dynamic_cast<octagon*>(currentplayer.get()) && !octagonlocked) { 
+			else if (keypressed(Action::switch3) && !dynamic_cast<octagon*>(currentplayer.get()) && !octagonlocked && !restart) { 
 				currentplayer = std::make_unique<octagon>(); 
 				swapped = true; 
 				nearestedge = 45.f; 
 			}
-			else if (keypressed(Action::switch4) && !dynamic_cast<triangle*>(currentplayer.get()) && !trianglelocked) { 
+			else if (keypressed(Action::switch4) && !dynamic_cast<triangle*>(currentplayer.get()) && !trianglelocked && !restart) { 
 				currentplayer = std::make_unique<triangle>(); 
 				swapped = true; 
 				nearestedge = 120.f; 
 			}
-			else if (keypressed(Action::switch5) && !dynamic_cast<hexagon*>(currentplayer.get()) && !hexagonlocked) { 
+			else if (keypressed(Action::switch5) && !dynamic_cast<hexagon*>(currentplayer.get()) && !hexagonlocked && !restart) { 
 				currentplayer = std::make_unique<hexagon>(); 
 				swapped = true; 
 				nearestedge = 60.f; 
