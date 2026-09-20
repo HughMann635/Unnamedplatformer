@@ -1009,16 +1009,16 @@ public:
     sf::RectangleShape fadescreen;
     menuswitch() {
         fadescreen.setSize(sf::Vector2f(width, height));
-        fadescreen.setPosition(sf::Vector2f(0, height));
+        fadescreen.setPosition(sf::Vector2f(0, -height));
         fadescreen.setFillColor(sf::Color(0, 0, 0));
     }
     void fade (sf::RenderWindow& window, bool& switched, State targetstate) {
         window.draw(fadescreen);
         if (switched) {
-            fadescreen.setPosition(fadescreen.getPosition()+sf::Vector2f(0, -20));
+            fadescreen.setPosition(fadescreen.getPosition()+sf::Vector2f(0, 20));
             if (fadescreen.getPosition().y == 0) state = targetstate;
-            if (fadescreen.getPosition().y == -720) { 
-                fadescreen.setPosition(sf::Vector2f(0, height));
+            if (fadescreen.getPosition().y == height) { 
+                fadescreen.setPosition(sf::Vector2f(0, -height));
                 switched = false;
             }
         }
