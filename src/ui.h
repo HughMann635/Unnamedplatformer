@@ -265,8 +265,9 @@ public:
         pausebtnshadow.setFillColor(sf::Color(0, 0, 0, (235/225)*levelshade));
         std::string pb = "";
         pb = maketime(pbs[setnum*6+levelnum]);
-        time = maketext(30, sf::Color(100, 100, 255, levelshade), maketime(leveltimer.getElapsedTime().asMilliseconds())+""+pb, font, sf::Vector2f(1000, 100));
-        timeshadow = textshadow(235, 6, timeshadow);
+        time = maketext(30, sf::Color(100, 100, 255, levelshade), maketime(leveltimer.getElapsedTime().asMilliseconds())+" / "+pb, font, sf::Vector2f(1100, 100));
+        timeshadow = textshadow(235, 6, time);
+        timeshadow.setFillColor(sf::Color(0, 0, 0, levelshade));
         window.draw(level);
         window.draw(pausebtnshadow);
         window.draw(pausebtn);
