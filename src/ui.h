@@ -229,19 +229,28 @@ public:
     sf::Text pausetxtshadow;
     sf::RectangleShape pausebtn; 
     sf::RectangleShape pausebtnshadow;
+    sf::Text time;
+    sf::Text timeshadow;
     int levelshade = 225;
 
     playing() :
         font("AldotheApache.ttf"),
         level(font),
         pausetxt(font),
-        pausetxtshadow(font)
+        pausetxtshadow(font),
+        time(font),
+        timeshadow(font)
     {
         level = maketext(35, sf::Color(255, 45, 200, levelshade), "Level "+std::to_string(setnum*6+levelnum+1), font, sf::Vector2f(width/2, 60));
         pausetxt = maketext(30, sf::Color(200, 150, 0, levelshade), "PAUSE", font, sf::Vector2f(120, 80));
         pausetxtshadow = textshadow(120, 3, pausetxt);
         pausebtn = makebtn(sf::Vector2f(100, 50), sf::Color(255, 220, 0, levelshade), pausetxt.getPosition());
         pausebtnshadow = rectshadow(235, 6, pausebtn);
+        std::string pb = "";
+        if (pbs[setnum*6+levelnum] == 0) pb = "--:--:--";
+        else pb = maketime(pbs[setnum*6+levelnum]);
+        time = maketext(30, sf::Color(100, 100, 255, levelshade), pb, font, sf::Vector2f(1000, 100));
+        timeshadow = textshadow(235, 6, timeshadow);
     }
 
     void draw (sf::RenderWindow& window) {
@@ -254,11 +263,17 @@ public:
         pausebtn.setFillColor(sf::Color(255, 220, 0, levelshade));
         pausetxtshadow.setFillColor(sf::Color(0, 0, 0, 120.f/225.f*levelshade));
         pausebtnshadow.setFillColor(sf::Color(0, 0, 0, (235/225)*levelshade));
+        std::string pb = "";
+        pb = maketime(pbs[setnum*6+levelnum]);
+        time = maketext(30, sf::Color(100, 100, 255, levelshade), maketime(leveltimer.getElapsedTime().asMilliseconds())+""+pb, font, sf::Vector2f(1000, 100));
+        timeshadow = textshadow(235, 6, timeshadow);
         window.draw(level);
         window.draw(pausebtnshadow);
         window.draw(pausebtn);
         window.draw(pausetxtshadow);
         window.draw(pausetxt);
+        window.draw(timeshadow);
+        window.draw(time);
     }
 
     void checkexit (sf::RenderWindow& window, sf::Sound& clicksound) {

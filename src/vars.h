@@ -2,6 +2,8 @@
 #include <SFML/System.hpp>
 #include <map>
 #include <string>
+#include <iomanip>
+#include <sstream>
 
 //Window settings
 const int width = 1280;
@@ -24,6 +26,8 @@ inline bool menuenter = false;
 inline bool handbookenter = false;
 inline bool autohover = false;
 inline bool restarted = false;
+inline int pbs[30] = {0};
+inline sf::Clock leveltimer;
 
 //States stuff
 enum class State {
@@ -85,6 +89,17 @@ inline std::map<Action, sf::Keyboard::Key> keybinds = {
 inline bool keypressed (Action action) {
     if (sf::Keyboard::isKeyPressed(keybinds[action])) return true;
     else return false;
+}
+
+inline std::string maketime (int ms) {
+    if (ms == 0) return "--:--.---";
+    int mins = (ms/1000) / 60;
+    int secs = (ms/1000) % 60;
+    int millisecs = ms % 1000;
+
+    std::ostringstream timestring;
+    timestring << std::setfill('0') << std::setw(2) << mins << ':' << std::setw(2) << secs << '.' << std::setw(2) << millisecs;
+    return timestring.str();
 }
 
 inline bool swimming = false;

@@ -31,8 +31,6 @@ int main()
 	sf::Vector2f lastframe_pos;
 	sf::Vector2f lastframe_vel;
 	sf::Clock timer;
-	sf::Clock leveltimer;
-	float pbs[30] = {0.f};
 	sf::Vector2f edge;
 	sf::RenderTexture env (sf::Vector2u(width, height));
 	sf::Sprite envsprite (env.getTexture());
