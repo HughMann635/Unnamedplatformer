@@ -4,7 +4,6 @@
 #include <SFML/Audio.hpp>
 #include <string>
 #include "vars.h"
-#include "states.h"
 #include "tiletypes.h"
 #include "players.h"
 

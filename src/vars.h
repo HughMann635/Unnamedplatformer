@@ -25,6 +25,20 @@ inline bool handbookenter = false;
 inline bool autohover = false;
 inline bool restarted = false;
 
+//States stuff
+enum class State {
+    mainmenu,
+    playing,
+    pause,
+    levelselect,
+    credits,
+    handbook,
+    settings
+};
+
+inline State state = State::mainmenu;
+inline State targetstate = State::mainmenu;
+
 //Player and physics settings
 const float playerdim = 20.f; //Also the dimensions of every tile in the game 
 inline float gravity = 1800.f;

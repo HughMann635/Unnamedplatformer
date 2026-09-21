@@ -3,7 +3,6 @@
 #include <iostream>
 #include <algorithm>
 
-#include "states.h"
 #include "players.h"
 #include "tiletypes.h"
 #include "scenes.h"
@@ -334,10 +333,7 @@ int main()
 		if (keypressed(Action::goback)) esckeyheld = true;
 		else esckeyheld = false;
 		sf::Listener::setGlobalVolume(volumelevel*15);
-		if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) { 
-			mouseheld = true; 
-		}
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) mouseheld = true; 
 		else mouseheld = false;
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Enter)) std::cout << deathcount;
 	}
 }
