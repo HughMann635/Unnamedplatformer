@@ -263,8 +263,8 @@ public:
     }
 
     void checkexit (sf::RenderWindow& window, sf::Sound& clicksound) {
-        if (keypressed(Action::goback)) state = State::pause;
-        if (btnpress(clicksound, false, window, pausetxt, pausebtn, pausetxtshadow, pausebtnshadow, sf::Vector2f(120, 80), sf::Color(150, 112, 0), sf::Color(180, 180, 0), sf::Color(200, 200, 200), sf::Color(100, 100, 100))) state = State::pause;
+        if (keypressed(Action::goback) && !restart) state = State::pause;
+        if (!restart && btnpress(clicksound, false, window, pausetxt, pausebtn, pausetxtshadow, pausebtnshadow, sf::Vector2f(120, 80), sf::Color(150, 112, 0), sf::Color(180, 180, 0), sf::Color(200, 200, 200), sf::Color(100, 100, 100))) state = State::pause;
     }
 };
 
@@ -352,6 +352,10 @@ public:
     sf::CircleShape coinicons[6];
     sf::Color leveltxtcolor[7];
     sf::Color levelbtncolor[7];
+    sf::Text deathstxt;
+    sf::Text deathshadow; //aura??
+    sf::Text coinstxt;
+    sf::Text coinshadow;
 
     levelselect() :
         font("AldotheApache.ttf"),
@@ -362,7 +366,11 @@ public:
         set(font),
         setshadow(font),
         levelnums{font, font, font, font, font, font},
-        numshadows{font, font, font, font, font, font}
+        numshadows{font, font, font, font, font, font},
+        deathstxt(font),
+        deathshadow(font),
+        coinstxt(font),
+        coinshadow(font)
     {
         goright = maketext(30, sf::Color(140, 225, 10), ">", font, sf::Vector2f(1180, height/2));
         gorightbtn = makebtn(sf::Vector2f(40, 40), sf::Color(240, 255, 80), goright.getPosition());
@@ -385,6 +393,11 @@ public:
             else coinicons[i].setPosition(sf::Vector2f(266 + (i - 3) * 400, 496));
         } 
         
+        deathstxt = maketext(35, sf::Color(255, 80, 80), "TOTAL DEATHS:   "+std::to_string(deathcount), font, sf::Vector2f(640, 630));
+        deathshadow = textshadow(235, 3, deathstxt);
+        coinstxt = maketext(35, sf::Color(255, 160, 0), "COINS:   polacehioldrr", font, sf::Vector2f(640, 670));
+        coinshadow = textshadow(235, 3, coinstxt);
+
         update();
     }
 
@@ -421,6 +434,16 @@ public:
             levelnums[i].setFillColor(leveltxtcolor[i]);
             levelbtns[i].setFillColor(levelbtncolor[i]);
         }
+        deathstxt = maketext(35, sf::Color(255, 80, 80), "TOTAL DEATHS:   "+std::to_string(deathcount), font, sf::Vector2f(640, 630));
+        deathshadow = textshadow(235, 3, deathstxt);
+        int coincount = 0;
+        for (int i = 0; i < 30; i++) if (coins[i] == 1) coincount += 1;
+        coinstxt = maketext(35, sf::Color(255, 160, 0), "COINS:   "+std::to_string(coincount)+"/30", font, sf::Vector2f(640, 670));
+        coinshadow = textshadow(235, 3, coinstxt);
+        window.draw(deathshadow);
+        window.draw(deathstxt);
+        window.draw(coinshadow);
+        window.draw(coinstxt);
     }
 
     void update() {
@@ -473,7 +496,7 @@ public:
                 }
             }
         }
-
+        
         if (keypressed(Action::goback)) state = State::mainmenu;
     }
 };

@@ -101,6 +101,7 @@ int main()
 				if (currentplayer -> shape().getFillColor().a > 0) {
 					currentplayer -> shape().setFillColor(sf::Color(currentplayer->shape().getFillColor().r, currentplayer->shape().getFillColor().g, currentplayer->shape().getFillColor().b, currentplayer->shape().getFillColor().a - (3)));
 				} else {
+					deathcount += 1;
 					map.statictilelist.clear();
 					map.dynamictilelist.clear();
 					map.envtilelist.clear();
