@@ -31,6 +31,8 @@ int main()
 	sf::Vector2f lastframe_pos;
 	sf::Vector2f lastframe_vel;
 	sf::Clock timer;
+	sf::Clock leveltimer;
+	float pbs[30] = {0.f};
 	sf::Vector2f edge;
 	sf::RenderTexture env (sf::Vector2u(width, height));
 	sf::Sprite envsprite (env.getTexture());
@@ -56,7 +58,6 @@ int main()
 
 	//TO ADD!!!!!
 	//speedrun timer
-	//death count
 	//updating handbook (notif icon, hidden objects)
 	//more sfx (death especially)
 
@@ -94,12 +95,14 @@ int main()
 				map.drawenv(env);
 				env.display();
 				envsprite.setTexture((env.getTexture()));
+				leveltimer.restart();
 				gamestart = true;
 			}
 			if (restart) {
 				if (currentplayer -> shape().getFillColor().a > 0) {
 					currentplayer -> shape().setFillColor(sf::Color(currentplayer->shape().getFillColor().r, currentplayer->shape().getFillColor().g, currentplayer->shape().getFillColor().b, currentplayer->shape().getFillColor().a - (3)));
 				} else {
+					leveltimer.restart();
 					deathcount += 1;
 					map.statictilelist.clear();
 					map.dynamictilelist.clear();
@@ -125,6 +128,8 @@ int main()
 				}
 			} 
 			if (newlevel) {
+				if (pbs[setnum*6+levelnum] > leveltimer.getElapsedTime().asMilliseconds() || pbs[setnum*6+levelnum] == 0) pbs[setnum*6+levelnum] = leveltimer.getElapsedTime().asMilliseconds();
+				std::cout << pbs[setnum*6+levelnum];
 				completed[setnum*6+levelnum] = 1;
 				unlocked[setnum*6+levelnum+1] = 1;
 				levelnum += 1;
@@ -137,7 +142,7 @@ int main()
 					}
 					else setnum += 1;
 				}
-	
+				
 				map.statictilelist.clear();
 				map.dynamictilelist.clear();
 				map.envtilelist.clear();
@@ -149,6 +154,7 @@ int main()
 				sf::Sprite envsprite(env.getTexture());
 				tped = false;
 				tp_timer.restart();
+				leveltimer.restart();
 				triangleshade = 255;
 				currentplayer -> shape().setPosition(map.spawn);
 				currentplayer -> velocity = sf::Vector2f(0.f, 0.f);
