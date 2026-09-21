@@ -55,9 +55,15 @@ int main()
 	
 
 	//TO ADD!!!!!
-	//speedrun timer
 	//updating handbook (notif icon, hidden objects)
 	//more sfx (death especially)
+
+	//RETURNING TO OLD LEVELS
+	//after beating every level in a set you can use that shape anywhere
+	//beating set 2 lets you use circle in set 1
+	//HOWEVER if you switch to a mroe advanced shape for a set that shouldn't have it the timer
+	//- will change color -> red
+	//- nullify the pb for that run
 
 
 	while (window.isOpen()) {
