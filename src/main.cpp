@@ -52,11 +52,13 @@ int main()
 	//rotation bugs
 	//levels 13, 17, 26, 4, 8, look into
 	//as well as other levels but these ones I can remember
+	//ISSUES WITH WALKING THRU ONE TILE GAPS
 	
 
 	//TO ADD!!!!!
 	//updating handbook (notif icon, hidden objects)
 	//more sfx (death especially)
+	
 
 	//RETURNING TO OLD LEVELS
 	//after beating every level in a set you can use that shape anywhere
@@ -87,10 +89,10 @@ int main()
 				map.dynamictilelist.clear();
 				map.envtilelist.clear();
 				map.loadmap(levels[setnum][levelnum], levels_env[setnum][levelnum]);
+				currentplayer = std::make_unique<square>();
+				currentplayer -> velocity = sf::Vector2f(0, 0);
 				currentplayer -> shape().setPosition(map.spawn);
 				currentplayer -> shape().setRotation(sf::degrees(0));
-				currentplayer -> rotation = 0;
-				currentplayer -> velocity = sf::Vector2f(0, 0); 
 				currentplayer -> freefallingtip = false;
 				tipping_right = false;
 				tipping_left = false;
@@ -171,10 +173,25 @@ int main()
 				newlevel = false;
 			} 
 			
-			if (setnum >= 1) circlelocked = false;
-			if (setnum >= 2) octagonlocked = false;
-			if (setnum >= 3) trianglelocked = false;
-			if (setnum >= 4) hexagonlocked = false;
+			circlelocked = false;
+			octagonlocked = false;
+			trianglelocked = false;
+			hexagonlocked = false;
+			
+			for (int i = 0; i < 6; i++) { 
+				if (completed[6+i] == 0 && !(setnum >= 1)) {
+					circlelocked = true;
+				}
+				if (completed[12+i] == 0 && !(setnum >= 2)) {
+					octagonlocked = true;
+				}
+				if (completed[18+i] == 0 && !(setnum >= 3)) {
+					trianglelocked = true;
+				}
+				if (completed[24+i] == 0 && !(setnum >= 4)) {
+					hexagonlocked = true;
+				}
+			}
 	
 			swapped = false;
 			if (currentplayer -> grounded) jumpcount = 2;
