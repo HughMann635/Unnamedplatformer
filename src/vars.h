@@ -98,7 +98,7 @@ inline std::string maketime (int ms) {
     int millisecs = ms % 1000;
 
     std::ostringstream timestring;
-    timestring << std::setfill('0') << std::setw(2) << mins << ':' << std::setw(2) << secs << '.' << std::setw(2) << millisecs;
+    timestring << std::setfill('0') << std::setw(2) << mins << ':' << std::setw(2) << secs << '.' << std::setw(3) << millisecs;
     return timestring.str();
 }
 
@@ -135,3 +135,4 @@ inline bool hexagonlocked = true;
 inline int coins[30] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 inline int completed[30] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 inline int unlocked[31] = {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+inline int levelselected = 0;
