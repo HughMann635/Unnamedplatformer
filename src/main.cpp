@@ -61,10 +61,8 @@ int main()
 	//more sfx (death especially)
 	
 
-	//RETURNING TO OLD LEVELS
-	//after beating every level in a set you can use that shape anywhere
-	//beating set 2 lets you use circle in set 1
-	//HOWEVER if you switch to a mroe advanced shape for a set that shouldn't have it the timer
+	//RETURNING TO OLD LEVELS - mainly done
+	//but if you switch to a mroe advanced shape for a set that shouldn't have it the timer
 	//- will change color -> red
 	//- nullify the pb for that run
 
@@ -200,9 +198,8 @@ int main()
 			blockonhead = false;
 			currentplayer -> grounded = false;
 			if (!inblackhole && currentplayer -> shape().getPosition().y < 730 && !restart) currentplayer -> updatepos(deltatime, map);
-			if (restart) currentplayer -> shape().move(sf::Vector2f(currentplayer -> velocity.x*deltatime*0.05, currentplayer -> velocity.y*deltatime*0.05));
-			if (currentplayer -> shape().getPosition().y >= 730) currentplayer -> shape().move(sf::Vector2f(0, 3*deltatime));
-			if (currentplayer -> shape().getPosition().y > 1000) restart = true;
+			if (restart && currentplayer -> shape().getPosition().y) currentplayer -> shape().move(sf::Vector2f(currentplayer -> velocity.x*deltatime*0.05, currentplayer -> velocity.y*deltatime*0.05));
+			if (currentplayer -> shape().getPosition().y > 730) restart = true;
 			map.updatemap(deltatime);
 			inblackhole = false;
 			map.checkCollisions(*currentplayer, deltatime);
