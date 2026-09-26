@@ -850,29 +850,67 @@ public:
         menubox = makebtn(sf::Vector2f(700, 300), sf::Color(100, 90, 90), sf::Vector2f(width/2, height/2+40));
         menuboxshadow = rectshadow(235, 10, menubox);
 
-        envtiles.push_back(std::make_unique<ground_>(sf::Vector2f(400, 300)));
-        envtiles.push_back(std::make_unique<water>(sf::Vector2f(560, 300)));
-        envtiles.push_back(std::make_unique<lava>(sf::Vector2f(720, 300)));
-        envtiles.push_back(std::make_unique<zero_g>(sf::Vector2f(880, 300)));
-
-        shapetiles.push_back(std::make_unique<square>());
-        shapetiles.push_back(std::make_unique<circle>());
-        shapetiles.push_back(std::make_unique<octagon>());
-        shapetiles.push_back(std::make_unique<triangle>());
-        shapetiles.push_back(std::make_unique<hexagon>());
-
-        objecttiles.push_back(std::make_unique<spike>(sf::Vector2f(340, 300), 0));
-        objecttiles.push_back(std::make_unique<doublespike>(sf::Vector2f(460, 300), 0));
-        objecttiles.push_back(std::make_unique<door>(sf::Vector2f(570, 300)));
-        objecttiles.push_back(std::make_unique<button>(sf::Vector2f(590, 300)));
-        objecttiles.push_back(std::make_unique<spring>(sf::Vector2f(700, 300)));
-        objecttiles.push_back(std::make_unique<block>(sf::Vector2f(820, 300)));
-        objecttiles.push_back(std::make_unique<blackhole>(sf::Vector2f(920, 300), 0.4));
-
         tilename = maketext(35, sf::Color(255, 40, 60), "SELECT A TILE", font, sf::Vector2f(640, 370));
         tiledesc = maketext(25, sf::Color(255, 40, 60), "AND ITS DESCRIPTION WILL APPEAR HERE", font, sf::Vector2f(640, 450));
         tilenameshadow = textshadow(120, 3, tilename);
         tiledescshadow = textshadow(120, 3, tiledesc);
+
+        maketiles();
+    }
+
+    void maketiles () {
+        envtiles.clear();
+        shapetiles.clear();
+        objecttiles.clear();
+        envtiles.push_back(std::make_unique<ground_>(sf::Vector2f(400, 300)));
+        envtiles.push_back(std::make_unique<water>(sf::Vector2f(560, 300)));
+        envtiles.push_back(std::make_unique<lava>(sf::Vector2f(720, 300)));
+        envtiles.push_back(std::make_unique<zero_g>(sf::Vector2f(880, 300)));
+        if (unlocked[3] == 0) {
+            envtiles[1]->collide().setFillColor(sf::Color(0, 0, 0));
+            envtiles[2]->collide().setFillColor(sf::Color(0, 0, 0));
+            envtiles[3]->collide().setFillColor(sf::Color(0, 0, 0));
+        }
+
+        shapetiles.push_back(std::make_unique<square>());
+        shapetiles.push_back(std::make_unique<circle>());
+        if (unlocked[6] == 0) shapetiles[1]->shape().setFillColor(sf::Color(0, 0, 0));
+        shapetiles.push_back(std::make_unique<octagon>());
+        if (unlocked[12] == 0) shapetiles[2]->shape().setFillColor(sf::Color(0, 0, 0));
+        shapetiles.push_back(std::make_unique<triangle>());
+        if (unlocked[18] == 0) shapetiles[3]->shape().setFillColor(sf::Color(0, 0, 0));
+        shapetiles.push_back(std::make_unique<hexagon>());
+        if (unlocked[24] == 0) shapetiles[4]->shape().setFillColor(sf::Color(0, 0, 0));
+
+        objecttiles.push_back(std::make_unique<spike>(sf::Vector2f(340, 300), 0));
+        objecttiles.push_back(std::make_unique<doublespike>(sf::Vector2f(460, 300), 0));
+        if (unlocked[1] == 0) { 
+            objecttiles[1]->collide().setFillColor(sf::Color(0, 0, 0)); 
+            objecttiles[1]->getshape2().setFillColor(sf::Color(0, 0, 0));
+            objecttiles[1]->collide().setOutlineColor(sf::Color(0, 0, 0)); 
+            objecttiles[1]->getshape2().setOutlineColor(sf::Color(0, 0, 0)); 
+        }
+        objecttiles.push_back(std::make_unique<button>(sf::Vector2f(590, 300)));
+        if (unlocked[2] == 0) { 
+            objecttiles[2]->collide().setFillColor(sf::Color(0, 0, 0)); 
+            objecttiles[2]->getshape2().setFillColor(sf::Color(0, 0, 0)); 
+            objecttiles.push_back(std::make_unique<ground_>(sf::Vector2f(570, 300)));
+            objecttiles[3]->collide().setFillColor(sf::Color(0, 0, 0));
+        } else {
+            objecttiles.push_back(std::make_unique<door>(sf::Vector2f(570, 300)));
+        }
+        objecttiles.push_back(std::make_unique<spring>(sf::Vector2f(700, 300)));
+        if (unlocked[1] == 0) { objecttiles[4]->collide().setFillColor(sf::Color(0, 0, 0)); }
+        objecttiles.push_back(std::make_unique<block>(sf::Vector2f(820, 300)));
+        if (unlocked[2] == 0) { 
+            objecttiles[5]->collide().setFillColor(sf::Color(0, 0, 0)); 
+            objecttiles[5]->collide().setOutlineColor(sf::Color(0, 0, 0)); 
+        }
+        objecttiles.push_back(std::make_unique<blackhole>(sf::Vector2f(920, 300), 0.4));
+        if (unlocked[26] == 0) { 
+            objecttiles[6]->collide().setFillColor(sf::Color(0, 0, 0));
+            objecttiles[6]->collide().setOutlineColor(sf::Color(0, 0, 0)); 
+        }
     }
 
     void draw (sf::RenderWindow& window) {
@@ -965,6 +1003,10 @@ public:
                         tiledesc = maketext(25, sf::Color(230, 230, 230), "It's a strange zone where gravity doesn't apply.\nYou can float and push blocks freely through this zone...\nalthough the scientific accuracy is questionable...", font, sf::Vector2f(640, 450));
                         break;
                     }
+                    if (unlocked[3] == 0) {
+                        tilename.setString("???");
+                        tiledesc.setString("Complete more levels to discover this environment type!");
+                    }
                     tiledesc.setOrigin(sf::Vector2f(tilename.getLocalBounds().position.x, tilename.getLocalBounds().position.y));
                     tiledesc.setPosition(sf::Vector2f(320, 410));
                     tilenameshadow = textshadow(120, 3, tilename);
@@ -985,18 +1027,34 @@ public:
                         case 1:
                         tilename = maketext(35, sf::Color(0, 145, 255), "CIRCLE", font, sf::Vector2f(640, 370));
                         tiledesc = maketext(25, sf::Color(0, 145, 255), "The circle can accelerate rapidly when moving around,\nmaking it good for crossing long gaps and such.\nIts shape also allows it to roll underneath\nobstacles through 1-tile pathways.", font, sf::Vector2f(640, 450));
+                        if (unlocked[6] == 0) {
+                            tilename.setString("???");
+                            tiledesc.setString("Complete more levels to discover this character!");
+                        }
                         break;
                         case 2:
                         tilename = maketext(35, sf::Color(160, 100, 200), "OCTAGON", font, sf::Vector2f(640, 370));
                         tiledesc = maketext(20, sf::Color(160, 100, 200), "The octagon can wall jump! There are three types of walljumps.\nHold left shift when wall jumping to jump fast but without much height.\nHold right shift while wall jumping to jump high with less horizontal reach.\nIf not holding either shift, you just perform a normal wall jump.", font, sf::Vector2f(640, 450));
+                        if (unlocked[12] == 0) {
+                            tilename.setString("???");
+                            tiledesc.setString("Complete more levels to discover this character!");
+                        }
                         break;
                         case 3:
                         tilename = maketext(35, sf::Color(0, 255, 0), "TRIANGLE", font, sf::Vector2f(640, 370));
                         tiledesc = maketext(25, sf::Color(0, 255, 0), "The triangle can teleport exactly 2.5 tiles ahead of itself.\nUseful forcrossing barriers and chaining it\nwith other shapes to do combos!", font, sf::Vector2f(640, 450));
+                        if (unlocked[18] == 0) {
+                            tilename.setString("???");
+                            tiledesc.setString("Complete more levels to discover this character!");
+                        }
                         break;
                         case 4:
                         tilename = maketext(35, sf::Color(255, 210, 0), "HEXAGON", font, sf::Vector2f(640, 370));
                         tiledesc = maketext(25, sf::Color(255, 210, 0), "The hexagon can double jump. To maximize its utility,\npractice comboing it with other shapes to gain massive\ndistance!", font, sf::Vector2f(640, 450));
+                        if (unlocked[24] == 0) {
+                            tilename.setString("???");
+                            tiledesc.setString("Complete more levels to discover this character!");
+                        }
                     }
                     tiledesc.setOrigin(sf::Vector2f(tilename.getLocalBounds().position.x, tilename.getLocalBounds().position.y));
                     tiledesc.setPosition(sf::Vector2f(320, 410));
@@ -1020,30 +1078,50 @@ public:
                         case 1:
                         tilename = maketext(35, sf::Color(255, 0, 0), "DOUBLE SPIKE", font, sf::Vector2f(640, 370));
                         tiledesc = maketext(25, sf::Color(255, 0, 0), "Bit less punishing than a normal spike, since it's a bit shorter.", font, sf::Vector2f(640, 450));
+                        if (unlocked[1] == 0) {
+                            tilename.setString("???");
+                            tiledesc.setString("Complete more levels to discover this obstacle!");
+                        }
                         tilenameshadow = textshadow(120, 3, tilename);
                         tiledescshadow = textshadow(120, 3, tiledesc);
                         break;
                         case 2:
                         tilename = maketext(35, sf::Color(120, 120, 120), "BUTTON AND DOOR", font, sf::Vector2f(640, 370));
                         tiledesc = maketext(20, sf::Color(120, 120, 120), "For every button on the map, there's a door,\nand vice versa. If the player or a block is positioned on the button, its\ncorresponding door will open.\nDoors will never close while a player or block is within its bounds.", font, sf::Vector2f(640, 450));
+                        if (unlocked[2] == 0) {
+                            tilename.setString("???");
+                            tiledesc.setString("Complete more levels to discover this obstacle!");
+                        }
                         tilenameshadow = textshadow(120, 3, tilename);
                         tiledescshadow = textshadow(120, 3, tiledesc);
                         break;
                         case 3:
                         tilename = maketext(35, sf::Color(120, 120, 120), "BUTTON AND DOOR", font, sf::Vector2f(640, 370));
                         tiledesc = maketext(20, sf::Color(120, 120, 120), "For every button on the map, there's a door,\nand vice versa. If the player or a block is positioned on the button, its\ncorresponding door will open.\nDoors will never close while a player or block is within its bounds.", font, sf::Vector2f(640, 450));
+                        if (unlocked[2] == 0) {
+                            tilename.setString("???");
+                            tiledesc.setString("Complete more levels to discover this obstacle!");
+                        }
                         tilenameshadow = textshadow(120, 3, tilename);
                         tiledescshadow = textshadow(120, 3, tiledesc);
                         break;
                         case 4:
                         tilename = maketext(35, sf::Color(200, 255, 255), "SPRING", font, sf::Vector2f(640, 370));
                         tiledesc = maketext(25, sf::Color(200, 255, 255), "Gives you a huge vertical boost, but not blocks.", font, sf::Vector2f(640, 450));
+                        if (unlocked[1] == 0) {
+                            tilename.setString("???");
+                            tiledesc.setString("Complete more levels to discover this obstacle!");
+                        }
                         tilenameshadow = textshadow(120, 3, tilename);
                         tiledescshadow = textshadow(120, 3, tiledesc);
                         break;
                         case 5:
                         tilename = maketext(35, sf::Color(150, 150, 150), "PUSHABLE BLOCK", font, sf::Vector2f(640, 370));
                         tiledesc = maketext(25, sf::Color(150, 150, 150), "These are blocks you can move around to reach farther\nand push buttons! Keep in mind: you cannot push two\nstacked blocks in the direction they're\nstacked, and gravity applies to them just as it does to you.", font, sf::Vector2f(640, 450));
+                        if (unlocked[2] == 0) {
+                            tilename.setString("???");
+                            tiledesc.setString("Complete more levels to discover this obstacle!");
+                        }
                         tilenameshadow = textshadow(120, 3, tilename);
                         tiledescshadow = textshadow(120, 3, tiledesc);
                         break;
@@ -1054,6 +1132,10 @@ public:
                         tiledesc.setOutlineColor(sf::Color(240, 170, 0));
                         tilename.setOutlineThickness(-1);
                         tiledesc.setOutlineThickness(-1);
+                        if (unlocked[2] == 0) {
+                            tilename.setString("???");
+                            tiledesc.setString("Complete more levels to discover this obstacle!");
+                        }
                     }
                     tiledesc.setOrigin(sf::Vector2f(tilename.getLocalBounds().position.x, tilename.getLocalBounds().position.y));
                     tiledesc.setPosition(sf::Vector2f(320, 410));
@@ -1064,6 +1146,7 @@ public:
                 }
             }
         }
+        maketiles();
     }
 };
 

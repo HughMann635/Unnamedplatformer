@@ -164,9 +164,9 @@ public:
     }
 
     void draw (sf::RenderTarget& window) override {
+        window.draw(particle_drawer);
         window.draw(blackholeblock);
         window.draw(photonring);  
-        window.draw(particle_drawer);
     }
 
     sf::Shape& collide() override {
@@ -342,12 +342,14 @@ public:
     }
 
     void draw (sf::RenderTarget& window) {
-        if (pressed) {
-            buttonblock[0].setFillColor(sf::Color(0, 210, 0));
-            buttonblock[1].setFillColor(sf::Color(0, 150, 0));
-        } else {
-            buttonblock[0].setFillColor(sf::Color(200, 0, 0));
-            buttonblock[1].setFillColor(sf::Color(95, 0, 0));
+        if (state != State::handbook) {
+            if (pressed) {
+                buttonblock[0].setFillColor(sf::Color(0, 210, 0));
+                buttonblock[1].setFillColor(sf::Color(0, 150, 0));
+            } else {
+                buttonblock[0].setFillColor(sf::Color(200, 0, 0));
+                buttonblock[1].setFillColor(sf::Color(95, 0, 0));
+            }
         }
         window.draw(buttonblock[1]);
         window.draw(buttonblock[0]);
