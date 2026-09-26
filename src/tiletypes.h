@@ -8,7 +8,7 @@ public:
     virtual void draw (sf::RenderTarget& window) {}
     virtual sf::Shape& collide() = 0;
     virtual void movetile (float deltatime) {} 
-    virtual sf::Shape& getspike2() { return collide(); } 
+    virtual sf::Shape& getshape2() { return collide(); } 
     virtual ~tileTypes() {}
 };
 
@@ -95,7 +95,7 @@ public:
         return twospikes[0];
     }
 
-    sf::Shape& getspike2() override {
+    sf::Shape& getshape2() override {
         return twospikes[1];
     } 
 
@@ -355,6 +355,10 @@ public:
 
     sf::Shape& collide() override {
         return buttonblock[1];
+    }
+
+    sf::Shape& getshape2() override {
+        return buttonblock[0];
     }
 };
 
