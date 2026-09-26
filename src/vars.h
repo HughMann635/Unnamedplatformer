@@ -28,6 +28,7 @@ inline bool autohover = false;
 inline bool restarted = false;
 inline int pbs[30] = {0};
 inline sf::Clock leveltimer;
+inline bool newnotif = false;
 
 //States stuff
 enum class State {

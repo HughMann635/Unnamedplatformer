@@ -134,9 +134,10 @@ int main()
 			} 
 			if (newlevel) {
 				if (pbs[setnum*6+levelnum] > leveltimer.getElapsedTime().asMilliseconds() || pbs[setnum*6+levelnum] == 0) pbs[setnum*6+levelnum] = leveltimer.getElapsedTime().asMilliseconds();
-				std::cout << pbs[setnum*6+levelnum];
 				completed[setnum*6+levelnum] = 1;
 				unlocked[setnum*6+levelnum+1] = 1;
+				if ((setnum*6+levelnum+1) % 6 == 0) newnotif = true;
+				else newnotif = false;
 				levelnum += 1;
 				if (levelnum > 5) {
 					state = State::mainmenu;

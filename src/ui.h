@@ -95,7 +95,8 @@ public:
     sf::ConvexShape backiconshadow;
     sf::RectangleShape backbtn;
     sf::RectangleShape backbtnshadow;
-    
+    sf::CircleShape handbooknotif;
+
     mainmenu() :
         font("AldotheApache.ttf"),
         title(font),
@@ -153,6 +154,11 @@ public:
         backiconshadow.setFillColor(sf::Color(0, 0, 0, 75));
         backiconshadow.setPosition(backicon.getPosition()+sf::Vector2f(2, 2));
         backbtnshadow = rectshadow(235, 4, backbtn);
+
+        handbooknotif.setRadius(3);
+        handbooknotif.setOrigin(sf::Vector2f(3, 3));
+        handbooknotif.setPosition(sf::Vector2f(691, 538));
+        handbooknotif.setFillColor(sf::Color(255, 20, 20, static_cast<int>(newnotif)*255));
     }
 
     void play (sf::RenderWindow& window, sf::Sound& clicksound) {
@@ -167,6 +173,7 @@ public:
         if (btnpress(-1, clicksound, false, window, handbooktxt, handbookbtn, handbooktxtshadow, handbookbtnshadow, sf::Vector2f(640, 550), sf::Color(20, 50, 255), sf::Color(0, 0, 115), sf::Color(0, 0, 100), sf::Color(180, 180, 180))) {
             switched = true;
             targetstate = State::handbook;
+            newnotif = false;
         }
         if (btnpress(-1, clicksound, false, window, settingstxt, settingsbtn, settingstxtshadow, settingsbtnshadow, sf::Vector2f(790, 550), sf::Color(20, 255, 50), sf::Color(0, 115, 0), sf::Color(0, 70, 0), sf::Color(180, 180, 180))) {
             switched = true;
@@ -193,6 +200,8 @@ public:
         window.draw(handbookbtn);
         window.draw(handbooktxtshadow);
         window.draw(handbooktxt);
+        handbooknotif.setFillColor(sf::Color(255, 20, 20, static_cast<int>(newnotif)*255));
+        window.draw(handbooknotif);
     }
 
     bool navback(sf::RenderWindow& window, sf::Sound& clicksound) {
