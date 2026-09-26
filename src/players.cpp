@@ -27,18 +27,21 @@ void entity::rotateobject(sf::Vector2f& edge, tilemap& map, sf::Shape& shape, fl
         initialtip = shape.getRotation().asDegrees();
         edge = sf::Vector2f(std::ceil(center.x / playerdim) * playerdim, shape.getPosition().y + playerdim / 2);
     }
-
-    float tilt = shape.getRotation().asDegrees() - initialtip;
+    int tilt = shape.getRotation().asDegrees() - initialtip;
     if (tilt > 180) tilt -= 360;
     if (tilt < -180) tilt += 360;
-    if (!freefallingtip && (tipping_right || tipping_left) && (tilt > 45 || tilt < -45)) {
+    if (keypressed(Action::left) || keypressed(Action::right) || keypressed(Action::jump)) {
+        tipping_left = false;
+        tipping_right = false;
+    }
+    if ((!freefallingtip && (tipping_right || tipping_left) && (tilt > 45 || tilt < -45))) {
         freefallingtip = true;
     }
 
     if (freefallingtip) {
-        float direction = tipping_right ? 1 : -1;
+        int direction = tipping_right ? 1 : -1;
         shape.rotate(sf::degrees(direction * deltatime * 100));
-        if ((grounded) || zerogactive) {
+        if ((grounded) || zerogactive || keypressed(Action::left) || keypressed(Action::right) || keypressed(Action::jump)) {
             freefallingtip = false;
             tipping_right = false;
             tipping_left = false;
@@ -58,7 +61,7 @@ void entity::rotateobject(sf::Vector2f& edge, tilemap& map, sf::Shape& shape, fl
     } 
     else if (grounded && std::abs(velocity.x) <= 225.f) {
         rotation = 0.f;
-        float nearestangle = 360.f;
+        float nearestangle = 360;
         float currentangle = shape.getRotation().asDegrees();
         if (settlepoint < 0) {
             for (int i = 0; i <= (360 / nearestedge); i++) {
@@ -68,9 +71,9 @@ void entity::rotateobject(sf::Vector2f& edge, tilemap& map, sf::Shape& shape, fl
             }
             settlepoint = nearestangle;
         }
-        float dist = std::fmod(currentangle - settlepoint + 540.f, 360.f) - 180.f;
-        if (dist > 180 * deltatime) shape.rotate(sf::degrees(-180 * deltatime)); 
-        else if (dist < -180 * deltatime) shape.rotate(sf::degrees(180 * deltatime));
+        float dist = std::fmod(currentangle - settlepoint + 540.f, 360.f) - 180;
+        if (dist > 3) shape.rotate(sf::degrees(-180 * deltatime)); 
+        else if (dist < -3) shape.rotate(sf::degrees(180 * deltatime));
         else { 
             shape.setRotation(sf::degrees(settlepoint));
             settlepoint = -1; 
